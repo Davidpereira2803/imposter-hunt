@@ -20,7 +20,7 @@ export default function Results() {
   }
 
   const imposterName = players[imposterIndex] || "Unknown";
-  const outcome = typeof params?.outcome === "string" ? params.outcome : null;
+  const { outcome } = useLocalSearchParams();
 
   const headline =
     outcome === "imposter"

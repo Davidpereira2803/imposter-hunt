@@ -112,29 +112,33 @@ export default function Vote() {
       }
 
       const eliminated = leaders[0];
+      console.log("Finishing voting, selected:", eliminated);
       const outcome = eliminatePlayer(eliminated);
-      const remaining = aliveCount();
-
+      console.log("Elimination outcome:", outcome);
+      
       if (outcome === "civilians") {
-        router.push({
-          pathname: "/results",
-          params: { outcome: "civilians", eliminated: String(eliminated) }
-        });
+        console.log("Navigating to results - civilians win");
+        router.replace({ pathname: "/results", params: { outcome: "civilians", eliminated: String(eliminated) } });
         return;
       }
-
-      if (remaining <= 2) {
-        Alert.alert("Imposter Wins!", "Only two players remain.", [
-          { text: "Continue", onPress: () => router.push({
-            pathname: "/results", 
-            params: { outcome: "imposter", eliminated: String(eliminated) }
-          }) }
-        ]);
+      
+      if (outcome === "imposter") {
+        console.log("Navigating to results - imposter wins");
+        router.replace({ pathname: "/results", params: { outcome: "imposter", eliminated: String(eliminated) } });
         return;
       }
-
-      nextRound();
-      router.replace("/round");
+      
+      const alivePlayers = players.filter(p => p.isAlive);
+      console.log("Alive players count:", alivePlayers.length);
+      
+      if (alivePlayers.length === 2) {
+        console.log("Only 2 players remain - imposter wins by parity");
+        router.replace({ pathname: "/results", params: { outcome: "imposter", eliminated: String(eliminated) } });
+        return;
+      }
+      
+      console.log("Navigating to imposter-guess");
+      router.replace("/imposter-guess");
     }
   };
 
