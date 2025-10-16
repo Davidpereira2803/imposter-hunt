@@ -1,9 +1,14 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Alert, ScrollView } from "react-native";
+import { View, Text, StyleSheet, Alert, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
 import { useGameStore } from "../src/store/gameStore";
 import { useAdConsentContext } from "../src/contexts/AdConsentContext";
+import Screen from "../src/components/ui/Screen";
+import Title from "../src/components/ui/Title";
+import Button from "../src/components/ui/Button";
+import Card from "../src/components/ui/Card";
+import { space, palette, type } from "../src/constants/theme";
 
 export default function Settings() {
   const router = useRouter();
@@ -18,8 +23,8 @@ export default function Settings() {
 
   const handleClearData = async () => {
     Alert.alert(
-      "Clear All Data",
-      "This will remove all saved player names and preferences. Are you sure?",
+      "Clear Data",
+      "Remove all saved data?",
       [
         { text: "Cancel", style: "cancel" },
         {
@@ -30,7 +35,7 @@ export default function Settings() {
               await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
             } catch {}
             await clearStorage();
-            Alert.alert("Success", "All data has been cleared.");
+            Alert.alert("Success", "Data cleared");
           }
         }
       ]
@@ -41,16 +46,16 @@ export default function Settings() {
     try {
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
       await showConsentForm();
-      Alert.alert("Privacy Settings Updated", "Your ad preferences have been saved.");
+      Alert.alert("Updated", "Privacy settings saved");
     } catch (error) {
-      Alert.alert("Error", "Could not open privacy settings. Please try again.");
+      Alert.alert("Error", "Could not open settings");
     }
   };
 
   const handleResetConsent = async () => {
     Alert.alert(
-      "Reset Ad Consent",
-      "This will reset all ad consent settings. The consent form will appear again.",
+      "Reset Consent",
+      "Reset ad preferences?",
       [
         { text: "Cancel", style: "cancel" },
         {
@@ -61,7 +66,7 @@ export default function Settings() {
               await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
             } catch {}
             await resetConsent();
-            Alert.alert("Success", "Ad consent has been reset.");
+            Alert.alert("Success", "Consent reset");
           }
         }
       ]
@@ -69,156 +74,123 @@ export default function Settings() {
   };
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <Text style={styles.title}>Settings</Text>
+    <Screen>
+      <ScrollView contentContainerStyle={styles.scroll}>
+        <Title style={styles.title}>Settings</Title>
 
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Privacy & Ads</Text>
-        
-        <View style={styles.infoBox}>
-          <Text style={styles.infoLabel}>Ad Status:</Text>
-          <Text style={styles.infoValue}>
-            {isLoading ? "Loading..." : canShowAds ? "Enabled" : "Disabled"}
-          </Text>
-        </View>
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Privacy & Ads</Text>
+          
+          <Card style={styles.infoRow}>
+            <Text style={styles.infoLabel}>Ads</Text>
+            <Text style={styles.infoValue}>
+              {isLoading ? "..." : canShowAds ? "On" : "Off"}
+            </Text>
+          </Card>
 
-        <View style={styles.infoBox}>
-          <Text style={styles.infoLabel}>Personalized Ads:</Text>
-          <Text style={styles.infoValue}>
-            {isLoading ? "Loading..." : canShowPersonalizedAds ? "Yes" : "No"}
-          </Text>
-        </View>
+          <Card style={styles.infoRow}>
+            <Text style={styles.infoLabel}>Personalized</Text>
+            <Text style={styles.infoValue}>
+              {isLoading ? "..." : canShowPersonalizedAds ? "Yes" : "No"}
+            </Text>
+          </Card>
 
-        <TouchableOpacity 
-          style={[styles.button, styles.primaryButton]} 
-          onPress={handleManagePrivacy}
-          disabled={isLoading}
-        >
-          <Text style={styles.buttonText}>Manage Privacy Settings</Text>
-        </TouchableOpacity>
-
-        {__DEV__ && (
-          <TouchableOpacity 
-            style={[styles.button, styles.warningButton]} 
-            onPress={handleResetConsent}
+          <Button 
+            title="Manage Privacy"
+            onPress={handleManagePrivacy}
+            variant="primary"
+            size="md"
             disabled={isLoading}
-          >
-            <Text style={styles.buttonText}>Reset Ad Consent (Dev Only)</Text>
-          </TouchableOpacity>
-        )}
-      </View>
+          />
 
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Game Data</Text>
-        
-        <TouchableOpacity 
-          style={[styles.button, styles.dangerButton]} 
-          onPress={handleClearData}
-        >
-          <Text style={styles.buttonText}>Clear All Game Data</Text>
-        </TouchableOpacity>
-      </View>
+          {__DEV__ && (
+            <Button 
+              title="Reset Consent (Dev)"
+              onPress={handleResetConsent}
+              variant="warn"
+              size="md"
+              disabled={isLoading}
+              style={styles.devBtn}
+            />
+          )}
+        </View>
 
-      <TouchableOpacity 
-        style={[styles.button, styles.secondaryButton]} 
-        onPress={() => router.back()}
-      >
-        <Text style={styles.buttonText}>Back to Menu</Text>
-      </TouchableOpacity>
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Game Data</Text>
+          
+          <Button 
+            title="Clear All Data"
+            onPress={handleClearData}
+            variant="danger"
+            size="md"
+          />
+        </View>
 
-      <View style={styles.versionContainer}>
-        <Text style={styles.versionText}>Imposter Hunt v1.0.0</Text>
-        <Text style={styles.versionSubtext}>
-          {__DEV__ ? "Development Mode" : "Production"}
-        </Text>
-      </View>
-    </ScrollView>
+        <Button 
+          title="Back"
+          onPress={() => router.back()}
+          variant="ghost"
+          size="md"
+          style={styles.backBtn}
+        />
+
+        <View style={styles.version}>
+          <Text style={styles.versionText}>v1.0.0</Text>
+        </View>
+      </ScrollView>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#000",
-  },
-  content: {
-    padding: 20,
+  scroll: {
     paddingTop: 60,
-    paddingBottom: 40,
+    paddingHorizontal: space.lg,
+    paddingBottom: space.xl,
   },
   title: {
-    color: "#fff",
-    fontSize: 28,
-    fontWeight: "900",
-    textAlign: "center",
-    marginBottom: 32,
+    marginBottom: space.xl,
   },
   section: {
-    marginBottom: 32,
+    marginBottom: space.xl,
   },
   sectionTitle: {
-    color: "#fff",
-    fontSize: 18,
+    color: palette.textDim,
+    fontSize: type.small,
     fontWeight: "700",
-    marginBottom: 16,
+    textTransform: "uppercase",
+    letterSpacing: 1,
+    marginBottom: space.md,
   },
-  infoBox: {
-    backgroundColor: "#1a1a1a",
-    padding: 16,
-    borderRadius: 12,
-    marginBottom: 12,
+  infoRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    marginBottom: space.sm,
+    padding: space.md,
   },
   infoLabel: {
-    color: "#aaa",
-    fontSize: 16,
+    color: palette.textDim,
+    fontSize: type.body,
     fontWeight: "600",
   },
   infoValue: {
-    color: "#fff",
-    fontSize: 16,
+    color: palette.text,
+    fontSize: type.body,
     fontWeight: "700",
   },
-  button: {
-    paddingVertical: 16,
-    paddingHorizontal: 24,
-    borderRadius: 12,
+  devBtn: {
+    marginTop: space.sm,
+  },
+  backBtn: {
+    marginTop: space.lg,
+  },
+  version: {
     alignItems: "center",
-    marginBottom: 12,
-  },
-  primaryButton: {
-    backgroundColor: "#23a6f0",
-  },
-  secondaryButton: {
-    backgroundColor: "#1a1a1a",
-    borderWidth: 1,
-    borderColor: "#333",
-  },
-  dangerButton: {
-    backgroundColor: "#e63946",
-  },
-  warningButton: {
-    backgroundColor: "#ffc107",
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "700",
-  },
-  versionContainer: {
-    marginTop: 40,
-    alignItems: "center",
+    marginTop: space.xl,
   },
   versionText: {
-    color: "#666",
-    fontSize: 14,
-    fontWeight: "600",
-  },
-  versionSubtext: {
-    color: "#444",
-    fontSize: 12,
-    marginTop: 4,
+    color: palette.textDim,
+    fontSize: type.small,
   },
 });

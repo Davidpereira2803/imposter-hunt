@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TextInput, TouchableOpacity, FlatList, StyleSheet, Alert, BackHandler, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
+import { View, ScrollView, StyleSheet, Alert, BackHandler, KeyboardAvoidingView, Platform } from "react-native";
 import { useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
 import { useGameStore } from "../src/store/gameStore";
 import topics from "../src/data/topics.json";
+import Screen from "../src/components/ui/Screen";
+import Title from "../src/components/ui/Title";
+import Button from "../src/components/ui/Button";
+import Input from "../src/components/ui/Input";
+import Card from "../src/components/ui/Card";
+import Pill from "../src/components/ui/Pill";
+import { space, palette, type } from "../src/constants/theme";
+import { Text, TouchableOpacity } from "react-native";
 
 export default function Setup() {
   const router = useRouter();
@@ -14,7 +22,7 @@ export default function Setup() {
 
   useEffect(() => {
     const backAction = () => {
-      Alert.alert("Exit Game", "Are you sure you want to exit?", [
+      Alert.alert("Exit", "Exit game?", [
         { text: "Cancel", style: "cancel" },
         { text: "Exit", onPress: () => BackHandler.exitApp() }
       ]);
@@ -30,7 +38,7 @@ export default function Setup() {
     if (!name) return;
     
     if (playerList.includes(name)) {
-      Alert.alert("Duplicate Name", "This player name already exists.");
+      Alert.alert("Duplicate", "Player already added");
       return;
     }
 
@@ -59,12 +67,12 @@ export default function Setup() {
 
   const handleStartGame = async () => {
     if (playerList.length < 3) {
-      Alert.alert("Not Enough Players", "You need at least 3 players to start.");
+      Alert.alert("Need 3+ Players", "Add more players to start");
       return;
     }
 
     if (!selectedTopic) {
-      Alert.alert("No Topic Selected", "Please choose a topic first.");
+      Alert.alert("Choose Topic", "Select a category first");
       return;
     }
 
@@ -74,210 +82,142 @@ export default function Setup() {
     if (success) {
       router.push("/role");
     } else {
-      Alert.alert("Error", "Failed to start the game. Please try again.");
+      Alert.alert("Error", "Failed to start game");
     }
   };
 
   return (
-    <KeyboardAvoidingView 
-      style={s.container} 
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={0}
-    >
-      <ScrollView 
-        style={s.scrollView}
-        contentContainerStyle={s.scrollContent}
-        showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="handled"
+    <Screen>
+      <KeyboardAvoidingView 
+        style={styles.container}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        <Text style={s.title}>Game Setup</Text>
+        <ScrollView 
+          contentContainerStyle={styles.scroll}
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+        >
+          <Title style={styles.title}>Setup</Title>
 
-        <View style={s.section}>
-          <Text style={s.sectionTitle}>Players ({playerList.length})</Text>
-          <View style={s.inputRow}>
-            <TextInput
-              style={s.input}
-              value={inputName}
-              onChangeText={setInputName}
-              placeholder="Enter player name"
-              placeholderTextColor="#666"
-              maxLength={20}
-              onSubmitEditing={addPlayer}
-              returnKeyType="done"
-            />
-            <TouchableOpacity style={[s.btn, s.primary]} onPress={addPlayer}>
-              <Text style={s.btnText}>Add</Text>
-            </TouchableOpacity>
+          {/* Players Section */}
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Players ({playerList.length})</Text>
+            
+            <View style={styles.inputRow}>
+              <Input
+                value={inputName}
+                onChangeText={setInputName}
+                placeholder="Player name"
+                maxLength={20}
+                onSubmitEditing={addPlayer}
+                returnKeyType="done"
+                style={styles.input}
+              />
+              <Button title="Add" onPress={addPlayer} variant="primary" />
+            </View>
+
+            {playerList.length > 0 && (
+              <View style={styles.playerList}>
+                {playerList.map((name, index) => (
+                  <Card key={`player-${index}`} style={styles.playerCard}>
+                    <Text style={styles.playerName}>{name}</Text>
+                    <TouchableOpacity onPress={() => removePlayer(index)} style={styles.removeBtn}>
+                      <Text style={styles.removeText}>×</Text>
+                    </TouchableOpacity>
+                  </Card>
+                ))}
+              </View>
+            )}
           </View>
 
-          {playerList.length > 0 && (
-            <View style={s.playerListContainer}>
-              {playerList.map((item, index) => (
-                <View key={`player-${index}`} style={s.playerItem}>
-                  <Text style={s.playerName}>{item}</Text>
-                  <TouchableOpacity onPress={() => removePlayer(index)} style={s.removeBtn}>
-                    <Text style={s.removeText}>×</Text>
-                  </TouchableOpacity>
-                </View>
+          {/* Topic Section */}
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Topic</Text>
+            <View style={styles.topicGrid}>
+              {Object.keys(topics).map((key) => (
+                <TouchableOpacity
+                  key={key}
+                  onPress={() => selectTopic(key)}
+                  style={styles.topicBtn}
+                >
+                  <Pill variant={selectedTopic === key ? "primary" : "default"}>
+                    {key.charAt(0).toUpperCase() + key.slice(1)}
+                  </Pill>
+                </TouchableOpacity>
               ))}
             </View>
-          )}
-        </View>
-
-        <View style={s.section}>
-          <Text style={s.sectionTitle}>Choose Topic</Text>
-          <View style={s.topicGrid}>
-            {Object.keys(topics).map((key) => (
-              <TouchableOpacity
-                key={key}
-                style={[s.topicBtn, selectedTopic === key && s.topicSelected]}
-                onPress={() => selectTopic(key)}
-              >
-                <Text style={[s.topicText, selectedTopic === key && s.topicTextSelected]}>
-                  {key.charAt(0).toUpperCase() + key.slice(1)}
-                </Text>
-              </TouchableOpacity>
-            ))}
           </View>
-        </View>
 
-        <TouchableOpacity 
-          style={[s.startBtn, (playerList.length < 3 || !selectedTopic) && s.disabled]} 
-          onPress={handleStartGame}
-          disabled={playerList.length < 3 || !selectedTopic}
-        >
-          <Text style={s.startText}>Start Game</Text>
-        </TouchableOpacity>
-      </ScrollView>
-    </KeyboardAvoidingView>
+          <Button 
+            title="Start Game"
+            onPress={handleStartGame}
+            variant="success"
+            size="lg"
+            disabled={playerList.length < 3 || !selectedTopic}
+            style={styles.startBtn}
+          />
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </Screen>
   );
 }
 
-const s = StyleSheet.create({
-  container: { 
-    flex: 1, 
-    backgroundColor: "#000" 
-  },
-  scrollView: { 
-    flex: 1 
-  },
-  scrollContent: { 
-    padding: 20, 
+const styles = StyleSheet.create({
+  container: { flex: 1 },
+  scroll: { 
+    padding: space.lg, 
     paddingTop: 60,
-    paddingBottom: 40
+    paddingBottom: 40 
   },
-  title: { 
-    color: "#fff", 
-    fontSize: 28, 
-    fontWeight: "900", 
-    textAlign: "center", 
-    marginBottom: 32 
-  },
-  section: { 
-    marginBottom: 32 
-  },
+  title: { marginBottom: space.xl },
+  section: { marginBottom: space.xl },
   sectionTitle: { 
-    color: "#fff", 
-    fontSize: 18, 
+    color: palette.textDim, 
+    fontSize: type.small, 
     fontWeight: "700", 
-    marginBottom: 16 
+    textTransform: "uppercase",
+    letterSpacing: 1,
+    marginBottom: space.md 
   },
   inputRow: { 
     flexDirection: "row", 
-    gap: 12, 
-    marginBottom: 16 
+    gap: space.sm,
+    marginBottom: space.md 
   },
-  input: { 
-    flex: 1, 
-    backgroundColor: "#1a1a1a", 
-    color: "#fff", 
-    padding: 16, 
-    borderRadius: 12, 
-    fontSize: 16 
-  },
-  btn: { 
-    paddingHorizontal: 20, 
-    paddingVertical: 16, 
-    borderRadius: 12, 
-    justifyContent: "center" 
-  },
-  btnText: { 
-    color: "#fff", 
-    fontWeight: "700", 
-    fontSize: 16 
-  },
-  primary: { 
-    backgroundColor: "#23a6f0" 
-  },
-  playerListContainer: { 
-    gap: 8 
-  },
-  playerItem: { 
+  input: { flex: 1 },
+  playerList: { gap: space.sm },
+  playerCard: { 
     flexDirection: "row", 
-    alignItems: "center", 
-    backgroundColor: "#1a1a1a", 
-    padding: 16, 
-    borderRadius: 12 
+    alignItems: "center",
+    padding: space.md 
   },
   playerName: { 
     flex: 1, 
-    color: "#fff", 
-    fontSize: 16, 
+    color: palette.text, 
+    fontSize: type.body, 
     fontWeight: "600" 
   },
   removeBtn: { 
-    backgroundColor: "#e63946", 
     width: 32, 
     height: 32, 
     borderRadius: 16, 
-    justifyContent: "center", 
-    alignItems: "center" 
+    backgroundColor: palette.danger,
+    alignItems: "center",
+    justifyContent: "center"
   },
   removeText: { 
-    color: "#fff", 
+    color: palette.text, 
     fontSize: 20, 
     fontWeight: "700" 
   },
   topicGrid: { 
     flexDirection: "row", 
     flexWrap: "wrap", 
-    gap: 12 
+    gap: space.sm 
   },
-  topicBtn: { 
-    backgroundColor: "#1a1a1a", 
-    paddingVertical: 16, 
-    paddingHorizontal: 20, 
-    borderRadius: 12, 
-    minWidth: 100, 
-    alignItems: "center" 
-  },
-  topicSelected: { 
-    backgroundColor: "#23a6f0" 
-  },
-  topicText: { 
-    color: "#fff", 
-    fontSize: 16, 
-    fontWeight: "600" 
-  },
-  topicTextSelected: { 
-    color: "#fff", 
-    fontWeight: "700" 
+  topicBtn: {
   },
   startBtn: { 
-    backgroundColor: "#06d6a0", 
-    paddingVertical: 18, 
-    borderRadius: 16, 
-    alignItems: "center", 
-    marginTop: 20,
-    marginBottom: 20
-  },
-  startText: { 
-    color: "#000", 
-    fontSize: 18, 
-    fontWeight: "900" 
-  },
-  disabled: { 
-    backgroundColor: "#333", 
-    opacity: 0.6 
+    marginTop: space.lg 
   },
 });

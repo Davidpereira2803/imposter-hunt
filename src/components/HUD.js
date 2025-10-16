@@ -1,31 +1,22 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
+import Pill from "./ui/Pill";
+import { space } from "../constants/theme";
 
 export default function HUD({ round, aliveCount }) {
   return (
-    <View style={s.hud}>
-      {round && <Text style={s.hudText}>Round {round}</Text>}
-      <Text style={s.hudText}>{aliveCount || 0} alive</Text>
+    <View style={styles.container}>
+      <Pill>Round {round}</Pill>
+      <Pill>{aliveCount} Alive</Pill>
     </View>
   );
 }
 
-const s = StyleSheet.create({
-  hud: {
+const styles = StyleSheet.create({
+  container: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: "#1a1a1a",
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-    borderRadius: 12,
-    marginBottom: 20,
-    borderWidth: 1,
-    borderColor: "#333",
-  },
-  hudText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "700",
+    justifyContent: "center",
+    gap: space.sm,
+    marginBottom: space.lg,
   },
 });

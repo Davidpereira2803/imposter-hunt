@@ -78,4 +78,4 @@ If you have questions or concerns about this policy, contact the developer throu
 
 **By using Imposter Hunt, you agree to this privacy policy.**
 You can view this policy at any time at:
-[https://github.com/davidpereira2803/imposter-hunt/blob/main/PRIVACY.md](https://github.com/davidpereira2803/imposter-hunt/blob/main/PRIVACY.md)
+[https://github.com/davidpereira2803/imposter-hunt/blob/main/PRIVACY.md](https://github.com/davidpereira2803/imposter-hunt/blob/main/privacy.md)

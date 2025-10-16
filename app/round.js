@@ -1,9 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Alert, BackHandler } from "react-native";
+import { View, StyleSheet, Alert, BackHandler, Animated } from "react-native";
 import { useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
 import { useGameStore } from "../src/store/gameStore";
 import HUD from "../src/components/HUD";
+import Screen from "../src/components/ui/Screen";
+import Title from "../src/components/ui/Title";
+import Button from "../src/components/ui/Button";
+import { space } from "../src/constants/theme";
 
 export default function Round() {
   const router = useRouter();
@@ -11,12 +15,13 @@ export default function Round() {
   const [seconds, setSeconds] = useState(60);
   const [isRunning, setIsRunning] = useState(false);
   const intervalRef = useRef(null);
+  const scaleAnim = useRef(new Animated.Value(1)).current;
 
   const aliveNow = getAliveCount ? getAliveCount() : (players?.length || 0);
 
   useEffect(() => {
     const backAction = () => {
-      Alert.alert("Exit to Setup?", "Are you sure you want to exit the current game?", [
+      Alert.alert("Exit Game", "Return to setup?", [
         { text: "Cancel", style: "cancel" },
         { text: "Exit", onPress: () => router.replace("/setup") }
       ]);
@@ -37,13 +42,28 @@ export default function Round() {
     if (isRunning && seconds > 0) {
       intervalRef.current = setTimeout(() => {
         setSeconds(prev => prev - 1);
+        
+        if (seconds % 10 === 0) {
+          Animated.sequence([
+            Animated.timing(scaleAnim, {
+              toValue: 1.03,
+              duration: 150,
+              useNativeDriver: true,
+            }),
+            Animated.timing(scaleAnim, {
+              toValue: 1,
+              duration: 150,
+              useNativeDriver: true,
+            }),
+          ]).start();
+        }
       }, 1000);
     } else {
       clearTimeout(intervalRef.current);
     }
 
     return () => clearTimeout(intervalRef.current);
-  }, [isRunning, seconds]);
+  }, [isRunning, seconds, scaleAnim]);
 
   useEffect(() => {
     if (seconds === 0 && isRunning) {
@@ -53,8 +73,8 @@ export default function Round() {
       } catch {}
       
       Alert.alert(
-        "Time's Up!",
-        "Discussion time is over. Proceed to voting.",
+        "Time's Up",
+        "Proceed to voting",
         [{ text: "Vote Now", onPress: () => router.push("/vote") }]
       );
     }
@@ -102,67 +122,103 @@ export default function Round() {
   };
 
   if (!players?.length || !secretWord) {
-    return (
-      <View style={s.wrap}>
-        <Text style={s.title}>Loading...</Text>
-      </View>
-    );
+    return null;
   }
 
   return (
-    <View style={s.wrap}>
-      <Text style={s.title}>Discussion Phase</Text>
-      <HUD round={round || 1} aliveCount={aliveNow} />
+    <Screen>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <HUD round={round || 1} aliveCount={aliveNow} />
+        </View>
 
-      <View style={s.timerContainer}>
-        <Text style={[s.timer, seconds <= 10 && s.timerUrgent]}>{formatTime(seconds)}</Text>
-        <View style={s.timerControls}>
-          {!isRunning ? (
-            <TouchableOpacity style={[s.btn, s.primary]} onPress={startTimer}>
-              <Text style={s.btnText}>Start</Text>
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity style={[s.btn, s.warning]} onPress={pauseTimer}>
-              <Text style={s.btnText}>Pause</Text>
-            </TouchableOpacity>
-          )}
-          <TouchableOpacity style={[s.btn, s.muted]} onPress={resetTimer}>
-            <Text style={s.btnText}>Reset</Text>
-          </TouchableOpacity>
+        <View style={styles.timerSection}>
+          <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
+            <Title 
+              variant="giant" 
+              style={[styles.timer, seconds <= 10 && styles.timerUrgent]}
+            >
+              {formatTime(seconds)}
+            </Title>
+          </Animated.View>
+        </View>
+
+        <View style={styles.actions}>
+          <View style={styles.primaryActions}>
+            {!isRunning ? (
+              <Button 
+                title="Start" 
+                onPress={startTimer}
+                variant="warn"
+                size="lg"
+              />
+            ) : (
+              <Button 
+                title="Pause" 
+                onPress={pauseTimer}
+                variant="primary"
+                size="lg"
+              />
+            )}
+
+            <Button 
+              title="Vote" 
+              onPress={() => router.push("/vote")}
+              variant="success"
+              size="lg"
+            />
+          </View>
+
+          <View style={styles.secondaryActions}>
+            <Button 
+              title="Reset Timer" 
+              onPress={resetTimer}
+              variant="muted"
+              size="md"
+            />
+
+            <Button 
+              title="Imposter Guess" 
+              onPress={handleImposterGuess}
+              variant="danger"
+              size="md"
+            />
+          </View>
         </View>
       </View>
-
-      <Text style={s.instructions}>
-        Discuss and give subtle hints about your role. Try to identify the imposter!
-      </Text>
-
-      <View style={s.actions}>
-        <TouchableOpacity style={[s.btn, s.danger]} onPress={handleImposterGuess}>
-          <Text style={s.btnText}>Imposter Guess (Optional)</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={[s.btn, s.success]} onPress={() => router.push("/vote")}>
-          <Text style={s.btnText}>Proceed to Vote</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    </Screen>
   );
 }
 
-const s = StyleSheet.create({
-  wrap: { flex: 1, backgroundColor: "#000", padding: 20, paddingTop: 60 },
-  title: { color: "#fff", fontSize: 28, fontWeight: "900", textAlign: "center", marginBottom: 20 },
-  timerContainer: { alignItems: "center", marginVertical: 32 },
-  timer: { color: "#fff", fontSize: 56, fontWeight: "900", marginBottom: 20 },
-  timerUrgent: { color: "#e63946" },
-  timerControls: { flexDirection: "row", gap: 16 },
-  instructions: { color: "#aaa", textAlign: "center", marginVertical: 24, lineHeight: 22, fontSize: 16 },
-  actions: { gap: 16, marginVertical: 24 },
-  btn: { paddingVertical: 16, paddingHorizontal: 24, borderRadius: 12, alignItems: "center", minHeight: 56 },
-  btnText: { color: "#fff", fontSize: 16, fontWeight: "700" },
-  primary: { backgroundColor: "#23a6f0" },
-  success: { backgroundColor: "#06d6a0" },
-  warning: { backgroundColor: "#ffc107" },
-  danger: { backgroundColor: "#e63946" },
-  muted: { backgroundColor: "#1a1a1a" },
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 60,
+    paddingHorizontal: space.lg,
+  },
+  header: {
+    marginBottom: space.xl,
+  },
+  timerSection: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  timer: {
+    letterSpacing: 2,
+  },
+  timerUrgent: {
+    color: "#FF5964",
+  },
+  actions: {
+    paddingBottom: space.xl,
+    gap: space.md,
+  },
+  primaryActions: {
+    flexDirection: "row",
+    gap: space.md,
+  },
+  secondaryActions: {
+    gap: space.sm,
+  },
 });

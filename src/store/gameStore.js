@@ -3,130 +3,119 @@ import { persist, createJSONStorage } from "zustand/middleware";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import topics from "../data/topics.json";
 
-function pickRandom(arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
-}
-
 export const useGameStore = create(
   persist(
     (set, get) => ({
-      _hasHydrated: false,
-
-      players: [],            // ["Alice", "Bob", "Cara", ...]
-      alive: [],              // [true, true, true, ...] mirrors players by index
-      topicKey: null,         // "food" | "animals" | ...
-      secretWord: null,
-      imposterIndex: null,    // index in players
+      players: [],
+      topicKey: "",
+      secretWord: "",
+      imposterIndex: null,
+      alive: [],
       round: 1,
+      _hasHydrated: false,
 
       setPlayers: (players) => set({ players }),
       setTopicKey: (topicKey) => set({ topicKey }),
-      setHasHydrated: (hasHydrated) => set({ _hasHydrated: hasHydrated }),
 
       startMatch: () => {
         const { players, topicKey } = get();
-        if (!topicKey || (players?.length ?? 0) < 3) return false;
-        const wordList = topics[topicKey] || [];
-        if (!wordList.length) return false;
+        
+        if (!players || players.length < 3) {
+          console.error("Need at least 3 players");
+          return false;
+        }
 
-        const word = pickRandom(wordList);
-        const imposterIndex = Math.floor(Math.random() * players.length);
-        const alive = players.map(() => true);
+        if (!topicKey || !topics[topicKey]) {
+          console.error("Invalid topic key");
+          return false;
+        }
 
-        set({ secretWord: word, imposterIndex, round: 1, alive });
+        const words = topics[topicKey];
+        if (!words || words.length === 0) {
+          console.error("No words available for this topic");
+          return false;
+        }
+
+        const randomWord = words[Math.floor(Math.random() * words.length)];
+        
+        const randomImposter = Math.floor(Math.random() * players.length);
+        
+        const aliveArray = players.map(() => true);
+
+        set({
+          secretWord: randomWord,
+          imposterIndex: randomImposter,
+          alive: aliveArray,
+          round: 1,
+        });
+
+        console.log("Match started:", {
+          word: randomWord,
+          imposter: players[randomImposter],
+          players: players.length,
+        });
+
         return true;
       },
 
-      eliminatePlayer: (playerIndex) => {
-        set((state) => {
-          const updatedAlive = state.alive.map((isAlive, i) =>
-            i === playerIndex ? false : isAlive
-          );
-
-          const aliveCount = updatedAlive.filter(Boolean).length;
-          const imposterAlive = updatedAlive[state.imposterIndex];
-
-          console.log("After elimination:", {
-            totalAlive: aliveCount,
-            imposterAlive,
-            eliminatedIndex: playerIndex,
-            wasImposter: playerIndex === state.imposterIndex
-          });
-
-          let outcome;
-          if (playerIndex === state.imposterIndex) {
-            outcome = "civilians";
-          } else if (aliveCount === 1 && imposterAlive) {
-            outcome = "imposter";
-          } else {
-            outcome = "continue";
-          }
-
-          console.log("Outcome:", outcome);
-
-          return {
-            alive: updatedAlive,
-            outcome
-          };
+      resetMatch: () => {
+        set({
+          secretWord: "",
+          imposterIndex: null,
+          alive: [],
+          round: 1,
         });
+      },
 
-        return get().outcome;
+      eliminatePlayer: (index) => {
+        const { alive, imposterIndex, players } = get();
+        
+        if (!alive || !players) return null;
+
+        const newAlive = [...alive];
+        newAlive[index] = false;
+
+        set({ alive: newAlive });
+
+        if (index === imposterIndex) {
+          return "civilians";
+        }
+
+        const aliveCount = newAlive.filter(Boolean).length;
+        if (aliveCount === 2) {
+          return "imposter";
+        }
+
+        return "continue";
       },
 
       aliveCount: () => {
         const { alive } = get();
-        return alive.filter(Boolean).length;
+        return alive ? alive.filter(Boolean).length : 0;
       },
-
-      nextRound: () => set((s) => ({ round: s.round + 1 })),
-
-      resetMatch: () =>
-        set({
-          players: [],
-          alive: [],
-          topicKey: null,
-          secretWord: null,
-          imposterIndex: null,
-          round: 1
-        }),
 
       clearStorage: async () => {
-        try {
-          await AsyncStorage.removeItem("fakeout-game-storage");
-          set({
-            players: [],
-            alive: [],
-            topicKey: null,
-            secretWord: null,
-            imposterIndex: null,
-            round: 1
-          });
-        } catch (error) {
-          console.error("Failed to clear storage:", error);
-        }
+        await AsyncStorage.clear();
+        set({
+          players: [],
+          topicKey: "",
+          secretWord: "",
+          imposterIndex: null,
+          alive: [],
+          round: 1,
+        });
       },
+
+      _hydrated: false,
     }),
     {
-      name: "fakeout-game-storage",
+      name: "imposter-hunt-storage",
       storage: createJSONStorage(() => AsyncStorage),
-      
-      partialize: (state) => ({
-        players: state.players,
-        topicKey: state.topicKey,
-      }),
-
-      version: 1,
-      
-      onRehydrateStorage: (state) => {
-        console.log("Starting hydration...");
-        return (state, error) => {
-          if (error) {
-            console.log("Error during rehydration:", error);
-          } else {
-            console.log("Hydration completed successfully");
-          }
-          useGameStore.getState().setHasHydrated(true);
-        };
+      onRehydrateStorage: () => (state) => {
+        if (state) {
+          state._hasHydrated = true;
+          state._hydrated = true;
+        }
       },
     }
   )
