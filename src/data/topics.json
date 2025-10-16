@@ -1,0 +1,6 @@
+{
+  "food": ["Pizza", "Burger", "Sushi", "Taco", "Pasta", "Ice Cream", "Curry", "Salad"],
+  "animals": ["Dog", "Cat", "Elephant", "Lion", "Giraffe", "Zebra", "Dolphin", "Panda"],
+  "movies": ["Titanic", "Avatar", "Inception", "Matrix", "Gladiator", "Joker", "Dune", "Interstellar"],
+  "countries": ["France", "Japan", "Brazil", "Canada", "Australia", "Egypt", "India", "Spain"]
+}
