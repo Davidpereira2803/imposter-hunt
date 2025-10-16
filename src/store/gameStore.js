@@ -37,17 +37,40 @@ export const useGameStore = create(
         return true;
       },
 
-      eliminatePlayer: (idx) => {
-        const { alive, imposterIndex } = get();
-        if (!alive[idx]) return "continue";
-        const nextAlive = alive.slice();
-        nextAlive[idx] = false;
-        set({ alive: nextAlive });
+      eliminatePlayer: (playerIndex) => {
+        set((state) => {
+          const updatedAlive = state.alive.map((isAlive, i) =>
+            i === playerIndex ? false : isAlive
+          );
 
-        if (idx === imposterIndex) {
-          return "civilians";
-        }
-        return "continue";
+          const aliveCount = updatedAlive.filter(Boolean).length;
+          const imposterAlive = updatedAlive[state.imposterIndex];
+
+          console.log("After elimination:", {
+            totalAlive: aliveCount,
+            imposterAlive,
+            eliminatedIndex: playerIndex,
+            wasImposter: playerIndex === state.imposterIndex
+          });
+
+          let outcome;
+          if (playerIndex === state.imposterIndex) {
+            outcome = "civilians";
+          } else if (aliveCount === 1 && imposterAlive) {
+            outcome = "imposter";
+          } else {
+            outcome = "continue";
+          }
+
+          console.log("Outcome:", outcome);
+
+          return {
+            alive: updatedAlive,
+            outcome
+          };
+        });
+
+        return get().outcome;
       },
 
       aliveCount: () => {

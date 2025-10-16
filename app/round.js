@@ -84,32 +84,15 @@ export default function Round() {
     try { await Haptics.selectionAsync(); } catch {}
   };
 
-  const handleImposterGuess = () => {
-    Alert.prompt(
-      "Imposter's Guess",
-      "What do you think the secret word is?",
-      [
-        { text: "Cancel", style: "cancel" },
-        {
-          text: "Submit",
-          onPress: async (guess) => {
-            if (guess?.toLowerCase().trim() === secretWord?.toLowerCase().trim()) {
-              try { await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy); } catch {}
-              Alert.alert("Imposter Wins!", "Correct guess!", [
-                { text: "Continue", onPress: () => router.push({
-                  pathname: "/results",
-                  params: { outcome: "imposter" }
-                }) }
-              ]);
-            } else {
-              Alert.alert("Wrong guess!", "The game continues.", [
-                { text: "OK" }
-              ]);
-            }
-          }
-        }
-      ]
-    );
+  const handleImposterGuess = async () => {
+    try { 
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium); 
+    } catch {}
+    
+    router.push({
+      pathname: "/imposter-guess",
+      params: { mode: "optional" }
+    });
   };
 
   const formatTime = (secs) => {
@@ -155,7 +138,7 @@ export default function Round() {
 
       <View style={s.actions}>
         <TouchableOpacity style={[s.btn, s.danger]} onPress={handleImposterGuess}>
-          <Text style={s.btnText}>Imposter Guess</Text>
+          <Text style={s.btnText}>Imposter Guess (Optional)</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={[s.btn, s.success]} onPress={() => router.push("/vote")}>

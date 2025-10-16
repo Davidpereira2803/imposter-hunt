@@ -1,6 +1,126 @@
 {
-  "food": ["Pizza", "Burger", "Sushi", "Taco", "Pasta", "Ice Cream", "Curry", "Salad"],
-  "animals": ["Dog", "Cat", "Elephant", "Lion", "Giraffe", "Zebra", "Dolphin", "Panda"],
-  "movies": ["Titanic", "Avatar", "Inception", "Matrix", "Gladiator", "Joker", "Dune", "Interstellar"],
-  "countries": ["France", "Japan", "Brazil", "Canada", "Australia", "Egypt", "India", "Spain"]
+  "food": [
+    "Pizza", "Burger", "Sushi", "Taco", "Pasta", "Ice Cream", "Curry", "Salad",
+    "Steak", "Ramen", "Sandwich", "Burrito", "Lasagna", "Pancakes", "Waffles",
+    "Croissant", "Bagel", "Donut", "Cake", "Pie", "Cookies", "Brownie",
+    "Hot Dog", "Nachos", "Fries", "Onion Rings", "Chicken Wings", "Nuggets",
+    "Popcorn", "Pretzel", "Muffin", "Cupcake", "Cheesecake", "Tiramisu",
+    "Bread", "Toast", "Biscuit", "Scone", "Dumpling", "Spring Roll",
+    "Quesadilla", "Enchilada", "Fajitas", "Paella", "Risotto", "Gnocchi",
+    "Ravioli", "Tortellini", "Pho", "Pad Thai", "Fried Rice", "Noodles",
+    "Soup", "Stew", "Chili", "Fondue", "Kebab", "Shawarma", "Falafel",
+    "Hummus", "Guacamole", "Salsa", "Pesto", "Marinara", "Alfredo"
+  ],
+  "animals": [
+    "Dog", "Cat", "Elephant", "Lion", "Giraffe", "Zebra", "Dolphin", "Panda",
+    "Tiger", "Bear", "Wolf", "Fox", "Rabbit", "Squirrel", "Deer", "Moose",
+    "Horse", "Cow", "Pig", "Sheep", "Goat", "Chicken", "Duck", "Goose",
+    "Eagle", "Hawk", "Owl", "Parrot", "Penguin", "Flamingo", "Peacock",
+    "Butterfly", "Bee", "Ladybug", "Spider", "Ant", "Snail", "Worm",
+    "Shark", "Whale", "Octopus", "Jellyfish", "Crab", "Lobster", "Starfish",
+    "Kangaroo", "Koala", "Platypus", "Wombat", "Sloth", "Armadillo",
+    "Monkey", "Gorilla", "Chimpanzee", "Orangutan", "Lemur", "Baboon",
+    "Rhino", "Hippo", "Crocodile", "Alligator", "Turtle", "Tortoise",
+    "Snake", "Lizard", "Frog", "Toad", "Salamander", "Chameleon"
+  ],
+  "movies": [
+    "Titanic", "Avatar", "Inception", "Matrix", "Gladiator", "Joker", "Dune", "Interstellar",
+    "Avengers", "Batman", "Superman", "Spider-Man", "Iron Man", "Thor", "Hulk",
+    "Star Wars", "Star Trek", "Alien", "Predator", "Terminator", "RoboCop",
+    "Jurassic Park", "King Kong", "Godzilla", "Jaws", "E.T.", "Gremlins",
+    "Shrek", "Frozen", "Moana", "Encanto", "Coco", "Up", "Ratatouille",
+    "Finding Nemo", "Toy Story", "Cars", "WALL-E", "Inside Out", "Soul",
+    "Lion King", "Aladdin", "Beauty and the Beast", "Mulan", "Pocahontas",
+    "Harry Potter", "Lord of the Rings", "Hobbit", "Narnia", "Twilight",
+    "Hunger Games", "Divergent", "Maze Runner", "Percy Jackson", "Fantastic Beasts",
+    "Fast & Furious", "Mission Impossible", "James Bond", "Bourne", "John Wick",
+    "Die Hard", "Lethal Weapon", "Rambo", "Rocky", "Creed", "Karate Kid",
+    "Forrest Gump", "Shawshank Redemption", "Green Mile", "Godfather", "Scarface",
+    "Goodfellas", "Casino", "Heat", "Pulp Fiction", "Reservoir Dogs", "Django"
+  ],
+  "countries": [
+    "France", "Japan", "Brazil", "Canada", "Australia", "Egypt", "India", "Spain",
+    "USA", "Mexico", "China", "Russia", "Germany", "Italy", "UK", "Greece",
+    "Turkey", "Thailand", "Vietnam", "Indonesia", "Malaysia", "Philippines",
+    "South Korea", "North Korea", "Argentina", "Chile", "Peru", "Colombia",
+    "Venezuela", "Cuba", "Jamaica", "Haiti", "Portugal", "Netherlands",
+    "Belgium", "Switzerland", "Austria", "Sweden", "Norway", "Denmark",
+    "Finland", "Iceland", "Poland", "Ukraine", "Romania", "Hungary",
+    "Czech Republic", "Ireland", "Scotland", "Wales", "New Zealand",
+    "South Africa", "Nigeria", "Kenya", "Morocco", "Ethiopia", "Ghana",
+    "Saudi Arabia", "Iran", "Iraq", "Israel", "Jordan", "Lebanon",
+    "Pakistan", "Bangladesh", "Nepal", "Sri Lanka", "Afghanistan", "Mongolia"
+  ],
+  "sports": [
+    "Soccer", "Basketball", "Baseball", "Football", "Tennis", "Golf", "Hockey",
+    "Volleyball", "Cricket", "Rugby", "Boxing", "Wrestling", "MMA", "Karate",
+    "Judo", "Taekwondo", "Fencing", "Archery", "Swimming", "Diving",
+    "Gymnastics", "Track", "Marathon", "Cycling", "Skateboarding", "Surfing",
+    "Skiing", "Snowboarding", "Ice Skating", "Curling", "Bobsled", "Luge",
+    "Rock Climbing", "Parkour", "Polo", "Lacrosse", "Badminton", "Table Tennis",
+    "Bowling", "Darts", "Billiards", "Snooker", "Chess", "Poker"
+  ],
+  "occupations": [
+    "Doctor", "Nurse", "Teacher", "Professor", "Lawyer", "Judge", "Police",
+    "Firefighter", "Paramedic", "Pilot", "Astronaut", "Sailor", "Soldier",
+    "Engineer", "Architect", "Designer", "Artist", "Painter", "Sculptor",
+    "Musician", "Singer", "Dancer", "Actor", "Director", "Producer", "Writer",
+    "Journalist", "Reporter", "Photographer", "Videographer", "Chef", "Baker",
+    "Waiter", "Bartender", "Barista", "Cashier", "Receptionist", "Secretary",
+    "Accountant", "Banker", "Investor", "Trader", "Realtor", "Agent",
+    "Manager", "CEO", "Entrepreneur", "Consultant", "Analyst", "Programmer",
+    "Developer", "Designer", "Technician", "Mechanic", "Electrician", "Plumber",
+    "Carpenter", "Painter", "Gardener", "Farmer", "Veterinarian", "Zookeeper"
+  ],
+  "brands": [
+    "Apple", "Samsung", "Google", "Microsoft", "Amazon", "Facebook", "Tesla",
+    "Nike", "Adidas", "Puma", "Reebok", "Under Armour", "Vans", "Converse",
+    "Coca-Cola", "Pepsi", "Sprite", "Fanta", "McDonald's", "Burger King",
+    "KFC", "Subway", "Starbucks", "Dunkin", "Pizza Hut", "Domino's",
+    "Toyota", "Honda", "Ford", "BMW", "Mercedes", "Audi", "Volkswagen",
+    "Ferrari", "Lamborghini", "Porsche", "Bugatti", "Rolls-Royce", "Bentley",
+    "Sony", "Nintendo", "PlayStation", "Xbox", "Disney", "Netflix", "Spotify",
+    "YouTube", "Instagram", "Twitter", "TikTok", "Snapchat", "WhatsApp"
+  ],
+  "colors": [
+    "Red", "Blue", "Green", "Yellow", "Orange", "Purple", "Pink", "Brown",
+    "Black", "White", "Gray", "Silver", "Gold", "Beige", "Tan", "Cream",
+    "Crimson", "Scarlet", "Maroon", "Navy", "Turquoise", "Cyan", "Teal",
+    "Lime", "Olive", "Forest", "Mint", "Jade", "Emerald", "Violet",
+    "Lavender", "Magenta", "Fuchsia", "Rose", "Coral", "Salmon", "Peach",
+    "Amber", "Bronze", "Copper", "Rust", "Mahogany", "Chestnut", "Ivory"
+  ],
+  "clothing": [
+    "T-Shirt", "Shirt", "Blouse", "Sweater", "Hoodie", "Jacket", "Coat",
+    "Jeans", "Pants", "Shorts", "Skirt", "Dress", "Suit", "Tie", "Scarf",
+    "Hat", "Cap", "Beanie", "Gloves", "Mittens", "Socks", "Shoes", "Boots",
+    "Sneakers", "Sandals", "Flip-Flops", "Heels", "Slippers", "Belt",
+    "Underwear", "Bra", "Pajamas", "Robe", "Swimsuit", "Bikini", "Trunks",
+    "Vest", "Cardigan", "Poncho", "Cape", "Apron", "Uniform", "Jersey"
+  ],
+  "vehicles": [
+    "Car", "Truck", "Van", "SUV", "Bus", "Motorcycle", "Scooter", "Bicycle",
+    "Skateboard", "Scooter", "Segway", "Hoverboard", "Train", "Subway",
+    "Tram", "Trolley", "Taxi", "Uber", "Limousine", "Ambulance", "Fire Truck",
+    "Police Car", "Tow Truck", "Garbage Truck", "Delivery Truck", "Semi",
+    "Trailer", "RV", "Camper", "Boat", "Yacht", "Ship", "Cruise Ship",
+    "Ferry", "Submarine", "Jet Ski", "Kayak", "Canoe", "Raft", "Sailboat",
+    "Airplane", "Jet", "Helicopter", "Drone", "Hot Air Balloon", "Blimp",
+    "Rocket", "Spaceship", "UFO", "Satellite", "Rover", "Tank", "ATV"
+  ],
+  "instruments": [
+    "Guitar", "Piano", "Violin", "Cello", "Bass", "Drums", "Flute", "Trumpet",
+    "Saxophone", "Clarinet", "Trombone", "Tuba", "Harp", "Banjo", "Ukulele",
+    "Mandolin", "Accordion", "Harmonica", "Xylophone", "Marimba", "Tambourine",
+    "Bongos", "Congas", "Cymbals", "Triangle", "Cowbell", "Gong", "Chimes",
+    "Synthesizer", "Keyboard", "Organ", "Bagpipes", "Sitar", "Didgeridoo"
+  ],
+  "technology": [
+    "Computer", "Laptop", "Desktop", "Tablet", "Phone", "Smartphone", "Watch",
+    "Smartwatch", "TV", "Monitor", "Screen", "Projector", "Camera", "Webcam",
+    "Microphone", "Speaker", "Headphones", "Earbuds", "Keyboard", "Mouse",
+    "Printer", "Scanner", "Router", "Modem", "Server", "Hard Drive", "USB",
+    "Charger", "Battery", "Solar Panel", "Generator", "Drone", "Robot",
+    "AI", "VR Headset", "Console", "Controller", "Joystick", "Remote"
+  ]
 }

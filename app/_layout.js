@@ -1,6 +1,7 @@
+import React, { useState, useEffect } from "react";
 import { Stack } from "expo-router";
-import { useEffect, useState } from "react";
 import { useGameStore } from "../src/store/gameStore";
+import { AdConsentProvider } from "../src/contexts/AdConsentContext";
 import LoadingScreen from "../src/components/LoadingScreen";
 
 export default function Layout() {
@@ -26,11 +27,13 @@ export default function Layout() {
   }
 
   return (
-    <Stack
-      screenOptions={{
-        headerShown: false,
-        animation: "slide_from_right",
-      }}
-    />
+    <AdConsentProvider>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+          animation: "slide_from_right",
+        }}
+      />
+    </AdConsentProvider>
   );
 }
