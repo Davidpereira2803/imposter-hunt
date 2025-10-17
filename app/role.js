@@ -21,6 +21,7 @@ import Title from "../src/components/ui/Title";
 import Button from "../src/components/ui/Button";
 import Card from "../src/components/ui/Card";
 import { space, palette, type, radii } from "../src/constants/theme";
+import { Icon, icons } from "../src/constants/icons";
 
 export default function Role() {
   const router = useRouter();
@@ -143,7 +144,10 @@ export default function Role() {
                   pressed && styles.revealBtnPressed
                 ]}
               >
-                <Text style={styles.revealBtnText}>👁️ Reveal Role</Text>
+                <View style={styles.revealBtnContent}>
+                  <Icon name="eye" size={28} color={palette.text} />
+                  <Text style={styles.revealBtnText}>Reveal Role</Text>
+                </View>
               </Pressable>
             </Animated.View>
           </Animated.View>
@@ -161,7 +165,7 @@ export default function Role() {
                         entering={ZoomIn.delay(100).springify()}
                         style={styles.roleContainer}
                       >
-                        <Text style={styles.emojiLarge}>😈</Text>
+                        <Icon name="incognito" size={100} color={palette.danger} />
                         <View style={styles.imposterBadge}>
                           <Text style={styles.imposterText}>IMPOSTER</Text>
                         </View>
@@ -188,7 +192,7 @@ export default function Role() {
                         entering={ZoomIn.delay(100).springify()}
                         style={styles.roleContainer}
                       >
-                        <Text style={styles.emojiLarge}>👥</Text>
+                        <Icon name="account-group" size={100} color={palette.success} />
                         <View style={styles.civilianBadge}>
                           <Text style={styles.civilianText}>CIVILIAN</Text>
                         </View>
@@ -226,7 +230,7 @@ export default function Role() {
                     style={styles.actionContainer}
                   >
                     <Button
-                      title={isLastPlayer ? "🎮 Start Round" : "✋ Hide & Pass"}
+                      title={isLastPlayer ? "Start Round" : "Hide & Pass"}
                       onPress={handleNext}
                       variant="success"
                       size="lg"
@@ -289,6 +293,11 @@ const styles = StyleSheet.create({
     transform: [{ scale: 0.98 }],
     opacity: 0.9,
   },
+  revealBtnContent: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
   revealBtnText: {
     color: palette.text,
     fontSize: type.h2,
@@ -304,10 +313,6 @@ const styles = StyleSheet.create({
   roleContainer: {
     alignItems: "center",
     marginBottom: space.xl * 2,
-  },
-  emojiLarge: {
-    fontSize: 100,
-    marginBottom: space.lg,
   },
   imposterBadge: {
     backgroundColor: palette.danger,

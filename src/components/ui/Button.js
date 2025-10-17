@@ -1,5 +1,5 @@
 import React from "react";
-import { TouchableOpacity, Text, StyleSheet } from "react-native";
+import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
 import { palette, radii, type } from "../../constants/theme";
 
 export default function Button({ 
@@ -8,6 +8,8 @@ export default function Button({
   variant = "primary", 
   size = "md", 
   disabled = false,
+  icon,
+  iconPosition = "left",
   style 
 }) {
   const variantStyle = styles[variant] || styles.primary;
@@ -27,9 +29,13 @@ export default function Button({
       ]}
       activeOpacity={0.7}
     >
-      <Text style={[styles.label, textColorStyle]}>
-        {title}
-      </Text>
+      <View style={styles.content}>
+        {icon && iconPosition === "left" && <View style={styles.iconLeft}>{icon}</View>}
+        <Text style={[styles.label, textColorStyle]}>
+          {title}
+        </Text>
+        {icon && iconPosition === "right" && <View style={styles.iconRight}>{icon}</View>}
+      </View>
     </TouchableOpacity>
   );
 }
@@ -39,6 +45,17 @@ const styles = StyleSheet.create({
     borderRadius: radii.lg, 
     alignItems: "center", 
     justifyContent: "center" 
+  },
+  content: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  iconLeft: {
+    marginRight: 8,
+  },
+  iconRight: {
+    marginLeft: 8,
   },
   md: { 
     paddingVertical: 12, 

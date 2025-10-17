@@ -70,8 +70,8 @@ export default function CircularTimer({ seconds, totalSeconds = 60 }) {
 
   return (
     <View style={styles.container}>
-      <Animated.View style={animatedContainerStyle}>
-        <Svg width={size} height={size} style={styles.svg}>
+      <Animated.View style={[styles.timerWrapper, animatedContainerStyle]}>
+        <Svg width={size} height={size}>
           {/* Background Circle */}
           <Circle
             cx={size / 2}
@@ -97,7 +97,7 @@ export default function CircularTimer({ seconds, totalSeconds = 60 }) {
           />
         </Svg>
 
-        {/* Timer Text */}
+        {/* Timer Text - Absolutely positioned in center */}
         <View style={styles.timeContainer}>
           <Text style={[styles.timeText, { color: getTimerColor() }]}>
             {formatTime(seconds)}
@@ -114,10 +114,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  svg: {
-    position: "absolute",
+  timerWrapper: {
+    width: 280,
+    height: 280,
+    justifyContent: "center",
+    alignItems: "center",
   },
   timeContainer: {
+    position: "absolute",
     alignItems: "center",
   },
   timeText: {

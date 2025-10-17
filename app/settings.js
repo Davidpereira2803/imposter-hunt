@@ -10,6 +10,7 @@ import Title from "../src/components/ui/Title";
 import Button from "../src/components/ui/Button";
 import Card from "../src/components/ui/Card";
 import { space, palette, type } from "../src/constants/theme";
+import { Icon } from "../src/constants/icons";
 
 const TUTORIAL_SEEN_KEY = "imposter-hunt-tutorial-seen";
 
@@ -99,6 +100,7 @@ export default function Settings() {
             onPress={handleViewTutorial}
             variant="primary"
             size="md"
+            icon={<Icon name="help-circle" size={20} color={palette.text} />}
           />
         </View>
 
@@ -125,6 +127,7 @@ export default function Settings() {
             variant="primary"
             size="md"
             disabled={isLoading}
+            icon={<Icon name="shield-account" size={20} color={palette.text} />}
           />
 
           {__DEV__ && (
@@ -147,6 +150,7 @@ export default function Settings() {
             onPress={handleClearData}
             variant="danger"
             size="md"
+            icon={<Icon name="delete" size={20} color={palette.text} />}
           />
         </View>
 
@@ -156,6 +160,7 @@ export default function Settings() {
           variant="ghost"
           size="md"
           style={styles.backBtn}
+          icon={<Icon name="arrow-left" size={20} color={palette.text} />}
         />
 
         <View style={styles.version}>

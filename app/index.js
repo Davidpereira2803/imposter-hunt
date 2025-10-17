@@ -7,7 +7,8 @@ import { AdBanner } from "../src/components/AdBanner";
 import Screen from "../src/components/ui/Screen";
 import Title from "../src/components/ui/Title";
 import Button from "../src/components/ui/Button";
-import { space } from "../src/constants/theme";
+import { space, palette } from "../src/constants/theme";
+import { Icon, icons } from "../src/constants/icons";
 
 export default function Home() {
   const router = useRouter();
@@ -51,7 +52,11 @@ export default function Home() {
     <Screen>
       <View style={styles.content}>
         <View style={styles.header}>
-          <Title>🎭</Title>
+          <Icon 
+            name={icons.gameLogo.name} 
+            size={icons.gameLogo.size} 
+            color={palette.primary}
+          />
           <Title style={styles.title}>Imposter Hunt</Title>
         </View>
 
@@ -62,6 +67,7 @@ export default function Home() {
               onPress={handleQuickStart}
               variant="success"
               size="lg"
+              icon={<Icon name="play-circle" size={24} color="#000" />}
             />
           )}
 
@@ -70,6 +76,7 @@ export default function Home() {
             onPress={handleNewGame}
             variant="primary"
             size="lg"
+            icon={<Icon name="plus-circle" size={24} color={palette.text} />}
           />
 
           <Button 
@@ -77,12 +84,12 @@ export default function Home() {
             onPress={handleSettings}
             variant="ghost"
             size="md"
+            icon={<Icon name={icons.settings.name} size={20} color={palette.text} />}
           />
         </View>
       </View>
 
       {/* <AdBanner /> */}
-      <AdBanner />
     </Screen>
   );
 }

@@ -7,7 +7,8 @@ import HUD from "../src/components/HUD";
 import CircularTimer from "../src/components/ui/CircularTimer";
 import Screen from "../src/components/ui/Screen";
 import Button from "../src/components/ui/Button";
-import { space } from "../src/constants/theme";
+import { space, palette } from "../src/constants/theme";
+import { Icon } from "../src/constants/icons";
 
 export default function Round() {
   const router = useRouter();
@@ -130,28 +131,31 @@ export default function Round() {
           <View style={styles.primaryActions}>
             {!isRunning ? (
               <Button 
-                title="▶️ Start" 
+                title="Start" 
                 onPress={startTimer}
                 variant="success"
                 size="lg"
                 style={styles.controlBtn}
+                icon={<Icon name="play" size={24} color="#000" />}
               />
             ) : (
               <Button 
-                title="⏸️ Pause" 
+                title="Pause" 
                 onPress={pauseTimer}
                 variant="warn"
                 size="lg"
                 style={styles.controlBtn}
+                icon={<Icon name="pause" size={24} color="#000" />}
               />
             )}
 
             <Button 
-              title="🗳️ Vote" 
+              title="Vote" 
               onPress={() => router.push("/vote")}
               variant="primary"
               size="lg"
               style={styles.controlBtn}
+              icon={<Icon name="vote" size={24} color={palette.text} />}
             />
           </View>
 
@@ -161,6 +165,7 @@ export default function Round() {
               onPress={resetTimer}
               variant="muted"
               size="md"
+              icon={<Icon name="refresh" size={20} color={palette.text} />}
             />
 
             <Button 
@@ -168,6 +173,7 @@ export default function Round() {
               onPress={handleImposterGuess}
               variant="danger"
               size="md"
+              icon={<Icon name="incognito" size={20} color={palette.text} />}
             />
           </View>
         </View>

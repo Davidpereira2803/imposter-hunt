@@ -8,6 +8,7 @@ import Title from "../src/components/ui/Title";
 import Button from "../src/components/ui/Button";
 import Card from "../src/components/ui/Card";
 import { space, palette, type } from "../src/constants/theme";
+import { Icon } from "../src/constants/icons";
 
 export default function Results() {
   const router = useRouter();
@@ -57,9 +58,12 @@ export default function Results() {
     <Screen>
       <View style={styles.content}>
         <View style={styles.header}>
-          <Title style={styles.emoji}>
-            {imposterWon ? "😈" : "🎉"}
-          </Title>
+          <Icon 
+            name={imposterWon ? "skull" : "trophy"} 
+            size={100} 
+            color={imposterWon ? palette.danger : palette.success}
+            style={styles.icon}
+          />
           <Title 
             variant="h1" 
             style={[styles.outcome, imposterWon ? styles.imposterWin : styles.civilianWin]}
@@ -110,8 +114,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: space.xl * 2,
   },
-  emoji: {
-    fontSize: 64,
+  icon: {
     marginBottom: space.lg,
   },
   outcome: {
