@@ -82,6 +82,7 @@ export default function Home() {
       </View>
 
       {/* <AdBanner /> */}
+      <AdBanner />
     </Screen>
   );
 }

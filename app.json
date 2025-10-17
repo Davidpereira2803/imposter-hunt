@@ -45,7 +45,8 @@
           "userTrackingPermission": "This identifier will be used to deliver personalized ads to you."
         }
       ],
-      "expo-build-properties"
+      "expo-build-properties",
+      "expo-system-ui"
     ],
     "newArchEnabled": true,
     "experiments": {
