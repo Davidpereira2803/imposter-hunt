@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, Alert, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useGameStore } from "../src/store/gameStore";
 import { useAdConsentContext } from "../src/contexts/AdConsentContext";
 import Screen from "../src/components/ui/Screen";
@@ -9,6 +10,8 @@ import Title from "../src/components/ui/Title";
 import Button from "../src/components/ui/Button";
 import Card from "../src/components/ui/Card";
 import { space, palette, type } from "../src/constants/theme";
+
+const TUTORIAL_SEEN_KEY = "imposter-hunt-tutorial-seen";
 
 export default function Settings() {
   const router = useRouter();
@@ -20,6 +23,15 @@ export default function Settings() {
     resetConsent,
     isLoading 
   } = useAdConsentContext();
+
+  const handleViewTutorial = async () => {
+    try {
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    } catch {}
+    
+    await AsyncStorage.removeItem(TUTORIAL_SEEN_KEY);
+    router.push("/tutorial");
+  };
 
   const handleClearData = async () => {
     Alert.alert(
@@ -77,6 +89,18 @@ export default function Settings() {
     <Screen>
       <ScrollView contentContainerStyle={styles.scroll}>
         <Title style={styles.title}>Settings</Title>
+
+        {/* Help Section - NEW */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Help</Text>
+          
+          <Button 
+            title="How to Play"
+            onPress={handleViewTutorial}
+            variant="primary"
+            size="md"
+          />
+        </View>
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Privacy & Ads</Text>

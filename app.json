@@ -45,14 +45,7 @@
           "userTrackingPermission": "This identifier will be used to deliver personalized ads to you."
         }
       ],
-      [
-        "expo-build-properties",
-        {
-          "android": {
-            "extraProguardRules": "-keep class com.google.android.gms.** { *; }\n-dontwarn com.google.android.gms.**"
-          }
-        }
-      ]
+      "expo-build-properties"
     ],
     "extra": {
       "eas": {
