@@ -3,6 +3,11 @@ import { persist, createJSONStorage } from "zustand/middleware";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import topics from "../data/topics.json";
 
+const CUSTOM_TOPICS_KEY = "imposter-hunt-custom-topics";
+
+const slugify = (s = "") =>
+  s.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+
 export const useGameStore = create(
   persist(
     (set, get) => ({
@@ -13,46 +18,47 @@ export const useGameStore = create(
       alive: [],
       round: 1,
       _hasHydrated: false,
+      predefinedTopics: topics,
+      customTopics: [],
 
       setPlayers: (players) => set({ players }),
       setTopicKey: (topicKey) => set({ topicKey }),
 
+      getTopicByKey: (key) => {
+        if (!key) return null;
+        if (key.startsWith("custom:")) {
+          const slug = key.slice("custom:".length);
+          const t = (get().customTopics || []).find((x) => slugify(x.name) === slug);
+          return t ? { key, name: t.name, words: t.words || [], isCustom: true } : null;
+        }
+        const words = (get().predefinedTopics || {})[key];
+        if (Array.isArray(words)) {
+          return { key, name: key, words, isCustom: false };
+        }
+        return null;
+      },
+      getTopicWordsByKey: (key) => {
+        const t = get().getTopicByKey(key);
+        return t ? t.words : null;
+      },
+
       startMatch: () => {
         const { players, topicKey } = get();
-        
-        if (!players || players.length < 3) {
-          console.error("Need at least 3 players");
-          return false;
-        }
+        if (!players || players.length < 3) return false;
 
-        if (!topicKey || !topics[topicKey]) {
+        const words = get().getTopicWordsByKey(topicKey);
+        if (!words || words.length === 0) {
           console.error("Invalid topic key");
           return false;
         }
 
-        const words = topics[topicKey];
-        if (!words || words.length === 0) {
-          console.error("No words available for this topic");
-          return false;
-        }
-
-        const randomWord = words[Math.floor(Math.random() * words.length)];
-        
-        const randomImposter = Math.floor(Math.random() * players.length);
-        
-        const aliveArray = players.map(() => true);
+        const secretWord = words[Math.floor(Math.random() * words.length)];
+        const imposterIndex = Math.floor(Math.random() * players.length);
 
         set({
-          secretWord: randomWord,
-          imposterIndex: randomImposter,
-          alive: aliveArray,
+          secretWord,
+          imposterIndex,
           round: 1,
-        });
-
-        console.log("Match started:", {
-          word: randomWord,
-          imposter: players[randomImposter],
-          players: players.length,
         });
 
         return true;
@@ -106,7 +112,58 @@ export const useGameStore = create(
         });
       },
 
-      _hydrated: false,
+      loadCustomTopics: async () => {
+        try {
+          const raw = await AsyncStorage.getItem(CUSTOM_TOPICS_KEY);
+          const parsed = raw ? JSON.parse(raw) : [];
+          set({ customTopics: Array.isArray(parsed) ? parsed : [] });
+        } catch {}
+      },
+      saveCustomTopics: async () => {
+        try {
+          const { customTopics } = get();
+          await AsyncStorage.setItem(CUSTOM_TOPICS_KEY, JSON.stringify(customTopics));
+        } catch {}
+      },
+      addCustomTopic: async ({ name, words = [] }) => {
+        const safeName = (name || "").trim();
+        const safeWords = (words || []).map((w) => String(w).trim()).filter(Boolean);
+        if (!safeName) return { ok: false, error: "Topic name required" };
+
+        const predefinedNames = Object.keys(get().predefinedTopics || {});
+        const allNamesLower = [
+          ...predefinedNames,
+          ...(get().customTopics || []).map((t) => t.name),
+        ].map((n) => n.toLowerCase());
+
+        if (allNamesLower.includes(safeName.toLowerCase())) {
+          return { ok: false, error: "Topic name already exists" };
+        }
+
+        const next = [...(get().customTopics || []), { name: safeName, words: safeWords }];
+        set({ customTopics: next });
+        await get().saveCustomTopics?.();
+        return { ok: true };
+      },
+      removeCustomTopic: async (name) => {
+        const next = (get().customTopics || []).filter((t) => t.name !== name);
+        set({ customTopics: next });
+        await get().saveCustomTopics?.();
+
+        const selected = get().topicKey;
+        if (selected && selected.startsWith("custom:") && selected === `custom:${slugify(name)}`) {
+          set({ topicKey: undefined });
+        }
+      },
+      getAllTopics: () => {
+        const pre = Object.entries(get().predefinedTopics || {}).map(([key, words]) => ({
+          key, name: key, words, isCustom: false,
+        }));
+        const custom = (get().customTopics || []).map((t) => ({
+          key: `custom:${slugify(t.name)}`, name: t.name, words: t.words || [], isCustom: true,
+        }));
+        return [...pre, ...custom];
+      },
     }),
     {
       name: "imposter-hunt-storage",

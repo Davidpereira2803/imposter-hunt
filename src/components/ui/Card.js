@@ -1,10 +1,28 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
-import { palette, radii, space, shadow } from "../../constants/theme";
+import { View, Pressable, StyleSheet } from "react-native";
+import { palette, radii, space } from "../../constants/theme";
 
-export default function Card({ children, style }) {
+export default function Card({ children, style, onPress, disabled, ...rest }) {
+  if (onPress) {
+    return (
+      <Pressable
+        {...rest}
+        onPress={onPress}
+        disabled={disabled}
+        style={({ pressed }) => [
+          styles.card,
+          pressed && styles.pressed,
+          style,
+        ]}
+        accessibilityRole="button"
+      >
+        {children}
+      </Pressable>
+    );
+  }
+
   return (
-    <View style={[styles.card, style]}>
+    <View {...rest} style={[styles.card, style]} accessibilityRole="summary">
       {children}
     </View>
   );
@@ -14,9 +32,10 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: palette.panel,
     borderRadius: radii.lg,
-    borderWidth: 1,
-    borderColor: palette.line,
-    padding: space.lg,
-    ...shadow.card,
+    padding: space.md,
+  },
+  pressed: {
+    opacity: 0.85,
+    transform: [{ scale: 0.99 }],
   },
 });

@@ -1,24 +1,57 @@
-import React, { useState, useEffect } from "react";
-import { View, ScrollView, StyleSheet, Alert, BackHandler, KeyboardAvoidingView, Platform } from "react-native";
+import React, { useState, useMemo, useEffect } from "react";
+import { View, ScrollView, StyleSheet, Alert, BackHandler, KeyboardAvoidingView, Platform, Modal, Text, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
 import { useGameStore } from "../src/store/gameStore";
-import topics from "../src/data/topics.json";
 import Screen from "../src/components/ui/Screen";
 import Title from "../src/components/ui/Title";
 import Button from "../src/components/ui/Button";
 import Input from "../src/components/ui/Input";
 import Card from "../src/components/ui/Card";
 import Pill from "../src/components/ui/Pill";
-import { space, palette, type } from "../src/constants/theme";
-import { Text, TouchableOpacity } from "react-native";
+import { space, palette, radii, type } from "../src/constants/theme";
+import { Icon } from "../src/constants/icons";
 
 export default function Setup() {
   const router = useRouter();
-  const { players, topicKey, setPlayers, setTopicKey, startMatch } = useGameStore();
+
+  const players = useGameStore((s) => s.players);
+  const topicKey = useGameStore((s) => s.topicKey);
+  const setPlayers = useGameStore((s) => s.setPlayers);
+  const setTopicKey = useGameStore((s) => s.setTopicKey);
+  const startMatch = useGameStore((s) => s.startMatch);
+
+  const addCustomTopic = useGameStore((s) => s.addCustomTopic);
+
+  const predefinedTopics = useGameStore((s) => s.predefinedTopics);
+  const customTopics = useGameStore((s) => s.customTopics);
+
+  const allTopics = useMemo(() => {
+    const pre = Object.entries(predefinedTopics || {}).map(([key, words]) => ({
+      key,
+      name: key,
+      words,
+      isCustom: false,
+    }));
+    const custom = (customTopics || []).map((t) => ({
+      key: `custom:${(t.name || "")
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)/g, "")}`,
+      name: t.name,
+      words: t.words || [],
+      isCustom: true,
+    }));
+    return [...pre, ...custom];
+  }, [predefinedTopics, customTopics]);
+
   const [inputName, setInputName] = useState("");
   const [playerList, setPlayerList] = useState(players || []);
-  const [selectedTopic, setSelectedTopic] = useState(topicKey || "");
+  const [modalVisible, setModalVisible] = useState(false);
+  const [topicName, setTopicName] = useState("");
+  const [topicWordsText, setTopicWordsText] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const backAction = () => {
@@ -58,10 +91,8 @@ export default function Setup() {
     try { await Haptics.selectionAsync(); } catch {}
   };
 
-  const selectTopic = async (key) => {
-    setSelectedTopic(key);
+  const handleSelectTopic = async (key) => {
     setTopicKey(key);
-    
     try { await Haptics.selectionAsync(); } catch {}
   };
 
@@ -70,19 +101,50 @@ export default function Setup() {
       Alert.alert("Need 3+ Players", "Add more players to start");
       return;
     }
-
-    if (!selectedTopic) {
+    if (!topicKey) {
       Alert.alert("Choose Topic", "Select a category first");
       return;
     }
-
     try { await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium); } catch {}
-
     const success = startMatch();
-    if (success) {
-      router.push("/role");
-    } else {
-      Alert.alert("Error", "Failed to start game");
+    if (success) router.push("/role");
+    else Alert.alert("Error", "Failed to start game");
+  };
+
+  const openModal = () => {
+    setError("");
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+    setTopicName("");
+    setTopicWordsText("");
+    setError("");
+  };
+
+  const handleSaveTopic = async () => {
+    const name = topicName.trim();
+    const words = topicWordsText.split(",").map((w) => w.trim()).filter(Boolean);
+    if (!name) {
+      setError("Please enter a topic name.");
+      return;
+    }
+    const exists = allTopics.some((t) => t.name.toLowerCase() === name.toLowerCase());
+    if (exists) {
+      setError("A topic with this name already exists.");
+      return;
+    }
+    const res = await addCustomTopic?.({ name, words });
+    if (res?.ok) {
+      const key = `custom:${name.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")}`;
+      setTopicKey(key);
+      setModalVisible(false);
+      setTopicName("");
+      setTopicWordsText("");
+      setError("");
+    } else if (res?.error) {
+      setError(res.error);
     }
   };
 
@@ -133,18 +195,33 @@ export default function Setup() {
           {/* Topic Section */}
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Topic</Text>
-            <View style={styles.topicGrid}>
-              {Object.keys(topics).map((key) => (
-                <TouchableOpacity
-                  key={key}
-                  onPress={() => selectTopic(key)}
-                  style={styles.topicBtn}
-                >
-                  <Pill variant={selectedTopic === key ? "primary" : "default"}>
-                    {key.charAt(0).toUpperCase() + key.slice(1)}
-                  </Pill>
-                </TouchableOpacity>
-              ))}
+
+            {allTopics.length > 0 && (
+              <View style={styles.topicList}>
+                {allTopics.map((t) => (
+                  <Card
+                    key={t.key}
+                    onPress={() => handleSelectTopic(t.key)}
+                    style={[
+                      styles.topicCard,
+                      topicKey === t.key && { borderColor: palette.primary, borderWidth: 2 },
+                    ]}
+                  >
+                    <Text style={styles.topicName}>{t.name}</Text>
+                    {t.isCustom ? <Pill label="Custom" /> : null}
+                  </Card>
+                ))}
+              </View>
+            )}
+
+            <View style={{ marginTop: space.lg }}>
+              <Button
+                title="Create Custom Topic"
+                onPress={openModal}
+                size="md"
+                variant="ghost"
+                icon={<Icon name="plus-circle" size={20} color={palette.text} />}
+              />
             </View>
           </View>
 
@@ -153,11 +230,56 @@ export default function Setup() {
             onPress={handleStartGame}
             variant="success"
             size="lg"
-            disabled={playerList.length < 3 || !selectedTopic}
+            disabled={playerList.length < 3 || !topicKey}
             style={styles.startBtn}
           />
         </ScrollView>
       </KeyboardAvoidingView>
+
+      {/* Modal */}
+      <Modal
+        animationType="fade"
+        transparent
+        visible={modalVisible}
+        onRequestClose={closeModal}
+      >
+        <View style={styles.modalBackdrop}>
+          <View style={styles.modalCard}>
+            <Text style={styles.modalTitle}>Create Custom Topic</Text>
+
+            <Input
+              placeholder="Topic Name"
+              value={topicName}
+              onChangeText={setTopicName}
+            />
+
+            <Input
+              placeholder="Add words (comma separated)"
+              value={topicWordsText}
+              onChangeText={setTopicWordsText}
+              multiline
+              numberOfLines={3}
+              style={{ height: 100, textAlignVertical: "top" }}
+            />
+
+            {error ? <Text style={styles.errorText}>{error}</Text> : null}
+
+            <View style={styles.modalActions}>
+              <Button
+                title="Cancel"
+                onPress={closeModal}
+                variant="ghost"
+              />
+              <Button
+                title="Save"
+                onPress={handleSaveTopic}
+                variant="primary"
+                icon={<Icon name="content-save" size={18} color={palette.text} />}
+              />
+            </View>
+          </View>
+        </View>
+      </Modal>
     </Screen>
   );
 }
@@ -219,5 +341,50 @@ const styles = StyleSheet.create({
   },
   startBtn: { 
     marginTop: space.lg 
+  },
+  modalBackdrop: {
+    flex: 1,
+    backgroundColor: "#000A",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: space.lg,
+  },
+  modalCard: {
+    width: "100%",
+    backgroundColor: palette.panel,
+    borderRadius: radii.lg,
+    padding: space.lg,
+  },
+  modalTitle: {
+    fontSize: type.h3,
+    fontWeight: "900",
+    marginBottom: space.md,
+    color: palette.text,
+  },
+  modalActions: {
+    marginTop: space.md,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    gap: space.md,
+  },
+  errorText: {
+    color: palette.danger,
+    marginTop: space.sm,
+    fontWeight: "700",
+  },
+  topicName: {
+    color: palette.text,
+    fontSize: type.h4,
+    fontWeight: "800",
+  },
+  topicList: {
+    marginTop: space.md,
+    gap: space.sm,
+  },
+  topicCard: {
+    padding: space.md,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
 });

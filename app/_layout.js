@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useGameStore } from "../src/store/gameStore";
 import { AdConsentProvider } from "../src/contexts/AdConsentContext";
@@ -7,10 +8,15 @@ import LoadingScreen from "../src/components/LoadingScreen";
 
 const TUTORIAL_SEEN_KEY = "imposter-hunt-tutorial-seen";
 
-export default function Layout() {
+export default function RootLayout() {
+  const [ready, setReady] = useState(true);
   const [isReady, setIsReady] = useState(false);
   const [showTutorial, setShowTutorial] = useState(false);
   const hasHydrated = useGameStore((state) => state._hasHydrated);
+
+  useEffect(() => {
+    useGameStore.getState().loadCustomTopics?.();
+  }, []);
 
   useEffect(() => {
     const checkTutorial = async () => {
@@ -46,6 +52,7 @@ export default function Layout() {
 
   return (
     <AdConsentProvider>
+      <StatusBar style="light" backgroundColor="#000000" />
       <Stack
         screenOptions={{
           headerShown: false,
