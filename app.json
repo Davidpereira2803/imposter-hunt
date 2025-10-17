@@ -52,6 +52,9 @@
         "projectId": "your-project-id"
       }
     },
-    "newArchEnabled": true
+    "newArchEnabled": true,
+    "experiments": {
+      "reactCompiler": true
+    }
   }
 }

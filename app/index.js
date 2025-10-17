@@ -81,7 +81,7 @@ export default function Home() {
         </View>
       </View>
 
-      <AdBanner />
+      {/* <AdBanner /> */}
     </Screen>
   );
 }

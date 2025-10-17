@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, StyleSheet, Alert, BackHandler, Animated } from "react-native";
+import { View, StyleSheet, Alert, BackHandler } from "react-native";
 import { useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
 import { useGameStore } from "../src/store/gameStore";
 import HUD from "../src/components/HUD";
+import CircularTimer from "../src/components/ui/CircularTimer";
 import Screen from "../src/components/ui/Screen";
-import Title from "../src/components/ui/Title";
 import Button from "../src/components/ui/Button";
 import { space } from "../src/constants/theme";
 
@@ -15,7 +15,6 @@ export default function Round() {
   const [seconds, setSeconds] = useState(60);
   const [isRunning, setIsRunning] = useState(false);
   const intervalRef = useRef(null);
-  const scaleAnim = useRef(new Animated.Value(1)).current;
 
   const aliveNow = getAliveCount ? getAliveCount() : (players?.length || 0);
 
@@ -43,19 +42,16 @@ export default function Round() {
       intervalRef.current = setTimeout(() => {
         setSeconds(prev => prev - 1);
         
-        if (seconds % 10 === 0) {
-          Animated.sequence([
-            Animated.timing(scaleAnim, {
-              toValue: 1.03,
-              duration: 150,
-              useNativeDriver: true,
-            }),
-            Animated.timing(scaleAnim, {
-              toValue: 1,
-              duration: 150,
-              useNativeDriver: true,
-            }),
-          ]).start();
+        if (seconds === 10) {
+          try {
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+          } catch {}
+        }
+        
+        if (seconds <= 5) {
+          try {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+          } catch {}
         }
       }, 1000);
     } else {
@@ -63,7 +59,7 @@ export default function Round() {
     }
 
     return () => clearTimeout(intervalRef.current);
-  }, [isRunning, seconds, scaleAnim]);
+  }, [isRunning, seconds]);
 
   useEffect(() => {
     if (seconds === 0 && isRunning) {
@@ -115,12 +111,6 @@ export default function Round() {
     });
   };
 
-  const formatTime = (secs) => {
-    const mins = Math.floor(secs / 60);
-    const remainingSecs = secs % 60;
-    return `${mins}:${remainingSecs.toString().padStart(2, '0')}`;
-  };
-
   if (!players?.length || !secretWord) {
     return null;
   }
@@ -133,39 +123,35 @@ export default function Round() {
         </View>
 
         <View style={styles.timerSection}>
-          <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
-            <Title 
-              variant="giant" 
-              style={[styles.timer, seconds <= 10 && styles.timerUrgent]}
-            >
-              {formatTime(seconds)}
-            </Title>
-          </Animated.View>
+          <CircularTimer seconds={seconds} totalSeconds={60} />
         </View>
 
         <View style={styles.actions}>
           <View style={styles.primaryActions}>
             {!isRunning ? (
               <Button 
-                title="Start" 
+                title="▶️ Start" 
                 onPress={startTimer}
-                variant="warn"
+                variant="success"
                 size="lg"
+                style={styles.controlBtn}
               />
             ) : (
               <Button 
-                title="Pause" 
+                title="⏸️ Pause" 
                 onPress={pauseTimer}
-                variant="primary"
+                variant="warn"
                 size="lg"
+                style={styles.controlBtn}
               />
             )}
 
             <Button 
-              title="Vote" 
+              title="🗳️ Vote" 
               onPress={() => router.push("/vote")}
-              variant="success"
+              variant="primary"
               size="lg"
+              style={styles.controlBtn}
             />
           </View>
 
@@ -204,12 +190,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  timer: {
-    letterSpacing: 2,
-  },
-  timerUrgent: {
-    color: "#FF5964",
-  },
   actions: {
     paddingBottom: space.xl,
     gap: space.md,
@@ -217,6 +197,9 @@ const styles = StyleSheet.create({
   primaryActions: {
     flexDirection: "row",
     gap: space.md,
+  },
+  controlBtn: {
+    flex: 1,
   },
   secondaryActions: {
     gap: space.sm,
