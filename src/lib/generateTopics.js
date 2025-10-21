@@ -1,7 +1,8 @@
 import { useAIStore } from "../store/aiStore";
 import NetInfo from "@react-native-community/netinfo";
 
-const API_ENDPOINT = "https://your-backend.com/api/generate-topics";
+const API_BASE = "https://imposter-hunt-fug1yg03x-pearlabs-projects.vercel.app";
+const API_ENDPOINT = `${API_BASE.replace(/\/$/, "")}/api/complete`;
 
 const createHash = (description, numTopics, difficulty, language) => {
   const str = `${description.toLowerCase()}-${numTopics}-${difficulty}-${language}`;
@@ -18,9 +19,9 @@ const generateLocalFallback = (description, numTopics) => {
   const words = description
     .toLowerCase()
     .split(/[\s,;.]+/)
-    .filter((w) => w.length > 2)
-    .slice(0, numTopics);
+    .filter((w) => w.length > 2);
 
+  const base = words.slice(0, Math.max(1, Math.min(numTopics, words.length)));
   const items = [];
   const variations = [
     "",
@@ -40,25 +41,22 @@ const generateLocalFallback = (description, numTopics) => {
     "Thunder",
   ];
 
-  for (let i = 0; i < Math.min(numTopics, words.length * 3); i++) {
-    const baseWord = words[i % words.length];
-    const variation = variations[i % variations.length];
-    const combined = variation
-      ? `${variation} ${baseWord.charAt(0).toUpperCase() + baseWord.slice(1)}`
-      : baseWord.charAt(0).toUpperCase() + baseWord.slice(1);
-    
-    if (!items.includes(combined)) {
-      items.push(combined);
-    }
+  for (let i = 0; i < Math.min(numTopics, base.length * 3); i++) {
+    const w = base[i % base.length];
+    const v = variations[i % variations.length];
+    const c = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+    const combined = v ? `${v} ${c(w)}` : c(w);
+    if (!items.includes(combined)) items.push(combined);
   }
 
-  while (items.length < numTopics) {
-    const word = words[items.length % words.length];
-    items.push(`${word.charAt(0).toUpperCase() + word.slice(1)} ${items.length + 1}`);
+  while (items.length < numTopics && base.length > 0) {
+    const w = base[items.length % base.length];
+    const c = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+    items.push(`${c(w)} ${items.length + 1}`);
   }
 
   return {
-    topicGroup: description.charAt(0).toUpperCase() + description.slice(1),
+    topicGroup: description.trim() || "AI Topics",
     language: "en",
     items: items.slice(0, numTopics),
     source: "local-fallback",
@@ -76,75 +74,67 @@ export const generateTopics = async ({
 
     const cached = useAIStore.getState().getCachedResult(hash);
     if (cached) {
-      console.log("Using cached result");
-      return {
-        success: true,
-        data: { ...cached, source: "cache" },
-      };
+      return { success: true, data: { ...cached, source: "cache" } };
     }
 
     const netInfo = await NetInfo.fetch();
-    
     if (!netInfo.isConnected) {
-      console.log("Offline - using fallback");
       const fallback = generateLocalFallback(description, numTopics);
-      return {
-        success: true,
-        data: fallback,
-      };
+      return { success: true, data: fallback };
     }
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 30000);
 
     const response = await fetch(API_ENDPOINT, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        description,
-        numTopics,
+        prompt: description,
+        count: numTopics,
         difficulty,
-        language,
       }),
-      timeout: 30000,
+      signal: controller.signal,
     });
+
+    clearTimeout(timeoutId);
 
     if (!response.ok) {
-      throw new Error(`API returned ${response.status}`);
+      const text = await response.text().catch(() => "");
+      throw new Error(`API ${response.status}${text ? `: ${text}` : ""}`);
     }
 
-    const data = await response.json();
+    const raw = await response.json();
 
-    if (!data || !data.items || !Array.isArray(data.items)) {
-      throw new Error("Invalid response format");
+    let items = [];
+    if (Array.isArray(raw)) {
+      items = raw
+        .map((x) => (typeof x === "string" ? x : x?.word))
+        .filter(Boolean);
+    } else if (Array.isArray(raw?.items)) {
+      items = raw.items
+        .map((x) => (typeof x === "string" ? x : x?.word))
+        .filter(Boolean);
+    } else {
+      throw new Error("Invalid response format (expected array or items[])");
     }
 
-    useAIStore.getState().setCachedResult(hash, {
-      ...data,
+    const data = {
+      topicGroup: description.trim() || "AI Topics",
+      language: language || "en",
+      items,
       source: "api",
-    });
+    };
 
+    useAIStore.getState().setCachedResult(hash, data);
+
+    return { success: true, data };
+  } catch (error) {
+    const fallback = generateLocalFallback(description, numTopics);
     return {
       success: true,
-      data: {
-        ...data,
-        source: "api",
-      },
+      data: fallback,
+      warning: "Using fallback due to: " + (error?.message || "unknown error"),
     };
-  } catch (error) {
-    console.error("Generation error:", error);
-
-    try {
-      const fallback = generateLocalFallback(description, numTopics);
-      return {
-        success: true,
-        data: fallback,
-        warning: "Using fallback due to: " + error.message,
-      };
-    } catch (fallbackError) {
-      return {
-        success: false,
-        error: "Failed to generate topics: " + error.message,
-      };
-    }
   }
 };

@@ -28,9 +28,8 @@ export const useAIStore = create(
       maxAdsPerDay: MAX_ADS_PER_DAY,
 
       canGenerate: () => {
-        const state = get();
-        
-        if (isNewDay(state.lastGenerationDate)) {
+        const s = get();
+        if (isNewDay(s.lastGenerationDate)) {
           set({
             generationsToday: 0,
             watchedAdsToday: 0,
@@ -38,102 +37,71 @@ export const useAIStore = create(
           });
           return true;
         }
-
-        const maxAllowed = MAX_FREE_GENERATIONS + state.watchedAdsToday;
-        return state.generationsToday < maxAllowed;
+        const maxAllowed = MAX_FREE_GENERATIONS + s.watchedAdsToday;
+        return s.generationsToday < maxAllowed;
       },
 
       incrementGenerations: () => {
-        const state = get();
-        
-        if (isNewDay(state.lastGenerationDate)) {
+        const s = get();
+        if (isNewDay(s.lastGenerationDate)) {
           set({
             generationsToday: 1,
             watchedAdsToday: 0,
             lastGenerationDate: new Date().toISOString(),
           });
         } else {
-          set({
-            generationsToday: state.generationsToday + 1,
-          });
+          set({ generationsToday: s.generationsToday + 1 });
         }
       },
 
       incrementAdsWatched: () => {
-        const state = get();
-        
-        if (isNewDay(state.lastGenerationDate)) {
+        const s = get();
+        if (isNewDay(s.lastGenerationDate)) {
           set({
             watchedAdsToday: 1,
             lastGenerationDate: new Date().toISOString(),
           });
         } else {
           set({
-            watchedAdsToday: Math.min(
-              state.watchedAdsToday + 1,
-              MAX_ADS_PER_DAY
-            ),
+            watchedAdsToday: Math.min(s.watchedAdsToday + 1, MAX_ADS_PER_DAY),
           });
         }
       },
 
       addGeneratedTopic: (topic) => {
-        const state = get();
-        const newTopic = {
-          ...topic,
-          timestamp: Date.now(),
-        };
-        
+        const s = get();
         set({
-          generatedTopics: [newTopic, ...state.generatedTopics].slice(0, 50),
+          generatedTopics: [{ ...topic, timestamp: Date.now() }, ...s.generatedTopics].slice(0, 50),
         });
       },
 
       getCachedResult: (hash) => {
-        const state = get();
-        const cached = state.cache[hash];
-        
-        if (!cached) return null;
-        
-        const age = Date.now() - cached.timestamp;
-        const maxAge = 7 * 24 * 60 * 60 * 1000;
-        
-        if (age > maxAge) {
-          return null;
-        }
-        
-        return cached.data;
+        const entry = get().cache[hash];
+        if (!entry) return null;
+        const age = Date.now() - entry.timestamp;
+        const week = 7 * 24 * 60 * 60 * 1000;
+        return age > week ? null : entry.data;
       },
 
       setCachedResult: (hash, data) => {
-        const state = get();
+        const s = get();
         set({
           cache: {
-            ...state.cache,
-            [hash]: {
-              data,
-              timestamp: Date.now(),
-            },
+            ...s.cache,
+            [hash]: { data, timestamp: Date.now() },
           },
         });
       },
 
       cleanCache: () => {
-        const state = get();
+        const s = get();
         const now = Date.now();
-        const maxAge = 7 * 24 * 60 * 60 * 1000;
-        
-        const cleanedCache = Object.entries(state.cache).reduce(
-          (acc, [hash, entry]) => {
-            if (now - entry.timestamp < maxAge) {
-              acc[hash] = entry;
-            }
-            return acc;
-          },
-          {}
-        );
-        
-        set({ cache: cleanedCache });
+        const week = 7 * 24 * 60 * 60 * 1000;
+        const next = {};
+        for (const [k, v] of Object.entries(s.cache || {})) {
+          if (now - v.timestamp < week) next[k] = v;
+        }
+        set({ cache: next });
       },
 
       reset: () => {

@@ -14,6 +14,7 @@ import { useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
 import Slider from "@react-native-community/slider";
 import { useAIStore } from "../src/store/aiStore";
+import { useGameStore } from "../src/store/gameStore";
 import { generateTopics } from "../src/lib/generateTopics";
 import Screen from "../src/components/ui/Screen";
 import Title from "../src/components/ui/Title";
@@ -24,6 +25,9 @@ import { space, palette, type } from "../src/constants/theme";
 import { Icon } from "../src/constants/icons";
 
 const DIFFICULTIES = ["easy", "medium", "hard", "mixed"];
+
+const slugify = (s = "") =>
+  s.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 
 export default function AITopics() {
   const router = useRouter();
@@ -37,6 +41,8 @@ export default function AITopics() {
     incrementAdsWatched,
     addGeneratedTopic,
   } = useAIStore();
+
+  const { addCustomTopic, setTopicKey } = useGameStore();
 
   const [description, setDescription] = useState("");
   const [numTopics, setNumTopics] = useState(24);
@@ -116,26 +122,34 @@ export default function AITopics() {
         incrementGenerations();
         addGeneratedTopic(result.data);
 
+        const baseName = (result.data.topicGroup || description || "AI Topics").trim();
+        let finalName = `${baseName} (AI)`;
+        let attempts = 0;
+        let added = { ok: false };
+
+        while (!added.ok && attempts < 5) {
+          added = await addCustomTopic({ name: finalName, words: result.data.items });
+          if (!added.ok) {
+            attempts += 1;
+            finalName = `${baseName} (AI ${attempts + 1})`;
+          }
+        }
+
+        if (added.ok) {
+          const key = `custom:${slugify(finalName)}`;
+          setTopicKey(key);
+        }
+
         try {
-          await Haptics.notificationAsync(
-            Haptics.NotificationFeedbackType.Success
-          );
+          await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
         } catch {}
 
         Alert.alert(
-          "Success! 🎉",
-          `Generated ${result.data.items?.length || 0} topics for "${
-            result.data.topicGroup
-          }"`,
+          "Success",
+          `Generated ${result.data.items?.length || 0} topics.\nAdded "${finalName}" to your list.`,
           [
-            {
-              text: "View Topics",
-              onPress: () => router.push("/setup"),
-            },
-            {
-              text: "Generate More",
-              style: "cancel",
-            },
+            { text: "Go to Setup", onPress: () => router.push("/setup") },
+            { text: "Stay", style: "cancel" },
           ]
         );
 
