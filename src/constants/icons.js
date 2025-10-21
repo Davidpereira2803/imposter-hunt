@@ -22,6 +22,10 @@ export const icons = {
   close: { name: "close", size: 24 },
   check: { name: "check", size: 24 },
   alert: { name: "alert-circle", size: 24 },
+
+  // Tutorial
+  discussion: { name: "message-text-outline", size: 24 },
+  tip: { name: "lightbulb-on-outline", size: 20 },
   
   // Navigation
   back: { name: "arrow-left", size: 24 },

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, Alert, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
@@ -10,7 +10,6 @@ import Title from "../src/components/ui/Title";
 import Button from "../src/components/ui/Button";
 import Card from "../src/components/ui/Card";
 import { space, palette, type } from "../src/constants/theme";
-import { Icon } from "../src/constants/icons";
 
 const TUTORIAL_SEEN_KEY = "imposter-hunt-tutorial-seen";
 
@@ -22,8 +21,11 @@ export default function Settings() {
     canShowPersonalizedAds, 
     showConsentForm, 
     resetConsent,
+    consentInfo,
     isLoading 
   } = useAdConsentContext();
+
+  const [showDebug, setShowDebug] = useState(__DEV__);
 
   const handleViewTutorial = async () => {
     try {
@@ -61,14 +63,14 @@ export default function Settings() {
       await showConsentForm();
       Alert.alert("Updated", "Privacy settings saved");
     } catch (error) {
-      Alert.alert("Error", "Could not open settings");
+      Alert.alert("Error", error.message || "Could not open settings");
     }
   };
 
   const handleResetConsent = async () => {
     Alert.alert(
       "Reset Consent",
-      "Reset ad preferences?",
+      "This will reset your consent preferences and show the form again.",
       [
         { text: "Cancel", style: "cancel" },
         {
@@ -77,13 +79,30 @@ export default function Settings() {
           onPress: async () => {
             try {
               await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-            } catch {}
-            await resetConsent();
-            Alert.alert("Success", "Consent reset");
+              await resetConsent();
+              await new Promise(resolve => setTimeout(resolve, 500));
+              await showConsentForm();
+              Alert.alert("Success", "Consent preferences updated");
+            } catch (error) {
+              Alert.alert("Error", error.message || "Could not reset consent");
+            }
           }
         }
       ]
     );
+  };
+
+  const getConsentStatus = () => {
+    if (!consentInfo) return "Unknown";
+    
+    const statusMap = {
+      0: "Unknown",
+      1: "Required",
+      2: "Not Required",
+      3: "Obtained",
+    };
+    
+    return statusMap[consentInfo.status] || `Status ${consentInfo.status}`;
   };
 
   return (
@@ -91,7 +110,7 @@ export default function Settings() {
       <ScrollView contentContainerStyle={styles.scroll}>
         <Title style={styles.title}>Settings</Title>
 
-        {/* Help Section - NEW */}
+        {/* Help Section */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Help</Text>
           
@@ -100,23 +119,36 @@ export default function Settings() {
             onPress={handleViewTutorial}
             variant="primary"
             size="md"
-            icon={<Icon name="help-circle" size={20} color={palette.text} />}
           />
         </View>
 
+        {/* Privacy & Ads Section */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Privacy & Ads</Text>
           
           <Card style={styles.infoRow}>
-            <Text style={styles.infoLabel}>Ads</Text>
+            <Text style={styles.infoLabel}>Consent Status</Text>
             <Text style={styles.infoValue}>
-              {isLoading ? "..." : canShowAds ? "On" : "Off"}
+              {isLoading ? "..." : getConsentStatus()}
+            </Text>
+          </Card>
+
+          <Card style={styles.infoRow}>
+            <Text style={styles.infoLabel}>Ads Enabled</Text>
+            <Text style={[
+              styles.infoValue,
+              { color: canShowAds ? palette.success : palette.danger }
+            ]}>
+              {isLoading ? "..." : canShowAds ? "Yes" : "No"}
             </Text>
           </Card>
 
           <Card style={styles.infoRow}>
             <Text style={styles.infoLabel}>Personalized</Text>
-            <Text style={styles.infoValue}>
+            <Text style={[
+              styles.infoValue,
+              { color: canShowPersonalizedAds ? palette.warn : palette.success }
+            ]}>
               {isLoading ? "..." : canShowPersonalizedAds ? "Yes" : "No"}
             </Text>
           </Card>
@@ -127,7 +159,6 @@ export default function Settings() {
             variant="primary"
             size="md"
             disabled={isLoading}
-            icon={<Icon name="shield-account" size={20} color={palette.text} />}
           />
 
           {__DEV__ && (
@@ -142,6 +173,7 @@ export default function Settings() {
           )}
         </View>
 
+        {/* Game Data Section */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Game Data</Text>
           
@@ -150,7 +182,6 @@ export default function Settings() {
             onPress={handleClearData}
             variant="danger"
             size="md"
-            icon={<Icon name="delete" size={20} color={palette.text} />}
           />
         </View>
 
@@ -160,7 +191,6 @@ export default function Settings() {
           variant="ghost"
           size="md"
           style={styles.backBtn}
-          icon={<Icon name="arrow-left" size={20} color={palette.text} />}
         />
 
         <View style={styles.version}>
