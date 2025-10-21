@@ -232,6 +232,18 @@ export default function Setup() {
                 icon={<Icon name="plus-circle" size={20} color={palette.text} />}
               />
             </View>
+
+            <Button 
+              title="Generate with AI"
+              onPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(() => {});
+                router.push("/ai-topics");
+              }}
+              variant="primary"
+              size="md"
+              icon={<Icon name="magic-staff" size={20} color={palette.text} />}
+              style={{ marginBottom: space.sm }}
+            />
           </View>
 
           <Button 

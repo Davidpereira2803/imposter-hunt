@@ -1,3 +1,10 @@
+---
+layout: page
+title: Privacy Policy
+permalink: /privacy/
+---
+
+
 # **Imposter Hunt – Privacy Policy**
 
 *Last updated: October 2025*
