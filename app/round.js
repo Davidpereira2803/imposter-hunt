@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, StyleSheet, Alert, BackHandler } from "react-native";
+import { View, Text, StyleSheet, Alert, BackHandler, TouchableOpacity, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
 import { useGameStore } from "../src/store/gameStore";
@@ -7,24 +7,63 @@ import HUD from "../src/components/HUD";
 import CircularTimer from "../src/components/ui/CircularTimer";
 import Screen from "../src/components/ui/Screen";
 import Button from "../src/components/ui/Button";
-import { space, palette } from "../src/constants/theme";
+import Card from "../src/components/ui/Card";
+import { space, palette, type } from "../src/constants/theme";
 import { Icon } from "../src/constants/icons";
 
 export default function Round() {
   const router = useRouter();
-  const { players, round, secretWord, aliveCount: getAliveCount } = useGameStore();
+  const { players, alive, round, secretWord, imposterIndex, aliveCount: getAliveCount } = useGameStore();
   const [seconds, setSeconds] = useState(60);
   const [isRunning, setIsRunning] = useState(false);
+  const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
   const intervalRef = useRef(null);
+  const isNavigatingRef = useRef(false);
 
   const aliveNow = getAliveCount ? getAliveCount() : (players?.length || 0);
 
+  const alivePlayers = players
+    ?.map((name, index) => ({ name, index }))
+    .filter((_, index) => alive?.[index] !== false) || [];
+
+  const orderedPlayers = React.useMemo(() => {
+    if (!alivePlayers.length) return [];
+    
+    if (round === 1 && imposterIndex !== null) {
+      const imposterPlayerIndex = alivePlayers.findIndex(p => p.index === imposterIndex);
+      
+      if (imposterPlayerIndex === 0) {
+        return [...alivePlayers.slice(1), alivePlayers[0]];
+      }
+    }
+    
+    return alivePlayers;
+  }, [alivePlayers, round, imposterIndex]);
+
+  const handleQuitRound = () => {
+    Alert.alert(
+      "Quit Game",
+      "Are you sure you want to quit? Progress will be lost.",
+      [
+        { text: "Cancel", style: "cancel" },
+        { 
+          text: "Quit", 
+          style: "destructive",
+          onPress: async () => {
+            try { 
+              await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium); 
+            } catch {}
+            isNavigatingRef.current = true;
+            router.replace("/");
+          }
+        }
+      ]
+    );
+  };
+
   useEffect(() => {
     const backAction = () => {
-      Alert.alert("Exit Game", "Return to setup?", [
-        { text: "Cancel", style: "cancel" },
-        { text: "Exit", onPress: () => router.replace("/setup") }
-      ]);
+      handleQuitRound();
       return true;
     };
 
@@ -33,6 +72,8 @@ export default function Round() {
   }, []);
 
   useEffect(() => {
+    if (isNavigatingRef.current) return;
+    
     if (!players?.length || !secretWord) {
       router.replace("/setup");
     }
@@ -72,7 +113,13 @@ export default function Round() {
       Alert.alert(
         "Time's Up",
         "Proceed to voting",
-        [{ text: "Vote Now", onPress: () => router.push("/vote") }]
+        [{ 
+          text: "Vote Now", 
+          onPress: () => {
+            isNavigatingRef.current = true;
+            router.push("/vote");
+          }
+        }]
       );
     }
   }, [seconds, isRunning]);
@@ -101,15 +148,39 @@ export default function Round() {
     try { await Haptics.selectionAsync(); } catch {}
   };
 
+  const handleNextPlayer = async () => {
+    if (currentPlayerIndex < orderedPlayers.length - 1) {
+      setCurrentPlayerIndex(prev => prev + 1);
+      try { await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); } catch {}
+    }
+  };
+
+  const handlePreviousPlayer = async () => {
+    if (currentPlayerIndex > 0) {
+      setCurrentPlayerIndex(prev => prev - 1);
+      try { await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); } catch {}
+    }
+  };
+
   const handleImposterGuess = async () => {
     try { 
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium); 
     } catch {}
     
+    isNavigatingRef.current = true;
     router.push({
       pathname: "/imposter-guess",
       params: { mode: "optional" }
     });
+  };
+
+  const handleVote = async () => {
+    try { 
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium); 
+    } catch {}
+    
+    isNavigatingRef.current = true;
+    router.push("/vote");
   };
 
   if (!players?.length || !secretWord) {
@@ -118,9 +189,102 @@ export default function Round() {
 
   return (
     <Screen>
-      <View style={styles.container}>
+      <ScrollView 
+        style={styles.scrollView}
+        contentContainerStyle={styles.container}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.header}>
+          <TouchableOpacity onPress={handleQuitRound} style={styles.quitButton}>
+            <Icon name="close" size={24} color={palette.danger} />
+          </TouchableOpacity>
           <HUD round={round || 1} aliveCount={aliveNow} />
+        </View>
+
+        {/* Player Order Section */}
+        <View style={styles.orderSection}>
+          <Text style={styles.orderTitle}>Speaking Order</Text>
+          
+          <View style={styles.currentPlayerCard}>
+            <View style={styles.navigationButtons}>
+              <TouchableOpacity 
+                onPress={handlePreviousPlayer}
+                disabled={currentPlayerIndex === 0}
+                style={[
+                  styles.navButton,
+                  currentPlayerIndex === 0 && styles.navButtonDisabled
+                ]}
+              >
+                <Icon 
+                  name="chevron-left" 
+                  size={24} 
+                  color={currentPlayerIndex === 0 ? palette.textDim : palette.text} 
+                />
+              </TouchableOpacity>
+
+              <View style={styles.currentPlayer}>
+                <Text style={styles.turnLabel}>Current Turn</Text>
+                <Text style={styles.currentPlayerName}>
+                  {orderedPlayers[currentPlayerIndex]?.name || "—"}
+                </Text>
+                <Text style={styles.turnNumber}>
+                  {currentPlayerIndex + 1} of {orderedPlayers.length}
+                </Text>
+              </View>
+
+              <TouchableOpacity 
+                onPress={handleNextPlayer}
+                disabled={currentPlayerIndex === orderedPlayers.length - 1}
+                style={[
+                  styles.navButton,
+                  currentPlayerIndex === orderedPlayers.length - 1 && styles.navButtonDisabled
+                ]}
+              >
+                <Icon 
+                  name="chevron-right" 
+                  size={24} 
+                  color={currentPlayerIndex === orderedPlayers.length - 1 ? palette.textDim : palette.text} 
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          {/* Player List */}
+          <ScrollView 
+            horizontal 
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.playerListContent}
+          >
+            {orderedPlayers.map((player, idx) => (
+              <Card
+                key={player.index}
+                style={[
+                  styles.playerOrderCard,
+                  idx === currentPlayerIndex && styles.activePlayerCard,
+                  idx < currentPlayerIndex && styles.completedPlayerCard
+                ]}
+                onPress={() => {
+                  setCurrentPlayerIndex(idx);
+                  Haptics.selectionAsync().catch(() => {});
+                }}
+              >
+                <Text style={styles.playerOrderNumber}>{idx + 1}</Text>
+                <Text style={[
+                  styles.playerOrderName,
+                  idx === currentPlayerIndex && styles.activePlayerName,
+                  idx < currentPlayerIndex && styles.completedPlayerName
+                ]}>
+                  {player.name}
+                </Text>
+                {idx === currentPlayerIndex && (
+                  <Icon name="account-voice" size={16} color={palette.primary} />
+                )}
+                {idx < currentPlayerIndex && (
+                  <Icon name="check" size={16} color={palette.success} />
+                )}
+              </Card>
+            ))}
+          </ScrollView>
         </View>
 
         <View style={styles.timerSection}>
@@ -151,7 +315,7 @@ export default function Round() {
 
             <Button 
               title="Vote" 
-              onPress={() => router.push("/vote")}
+              onPress={handleVote}
               variant="primary"
               size="lg"
               style={styles.controlBtn}
@@ -177,27 +341,129 @@ export default function Round() {
             />
           </View>
         </View>
-      </View>
+      </ScrollView>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  scrollView: {
     flex: 1,
+  },
+  container: {
     paddingTop: 60,
     paddingHorizontal: space.lg,
+    paddingBottom: space.xl,
   },
   header: {
-    marginBottom: space.xl,
+    marginBottom: space.lg,
+    position: "relative",
   },
-  timerSection: {
-    flex: 1,
+  quitButton: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    zIndex: 10,
+    width: 40,
+    height: 40,
+    alignItems: "center",
     justifyContent: "center",
+  },
+  orderSection: {
+    marginBottom: space.lg,
+  },
+  orderTitle: {
+    fontSize: type.h4,
+    fontWeight: "800",
+    color: palette.text,
+    marginBottom: space.md,
+    textAlign: "center",
+  },
+  currentPlayerCard: {
+    marginBottom: space.md,
+  },
+  navigationButtons: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: palette.panel,
+    borderRadius: 16,
+    padding: space.md,
+  },
+  navButton: {
+    width: 40,
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  navButtonDisabled: {
+    opacity: 0.3,
+  },
+  currentPlayer: {
+    flex: 1,
     alignItems: "center",
   },
+  turnLabel: {
+    fontSize: type.small,
+    fontWeight: "700",
+    color: palette.textDim,
+    textTransform: "uppercase",
+    letterSpacing: 1,
+    marginBottom: 4,
+  },
+  currentPlayerName: {
+    fontSize: type.h3,
+    fontWeight: "900",
+    color: palette.primary,
+    marginBottom: 4,
+  },
+  turnNumber: {
+    fontSize: type.small,
+    fontWeight: "600",
+    color: palette.textDim,
+  },
+  playerListContent: {
+    gap: space.sm,
+    paddingHorizontal: 4,
+  },
+  playerOrderCard: {
+    minWidth: 80,
+    alignItems: "center",
+    paddingVertical: space.sm,
+    paddingHorizontal: space.xs,
+  },
+  activePlayerCard: {
+    borderColor: palette.primary,
+    borderWidth: 2,
+    backgroundColor: palette.primaryDim,
+  },
+  completedPlayerCard: {
+    opacity: 0.5,
+  },
+  playerOrderNumber: {
+    fontSize: type.caption,
+    fontWeight: "700",
+    color: palette.textDim,
+    marginBottom: 4,
+  },
+  playerOrderName: {
+    fontSize: type.small,
+    fontWeight: "700",
+    color: palette.text,
+    textAlign: "center",
+    marginBottom: 4,
+  },
+  activePlayerName: {
+    color: palette.primary,
+  },
+  completedPlayerName: {
+    color: palette.textDim,
+  },
+  timerSection: {
+    alignItems: "center",
+    marginVertical: space.lg,
+  },
   actions: {
-    paddingBottom: space.xl,
     gap: space.md,
   },
   primaryActions: {

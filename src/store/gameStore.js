@@ -55,13 +55,20 @@ export const useGameStore = create(
         const secretWord = words[Math.floor(Math.random() * words.length)];
         const imposterIndex = Math.floor(Math.random() * players.length);
 
+        const alive = players.map(() => true);
+
         set({
           secretWord,
           imposterIndex,
+          alive,
           round: 1,
         });
 
         return true;
+      },
+
+      nextRound: () => {
+        set((state) => ({ round: (state.round || 1) + 1 }));
       },
 
       resetMatch: () => {
@@ -76,7 +83,7 @@ export const useGameStore = create(
       eliminatePlayer: (index) => {
         const { alive, imposterIndex, players } = get();
         
-        if (!alive || !players) return null;
+        if (!alive || !players || index == null) return null;
 
         const newAlive = [...alive];
         newAlive[index] = false;
@@ -88,11 +95,30 @@ export const useGameStore = create(
         }
 
         const aliveCount = newAlive.filter(Boolean).length;
-        if (aliveCount === 2) {
+        
+        if (aliveCount <= 2) {
           return "imposter";
         }
 
         return "continue";
+      },
+
+      checkGameOver: () => {
+        const { alive, imposterIndex } = get();
+        if (!alive) return null;
+
+        const imposterAlive = alive[imposterIndex];
+        if (!imposterAlive) {
+          return "civilians";
+        }
+
+        const aliveCount = alive.filter(Boolean).length;
+        
+        if (aliveCount <= 2) {
+          return "imposter";
+        }
+
+        return null;
       },
 
       aliveCount: () => {

@@ -55,16 +55,13 @@ export default function Setup() {
 
   useEffect(() => {
     const backAction = () => {
-      Alert.alert("Exit", "Exit game?", [
-        { text: "Cancel", style: "cancel" },
-        { text: "Exit", onPress: () => BackHandler.exitApp() }
-      ]);
+      router.replace("/");
       return true;
     };
 
     const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
     return () => backHandler.remove();
-  }, []);
+  }, [router]);
 
   const addPlayer = async () => {
     const name = inputName.trim();
@@ -148,6 +145,11 @@ export default function Setup() {
     }
   };
 
+  const handleGoHome = async () => {
+    try { await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); } catch {}
+    router.replace("/");
+  };
+
   return (
     <Screen>
       <KeyboardAvoidingView 
@@ -159,7 +161,14 @@ export default function Setup() {
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
         >
-          <Title style={styles.title}>Setup</Title>
+          {/* Add header with back button */}
+          <View style={styles.header}>
+            <TouchableOpacity onPress={handleGoHome} style={styles.backButton}>
+              <Icon name="arrow-left" size={24} color={palette.text} />
+            </TouchableOpacity>
+            <Title style={styles.title}>Setup</Title>
+            <View style={styles.backButton} />
+          </View>
 
           {/* Players Section */}
           <View style={styles.section}>
@@ -291,7 +300,22 @@ const styles = StyleSheet.create({
     paddingTop: 60,
     paddingBottom: 40 
   },
-  title: { marginBottom: space.xl },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: space.xl,
+  },
+  backButton: {
+    width: 40,
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  title: { 
+    flex: 1,
+    textAlign: "center",
+  },
   section: { marginBottom: space.xl },
   sectionTitle: { 
     color: palette.textDim, 

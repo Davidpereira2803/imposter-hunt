@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Keyboard, BackHandler } from "react-native";
+import { View, Text, StyleSheet, Keyboard, BackHandler, KeyboardAvoidingView, Platform } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import * as Haptics from "expo-haptics";
 import { useGameStore } from "../src/store/gameStore";
@@ -82,56 +82,65 @@ export default function ImposterGuess() {
 
   return (
     <Screen>
-      <View style={styles.content}>
-        <Title style={styles.title}>
-          {isOptional ? "🎯 Guess Now?" : "🎯 Final Guess"}
-        </Title>
-        
-        <Card style={styles.infoCard}>
-          <Text style={styles.imposterLabel}>Imposter</Text>
-          <Text style={styles.imposterName}>{imposterName}</Text>
-          <Text style={styles.instruction}>
-            {isOptional 
-              ? "Correct = instant win. Wrong = continue playing."
-              : "One chance. Guess the secret word."
-            }
-          </Text>
-        </Card>
+      <KeyboardAvoidingView 
+        style={styles.container}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
+      >
+        <View style={styles.content}>
+          <Title style={styles.title}>
+            {isOptional ? "Guess Now?" : "Final Guess"}
+          </Title>
+          
+          <Card style={styles.infoCard}>
+            <Text style={styles.imposterLabel}>Imposter</Text>
+            <Text style={styles.imposterName}>{imposterName}</Text>
+            <Text style={styles.instruction}>
+              {isOptional 
+                ? "Correct = instant win. Wrong = continue playing."
+                : "One chance. Guess the secret word."
+              }
+            </Text>
+          </Card>
 
-        <Input
-          autoFocus
-          placeholder="Type your guess..."
-          value={guess}
-          onChangeText={setGuess}
-          onSubmitEditing={submit}
-          returnKeyType="done"
-          autoCapitalize="none"
-          autoCorrect={false}
-          style={styles.input}
-        />
-
-        <View style={styles.actions}>
-          <Button
-            title="Submit"
-            onPress={submit}
-            variant="primary"
-            size="lg"
-            disabled={!guess.trim()}
+          <Input
+            autoFocus
+            placeholder="Type your guess..."
+            value={guess}
+            onChangeText={setGuess}
+            onSubmitEditing={submit}
+            returnKeyType="done"
+            autoCapitalize="none"
+            autoCorrect={false}
+            style={styles.input}
           />
 
-          <Button
-            title={isOptional ? "Cancel" : "Pass"}
-            onPress={cancel}
-            variant="ghost"
-            size="md"
-          />
+          <View style={styles.actions}>
+            <Button
+              title="Submit"
+              onPress={submit}
+              variant="primary"
+              size="lg"
+              disabled={!guess.trim()}
+            />
+
+            <Button
+              title={isOptional ? "Cancel" : "Pass"}
+              onPress={cancel}
+              variant="ghost"
+              size="md"
+            />
+          </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   content: {
     flex: 1,
     justifyContent: "center",

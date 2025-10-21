@@ -33,8 +33,8 @@ export default function CircularTimer({ seconds, totalSeconds = 60 }) {
     }
   }, [seconds]);
 
-  const size = 280;
-  const strokeWidth = 16;
+  const size = 200;
+  const strokeWidth = 12;
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;
 
@@ -115,8 +115,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   timerWrapper: {
-    width: 280,
-    height: 280,
+    width: 200,
+    height: 200,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   timeText: {
-    fontSize: type.giant * 1.2,
+    fontSize: type.giant,
     fontWeight: "900",
     letterSpacing: 2,
   },

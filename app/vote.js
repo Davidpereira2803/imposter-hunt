@@ -1,32 +1,37 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Alert, BackHandler, ScrollView } from "react-native";
+import { View, Text, StyleSheet, Alert, BackHandler, TouchableOpacity, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
 import { useGameStore } from "../src/store/gameStore";
-import HUD from "../src/components/HUD";
 import Screen from "../src/components/ui/Screen";
-import Title from "../src/components/ui/Title";
-import Button from "../src/components/ui/Button";
 import Card from "../src/components/ui/Card";
+import Button from "../src/components/ui/Button";
+import Title from "../src/components/ui/Title";
 import { space, palette, type } from "../src/constants/theme";
+import { Icon } from "../src/constants/icons";
 
 export default function Vote() {
   const router = useRouter();
-  const { players, alive, round, eliminatePlayer, aliveCount: getAliveCount } = useGameStore();
-  const [voter, setVoter] = useState(0);
-  const [selected, setSelected] = useState(null);
+  const { 
+    players, 
+    alive,
+    eliminatePlayer, 
+    checkGameOver,
+    nextRound 
+  } = useGameStore();
 
-  const aliveNow = getAliveCount ? getAliveCount() : (players?.length || 0);
-  const aliveIndexes = players
-    ?.map((_, i) => i)
-    .filter((i) => alive?.[i]) || [];
+  const [selectedPlayer, setSelectedPlayer] = useState(null);
 
   useEffect(() => {
     const backAction = () => {
-      Alert.alert("Back to Round", "Cancel voting?", [
-        { text: "No", style: "cancel" },
-        { text: "Yes", onPress: () => router.back() }
-      ]);
+      Alert.alert(
+        "Go Back",
+        "Return to round?",
+        [
+          { text: "Cancel", style: "cancel" },
+          { text: "Yes", onPress: () => router.back() }
+        ]
+      );
       return true;
     };
 
@@ -34,135 +39,162 @@ export default function Vote() {
     return () => backHandler.remove();
   }, []);
 
-  useEffect(() => {
-    if (!players?.length || !alive?.length) {
-      router.replace("/setup");
-    }
-  }, [players, alive]);
+  const handleSelectPlayer = async (index) => {
+    setSelectedPlayer(index);
+    try { await Haptics.selectionAsync(); } catch {}
+  };
 
-  const confirmVote = async () => {
-    if (selected == null) {
-      Alert.alert("No Selection", "Choose a player first");
+  const handleVote = async () => {
+    if (selectedPlayer === null) {
+      Alert.alert("Select Player", "Choose someone to vote out");
       return;
     }
 
     try { await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium); } catch {}
 
-    if (voter < aliveIndexes.length - 1) {
-      setVoter(voter + 1);
-      setSelected(null);
+    const outcome = eliminatePlayer?.(selectedPlayer);
+    
+    if (outcome === "civilians" || outcome === "imposter") {
+      router.replace({
+        pathname: "/results",
+        params: { outcome }
+      });
     } else {
-      const outcome = eliminatePlayer(selected);
-
-      if (outcome === "civilians") {
-        router.replace({ pathname: "/results", params: { outcome: "civilians" } });
-        return;
-      }
-
-      if (outcome === "imposter") {
-        router.replace({ pathname: "/results", params: { outcome: "imposter" } });
-        return;
-      }
-
-      const alivePlayers = players.filter((_, i) => alive[i]);
-      if (alivePlayers.length === 2) {
-        router.replace({ pathname: "/results", params: { outcome: "imposter" } });
-        return;
-      }
-
-      console.log("Navigating to imposter-guess");
-      router.replace("/imposter-guess");
+      nextRound?.();
+      router.replace("/round");
     }
   };
 
-  if (!players?.length) return null;
+  const handleBack = async () => {
+    try { await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); } catch {}
+    router.back();
+  };
 
-  const currentVoter = players[aliveIndexes[voter]];
+  if (!players?.length || !alive) {
+    return null;
+  }
+
+  const alivePlayers = players
+    .map((name, index) => ({ name, index }))
+    .filter((_, index) => alive[index] === true);
 
   return (
     <Screen>
-      <ScrollView contentContainerStyle={styles.scroll}>
+      <View style={styles.container}>
         <View style={styles.header}>
-          <HUD round={round || 1} aliveCount={aliveNow} />
+          <TouchableOpacity onPress={handleBack} style={styles.backButton}>
+            <Icon name="arrow-left" size={24} color={palette.text} />
+          </TouchableOpacity>
           <Title style={styles.title}>Vote</Title>
-          <Card style={styles.voterCard}>
-            <Text style={styles.voterLabel}>Voting Now</Text>
-            <Text style={styles.voterName}>{currentVoter}</Text>
-          </Card>
+          <View style={styles.backButton} />
         </View>
 
-        <View style={styles.playerGrid}>
-          {aliveIndexes
-            .filter((i) => i !== aliveIndexes[voter])
-            .map((idx) => (
-              <Button
-                key={idx}
-                title={players[idx]}
-                onPress={() => {
-                  setSelected(idx);
-                  Haptics.selectionAsync().catch(() => {});
-                }}
-                variant={selected === idx ? "primary" : "ghost"}
-                size="lg"
-              />
-            ))}
-        </View>
+        <Text style={styles.subtitle}>Who is the imposter?</Text>
+
+        <ScrollView 
+          style={styles.playerList}
+          contentContainerStyle={styles.playerListContent}
+          showsVerticalScrollIndicator={false}
+        >
+          {alivePlayers.length === 0 ? (
+            <Text style={styles.emptyText}>No players available</Text>
+          ) : (
+            alivePlayers.map((player) => {
+              const isSelected = selectedPlayer === player.index;
+              
+              return (
+                <Card
+                  key={player.index}
+                  onPress={() => handleSelectPlayer(player.index)}
+                  style={[
+                    styles.playerCard,
+                    isSelected && styles.selectedCard
+                  ]}
+                >
+                  <Text style={styles.playerName}>{player.name}</Text>
+                  {isSelected && (
+                    <Icon name="check-circle" size={24} color={palette.success} />
+                  )}
+                </Card>
+              );
+            })
+          )}
+        </ScrollView>
 
         <View style={styles.actions}>
           <Button
-            title={selected != null ? `Eject ${players[selected]}` : "Select Player"}
-            onPress={confirmVote}
+            title="Confirm Vote"
+            onPress={handleVote}
             variant="danger"
             size="lg"
-            disabled={selected == null}
-          />
-
-          <Button
-            title="Back to Round"
-            onPress={() => router.back()}
-            variant="ghost"
-            size="md"
+            disabled={selectedPlayer === null}
+            icon={<Icon name="vote" size={24} color={palette.text} />}
           />
         </View>
-      </ScrollView>
+      </View>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  scroll: {
+  container: {
+    flex: 1,
     paddingTop: 60,
     paddingHorizontal: space.lg,
-    paddingBottom: space.xl,
   },
   header: {
-    marginBottom: space.xl,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: space.lg,
+  },
+  backButton: {
+    width: 40,
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
   },
   title: {
-    marginVertical: space.lg,
+    flex: 1,
+    textAlign: "center",
   },
-  voterCard: {
-    alignItems: "center",
-    paddingVertical: space.lg,
-  },
-  voterLabel: {
-    color: palette.textDim,
-    fontSize: type.small,
+  subtitle: {
+    fontSize: type.h3,
     fontWeight: "700",
-    textTransform: "uppercase",
-    letterSpacing: 1,
-    marginBottom: space.xs,
-  },
-  voterName: {
-    color: palette.text,
-    fontSize: type.h2,
-    fontWeight: "900",
-  },
-  playerGrid: {
-    gap: space.md,
+    color: palette.textDim,
+    textAlign: "center",
     marginBottom: space.xl,
   },
-  actions: {
+  playerList: {
+    flex: 1,
+  },
+  playerListContent: {
     gap: space.md,
+    paddingBottom: space.md,
+  },
+  playerCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    minHeight: 60,
+  },
+  selectedCard: {
+    borderColor: palette.success,
+    borderWidth: 2,
+  },
+  playerName: {
+    fontSize: type.h4,
+    fontWeight: "700",
+    color: palette.text,
+  },
+  emptyText: {
+    fontSize: type.body,
+    color: palette.textDim,
+    textAlign: "center",
+    marginTop: space.xl,
+  },
+  actions: {
+    paddingBottom: space.xl,
+    paddingTop: space.md,
   },
 });
