@@ -1,9 +1,8 @@
 ---
 layout: page
 title: Privacy Policy
-permalink: /privacy/
+permalink: /Privacy/
 ---
-
 
 # **Imposter Hunt – Privacy Policy**
 
@@ -44,7 +43,7 @@ This may include:
 * Device type, operating system version, and language
 
 These are handled under **Google’s Privacy Policy**, which you can review here:
-👉 [https://policies.google.com/privacy](https://policies.google.com/privacy)
+[https://policies.google.com/privacy](https://policies.google.com/privacy)
 
 If you are located in the **EU or UK**, the app will request your **ad consent** before showing any ads.
 You can change or withdraw this consent at any time in your device’s **Ad Settings**.
@@ -70,7 +69,7 @@ Your data security relies solely on your device’s built-in protections (e.g., 
 **Imposter Hunt** is an independent project developed by **David Pereira** for entertainment and learning purposes.
 
 If you have questions or concerns regarding this Privacy Policy, please contact via the project’s GitHub repository:
-👉 [https://github.com/davidpereira2803/imposter-hunt](https://github.com/davidpereira2803/imposter-hunt)
+[https://github.com/davidpereira2803/imposter-hunt](https://github.com/davidpereira2803/imposter-hunt)
 
 ---
 

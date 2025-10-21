@@ -13,7 +13,7 @@ import { space, palette, type } from "../src/constants/theme";
 import { Icon } from "../src/constants/icons";
 
 const TUTORIAL_SEEN_KEY = "imposter-hunt-tutorial-seen";
-const PRIVACY_POLICY_URL = "https://davidpereira2803.github.io/imposter-hunt/privacy/";
+const PRIVACY_POLICY_URL = "https://davidpereira2803.github.io/imposter-hunt/Privacy/";
 
 export default function Settings() {
   const router = useRouter();
