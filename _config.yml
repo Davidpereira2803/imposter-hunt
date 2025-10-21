@@ -1,2 +1,61 @@
+title: "Imposter Hunt"
+description: "The ultimate social deduction game - find the imposter before it's too late!"
+baseurl: ""
+url: "https://davidpereira2803.github.io/imposter-hunt"
+
+author:
+  name: "David Pereira"
+  email: "your-email@example.com"
+  github: "davidpereira2803"
+
 markdown: kramdown
 theme: minima
+
+minima:
+  skin: dark
+  social_links:
+    - { platform: github, user_url: "https://github.com/davidpereira2803/imposter-hunt" }
+    - { platform: twitter, user_url: "https://twitter.com/yourhandle" }
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+lang: en_US
+logo: /assets/icon.png
+twitter:
+  username: yourhandle
+  card: summary
+
+header_pages:
+  - README.md
+  - Privacy.md
+  - index.md
+
+exclude:
+  - node_modules/
+  - package.json
+  - package-lock.json
+  - .expo/
+  - .git/
+  - .gitignore
+  - Gemfile
+  - Gemfile.lock
+
+collections:
+  docs:
+    output: true
+    permalink: /:collection/:name
+
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"

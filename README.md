@@ -1,13 +1,19 @@
-# 🎭 Imposter Hunt
+---
+layout: page
+title: How to Play
+permalink: /README/
+---
 
-**Imposter Hunt** is a fast-paced social deduction game built with **React Native and Expo**, where players try to uncover who among them is the imposter — all on a single shared device.
+# How to Play Imposter Hunt
 
-## 🕹️ About the Game
+**Imposter Hunt** is a fast-paced social deduction game where players try to uncover who among them is the imposter — all on a single shared device.
+
+## About the Game
 
 Gather your friends and take turns passing the phone around. Everyone except one player receives a secret word from a chosen topic — but the **Imposter** has no clue!
 Your goal: give hints, discuss, and vote out the impostor before they can figure out the word.
 
-### 🔹 How to Play
+### How to Play
 
 1. **Setup** – Add 3+ players and pick a topic (Food, Animals, Movies, Countries).
 2. **Role Reveal** – Each player privately views their role (Civilian or Imposter).
@@ -15,7 +21,7 @@ Your goal: give hints, discuss, and vote out the impostor before they can figure
 4. **Voting** – Decide who to vote out each round.
 5. **Results** – Either the Imposter wins by guessing the word or Civilians win by catching them!
 
-### 🏆 Win Conditions
+### Win Conditions
 
 * **Civilians Win**: The imposter is correctly voted out.
 * **Imposter Wins**:
@@ -25,19 +31,19 @@ Your goal: give hints, discuss, and vote out the impostor before they can figure
 
 ---
 
-## ✨ Features
+## Features
 
-* 🧑‍🤝‍🧑 **Pass-and-play multiplayer** — one device for all players.
-* 🎨 **Clean minimal UI** optimized for quick social play.
-* 🔊 **Haptic feedback** for tactile interactions.
-* ⏱️ **Round timer** with controls for discussion pacing.
-* 💾 **Persistent storage** for player names & settings.
-* 🔁 **Multi-round gameplay** with elimination tracking.
-* 🧠 **Smart voting system** that handles ties and revotes.
+* **Pass-and-play multiplayer** — one device for all players.
+* **Clean minimal UI** optimized for quick social play.
+* **Haptic feedback** for tactile interactions.
+* **Round timer** with controls for discussion pacing.
+* **Persistent storage** for player names & settings.
+* **Multi-round gameplay** with elimination tracking.
+* **Smart voting system** that handles ties and revotes.
 
 ---
 
-## ⚙️ Built With
+## Built With
 
 * **React Native** & **Expo (SDK 54)**
 * **Expo Router** – File-based routing system.
@@ -48,7 +54,7 @@ Your goal: give hints, discuss, and vote out the impostor before they can figure
 
 ---
 
-## 🧩 Installation
+## Installation
 
 ```bash
 # Clone and install dependencies
@@ -63,7 +69,7 @@ npx expo start
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 app/
@@ -85,7 +91,7 @@ src/
 
 ---
 
-## 📱 Building for Android
+## Building for Android
 
 ```bash
 npx eas build -p android --profile preview
@@ -99,7 +105,7 @@ npx eas build -p android --profile production
 
 ---
 
-## 🔒 Privacy
+## Privacy
 
 This app uses Google AdMob for ads.
 
@@ -110,13 +116,13 @@ See the [Privacy Policy](https://github.com/YOUR_GITHUB_USERNAME/imposter-hunt/b
 
 ---
 
-## 🧠 Developer Notes
+## Developer Notes
 
 For technical documentation (architecture, dependencies, troubleshooting), see the [Developer Section](#developer-section).
 
 ---
 
-## 💻 Developer Section
+## Developer Section
 
 ### State Management
 
@@ -143,6 +149,6 @@ npm cache clean --force
 
 ---
 
-## 📜 License
+## License
 
 © 2025 David Pereira — All rights reserved.
