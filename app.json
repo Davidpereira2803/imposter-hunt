@@ -17,7 +17,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.yourcompany.imposterhunt",
+      "bundleIdentifier": "com.davidpereira2803.imposterhunt",
       "infoPlist": {
         "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you."
       }
@@ -27,7 +27,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#000000"
       },
-      "package": "com.yourcompany.imposterhunt",
+      "package": "com.davidpereira2803.imposterhunt",
       "permissions": [
         "android.permission.INTERNET",
         "android.permission.ACCESS_NETWORK_STATE"
@@ -45,20 +45,18 @@
           "userTrackingPermission": "This identifier will be used to deliver personalized ads to you."
         }
       ],
-      [
-        "expo-build-properties",
-        {
-          "android": {
-            "extraProguardRules": "-keep class com.google.android.gms.** { *; }\n-dontwarn com.google.android.gms.**"
-          }
-        }
-      ]
+      "expo-build-properties",
+      "expo-system-ui"
     ],
+    "newArchEnabled": true,
+    "experiments": {
+      "reactCompiler": true
+    },
     "extra": {
       "eas": {
-        "projectId": "your-project-id"
+        "projectId": "7e326574-2b4c-434f-8845-e9d61544fa7c"
       }
     },
-    "newArchEnabled": true
+    "owner": "davidpereira2803"
   }
 }

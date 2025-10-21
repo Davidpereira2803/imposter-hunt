@@ -1,9 +1,14 @@
 import React, { useEffect } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, BackHandler, Alert } from "react-native";
+import { View, StyleSheet, BackHandler, Alert } from "react-native";
 import { useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
 import { useGameStore } from "../src/store/gameStore";
 import { AdBanner } from "../src/components/AdBanner";
+import Screen from "../src/components/ui/Screen";
+import Title from "../src/components/ui/Title";
+import Button from "../src/components/ui/Button";
+import { space, palette } from "../src/constants/theme";
+import { Icon, icons } from "../src/constants/icons";
 
 export default function Home() {
   const router = useRouter();
@@ -11,7 +16,7 @@ export default function Home() {
 
   useEffect(() => {
     const backAction = () => {
-      Alert.alert("Exit App", "Are you sure you want to exit?", [
+      Alert.alert("Exit", "Exit game?", [
         { text: "Cancel", style: "cancel" },
         { text: "Exit", onPress: () => BackHandler.exitApp() }
       ]);
@@ -23,10 +28,7 @@ export default function Home() {
   }, []);
 
   const handleQuickStart = async () => {
-    try {
-      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    } catch {}
-
+    try { await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium); } catch {}
     if (players?.length >= 3 && topicKey) {
       router.push("/role");
     } else {
@@ -35,117 +37,77 @@ export default function Home() {
   };
 
   const handleNewGame = async () => {
-    try {
-      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    } catch {}
+    try { await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium); } catch {}
     router.push("/setup");
   };
 
   const handleSettings = async () => {
-    try {
-      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    } catch {}
+    try { await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); } catch {}
     router.push("/settings");
   };
 
   const canQuickStart = players?.length >= 3 && topicKey;
 
   return (
-    <View style={styles.container}>
+    <Screen>
       <View style={styles.content}>
-        <Text style={styles.title}>🎭 Imposter Hunt</Text>
-        <Text style={styles.subtitle}>Find the imposter among you</Text>
+        <View style={styles.header}>
+          <Icon 
+            name={icons.gameLogo.name} 
+            size={icons.gameLogo.size} 
+            color={palette.primary}
+          />
+          <Title style={styles.title}>Imposter Hunt</Title>
+        </View>
 
-        <View style={styles.buttonContainer}>
+        <View style={styles.actions}>
           {canQuickStart && (
-            <TouchableOpacity 
-              style={[styles.button, styles.primaryButton]} 
+            <Button 
+              title="Continue Game"
               onPress={handleQuickStart}
-            >
-              <Text style={styles.buttonText}>Quick Start</Text>
-              <Text style={styles.buttonSubtext}>
-                {players?.length} players · {topicKey}
-              </Text>
-            </TouchableOpacity>
+              variant="success"
+              size="lg"
+              icon={<Icon name="play-circle" size={24} color="#000" />}
+            />
           )}
 
-          <TouchableOpacity 
-            style={[styles.button, styles.secondaryButton]} 
+          <Button 
+            title="New Game"
             onPress={handleNewGame}
-          >
-            <Text style={styles.buttonText}>New Game</Text>
-          </TouchableOpacity>
+            variant="primary"
+            size="lg"
+            icon={<Icon name="plus-circle" size={24} color={palette.text} />}
+          />
 
-          <TouchableOpacity 
-            style={[styles.button, styles.tertiaryButton]} 
+          <Button 
+            title="Settings"
             onPress={handleSettings}
-          >
-            <Text style={styles.buttonText}>Settings</Text>
-          </TouchableOpacity>
+            variant="ghost"
+            size="md"
+            icon={<Icon name={icons.settings.name} size={20} color={palette.text} />}
+          />
         </View>
       </View>
 
-      {/* Ad Banner at bottom */}
-      <AdBanner />
-    </View>
+      {/* <AdBanner /> */}
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#000",
-  },
   content: {
     flex: 1,
     justifyContent: "center",
+    paddingHorizontal: space.lg,
+  },
+  header: {
     alignItems: "center",
-    padding: 20,
+    marginBottom: space.xl * 2,
   },
   title: {
-    color: "#fff",
-    fontSize: 36,
-    fontWeight: "900",
-    textAlign: "center",
-    marginBottom: 8,
+    marginTop: space.md,
   },
-  subtitle: {
-    color: "#aaa",
-    fontSize: 16,
-    textAlign: "center",
-    marginBottom: 48,
-  },
-  buttonContainer: {
-    width: "100%",
-    gap: 16,
-  },
-  button: {
-    paddingVertical: 18,
-    paddingHorizontal: 24,
-    borderRadius: 16,
-    alignItems: "center",
-  },
-  primaryButton: {
-    backgroundColor: "#06d6a0",
-  },
-  secondaryButton: {
-    backgroundColor: "#23a6f0",
-  },
-  tertiaryButton: {
-    backgroundColor: "#1a1a1a",
-    borderWidth: 1,
-    borderColor: "#333",
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 18,
-    fontWeight: "900",
-  },
-  buttonSubtext: {
-    color: "#fff",
-    fontSize: 14,
-    fontWeight: "600",
-    marginTop: 4,
-    opacity: 0.8,
+  actions: {
+    gap: space.md,
   },
 });

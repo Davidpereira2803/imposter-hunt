@@ -1,13 +1,22 @@
 import { useState, useEffect } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Keyboard, BackHandler } from "react-native";
-import { useRouter } from "expo-router";
+import { View, Text, StyleSheet, Keyboard, BackHandler, KeyboardAvoidingView, Platform } from "react-native";
+import { useRouter, useLocalSearchParams } from "expo-router";
 import * as Haptics from "expo-haptics";
 import { useGameStore } from "../src/store/gameStore";
+import Screen from "../src/components/ui/Screen";
+import Title from "../src/components/ui/Title";
+import Button from "../src/components/ui/Button";
+import Input from "../src/components/ui/Input";
+import Card from "../src/components/ui/Card";
+import { space, palette, type } from "../src/constants/theme";
 
 export default function ImposterGuess() {
   const router = useRouter();
+  const { mode } = useLocalSearchParams();
   const { players, imposterIndex, secretWord, _hydrated } = useGameStore();
   const [guess, setGuess] = useState("");
+
+  const isOptional = mode === "optional";
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener("hardwareBackPress", () => true);
@@ -31,147 +40,144 @@ export default function ImposterGuess() {
       } else {
         await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       }
-    } catch (e) {
-    }
+    } catch (e) {}
 
     Keyboard.dismiss();
     
-    router.replace({
-      pathname: "/results",
-      params: { outcome: isCorrect ? "imposter" : "civilians" }
-    });
+    if (isCorrect) {
+      router.replace({
+        pathname: "/results",
+        params: { outcome: "imposter" }
+      });
+    } else {
+      if (isOptional) {
+        router.back();
+      } else {
+        router.replace({
+          pathname: "/results",
+          params: { outcome: "civilians" }
+        });
+      }
+    }
   };
 
   const cancel = async () => {
     try {
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    } catch (e) {
-    }
+    } catch (e) {}
     
     Keyboard.dismiss();
-    router.replace({
-      pathname: "/results",
-      params: { outcome: "civilians" }
-    });
+    
+    if (isOptional) {
+      router.back();
+    } else {
+      router.replace({
+        pathname: "/results",
+        params: { outcome: "civilians" }
+      });
+    }
   };
 
-  const imposterName = players?.[imposterIndex]?.name || "Imposter";
+  const imposterName = players?.[imposterIndex] || "Imposter";
 
   return (
-    <View style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.title}>🎯 Final Chance</Text>
-        <Text style={styles.subtitle}>
-          {imposterName}, you get one guess at the secret word.
-        </Text>
-        <Text style={styles.instructions}>
-          Guess correctly to win the game. Wrong guess means civilians win!
-        </Text>
+    <Screen>
+      <KeyboardAvoidingView 
+        style={styles.container}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
+      >
+        <View style={styles.content}>
+          <Title style={styles.title}>
+            {isOptional ? "Guess Now?" : "Final Guess"}
+          </Title>
+          
+          <Card style={styles.infoCard}>
+            <Text style={styles.imposterLabel}>Imposter</Text>
+            <Text style={styles.imposterName}>{imposterName}</Text>
+            <Text style={styles.instruction}>
+              {isOptional 
+                ? "Correct = instant win. Wrong = continue playing."
+                : "One chance. Guess the secret word."
+              }
+            </Text>
+          </Card>
 
-        <View style={styles.inputContainer}>
-          <TextInput
+          <Input
             autoFocus
-            placeholder="Enter your guess..."
-            placeholderTextColor="#666"
+            placeholder="Type your guess..."
             value={guess}
             onChangeText={setGuess}
             onSubmitEditing={submit}
-            style={styles.input}
             returnKeyType="done"
             autoCapitalize="none"
             autoCorrect={false}
+            style={styles.input}
           />
+
+          <View style={styles.actions}>
+            <Button
+              title="Submit"
+              onPress={submit}
+              variant="primary"
+              size="lg"
+              disabled={!guess.trim()}
+            />
+
+            <Button
+              title={isOptional ? "Cancel" : "Pass"}
+              onPress={cancel}
+              variant="ghost"
+              size="md"
+            />
+          </View>
         </View>
-
-        <TouchableOpacity
-          style={[styles.button, styles.submitButton]}
-          onPress={submit}
-          disabled={!guess.trim()}
-        >
-          <Text style={styles.buttonText}>Submit Guess</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.button, styles.cancelButton]}
-          onPress={cancel}
-        >
-          <Text style={[styles.buttonText, styles.cancelText]}>Pass (Civilians Win)</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+      </KeyboardAvoidingView>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#000",
-    paddingTop: 60,
-    paddingHorizontal: 20,
   },
   content: {
     flex: 1,
-    alignItems: "center",
-    paddingTop: 20,
+    justifyContent: "center",
+    paddingHorizontal: space.lg,
   },
   title: {
-    color: "#fff",
-    fontSize: 32,
+    marginBottom: space.xl,
+  },
+  infoCard: {
+    alignItems: "center",
+    marginBottom: space.xl,
+    paddingVertical: space.xl,
+  },
+  imposterLabel: {
+    color: palette.textDim,
+    fontSize: type.small,
+    fontWeight: "700",
+    textTransform: "uppercase",
+    letterSpacing: 1,
+    marginBottom: space.xs,
+  },
+  imposterName: {
+    color: palette.danger,
+    fontSize: type.h1,
     fontWeight: "900",
-    textAlign: "center",
-    marginBottom: 12,
+    marginBottom: space.md,
   },
-  subtitle: {
-    color: "#fff",
-    fontSize: 18,
-    fontWeight: "600",
+  instruction: {
+    color: palette.textDim,
+    fontSize: type.body,
     textAlign: "center",
-    marginBottom: 8,
-  },
-  instructions: {
-    color: "#aaa",
-    fontSize: 14,
-    textAlign: "center",
-    lineHeight: 20,
-    marginBottom: 32,
-    paddingHorizontal: 20,
-  },
-  inputContainer: {
-    width: "100%",
-    marginBottom: 24,
+    lineHeight: 22,
   },
   input: {
-    backgroundColor: "#1a1a1a",
-    color: "#fff",
-    fontSize: 18,
-    fontWeight: "600",
-    borderRadius: 16,
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    borderWidth: 2,
-    borderColor: "#333",
+    marginBottom: space.xl,
   },
-  button: {
-    width: "100%",
-    paddingVertical: 16,
-    borderRadius: 16,
-    alignItems: "center",
-    marginBottom: 12,
-  },
-  submitButton: {
-    backgroundColor: "#23a6f0",
-  },
-  cancelButton: {
-    backgroundColor: "#1a1a1a",
-    borderWidth: 1,
-    borderColor: "#333",
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 18,
-    fontWeight: "900",
-  },
-  cancelText: {
-    color: "#999",
+  actions: {
+    gap: space.md,
   },
 });

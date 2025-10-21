@@ -1,9 +1,19 @@
-import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Alert, ScrollView } from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, Alert, ScrollView, TouchableOpacity, Linking } from "react-native";
 import { useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useGameStore } from "../src/store/gameStore";
 import { useAdConsentContext } from "../src/contexts/AdConsentContext";
+import Screen from "../src/components/ui/Screen";
+import Title from "../src/components/ui/Title";
+import Button from "../src/components/ui/Button";
+import Card from "../src/components/ui/Card";
+import { space, palette, type } from "../src/constants/theme";
+import { Icon } from "../src/constants/icons";
+
+const TUTORIAL_SEEN_KEY = "imposter-hunt-tutorial-seen";
+const PRIVACY_POLICY_URL = "https://github.com/Davidpereira2803/imposter-hunt/blob/master/Privacy.md";
 
 export default function Settings() {
   const router = useRouter();
@@ -13,13 +23,44 @@ export default function Settings() {
     canShowPersonalizedAds, 
     showConsentForm, 
     resetConsent,
+    consentInfo,
     isLoading 
   } = useAdConsentContext();
 
+  const [showDebug, setShowDebug] = useState(__DEV__);
+
+  const handleBack = async () => {
+    try { await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); } catch {}
+    router.back();
+  };
+
+  const handleViewTutorial = async () => {
+    try {
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    } catch {}
+    
+    await AsyncStorage.removeItem(TUTORIAL_SEEN_KEY);
+    router.push("/tutorial");
+  };
+
+  const handlePrivacyPolicy = async () => {
+    try {
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    } catch {}
+
+    const supported = await Linking.canOpenURL(PRIVACY_POLICY_URL);
+    
+    if (supported) {
+      await Linking.openURL(PRIVACY_POLICY_URL);
+    } else {
+      Alert.alert("Error", "Cannot open privacy policy link");
+    }
+  };
+
   const handleClearData = async () => {
     Alert.alert(
-      "Clear All Data",
-      "This will remove all saved player names and preferences. Are you sure?",
+      "Clear Data",
+      "Remove all saved data?",
       [
         { text: "Cancel", style: "cancel" },
         {
@@ -30,7 +71,7 @@ export default function Settings() {
               await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
             } catch {}
             await clearStorage();
-            Alert.alert("Success", "All data has been cleared.");
+            Alert.alert("Success", "Data cleared");
           }
         }
       ]
@@ -41,16 +82,16 @@ export default function Settings() {
     try {
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
       await showConsentForm();
-      Alert.alert("Privacy Settings Updated", "Your ad preferences have been saved.");
+      Alert.alert("Updated", "Privacy settings saved");
     } catch (error) {
-      Alert.alert("Error", "Could not open privacy settings. Please try again.");
+      Alert.alert("Error", error.message || "Could not open settings");
     }
   };
 
   const handleResetConsent = async () => {
     Alert.alert(
-      "Reset Ad Consent",
-      "This will reset all ad consent settings. The consent form will appear again.",
+      "Reset Consent",
+      "This will reset your consent preferences and show the form again.",
       [
         { text: "Cancel", style: "cancel" },
         {
@@ -59,166 +100,234 @@ export default function Settings() {
           onPress: async () => {
             try {
               await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-            } catch {}
-            await resetConsent();
-            Alert.alert("Success", "Ad consent has been reset.");
+              await resetConsent();
+              await new Promise(resolve => setTimeout(resolve, 500));
+              await showConsentForm();
+              Alert.alert("Success", "Consent preferences updated");
+            } catch (error) {
+              Alert.alert("Error", error.message || "Could not reset consent");
+            }
           }
         }
       ]
     );
   };
 
+  const getConsentStatus = () => {
+    if (!consentInfo) return "Unknown";
+    
+    const statusMap = {
+      0: "Unknown",
+      1: "Required",
+      2: "Not Required",
+      3: "Obtained",
+    };
+    
+    return statusMap[consentInfo.status] || `Status ${consentInfo.status}`;
+  };
+
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <Text style={styles.title}>Settings</Text>
-
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Privacy & Ads</Text>
-        
-        <View style={styles.infoBox}>
-          <Text style={styles.infoLabel}>Ad Status:</Text>
-          <Text style={styles.infoValue}>
-            {isLoading ? "Loading..." : canShowAds ? "Enabled" : "Disabled"}
-          </Text>
-        </View>
-
-        <View style={styles.infoBox}>
-          <Text style={styles.infoLabel}>Personalized Ads:</Text>
-          <Text style={styles.infoValue}>
-            {isLoading ? "Loading..." : canShowPersonalizedAds ? "Yes" : "No"}
-          </Text>
-        </View>
-
-        <TouchableOpacity 
-          style={[styles.button, styles.primaryButton]} 
-          onPress={handleManagePrivacy}
-          disabled={isLoading}
-        >
-          <Text style={styles.buttonText}>Manage Privacy Settings</Text>
-        </TouchableOpacity>
-
-        {__DEV__ && (
-          <TouchableOpacity 
-            style={[styles.button, styles.warningButton]} 
-            onPress={handleResetConsent}
-            disabled={isLoading}
-          >
-            <Text style={styles.buttonText}>Reset Ad Consent (Dev Only)</Text>
+    <Screen>
+      <ScrollView contentContainerStyle={styles.scroll}>
+        {/* Header with back button */}
+        <View style={styles.header}>
+          <TouchableOpacity onPress={handleBack} style={styles.backButton}>
+            <Icon name="arrow-left" size={24} color={palette.text} />
           </TouchableOpacity>
-        )}
-      </View>
+          <Title style={styles.title}>Settings</Title>
+          <View style={styles.backButton} />
+        </View>
 
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Game Data</Text>
-        
-        <TouchableOpacity 
-          style={[styles.button, styles.dangerButton]} 
-          onPress={handleClearData}
-        >
-          <Text style={styles.buttonText}>Clear All Game Data</Text>
-        </TouchableOpacity>
-      </View>
+        {/* Help Section */}
+        <View style={styles.section}>
+          <View style={styles.sectionHeader}>
+            <Icon name="help-circle" size={20} color={palette.textDim} />
+            <Text style={styles.sectionTitle}>Help</Text>
+          </View>
+          
+          <Button 
+            title="How to Play"
+            onPress={handleViewTutorial}
+            variant="primary"
+            size="md"
+            icon={<Icon name="book-open" size={20} color={palette.text} />}
+          />
+        </View>
 
-      <TouchableOpacity 
-        style={[styles.button, styles.secondaryButton]} 
-        onPress={() => router.back()}
-      >
-        <Text style={styles.buttonText}>Back to Menu</Text>
-      </TouchableOpacity>
+        {/* Privacy & Ads Section */}
+        <View style={styles.section}>
+          <View style={styles.sectionHeader}>
+            <Icon name="shield-check" size={20} color={palette.textDim} />
+            <Text style={styles.sectionTitle}>Privacy & Ads</Text>
+          </View>
+          
+          <Card style={styles.infoRow}>
+            <View style={styles.infoLeft}>
+              <Icon name="information" size={18} color={palette.textDim} />
+              <Text style={styles.infoLabel}>Consent Status</Text>
+            </View>
+            <Text style={styles.infoValue}>
+              {isLoading ? "..." : getConsentStatus()}
+            </Text>
+          </Card>
 
-      <View style={styles.versionContainer}>
-        <Text style={styles.versionText}>Imposter Hunt v1.0.0</Text>
-        <Text style={styles.versionSubtext}>
-          {__DEV__ ? "Development Mode" : "Production"}
-        </Text>
-      </View>
-    </ScrollView>
+          <Card style={styles.infoRow}>
+            <View style={styles.infoLeft}>
+              <Icon name="ads" size={18} color={palette.textDim} />
+              <Text style={styles.infoLabel}>Ads Enabled</Text>
+            </View>
+            <Text style={[
+              styles.infoValue,
+              { color: canShowAds ? palette.success : palette.danger }
+            ]}>
+              {isLoading ? "..." : canShowAds ? "Yes" : "No"}
+            </Text>
+          </Card>
+
+          <Card style={styles.infoRow}>
+            <View style={styles.infoLeft}>
+              <Icon name="account" size={18} color={palette.textDim} />
+              <Text style={styles.infoLabel}>Personalized</Text>
+            </View>
+            <Text style={[
+              styles.infoValue,
+              { color: canShowPersonalizedAds ? palette.warn : palette.success }
+            ]}>
+              {isLoading ? "..." : canShowPersonalizedAds ? "Yes" : "No"}
+            </Text>
+          </Card>
+
+          <Button 
+            title="Privacy Policy"
+            onPress={handlePrivacyPolicy}
+            variant="ghost"
+            size="md"
+            icon={<Icon name="file-document" size={20} color={palette.text} />}
+            style={styles.privacyBtn}
+          />
+
+          <Button 
+            title="Manage Privacy"
+            onPress={handleManagePrivacy}
+            variant="primary"
+            size="md"
+            disabled={isLoading}
+            icon={<Icon name="shield-account" size={20} color={palette.text} />}
+          />
+
+          {__DEV__ && (
+            <Button 
+              title="Reset Consent (Dev)"
+              onPress={handleResetConsent}
+              variant="warn"
+              size="md"
+              disabled={isLoading}
+              style={styles.devBtn}
+              icon={<Icon name="refresh" size={20} color="#000" />}
+            />
+          )}
+        </View>
+
+        {/* Game Data Section */}
+        <View style={styles.section}>
+          <View style={styles.sectionHeader}>
+            <Icon name="database" size={20} color={palette.textDim} />
+            <Text style={styles.sectionTitle}>Game Data</Text>
+          </View>
+          
+          <Button 
+            title="Clear All Data"
+            onPress={handleClearData}
+            variant="danger"
+            size="md"
+            icon={<Icon name="delete" size={20} color={palette.text} />}
+          />
+        </View>
+
+        <View style={styles.version}>
+          <Icon name="information-outline" size={16} color={palette.textDim} />
+          <Text style={styles.versionText}>Version 1.0.0</Text>
+        </View>
+      </ScrollView>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#000",
-  },
-  content: {
-    padding: 20,
+  scroll: {
     paddingTop: 60,
-    paddingBottom: 40,
+    paddingHorizontal: space.lg,
+    paddingBottom: space.xl,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: space.xl,
+  },
+  backButton: {
+    width: 40,
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
   },
   title: {
-    color: "#fff",
-    fontSize: 28,
-    fontWeight: "900",
+    flex: 1,
     textAlign: "center",
-    marginBottom: 32,
   },
   section: {
-    marginBottom: 32,
+    marginBottom: space.xl,
+  },
+  sectionHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: space.xs,
+    marginBottom: space.md,
   },
   sectionTitle: {
-    color: "#fff",
-    fontSize: 18,
+    color: palette.textDim,
+    fontSize: type.small,
     fontWeight: "700",
-    marginBottom: 16,
+    textTransform: "uppercase",
+    letterSpacing: 1,
   },
-  infoBox: {
-    backgroundColor: "#1a1a1a",
-    padding: 16,
-    borderRadius: 12,
-    marginBottom: 12,
+  infoRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    marginBottom: space.sm,
+    padding: space.md,
+  },
+  infoLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: space.sm,
   },
   infoLabel: {
-    color: "#aaa",
-    fontSize: 16,
+    color: palette.textDim,
+    fontSize: type.body,
     fontWeight: "600",
   },
   infoValue: {
-    color: "#fff",
-    fontSize: 16,
+    color: palette.text,
+    fontSize: type.body,
     fontWeight: "700",
   },
-  button: {
-    paddingVertical: 16,
-    paddingHorizontal: 24,
-    borderRadius: 12,
+  privacyBtn: {
+    marginBottom: space.sm,
+  },
+  devBtn: {
+    marginTop: space.sm,
+  },
+  version: {
+    flexDirection: "row",
     alignItems: "center",
-    marginBottom: 12,
-  },
-  primaryButton: {
-    backgroundColor: "#23a6f0",
-  },
-  secondaryButton: {
-    backgroundColor: "#1a1a1a",
-    borderWidth: 1,
-    borderColor: "#333",
-  },
-  dangerButton: {
-    backgroundColor: "#e63946",
-  },
-  warningButton: {
-    backgroundColor: "#ffc107",
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "700",
-  },
-  versionContainer: {
-    marginTop: 40,
-    alignItems: "center",
+    justifyContent: "center",
+    gap: space.xs,
+    marginTop: space.xl,
   },
   versionText: {
-    color: "#666",
-    fontSize: 14,
-    fontWeight: "600",
-  },
-  versionSubtext: {
-    color: "#444",
-    fontSize: 12,
-    marginTop: 4,
+    color: palette.textDim,
+    fontSize: type.small,
   },
 });

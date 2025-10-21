@@ -3,130 +3,202 @@ import { persist, createJSONStorage } from "zustand/middleware";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import topics from "../data/topics.json";
 
-function pickRandom(arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
-}
+const CUSTOM_TOPICS_KEY = "imposter-hunt-custom-topics";
+
+const slugify = (s = "") =>
+  s.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 
 export const useGameStore = create(
   persist(
     (set, get) => ({
-      _hasHydrated: false,
-
-      players: [],            // ["Alice", "Bob", "Cara", ...]
-      alive: [],              // [true, true, true, ...] mirrors players by index
-      topicKey: null,         // "food" | "animals" | ...
-      secretWord: null,
-      imposterIndex: null,    // index in players
+      players: [],
+      topicKey: "",
+      secretWord: "",
+      imposterIndex: null,
+      alive: [],
       round: 1,
+      _hasHydrated: false,
+      predefinedTopics: topics,
+      customTopics: [],
 
       setPlayers: (players) => set({ players }),
       setTopicKey: (topicKey) => set({ topicKey }),
-      setHasHydrated: (hasHydrated) => set({ _hasHydrated: hasHydrated }),
+
+      getTopicByKey: (key) => {
+        if (!key) return null;
+        if (key.startsWith("custom:")) {
+          const slug = key.slice("custom:".length);
+          const t = (get().customTopics || []).find((x) => slugify(x.name) === slug);
+          return t ? { key, name: t.name, words: t.words || [], isCustom: true } : null;
+        }
+        const words = (get().predefinedTopics || {})[key];
+        if (Array.isArray(words)) {
+          return { key, name: key, words, isCustom: false };
+        }
+        return null;
+      },
+      getTopicWordsByKey: (key) => {
+        const t = get().getTopicByKey(key);
+        return t ? t.words : null;
+      },
 
       startMatch: () => {
         const { players, topicKey } = get();
-        if (!topicKey || (players?.length ?? 0) < 3) return false;
-        const wordList = topics[topicKey] || [];
-        if (!wordList.length) return false;
+        if (!players || players.length < 3) return false;
 
-        const word = pickRandom(wordList);
+        const words = get().getTopicWordsByKey(topicKey);
+        if (!words || words.length === 0) {
+          console.error("Invalid topic key");
+          return false;
+        }
+
+        const secretWord = words[Math.floor(Math.random() * words.length)];
         const imposterIndex = Math.floor(Math.random() * players.length);
+
         const alive = players.map(() => true);
 
-        set({ secretWord: word, imposterIndex, round: 1, alive });
+        set({
+          secretWord,
+          imposterIndex,
+          alive,
+          round: 1,
+        });
+
         return true;
       },
 
-      eliminatePlayer: (playerIndex) => {
-        set((state) => {
-          const updatedAlive = state.alive.map((isAlive, i) =>
-            i === playerIndex ? false : isAlive
-          );
+      nextRound: () => {
+        set((state) => ({ round: (state.round || 1) + 1 }));
+      },
 
-          const aliveCount = updatedAlive.filter(Boolean).length;
-          const imposterAlive = updatedAlive[state.imposterIndex];
-
-          console.log("After elimination:", {
-            totalAlive: aliveCount,
-            imposterAlive,
-            eliminatedIndex: playerIndex,
-            wasImposter: playerIndex === state.imposterIndex
-          });
-
-          let outcome;
-          if (playerIndex === state.imposterIndex) {
-            outcome = "civilians";
-          } else if (aliveCount === 1 && imposterAlive) {
-            outcome = "imposter";
-          } else {
-            outcome = "continue";
-          }
-
-          console.log("Outcome:", outcome);
-
-          return {
-            alive: updatedAlive,
-            outcome
-          };
+      resetMatch: () => {
+        set({
+          secretWord: "",
+          imposterIndex: null,
+          alive: [],
+          round: 1,
         });
+      },
 
-        return get().outcome;
+      eliminatePlayer: (index) => {
+        const { alive, imposterIndex, players } = get();
+        
+        if (!alive || !players || index == null) return null;
+
+        const newAlive = [...alive];
+        newAlive[index] = false;
+
+        set({ alive: newAlive });
+
+        if (index === imposterIndex) {
+          return "civilians";
+        }
+
+        const aliveCount = newAlive.filter(Boolean).length;
+        
+        if (aliveCount <= 2) {
+          return "imposter";
+        }
+
+        return "continue";
+      },
+
+      checkGameOver: () => {
+        const { alive, imposterIndex } = get();
+        if (!alive) return null;
+
+        const imposterAlive = alive[imposterIndex];
+        if (!imposterAlive) {
+          return "civilians";
+        }
+
+        const aliveCount = alive.filter(Boolean).length;
+        
+        if (aliveCount <= 2) {
+          return "imposter";
+        }
+
+        return null;
       },
 
       aliveCount: () => {
         const { alive } = get();
-        return alive.filter(Boolean).length;
+        return alive ? alive.filter(Boolean).length : 0;
       },
 
-      nextRound: () => set((s) => ({ round: s.round + 1 })),
-
-      resetMatch: () =>
+      clearStorage: async () => {
+        await AsyncStorage.clear();
         set({
           players: [],
-          alive: [],
-          topicKey: null,
-          secretWord: null,
+          topicKey: "",
+          secretWord: "",
           imposterIndex: null,
-          round: 1
-        }),
+          alive: [],
+          round: 1,
+        });
+      },
 
-      clearStorage: async () => {
+      loadCustomTopics: async () => {
         try {
-          await AsyncStorage.removeItem("fakeout-game-storage");
-          set({
-            players: [],
-            alive: [],
-            topicKey: null,
-            secretWord: null,
-            imposterIndex: null,
-            round: 1
-          });
-        } catch (error) {
-          console.error("Failed to clear storage:", error);
+          const raw = await AsyncStorage.getItem(CUSTOM_TOPICS_KEY);
+          const parsed = raw ? JSON.parse(raw) : [];
+          set({ customTopics: Array.isArray(parsed) ? parsed : [] });
+        } catch {}
+      },
+      saveCustomTopics: async () => {
+        try {
+          const { customTopics } = get();
+          await AsyncStorage.setItem(CUSTOM_TOPICS_KEY, JSON.stringify(customTopics));
+        } catch {}
+      },
+      addCustomTopic: async ({ name, words = [] }) => {
+        const safeName = (name || "").trim();
+        const safeWords = (words || []).map((w) => String(w).trim()).filter(Boolean);
+        if (!safeName) return { ok: false, error: "Topic name required" };
+
+        const predefinedNames = Object.keys(get().predefinedTopics || {});
+        const allNamesLower = [
+          ...predefinedNames,
+          ...(get().customTopics || []).map((t) => t.name),
+        ].map((n) => n.toLowerCase());
+
+        if (allNamesLower.includes(safeName.toLowerCase())) {
+          return { ok: false, error: "Topic name already exists" };
         }
+
+        const next = [...(get().customTopics || []), { name: safeName, words: safeWords }];
+        set({ customTopics: next });
+        await get().saveCustomTopics?.();
+        return { ok: true };
+      },
+      removeCustomTopic: async (name) => {
+        const next = (get().customTopics || []).filter((t) => t.name !== name);
+        set({ customTopics: next });
+        await get().saveCustomTopics?.();
+
+        const selected = get().topicKey;
+        if (selected && selected.startsWith("custom:") && selected === `custom:${slugify(name)}`) {
+          set({ topicKey: undefined });
+        }
+      },
+      getAllTopics: () => {
+        const pre = Object.entries(get().predefinedTopics || {}).map(([key, words]) => ({
+          key, name: key, words, isCustom: false,
+        }));
+        const custom = (get().customTopics || []).map((t) => ({
+          key: `custom:${slugify(t.name)}`, name: t.name, words: t.words || [], isCustom: true,
+        }));
+        return [...pre, ...custom];
       },
     }),
     {
-      name: "fakeout-game-storage",
+      name: "imposter-hunt-storage",
       storage: createJSONStorage(() => AsyncStorage),
-      
-      partialize: (state) => ({
-        players: state.players,
-        topicKey: state.topicKey,
-      }),
-
-      version: 1,
-      
-      onRehydrateStorage: (state) => {
-        console.log("Starting hydration...");
-        return (state, error) => {
-          if (error) {
-            console.log("Error during rehydration:", error);
-          } else {
-            console.log("Hydration completed successfully");
-          }
-          useGameStore.getState().setHasHydrated(true);
-        };
+      onRehydrateStorage: () => (state) => {
+        if (state) {
+          state._hasHydrated = true;
+          state._hydrated = true;
+        }
       },
     }
   )
