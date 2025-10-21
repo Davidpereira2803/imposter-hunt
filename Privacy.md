@@ -1,7 +1,6 @@
 ---
-layout: page
+layout: default
 title: Privacy Policy
-permalink: /Privacy/
 ---
 
 # **Imposter Hunt – Privacy Policy**

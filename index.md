@@ -1,7 +1,6 @@
 ---
-layout: home
+layout: default
 title: Imposter Hunt - Social Deduction Game
-permalink: /
 ---
 
 # Imposter Hunt
@@ -18,14 +17,14 @@ Find the imposter among your friends before it's too late. One player receives a
 - **Beautiful UI** - Modern, polished design
 - **Privacy First** - Your data stays on your device
 
-## Download {#download}
+## Download
 
 [Get it on Google Play](#) | [Download APK](#)
 
 ## Documentation
 
-- [How to Play](/README)
-- [Privacy Policy](/Privacy)
+- [How to Play](README)
+- [Privacy Policy](Privacy)
 
 ## Built With
 
