@@ -1,7 +1,6 @@
 ---
-layout: page
+layout: default
 title: How to Play
-permalink: /README/
 ---
 
 # How to Play Imposter Hunt
