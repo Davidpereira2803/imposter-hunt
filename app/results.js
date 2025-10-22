@@ -9,6 +9,7 @@ import Button from "../src/components/ui/Button";
 import Card from "../src/components/ui/Card";
 import { space, palette, type } from "../src/constants/theme";
 import { Icon } from "../src/constants/icons";
+import { playSound } from "../src/lib/soundManager";
 
 export default function Results() {
   const router = useRouter();
@@ -35,6 +36,14 @@ export default function Results() {
       } catch {}
     };
     triggerHaptics();
+  }, [imposterWon]);
+
+  useEffect(() => {
+    if (imposterWon) {
+      playSound("lose", 0.8);
+    } else {
+      playSound("win", 0.8);
+    }
   }, [imposterWon]);
 
   const handlePlayAgain = async () => {

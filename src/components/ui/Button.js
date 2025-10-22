@@ -1,6 +1,7 @@
 import React from "react";
 import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
 import { palette, radii, type } from "../../constants/theme";
+import { playSound } from "../../lib/soundManager";
 
 export default function Button({ 
   title, 
@@ -10,15 +11,23 @@ export default function Button({
   disabled = false,
   icon,
   iconPosition = "left",
-  style 
+  style,
+  playClickSound = true, // New prop
 }) {
   const variantStyle = styles[variant] || styles.primary;
   const sizeStyle = size === "lg" ? styles.lg : styles.md;
   const textColorStyle = variant === "success" ? styles.textBlack : styles.textWhite;
 
+  const handlePress = async () => {
+    if (playClickSound) {
+      await playSound('click', 0.5);
+    }
+    onPress?.();
+  };
+
   return (
     <TouchableOpacity 
-      onPress={onPress} 
+      onPress={handlePress} 
       disabled={disabled}
       style={[
         styles.base, 

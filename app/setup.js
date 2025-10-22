@@ -24,10 +24,13 @@ export default function Setup() {
   const predefinedTopics = useGameStore((s) => s.predefinedTopics);
   const customTopics = useGameStore((s) => s.customTopics);
 
+  const toTitleCase = (str) => 
+    str.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+
   const allTopics = useMemo(() => {
     const pre = Object.entries(predefinedTopics || {}).map(([key, words]) => ({
       key,
-      name: key,
+      name: toTitleCase(key),
       words,
       isCustom: false,
       isAI: false,

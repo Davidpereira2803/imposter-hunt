@@ -5,6 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useGameStore } from "../src/store/gameStore";
 import { AdConsentProvider } from "../src/contexts/AdConsentContext";
 import LoadingScreen from "../src/components/LoadingScreen";
+import { initSounds, loadSound } from "../src/lib/soundManager";
 
 const TUTORIAL_SEEN_KEY = "imposter-hunt-tutorial-seen";
 
@@ -45,6 +46,25 @@ export default function RootLayout() {
 
     return () => clearTimeout(timeout);
   }, [hasHydrated]);
+
+  useEffect(() => {
+    async function setupSounds() {
+      await initSounds();
+
+      await Promise.all([
+        loadSound("click", require("../assets/sounds/button-click.wav")),
+        loadSound("reveal", require("../assets/sounds/reveal.wav")),
+        loadSound("imposter", require("../assets/sounds/imposter.wav")),
+        loadSound("civilian", require("../assets/sounds/civilian.wav")),
+        loadSound("success", require("../assets/sounds/success.wav")),
+        loadSound("eliminate", require("../assets/sounds/eliminate.wav")),
+        loadSound("win", require("../assets/sounds/win.wav")),
+        loadSound("lose", require("../assets/sounds/lose.wav")),
+      ]);
+    }
+
+    setupSounds();
+  }, []);
 
   if (!isReady) {
     return <LoadingScreen />;

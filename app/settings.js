@@ -1,16 +1,18 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Alert, ScrollView, TouchableOpacity, Linking } from "react-native";
+import { View, Text, StyleSheet, Alert, ScrollView, TouchableOpacity, Linking, Switch } from "react-native";
 import { useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useGameStore } from "../src/store/gameStore";
 import { useAdConsentContext } from "../src/contexts/AdConsentContext";
+import { useSettingsStore } from "../src/store/settingsStore";
 import Screen from "../src/components/ui/Screen";
 import Title from "../src/components/ui/Title";
 import Button from "../src/components/ui/Button";
 import Card from "../src/components/ui/Card";
 import { space, palette, type } from "../src/constants/theme";
 import { Icon } from "../src/constants/icons";
+import Slider from '@react-native-community/slider';
 
 const TUTORIAL_SEEN_KEY = "imposter-hunt-tutorial-seen";
 const PRIVACY_POLICY_URL = "https://davidpereira2803.github.io/imposter-hunt/Privacy/";
@@ -26,6 +28,11 @@ export default function Settings() {
     consentInfo,
     isLoading 
   } = useAdConsentContext();
+
+  const soundEnabled = useSettingsStore((s) => s.soundEnabled);
+  const soundVolume = useSettingsStore((s) => s.soundVolume);
+  const setSoundEnabled = useSettingsStore((s) => s.setSoundEnabled);
+  const setSoundVolume = useSettingsStore((s) => s.setSoundVolume);
 
   const [showDebug, setShowDebug] = useState(__DEV__);
 
@@ -244,6 +251,42 @@ export default function Settings() {
           />
         </View>
 
+        {/* Audio Section */}
+        <View style={styles.section}>
+          <View style={styles.sectionHeader}>
+            <Icon name="volume-high" size={20} color={palette.textDim} />
+            <Text style={styles.sectionTitle}>Audio</Text>
+          </View>
+
+          <Card style={styles.settingCard}>
+            <View style={styles.settingRow}>
+              <Text style={styles.settingLabel}>Sound Effects</Text>
+              <Switch
+                value={soundEnabled}
+                onValueChange={setSoundEnabled}
+                trackColor={{ false: palette.line, true: palette.primary }}
+              />
+            </View>
+          </Card>
+
+          {soundEnabled && (
+            <Card style={styles.settingCard}>
+              <Text style={styles.settingLabel}>Sound Volume</Text>
+              <Slider
+                style={{ width: '100%', height: 40 }}
+                minimumValue={0}
+                maximumValue={1}
+                value={soundVolume}
+                onValueChange={setSoundVolume}
+                minimumTrackTintColor={palette.primary}
+                maximumTrackTintColor={palette.line}
+                thumbTintColor={palette.primary}
+              />
+              <Text style={styles.volumeText}>{Math.round(soundVolume * 100)}%</Text>
+            </Card>
+          )}
+        </View>
+
         <View style={styles.version}>
           <Icon name="information-outline" size={16} color={palette.textDim} />
           <Text style={styles.versionText}>Version 1.0.0</Text>
@@ -329,5 +372,25 @@ const styles = StyleSheet.create({
   versionText: {
     color: palette.textDim,
     fontSize: type.small,
+  },
+  settingCard: {
+    marginBottom: space.sm,
+    padding: space.md,
+  },
+  settingRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  settingLabel: {
+    color: palette.text,
+    fontSize: type.body,
+    fontWeight: "600",
+  },
+  volumeText: {
+    color: palette.textDim,
+    fontSize: type.small,
+    textAlign: 'center',
+    marginTop: space.sm,
   },
 });
