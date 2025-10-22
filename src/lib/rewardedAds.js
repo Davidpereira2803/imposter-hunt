@@ -5,10 +5,12 @@ import mobileAds, {
   RewardedAdEventType,
   TestIds,
 } from "react-native-google-mobile-ads";
+import { ca } from "zod/v4/locales";
 
 const REWARDED_ID = __DEV__
   ? TestIds.REWARDED
-  : "ca-app-pub-xxxxxxxxxxxxxxxx/xxxxxxxxxx"; // TODO: replace on release
+  : ca-app-pub-xxxxxxxxxxxxx/yyyyyyyyyyyyyy;
+  //: process.env.AD_REWARDED_UNIT_ID;
 
 export async function initAds() {
   await mobileAds().setRequestConfiguration({

@@ -2,10 +2,12 @@ import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 import { useAdConsentContext } from '../contexts/AdConsentContext';
+import { ca } from 'zod/v4/locales';
 
 const adUnitId = __DEV__ 
   ? TestIds.BANNER 
-  : 'ca-app-pub-xxxxxxxxxxxxx/yyyyyyyyyyyyyy'; // Replace with your real ad unit ID
+  : ca-app-pub-xxxxxxxxxxxxx/yyyyyyyyyyyyyy;
+  //: process.env.AD_BANNER_UNIT_ID;
 
 export const AdBanner = () => {
   const { canShowAds, canShowPersonalizedAds, isLoading } = useAdConsentContext();

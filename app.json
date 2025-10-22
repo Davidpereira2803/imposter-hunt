@@ -40,13 +40,14 @@
       [
         "react-native-google-mobile-ads",
         {
-          "androidAppId": "ca-app-pub-3940256099942544~3347511713",
+          "androidAppId": "ca-app-pub-5142881516526777~8081445278",
           "iosAppId": "ca-app-pub-3940256099942544~1458002511",
           "userTrackingPermission": "This identifier will be used to deliver personalized ads to you."
         }
       ],
       "expo-build-properties",
-      "expo-system-ui"
+      "expo-system-ui",
+      "expo-router"
     ],
     "newArchEnabled": true,
     "experiments": {
