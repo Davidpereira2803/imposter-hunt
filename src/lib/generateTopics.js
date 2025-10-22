@@ -90,7 +90,7 @@ export const generateTopics = async ({
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${API_CONFIG.API_KEY}`, // Add API key here
+        "Authorization": `Bearer ${API_CONFIG.API_KEY}`,
       },
       body: JSON.stringify({
         prompt: description,
@@ -105,7 +105,6 @@ export const generateTopics = async ({
     if (!response.ok) {
       const text = await response.text().catch(() => "");
       
-      // Handle unauthorized specifically
       if (response.status === 401 || response.status === 403) {
         throw new Error("Authentication failed. Please update the app.");
       }

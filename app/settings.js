@@ -175,7 +175,7 @@ export default function Settings() {
 
           <Card style={styles.infoRow}>
             <View style={styles.infoLeft}>
-              <Icon name="ads" size={18} color={palette.textDim} />
+              <Icon name="advertisements" size={18} color={palette.textDim} />
               <Text style={styles.infoLabel}>Ads Enabled</Text>
             </View>
             <Text style={[
