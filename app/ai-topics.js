@@ -10,7 +10,7 @@ import {
   Alert,
   ActivityIndicator,
 } from "react-native";
-import { useRouter } from "expo-router";
+import { useRouter, useFocusEffect } from "expo-router";
 import * as Haptics from "expo-haptics";
 import Slider from "@react-native-community/slider";
 import { useAIStore } from "../src/store/aiStore";
@@ -23,6 +23,8 @@ import Input from "../src/components/ui/Input";
 import Card from "../src/components/ui/Card";
 import { space, palette, type } from "../src/constants/theme";
 import { Icon } from "../src/constants/icons";
+import { initAds, showRewarded } from "../src/lib/rewardedAds";
+import { useAdConsentContext } from "../src/contexts/AdConsentContext";
 
 const DIFFICULTIES = ["easy", "medium", "hard", "mixed"];
 
@@ -40,15 +42,41 @@ export default function AITopics() {
     incrementGenerations,
     incrementAdsWatched,
     addGeneratedTopic,
+    ensureDailyReset,
+    getRemainingGenerations,
+    getMaxAllowedToday,
   } = useAIStore();
 
   const { addCustomTopic, setTopicKey } = useGameStore();
+
+  const { canShowAds, canShowPersonalizedAds, showConsentForm } = useAdConsentContext();
+  const [isShowingAd, setIsShowingAd] = useState(false);
 
   const [description, setDescription] = useState("");
   const [numTopics, setNumTopics] = useState(24);
   const [difficulty, setDifficulty] = useState("medium");
   const [language, setLanguage] = useState("en");
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    initAds().catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    ensureDailyReset();
+  }, [ensureDailyReset]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      ensureDailyReset();
+    }, [ensureDailyReset])
+  );
+
+  const remaining = getRemainingGenerations
+    ? getRemainingGenerations()
+    : Math.max(0, (1 + watchedAdsToday) - generationsToday);
+
+  const freeRemaining = Math.max(0, 1 - Math.min(generationsToday, 1));
 
   const handleBack = async () => {
     try {
@@ -58,29 +86,24 @@ export default function AITopics() {
   };
 
   const handleWatchAd = async () => {
+    if (!canShowAds) {
+      try { await showConsentForm(); } catch {}
+    }
     if (watchedAdsToday >= maxAdsPerDay) {
-      Alert.alert("Limit Reached", "You've watched the maximum ads for today.");
+      Alert.alert("Limit Reached", "You've watched the maximum rewarded ads for today.");
       return;
     }
+    setIsShowingAd(true);
+    const res = await showRewarded({ nonPersonalized: !canShowPersonalizedAds });
+    setIsShowingAd(false);
 
-    try {
-      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    } catch {}
-
-    // TODO: Show rewarded ad
-    Alert.alert(
-      "Watch Ad",
-      "Rewarded ad integration coming soon. For now, you get +1 generation!",
-      [
-        {
-          text: "OK",
-          onPress: () => {
-            incrementAdsWatched();
-            Alert.alert("Success", "You earned 1 extra generation!");
-          },
-        },
-      ]
-    );
+    if (res.earned) {
+      incrementAdsWatched();
+      try { await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success); } catch {}
+      Alert.alert("Thanks!", "You earned +1 AI generation.");
+    } else {
+      Alert.alert("No reward", res.error?.message || "Ad closed before completion. Try again.");
+    }
   };
 
   const handleGenerate = async () => {
@@ -176,10 +199,6 @@ export default function AITopics() {
     }
   };
 
-  const getRemainingGenerations = () => {
-    return maxGenerations - generationsToday;
-  };
-
   return (
     <Screen>
       <KeyboardAvoidingView
@@ -205,9 +224,14 @@ export default function AITopics() {
           <Card style={styles.usageCard}>
             <View style={styles.usageRow}>
               <Icon name="lightning-bolt" size={20} color={palette.primary} />
-              <Text style={styles.usageText}>
-                {getRemainingGenerations()} generations remaining today
-              </Text>
+              <View style={{ flex: 1 }}>
+                <Text style={styles.usageText}>
+                  {remaining} generations remaining today
+                </Text>
+                <Text style={styles.usageSubText}>
+                  Free left: {freeRemaining} • Ads used: {watchedAdsToday}/{maxAdsPerDay}
+                </Text>
+              </View>
             </View>
             {watchedAdsToday < maxAdsPerDay && (
               <Button
@@ -217,6 +241,7 @@ export default function AITopics() {
                 size="sm"
                 icon={<Icon name="video" size={16} color={palette.text} />}
                 style={styles.adButton}
+                disabled={isShowingAd || watchedAdsToday >= maxAdsPerDay || !canShowAds}
               />
             )}
           </Card>
@@ -294,6 +319,7 @@ export default function AITopics() {
           </View>
 
           {/* Language Input */}
+          {/*
           <View style={styles.section}>
             <Text style={styles.label}>Language (optional)</Text>
             <Input
@@ -308,13 +334,15 @@ export default function AITopics() {
             </Text>
           </View>
 
+          */}
+
           {/* Generate Button */}
           <Button
             title={isLoading ? "Generating..." : "Generate Topics"}
             onPress={handleGenerate}
             variant="primary"
             size="lg"
-            disabled={isLoading || !canGenerate()}
+            disabled={isLoading || remaining <= 0}
             icon={
               isLoading ? (
                 <ActivityIndicator color={palette.text} size="small" />
@@ -380,6 +408,11 @@ const styles = StyleSheet.create({
     fontSize: type.body,
     fontWeight: "600",
     color: palette.text,
+  },
+  usageSubText: {
+    fontSize: type.small,
+    color: palette.textDim,
+    marginTop: 2,
   },
   adButton: {
     paddingHorizontal: space.sm,

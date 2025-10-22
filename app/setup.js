@@ -20,9 +20,7 @@ export default function Setup() {
   const setPlayers = useGameStore((s) => s.setPlayers);
   const setTopicKey = useGameStore((s) => s.setTopicKey);
   const startMatch = useGameStore((s) => s.startMatch);
-
   const addCustomTopic = useGameStore((s) => s.addCustomTopic);
-
   const predefinedTopics = useGameStore((s) => s.predefinedTopics);
   const customTopics = useGameStore((s) => s.customTopics);
 
@@ -32,17 +30,25 @@ export default function Setup() {
       name: key,
       words,
       isCustom: false,
+      isAI: false,
     }));
-    const custom = (customTopics || []).map((t) => ({
-      key: `custom:${(t.name || "")
-        .toLowerCase()
-        .trim()
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/(^-|-$)/g, "")}`,
-      name: t.name,
-      words: t.words || [],
-      isCustom: true,
-    }));
+    const custom = (customTopics || []).map((t) => {
+      const isAI =
+        t?.isAI === true ||
+        t?.source === "ai" ||
+        /\(ai\)/i.test(t?.name || "");
+      return {
+        key: `custom:${(t.name || "")
+          .toLowerCase()
+          .trim()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/(^-|-$)/g, "")}`,
+        name: t.name,
+        words: t.words || [],
+        isCustom: true,
+        isAI,
+      };
+    });
     return [...pre, ...custom];
   }, [predefinedTopics, customTopics]);
 
@@ -58,7 +64,6 @@ export default function Setup() {
       router.replace("/");
       return true;
     };
-
     const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
     return () => backHandler.remove();
   }, [router]);
@@ -66,17 +71,14 @@ export default function Setup() {
   const addPlayer = async () => {
     const name = inputName.trim();
     if (!name) return;
-    
     if (playerList.includes(name)) {
       Alert.alert("Duplicate", "Player already added");
       return;
     }
-
     const newList = [...playerList, name];
     setPlayerList(newList);
     setPlayers(newList);
     setInputName("");
-    
     try { await Haptics.selectionAsync(); } catch {}
   };
 
@@ -84,7 +86,6 @@ export default function Setup() {
     const newList = playerList.filter((_, i) => i !== index);
     setPlayerList(newList);
     setPlayers(newList);
-    
     try { await Haptics.selectionAsync(); } catch {}
   };
 
@@ -161,7 +162,7 @@ export default function Setup() {
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
         >
-          {/* Add header with back button */}
+          {/* Header */}
           <View style={styles.header}>
             <TouchableOpacity onPress={handleGoHome} style={styles.backButton}>
               <Icon name="arrow-left" size={24} color={palette.text} />
@@ -170,10 +171,74 @@ export default function Setup() {
             <View style={styles.backButton} />
           </View>
 
+          {/* Topic Section FIRST */}
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Topic</Text>
+
+            {/* Top actions: AI + Custom */}
+            <View style={styles.topicActionsRow}>
+              <View style={{ flex: 1 }}>
+                <Button 
+                  title="Generate with AI"
+                  onPress={() => {
+                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(() => {});
+                    router.push("/ai-topics");
+                  }}
+                  variant="primary"
+                  size="md"
+                  icon={<Icon name="magic-staff" size={20} color={palette.text} />}
+                  style={styles.topicActionBtn}
+                />
+              </View>
+              <View style={{ width: space.sm }} />
+              <View style={{ flex: 1 }}>
+                <Button
+                  title="Custom Topic"
+                  onPress={openModal}
+                  size="md"
+                  variant="ghost"
+                  icon={<Icon name="plus-circle" size={20} color={palette.text} />}
+                  style={styles.topicActionBtn}
+                />
+              </View>
+            </View>
+
+            {/* Grid of topics */}
+            {allTopics.length > 0 && (
+              <View style={styles.topicGrid}>
+                {allTopics.map((t) => (
+                  <Card
+                    key={t.key}
+                    onPress={() => handleSelectTopic(t.key)}
+                    style={[
+                      styles.topicCard,
+                      topicKey === t.key && { borderColor: palette.primary, borderWidth: 2 },
+                    ]}
+                  >
+                    <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
+                      <Text
+                        style={styles.topicName}
+                        numberOfLines={1}
+                        ellipsizeMode="tail"
+                      >
+                        {t.name}
+                      </Text>
+                      {t.isCustom ? (
+                        <View
+                          accessibilityLabel={t.isAI ? "AI generated topic" : "Custom topic"}
+                          style={[styles.dot, t.isAI ? styles.dotAI : styles.dotCustom]}
+                        />
+                      ) : null}
+                    </View>
+                  </Card>
+                ))}
+              </View>
+            )}
+          </View>
+
           {/* Players Section */}
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Players ({playerList.length})</Text>
-            
             <View style={styles.inputRow}>
               <Input
                 value={inputName}
@@ -201,51 +266,6 @@ export default function Setup() {
             )}
           </View>
 
-          {/* Topic Section */}
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Topic</Text>
-
-            {allTopics.length > 0 && (
-              <View style={styles.topicList}>
-                {allTopics.map((t) => (
-                  <Card
-                    key={t.key}
-                    onPress={() => handleSelectTopic(t.key)}
-                    style={[
-                      styles.topicCard,
-                      topicKey === t.key && { borderColor: palette.primary, borderWidth: 2 },
-                    ]}
-                  >
-                    <Text style={styles.topicName}>{t.name}</Text>
-                    {t.isCustom ? <Pill label="Custom" /> : null}
-                  </Card>
-                ))}
-              </View>
-            )}
-
-            <View style={{ marginTop: space.lg }}>
-              <Button
-                title="Create Custom Topic"
-                onPress={openModal}
-                size="md"
-                variant="ghost"
-                icon={<Icon name="plus-circle" size={20} color={palette.text} />}
-              />
-            </View>
-
-            <Button 
-              title="Generate with AI"
-              onPress={() => {
-                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(() => {});
-                router.push("/ai-topics");
-              }}
-              variant="primary"
-              size="md"
-              icon={<Icon name="magic-staff" size={20} color={palette.text} />}
-              style={{ marginBottom: space.sm }}
-            />
-          </View>
-
           <Button 
             title="Start Game"
             onPress={handleStartGame}
@@ -266,12 +286,13 @@ export default function Setup() {
       >
         <View style={styles.modalBackdrop}>
           <View style={styles.modalCard}>
-            <Text style={styles.modalTitle}>Create Custom Topic</Text>
+            <Text style={styles.modalTitle}>Custom Topic</Text>
 
             <Input
               placeholder="Topic Name"
               value={topicName}
               onChangeText={setTopicName}
+              style={styles.modalField}
             />
 
             <Input
@@ -280,7 +301,7 @@ export default function Setup() {
               onChangeText={setTopicWordsText}
               multiline
               numberOfLines={3}
-              style={{ height: 100, textAlignVertical: "top" }}
+              style={styles.textArea}
             />
 
             {error ? <Text style={styles.errorText}>{error}</Text> : null}
@@ -337,6 +358,49 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     marginBottom: space.md 
   },
+
+  topicActionsRow: {
+    flexDirection: "row",
+    alignItems: "stretch",
+    marginBottom: space.md,
+  },
+  topicActionBtn: {
+    minHeight: 52,
+    alignSelf: "stretch",
+    justifyContent: "center",
+  },
+  topicGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: space.sm,
+    marginTop: space.sm,
+  },
+  topicCard: {
+    width: "48%",
+    padding: space.md,
+    borderRadius: radii.md,
+    justifyContent: "center",
+  },
+  topicName: {
+    color: palette.text,
+    fontSize: type.h4,
+    fontWeight: "800",
+    maxWidth: "80%",
+  },
+  dot: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: "#00000040",
+  },
+  dotAI: {
+    backgroundColor: "#3B82F6",
+  },
+  dotCustom: {
+    backgroundColor: "#EF4444",
+  },
+
   inputRow: { 
     flexDirection: "row", 
     gap: space.sm,
@@ -368,16 +432,9 @@ const styles = StyleSheet.create({
     fontSize: 20, 
     fontWeight: "700" 
   },
-  topicGrid: { 
-    flexDirection: "row", 
-    flexWrap: "wrap", 
-    gap: space.sm 
-  },
-  topicBtn: {
-  },
-  startBtn: { 
-    marginTop: space.lg 
-  },
+
+  startBtn: { marginTop: space.lg },
+
   modalBackdrop: {
     flex: 1,
     backgroundColor: "#000A",
@@ -397,6 +454,13 @@ const styles = StyleSheet.create({
     marginBottom: space.md,
     color: palette.text,
   },
+  modalField: {
+    marginBottom: space.md,
+  },
+  textArea: {
+    height: 100,
+    textAlignVertical: "top",
+  },
   modalActions: {
     marginTop: space.md,
     flexDirection: "row",
@@ -407,20 +471,5 @@ const styles = StyleSheet.create({
     color: palette.danger,
     marginTop: space.sm,
     fontWeight: "700",
-  },
-  topicName: {
-    color: palette.text,
-    fontSize: type.h4,
-    fontWeight: "800",
-  },
-  topicList: {
-    marginTop: space.md,
-    gap: space.sm,
-  },
-  topicCard: {
-    padding: space.md,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
   },
 });
