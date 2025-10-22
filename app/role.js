@@ -22,7 +22,6 @@ import Button from "../src/components/ui/Button";
 import Card from "../src/components/ui/Card";
 import { space, palette, type, radii } from "../src/constants/theme";
 import { Icon, icons } from "../src/constants/icons";
-import { playSound } from "../src/lib/soundManager";
 
 export default function Role() {
   const router = useRouter();
@@ -77,13 +76,6 @@ export default function Role() {
       setRevealed(true);
       setShowBlur(true);
 
-      setTimeout(async () => {
-        if (isImposter) {
-          await playSound('imposter', 0.9);
-        } else {
-          await playSound('civilian', 0.7);
-        }
-      }, 800);
     } catch (error) {
       console.error("Reveal error:", error);
     }

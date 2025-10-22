@@ -29,11 +29,6 @@ export default function Settings() {
     isLoading 
   } = useAdConsentContext();
 
-  const soundEnabled = useSettingsStore((s) => s.soundEnabled);
-  const soundVolume = useSettingsStore((s) => s.soundVolume);
-  const setSoundEnabled = useSettingsStore((s) => s.setSoundEnabled);
-  const setSoundVolume = useSettingsStore((s) => s.setSoundVolume);
-
   const [showDebug, setShowDebug] = useState(__DEV__);
 
   const handleBack = async () => {
@@ -249,42 +244,6 @@ export default function Settings() {
             size="md"
             icon={<Icon name="delete" size={20} color={palette.text} />}
           />
-        </View>
-
-        {/* Audio Section */}
-        <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Icon name="volume-high" size={20} color={palette.textDim} />
-            <Text style={styles.sectionTitle}>Audio</Text>
-          </View>
-
-          <Card style={styles.settingCard}>
-            <View style={styles.settingRow}>
-              <Text style={styles.settingLabel}>Sound Effects</Text>
-              <Switch
-                value={soundEnabled}
-                onValueChange={setSoundEnabled}
-                trackColor={{ false: palette.line, true: palette.primary }}
-              />
-            </View>
-          </Card>
-
-          {soundEnabled && (
-            <Card style={styles.settingCard}>
-              <Text style={styles.settingLabel}>Sound Volume</Text>
-              <Slider
-                style={{ width: '100%', height: 40 }}
-                minimumValue={0}
-                maximumValue={1}
-                value={soundVolume}
-                onValueChange={setSoundVolume}
-                minimumTrackTintColor={palette.primary}
-                maximumTrackTintColor={palette.line}
-                thumbTintColor={palette.primary}
-              />
-              <Text style={styles.volumeText}>{Math.round(soundVolume * 100)}%</Text>
-            </Card>
-          )}
         </View>
 
         <View style={styles.version}>
