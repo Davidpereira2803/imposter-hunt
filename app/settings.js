@@ -5,7 +5,6 @@ import * as Haptics from "expo-haptics";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useGameStore } from "../src/store/gameStore";
 import { useAdConsentContext } from "../src/contexts/AdConsentContext";
-import { useSettingsStore } from "../src/store/settingsStore";
 import Screen from "../src/components/ui/Screen";
 import Title from "../src/components/ui/Title";
 import Button from "../src/components/ui/Button";
