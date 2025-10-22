@@ -1,8 +1,8 @@
 import { useAIStore } from "../store/aiStore";
 import NetInfo from "@react-native-community/netinfo";
+import API_CONFIG from "../config/api";
 
-const API_BASE = "https://imposter-hunt-fug1yg03x-pearlabs-projects.vercel.app";
-const API_ENDPOINT = `${API_BASE.replace(/\/$/, "")}/api/complete`;
+const API_ENDPOINT = `${API_CONFIG.BASE_URL}/api/complete`;
 
 const createHash = (description, numTopics, difficulty, language) => {
   const str = `${description.toLowerCase()}-${numTopics}-${difficulty}-${language}`;
@@ -88,7 +88,10 @@ export const generateTopics = async ({
 
     const response = await fetch(API_ENDPOINT, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${API_CONFIG.API_KEY}`, // Add API key here
+      },
       body: JSON.stringify({
         prompt: description,
         count: numTopics,
@@ -101,6 +104,12 @@ export const generateTopics = async ({
 
     if (!response.ok) {
       const text = await response.text().catch(() => "");
+      
+      // Handle unauthorized specifically
+      if (response.status === 401 || response.status === 403) {
+        throw new Error("Authentication failed. Please update the app.");
+      }
+      
       throw new Error(`API ${response.status}${text ? `: ${text}` : ""}`);
     }
 

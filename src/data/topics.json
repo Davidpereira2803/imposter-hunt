@@ -1,5 +1,5 @@
 {
-  "food": [
+  "Food": [
     "Pizza", "Burger", "Sushi", "Taco", "Pasta", "Ice Cream", "Curry", "Salad",
     "Steak", "Ramen", "Sandwich", "Burrito", "Lasagna", "Pancakes", "Waffles",
     "Croissant", "Bagel", "Donut", "Cake", "Pie", "Cookies", "Brownie",
@@ -11,7 +11,7 @@
     "Soup", "Stew", "Chili", "Fondue", "Kebab", "Shawarma", "Falafel",
     "Hummus", "Guacamole", "Salsa", "Pesto", "Marinara", "Alfredo"
   ],
-  "animals": [
+  "Animals": [
     "Dog", "Cat", "Elephant", "Lion", "Giraffe", "Zebra", "Dolphin", "Panda",
     "Tiger", "Bear", "Wolf", "Fox", "Rabbit", "Squirrel", "Deer", "Moose",
     "Horse", "Cow", "Pig", "Sheep", "Goat", "Chicken", "Duck", "Goose",
@@ -23,7 +23,7 @@
     "Rhino", "Hippo", "Crocodile", "Alligator", "Turtle", "Tortoise",
     "Snake", "Lizard", "Frog", "Toad", "Salamander", "Chameleon"
   ],
-  "movies": [
+  "Movies": [
     "Titanic", "Avatar", "Inception", "Matrix", "Gladiator", "Joker", "Dune", "Interstellar",
     "Avengers", "Batman", "Superman", "Spider-Man", "Iron Man", "Thor", "Hulk",
     "Star Wars", "Star Trek", "Alien", "Predator", "Terminator", "RoboCop",
@@ -38,7 +38,7 @@
     "Forrest Gump", "Shawshank Redemption", "Green Mile", "Godfather", "Scarface",
     "Goodfellas", "Casino", "Heat", "Pulp Fiction", "Reservoir Dogs", "Django"
   ],
-  "countries": [
+  "Countries": [
     "France", "Japan", "Brazil", "Canada", "Australia", "Egypt", "India", "Spain",
     "USA", "Mexico", "China", "Russia", "Germany", "Italy", "UK", "Greece",
     "Turkey", "Thailand", "Vietnam", "Indonesia", "Malaysia", "Philippines",
@@ -51,7 +51,7 @@
     "Saudi Arabia", "Iran", "Iraq", "Israel", "Jordan", "Lebanon",
     "Pakistan", "Bangladesh", "Nepal", "Sri Lanka", "Afghanistan", "Mongolia"
   ],
-  "sports": [
+  "Sports": [
     "Soccer", "Basketball", "Baseball", "Football", "Tennis", "Golf", "Hockey",
     "Volleyball", "Cricket", "Rugby", "Boxing", "Wrestling", "MMA", "Karate",
     "Judo", "Taekwondo", "Fencing", "Archery", "Swimming", "Diving",
@@ -60,7 +60,7 @@
     "Rock Climbing", "Parkour", "Polo", "Lacrosse", "Badminton", "Table Tennis",
     "Bowling", "Darts", "Billiards", "Snooker", "Chess", "Poker"
   ],
-  "occupations": [
+  "Occupations": [
     "Doctor", "Nurse", "Teacher", "Professor", "Lawyer", "Judge", "Police",
     "Firefighter", "Paramedic", "Pilot", "Astronaut", "Sailor", "Soldier",
     "Engineer", "Architect", "Designer", "Artist", "Painter", "Sculptor",
@@ -72,7 +72,7 @@
     "Developer", "Designer", "Technician", "Mechanic", "Electrician", "Plumber",
     "Carpenter", "Painter", "Gardener", "Farmer", "Veterinarian", "Zookeeper"
   ],
-  "brands": [
+  "Brands": [
     "Apple", "Samsung", "Google", "Microsoft", "Amazon", "Facebook", "Tesla",
     "Nike", "Adidas", "Puma", "Reebok", "Under Armour", "Vans", "Converse",
     "Coca-Cola", "Pepsi", "Sprite", "Fanta", "McDonald's", "Burger King",
@@ -82,7 +82,7 @@
     "Sony", "Nintendo", "PlayStation", "Xbox", "Disney", "Netflix", "Spotify",
     "YouTube", "Instagram", "Twitter", "TikTok", "Snapchat", "WhatsApp"
   ],
-  "colors": [
+  "Colors": [
     "Red", "Blue", "Green", "Yellow", "Orange", "Purple", "Pink", "Brown",
     "Black", "White", "Gray", "Silver", "Gold", "Beige", "Tan", "Cream",
     "Crimson", "Scarlet", "Maroon", "Navy", "Turquoise", "Cyan", "Teal",
@@ -90,7 +90,7 @@
     "Lavender", "Magenta", "Fuchsia", "Rose", "Coral", "Salmon", "Peach",
     "Amber", "Bronze", "Copper", "Rust", "Mahogany", "Chestnut", "Ivory"
   ],
-  "clothing": [
+  "Clothing": [
     "T-Shirt", "Shirt", "Blouse", "Sweater", "Hoodie", "Jacket", "Coat",
     "Jeans", "Pants", "Shorts", "Skirt", "Dress", "Suit", "Tie", "Scarf",
     "Hat", "Cap", "Beanie", "Gloves", "Mittens", "Socks", "Shoes", "Boots",
@@ -98,7 +98,7 @@
     "Underwear", "Bra", "Pajamas", "Robe", "Swimsuit", "Bikini", "Trunks",
     "Vest", "Cardigan", "Poncho", "Cape", "Apron", "Uniform", "Jersey"
   ],
-  "vehicles": [
+  "Vehicles": [
     "Car", "Truck", "Van", "SUV", "Bus", "Motorcycle", "Scooter", "Bicycle",
     "Skateboard", "Scooter", "Segway", "Hoverboard", "Train", "Subway",
     "Tram", "Trolley", "Taxi", "Uber", "Limousine", "Ambulance", "Fire Truck",
@@ -108,14 +108,14 @@
     "Airplane", "Jet", "Helicopter", "Drone", "Hot Air Balloon", "Blimp",
     "Rocket", "Spaceship", "UFO", "Satellite", "Rover", "Tank", "ATV"
   ],
-  "instruments": [
+  "Instruments": [
     "Guitar", "Piano", "Violin", "Cello", "Bass", "Drums", "Flute", "Trumpet",
     "Saxophone", "Clarinet", "Trombone", "Tuba", "Harp", "Banjo", "Ukulele",
     "Mandolin", "Accordion", "Harmonica", "Xylophone", "Marimba", "Tambourine",
     "Bongos", "Congas", "Cymbals", "Triangle", "Cowbell", "Gong", "Chimes",
     "Synthesizer", "Keyboard", "Organ", "Bagpipes", "Sitar", "Didgeridoo"
   ],
-  "technology": [
+  "Technology": [
     "Computer", "Laptop", "Desktop", "Tablet", "Phone", "Smartphone", "Watch",
     "Smartwatch", "TV", "Monitor", "Screen", "Projector", "Camera", "Webcam",
     "Microphone", "Speaker", "Headphones", "Earbuds", "Keyboard", "Mouse",
