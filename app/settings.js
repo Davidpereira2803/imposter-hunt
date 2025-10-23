@@ -1,20 +1,21 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Alert, ScrollView, TouchableOpacity, Linking, Switch } from "react-native";
+import { View, Text, StyleSheet, Alert, ScrollView, TouchableOpacity, Linking } from "react-native";
 import { useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useGameStore } from "../src/store/gameStore";
 import { useAdConsentContext } from "../src/contexts/AdConsentContext";
+import { AdBanner } from "../src/components/AdBanner";
 import Screen from "../src/components/ui/Screen";
 import Title from "../src/components/ui/Title";
 import Button from "../src/components/ui/Button";
 import Card from "../src/components/ui/Card";
 import { space, palette, type } from "../src/constants/theme";
 import { Icon } from "../src/constants/icons";
-import Slider from '@react-native-community/slider';
+
 
 const TUTORIAL_SEEN_KEY = "imposter-hunt-tutorial-seen";
-const PRIVACY_POLICY_URL = "https://davidpereira2803.github.io/imposter-hunt/Privacy/";
+const PRIVACY_POLICY_URL = "https://davidpereira2803.github.io/imposter-hunt/Privacy";
 
 export default function Settings() {
   const router = useRouter();
@@ -22,7 +23,7 @@ export default function Settings() {
   const { 
     canShowAds, 
     canShowPersonalizedAds, 
-    showConsentForm, 
+    showConsentForm,
     resetConsent,
     consentInfo,
     isLoading 
@@ -250,6 +251,9 @@ export default function Settings() {
           <Text style={styles.versionText}>Version 1.0.0</Text>
         </View>
       </ScrollView>
+
+      {/* <AdBanner /> */}
+      <AdBanner />
     </Screen>
   );
 }

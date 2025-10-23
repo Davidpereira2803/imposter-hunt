@@ -95,6 +95,7 @@ export const AdConsentProvider = ({ children }) => {
         canShowAds,
         canShowPersonalizedAds,
         isLoading,
+        isReady: !isLoading,
         showConsentForm,
         resetConsent,
         checkConsent,
