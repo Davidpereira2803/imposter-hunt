@@ -163,15 +163,11 @@ export default function Round() {
   };
 
   const handleImposterGuess = async () => {
-    try { 
-      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium); 
+    try {
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     } catch {}
     
-    isNavigatingRef.current = true;
-    router.push({
-      pathname: "/imposter-guess",
-      params: { mode: "optional" }
-    });
+    router.push("/imposter-guess");
   };
 
   const handleVote = async () => {

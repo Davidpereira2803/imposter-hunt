@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Keyboard, BackHandler, KeyboardAvoidingView, Platform } from "react-native";
-import { useRouter, useLocalSearchParams } from "expo-router";
+import { View, Text, StyleSheet, Keyboard, BackHandler, KeyboardAvoidingView, Platform, Alert } from "react-native";
+import { useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
 import { useGameStore } from "../src/store/gameStore";
 import Screen from "../src/components/ui/Screen";
@@ -12,14 +12,21 @@ import { space, palette, type } from "../src/constants/theme";
 
 export default function ImposterGuess() {
   const router = useRouter();
-  const { mode } = useLocalSearchParams();
   const { players, imposterIndex, secretWord, _hydrated } = useGameStore();
   const [guess, setGuess] = useState("");
 
-  const isOptional = mode === "optional";
-
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener("hardwareBackPress", () => true);
+    const backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
+      Alert.alert(
+        "Cancel Guess?",
+        "Going back counts as passing your guess. Civilians will win.",
+        [
+          { text: "Stay", style: "cancel" },
+          { text: "Cancel", style: "destructive", onPress: handleCancel }
+        ]
+      );
+      return true;
+    });
     return () => backHandler.remove();
   }, []);
 
@@ -44,38 +51,34 @@ export default function ImposterGuess() {
 
     Keyboard.dismiss();
     
-    if (isCorrect) {
-      router.replace({
-        pathname: "/results",
-        params: { outcome: "imposter" }
-      });
-    } else {
-      if (isOptional) {
-        router.back();
-      } else {
-        router.replace({
-          pathname: "/results",
-          params: { outcome: "civilians" }
-        });
-      }
-    }
+    router.replace({
+      pathname: "/results",
+      params: { outcome: isCorrect ? "imposter" : "civilians" }
+    });
   };
 
-  const cancel = async () => {
+  const handleCancel = async () => {
     try {
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     } catch (e) {}
     
     Keyboard.dismiss();
     
-    if (isOptional) {
-      router.back();
-    } else {
-      router.replace({
-        pathname: "/results",
-        params: { outcome: "civilians" }
-      });
-    }
+    router.replace({
+      pathname: "/results",
+      params: { outcome: "civilians" }
+    });
+  };
+
+  const cancel = () => {
+    Alert.alert(
+      "Cancel Guess?",
+      "This is your only chance. Canceling means you pass and civilians win.",
+      [
+        { text: "Stay", style: "cancel" },
+        { text: "Pass & Lose", style: "destructive", onPress: handleCancel }
+      ]
+    );
   };
 
   const imposterName = players?.[imposterIndex] || "Imposter";
@@ -88,18 +91,14 @@ export default function ImposterGuess() {
         keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
       >
         <View style={styles.content}>
-          <Title style={styles.title}>
-            {isOptional ? "Guess Now?" : "Final Guess"}
-          </Title>
+          <Title style={styles.title}>Final Guess</Title>
           
           <Card style={styles.infoCard}>
             <Text style={styles.imposterLabel}>Imposter</Text>
             <Text style={styles.imposterName}>{imposterName}</Text>
             <Text style={styles.instruction}>
-              {isOptional 
-                ? "Correct = instant win. Wrong = continue playing."
-                : "One chance. Guess the secret word."
-              }
+              One chance only. Guess the secret word.{'\n'}
+              Correct = you win. Wrong = civilians win.
             </Text>
           </Card>
 
@@ -117,7 +116,7 @@ export default function ImposterGuess() {
 
           <View style={styles.actions}>
             <Button
-              title="Submit"
+              title="Submit Guess"
               onPress={submit}
               variant="primary"
               size="lg"
@@ -125,7 +124,7 @@ export default function ImposterGuess() {
             />
 
             <Button
-              title={isOptional ? "Cancel" : "Pass"}
+              title="Pass (Lose)"
               onPress={cancel}
               variant="ghost"
               size="md"
