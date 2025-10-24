@@ -12,7 +12,6 @@ import {
 } from "react-native";
 import { useRouter, useFocusEffect } from "expo-router";
 import * as Haptics from "expo-haptics";
-import Slider from "@react-native-community/slider";
 import { useAIStore } from "../src/store/aiStore";
 import { useGameStore } from "../src/store/gameStore";
 import { generateTopics } from "../src/lib/generateTopics";
@@ -263,26 +262,35 @@ export default function AITopics() {
             </Text>
           </View>
 
-          {/* Number of Topics Slider */}
+          {/* Number of Topics Selection */}
           <View style={styles.section}>
             <View style={styles.labelRow}>
               <Text style={styles.label}>Number of Topics</Text>
               <Text style={styles.sliderValue}>{numTopics}</Text>
             </View>
-            <Slider
-              style={styles.slider}
-              minimumValue={10}
-              maximumValue={60}
-              step={1}
-              value={numTopics}
-              onValueChange={setNumTopics}
-              minimumTrackTintColor={palette.primary}
-              maximumTrackTintColor={palette.line}
-              thumbTintColor={palette.primary}
-            />
-            <View style={styles.sliderLabels}>
-              <Text style={styles.sliderLabel}>10</Text>
-              <Text style={styles.sliderLabel}>60</Text>
+            <View style={styles.chipContainer}>
+              {[10, 15, 20, 30, 40, 50, 60].map((num) => (
+                <TouchableOpacity
+                  key={num}
+                  onPress={() => {
+                    setNumTopics(num);
+                    Haptics.selectionAsync().catch(() => {});
+                  }}
+                  style={[
+                    styles.chip,
+                    numTopics === num && styles.chipSelected,
+                  ]}
+                >
+                  <Text
+                    style={[
+                      styles.chipText,
+                      numTopics === num && styles.chipTextSelected,
+                    ]}
+                  >
+                    {num}
+                  </Text>
+                </TouchableOpacity>
+              ))}
             </View>
           </View>
 
@@ -447,20 +455,6 @@ const styles = StyleSheet.create({
     fontSize: type.small,
     color: palette.textDim,
     marginTop: space.xs,
-  },
-  slider: {
-    width: "100%",
-    height: 40,
-  },
-  sliderLabels: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingHorizontal: space.xs,
-  },
-  sliderLabel: {
-    fontSize: type.small,
-    color: palette.textDim,
-    fontWeight: "600",
   },
   chipContainer: {
     flexDirection: "row",
