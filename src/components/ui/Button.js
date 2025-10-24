@@ -10,15 +10,19 @@ export default function Button({
   disabled = false,
   icon,
   iconPosition = "left",
-  style 
+  style,
 }) {
   const variantStyle = styles[variant] || styles.primary;
   const sizeStyle = size === "lg" ? styles.lg : styles.md;
   const textColorStyle = variant === "success" ? styles.textBlack : styles.textWhite;
 
+  const handlePress = async () => {
+    onPress?.();
+  };
+
   return (
     <TouchableOpacity 
-      onPress={onPress} 
+      onPress={handlePress} 
       disabled={disabled}
       style={[
         styles.base, 

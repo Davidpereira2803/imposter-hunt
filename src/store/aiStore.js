@@ -27,6 +27,30 @@ export const useAIStore = create(
       maxGenerations: MAX_FREE_GENERATIONS,
       maxAdsPerDay: MAX_ADS_PER_DAY,
 
+      ensureDailyReset: () => {
+        const s = get();
+        if (isNewDay(s.lastGenerationDate)) {
+          set({
+            generationsToday: 0,
+            watchedAdsToday: 0,
+            lastGenerationDate: new Date().toISOString(),
+          });
+        }
+      },
+
+      getMaxAllowedToday: () => {
+        const s = get();
+        const free = MAX_FREE_GENERATIONS;
+        const bonus = Math.min(s.watchedAdsToday, MAX_ADS_PER_DAY);
+        return free + bonus;
+      },
+
+      getRemainingGenerations: () => {
+        const s = get();
+        const allowed = get().getMaxAllowedToday();
+        return Math.max(0, allowed - s.generationsToday);
+      },
+
       canGenerate: () => {
         const s = get();
         if (isNewDay(s.lastGenerationDate)) {
@@ -35,10 +59,9 @@ export const useAIStore = create(
             watchedAdsToday: 0,
             lastGenerationDate: new Date().toISOString(),
           });
-          return true;
         }
-        const maxAllowed = MAX_FREE_GENERATIONS + s.watchedAdsToday;
-        return s.generationsToday < maxAllowed;
+        const allowed = get().getMaxAllowedToday();
+        return s.generationsToday < allowed;
       },
 
       incrementGenerations: () => {

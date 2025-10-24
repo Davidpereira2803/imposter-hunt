@@ -9,9 +9,9 @@ import LoadingScreen from "../src/components/LoadingScreen";
 const TUTORIAL_SEEN_KEY = "imposter-hunt-tutorial-seen";
 
 export default function RootLayout() {
-  const [ready, setReady] = useState(true);
   const [isReady, setIsReady] = useState(false);
   const [showTutorial, setShowTutorial] = useState(false);
+  const [tutorialChecked, setTutorialChecked] = useState(false);
   const hasHydrated = useGameStore((state) => state._hasHydrated);
 
   useEffect(() => {
@@ -26,6 +26,8 @@ export default function RootLayout() {
       } catch (error) {
         console.error("Error checking tutorial status:", error);
         setShowTutorial(false);
+      } finally {
+        setTutorialChecked(true);
       }
     };
 
@@ -38,13 +40,13 @@ export default function RootLayout() {
       setIsReady(true);
     }, 3000);
 
-    if (hasHydrated) {
+    if (hasHydrated && tutorialChecked) {
       clearTimeout(timeout);
       setIsReady(true);
     }
 
     return () => clearTimeout(timeout);
-  }, [hasHydrated]);
+  }, [hasHydrated, tutorialChecked]);
 
   if (!isReady) {
     return <LoadingScreen />;

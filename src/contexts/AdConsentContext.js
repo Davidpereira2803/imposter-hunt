@@ -88,6 +88,28 @@ export const AdConsentProvider = ({ children }) => {
     return false;
   })();
 
+  React.useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        if (typeof AdsConsent?.requestInfoUpdate === "function") {
+          await AdsConsent.requestInfoUpdate();
+        }
+        if (typeof AdsConsent?.loadAndShowConsentFormIfRequired === "function") {
+          await AdsConsent.loadAndShowConsentFormIfRequired();
+        }
+        if (typeof checkConsent === "function") {
+          await checkConsent();
+        }
+      } catch (e) {
+        console.warn("Consent boot prompt error:", e?.message || e);
+      } finally {
+        if (cancelled) return;
+      }
+    })();
+    return () => { cancelled = true; };
+  }, []);
+
   return (
     <AdConsentContext.Provider
       value={{
@@ -95,6 +117,7 @@ export const AdConsentProvider = ({ children }) => {
         canShowAds,
         canShowPersonalizedAds,
         isLoading,
+        isReady: !isLoading,
         showConsentForm,
         resetConsent,
         checkConsent,

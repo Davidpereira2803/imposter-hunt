@@ -70,15 +70,15 @@ export default function Role() {
   }, [revealed]);
 
   const handleReveal = async () => {
-    try { 
-      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy); 
-    } catch {}
-    
-    setShowBlur(true);
-    
-    setTimeout(() => {
+    try {
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+      
       setRevealed(true);
-    }, 300);
+      setShowBlur(true);
+
+    } catch (error) {
+      console.error("Reveal error:", error);
+    }
   };
 
   const handleNext = async () => {
@@ -171,19 +171,21 @@ export default function Role() {
                         </View>
                       </Animated.View>
 
+                      {/* FIX: Separate wrapper for layout animation */}
                       <Animated.View 
                         entering={SlideInDown.delay(400).springify()}
-                        style={cardAnimatedStyle}
                       >
-                        <Card style={styles.infoCard}>
-                          <Text style={styles.infoTitle}>Your Mission</Text>
-                          <Text style={styles.infoText}>
-                            • Blend in with civilians{'\n'}
-                            • Listen carefully to hints{'\n'}
-                            • Guess the secret word to win{'\n'}
-                            • Or survive until only 2 remain
-                          </Text>
-                        </Card>
+                        <Animated.View style={cardAnimatedStyle}>
+                          <Card style={styles.infoCard}>
+                            <Text style={styles.infoTitle}>Your Mission</Text>
+                            <Text style={styles.infoText}>
+                              • Blend in with civilians{'\n'}
+                              • Listen carefully to hints{'\n'}
+                              • Guess the secret word to win{'\n'}
+                              • Or survive until only 2 remain
+                            </Text>
+                          </Card>
+                        </Animated.View>
                       </Animated.View>
                     </>
                   ) : (
@@ -208,19 +210,21 @@ export default function Role() {
                         </View>
                       </Animated.View>
 
+                      {/* FIX: Separate wrapper for layout animation */}
                       <Animated.View 
                         entering={SlideInDown.delay(500).springify()}
-                        style={cardAnimatedStyle}
                       >
-                        <Card style={styles.infoCard}>
-                          <Text style={styles.infoTitle}>Your Mission</Text>
-                          <Text style={styles.infoText}>
-                            • Give subtle hints about the word{'\n'}
-                            • Don't say the word directly{'\n'}
-                            • Find and eliminate the imposter{'\n'}
-                            • Be careful - they're listening!
-                          </Text>
-                        </Card>
+                        <Animated.View style={cardAnimatedStyle}>
+                          <Card style={styles.infoCard}>
+                            <Text style={styles.infoTitle}>Your Mission</Text>
+                            <Text style={styles.infoText}>
+                              • Give subtle hints about the word{'\n'}
+                              • Don't say the word directly{'\n'}
+                              • Find and eliminate the imposter{'\n'}
+                              • Be careful - they're listening!
+                            </Text>
+                          </Card>
+                        </Animated.View>
                       </Animated.View>
                     </>
                   )}

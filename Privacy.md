@@ -3,16 +3,16 @@ layout: default
 title: Privacy Policy
 ---
 
-# **Imposter Hunt – Privacy Policy**
+# Imposter Hunt – Privacy Policy
 
 *Last updated: October 2025*
 
 Thank you for playing **Imposter Hunt**!
-Your privacy is very important to us. This policy explains what data is (and isn’t) collected, how it’s used, and what third-party services are involved.
+Your privacy is very important to us. This policy explains what data is (and isn't) collected, how it's used, and what third-party services are involved.
 
 ---
 
-## **About Imposter Hunt**
+## About Imposter Hunt
 
 **Imposter Hunt** is an offline, pass-and-play social game built with **React Native** and **Expo**.
 The game does **not require an account, registration, or an internet connection** to play.
@@ -20,69 +20,89 @@ All gameplay data — such as player names, topics, and round results — is sto
 
 ---
 
-## **Data We Do Not Collect**
+## Data We Do Not Collect
 
 We do **not**:
 
-* Collect, store, or transmit any personal data (e.g., name, email, phone number, or location)
-* Use analytics, cookies, or user tracking libraries
-* Access your contacts, camera, photos, microphone, or files
+- Collect or store personal information (no names, emails, phone numbers, etc.)
+- Track your location or device identifiers
+- Access your contacts, camera, or microphone
+- Require you to create an account or log in
+- Send gameplay data to any external server
 
 ---
 
-## **Advertising (Google AdMob)**
+## Data Stored Locally on Your Device
 
-This app uses **Google AdMob** to display banner ads.
-While we do not collect any personal data, AdMob may process limited **non-personal information** to serve and optimize ads.
+The following data is stored **only on your device** using **AsyncStorage** (encrypted local storage):
 
-This may include:
+1. **Game Settings**: Your preferred language, timer settings, and difficulty preferences
+2. **Custom Topics**: Any custom word lists you create
+3. **Player Names**: Names entered during game setup (only for the current session)
+4. **AI Generation History**: Topics generated using the AI feature (for caching and history)
+5. **Ad Preferences**: Your consent choices for personalized ads
 
-* Advertising identifiers (for frequency capping and performance)
-* Approximate region or location (for regional relevance)
-* Device type, operating system version, and language
-
-These are handled under **Google’s Privacy Policy**, which you can review here:
-[https://policies.google.com/privacy](https://policies.google.com/privacy)
-
-If you are located in the **EU or UK**, the app will request your **ad consent** before showing any ads.
-You can change or withdraw this consent at any time in your device’s **Ad Settings**.
+**This data never leaves your device** and can be deleted at any time from the Settings menu.
 
 ---
 
-## **Local Storage**
+## Third-Party Services
 
-All game progress and player information are saved **only on your device** using local storage (`AsyncStorage`).
-Removing or uninstalling the app deletes all stored data permanently.
+### Google AdMob (Advertising)
 
----
+We use **Google AdMob** to display ads and offer rewarded video ads for extra AI generations.
 
-## **Security**
+- **What AdMob collects**: Device identifiers, IP address, ad interaction data
+- **Why**: To serve relevant ads and measure ad performance
+- **Your control**: You can manage ad personalization through the app's Settings menu
+- **AdMob Privacy Policy**: [https://policies.google.com/privacy](https://policies.google.com/privacy)
 
-Since Imposter Hunt does not send or store any data externally, there is **no remote data transmission**.
-Your data security relies solely on your device’s built-in protections (e.g., screen lock, encryption, and OS security updates).
+### AI Topic Generation (Optional Feature)
 
----
+When you use the **AI Topic Builder**:
 
-## **Developer Information**
+- Your topic prompt is sent to our backend API (hosted on Vercel)
+- We do **not** log or store your prompts
+- The API uses AI to generate word lists based on your description
+- Results are cached locally on your device
 
-**Imposter Hunt** is an independent project developed by **David Pereira** for entertainment and learning purposes.
-
-If you have questions or concerns regarding this Privacy Policy, please contact via the project’s GitHub repository:
-[https://github.com/davidpereira2803/imposter-hunt](https://github.com/davidpereira2803/imposter-hunt)
-
----
-
-## **Summary**
-
-| **Category**           | **Collected**          | **Shared**    |
-| ---------------------- | ---------------------- | ------------- |
-| Personal Information   | ❌ No                   | ❌ No          |
-| Gameplay Data          | ✅ Stored locally only  | ❌ No          |
-| Ad Data (Non-personal) | ✅ Via Google AdMob SDK | ✅ With Google |
+**Backend URL**: `https://imposter-hunt-fug1yg03x-pearlabs-projects.vercel.app/api/complete`
 
 ---
 
-## **Policy Access**
+## Children's Privacy
 
-You can always view the latest version of this Privacy Policy at:
-[https://github.com/davidpereira2803/imposter-hunt/blob/main/Privacy.md](https://github.com/davidpereira2803/imposter-hunt/blob/main/Privacy.md)
+**Imposter Hunt** is suitable for all ages and does not knowingly collect personal information from children under 13. Since no accounts or personal data are collected, COPPA compliance is maintained.
+
+---
+
+## Your Rights and Choices
+
+You have full control over your data:
+
+- **Delete all data**: Use the "Clear All Data" button in Settings
+- **Manage ad preferences**: Adjust consent settings in the Privacy menu
+- **Opt out of personalized ads**: Choose non-personalized ads in Settings
+- **Uninstall the app**: All local data will be permanently deleted
+
+---
+
+## Changes to This Policy
+
+We may update this Privacy Policy occasionally. Any changes will be reflected here with an updated "Last updated" date.
+
+---
+
+## Contact Us
+
+If you have questions or concerns about this Privacy Policy, please contact:
+
+**David Pereira**  
+GitHub: [davidpereira2803](https://github.com/davidpereira2803)  
+Email: your-email@example.com
+
+---
+
+**By using Imposter Hunt, you agree to this Privacy Policy.**
+
+[Back to Home]({{ site.baseurl }}/) | [How to Play]({{ site.baseurl }}/README)

@@ -5,6 +5,7 @@ import * as Haptics from "expo-haptics";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useGameStore } from "../src/store/gameStore";
 import { useAdConsentContext } from "../src/contexts/AdConsentContext";
+import { AdBanner } from "../src/components/AdBanner";
 import Screen from "../src/components/ui/Screen";
 import Title from "../src/components/ui/Title";
 import Button from "../src/components/ui/Button";
@@ -12,8 +13,9 @@ import Card from "../src/components/ui/Card";
 import { space, palette, type } from "../src/constants/theme";
 import { Icon } from "../src/constants/icons";
 
+
 const TUTORIAL_SEEN_KEY = "imposter-hunt-tutorial-seen";
-const PRIVACY_POLICY_URL = "https://davidpereira2803.github.io/imposter-hunt/Privacy/";
+const PRIVACY_POLICY_URL = "https://davidpereira2803.github.io/imposter-hunt/Privacy";
 
 export default function Settings() {
   const router = useRouter();
@@ -21,7 +23,7 @@ export default function Settings() {
   const { 
     canShowAds, 
     canShowPersonalizedAds, 
-    showConsentForm, 
+    showConsentForm,
     resetConsent,
     consentInfo,
     isLoading 
@@ -173,7 +175,7 @@ export default function Settings() {
 
           <Card style={styles.infoRow}>
             <View style={styles.infoLeft}>
-              <Icon name="ads" size={18} color={palette.textDim} />
+              <Icon name="advertisements" size={18} color={palette.textDim} />
               <Text style={styles.infoLabel}>Ads Enabled</Text>
             </View>
             <Text style={[
@@ -249,6 +251,9 @@ export default function Settings() {
           <Text style={styles.versionText}>Version 1.0.0</Text>
         </View>
       </ScrollView>
+
+      {/* <AdBanner /> */}
+      <AdBanner />
     </Screen>
   );
 }
@@ -329,5 +334,25 @@ const styles = StyleSheet.create({
   versionText: {
     color: palette.textDim,
     fontSize: type.small,
+  },
+  settingCard: {
+    marginBottom: space.sm,
+    padding: space.md,
+  },
+  settingRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  settingLabel: {
+    color: palette.text,
+    fontSize: type.body,
+    fontWeight: "600",
+  },
+  volumeText: {
+    color: palette.textDim,
+    fontSize: type.small,
+    textAlign: 'center',
+    marginTop: space.sm,
   },
 });

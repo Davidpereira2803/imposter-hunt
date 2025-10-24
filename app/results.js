@@ -37,6 +37,7 @@ export default function Results() {
     triggerHaptics();
   }, [imposterWon]);
 
+
   const handlePlayAgain = async () => {
     try { await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium); } catch {}
     

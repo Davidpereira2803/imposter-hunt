@@ -1,5 +1,39 @@
 {
-  "food": [
+  "Luxembourg": [
+    "Bëschspëtzt", "Platt grond", "Héich wäerter", "Naturreservat", "Quellgewässer",
+    "Séiufer", "Wanderwee", "Fielsenzummel", "Biergkette", "Ried beräich",
+    "Wisen saum", "Bëschrand", "Grouss Bësch", "Reed ufer", "Äesch beem",
+    "Eich beem", "Beech boom", "Rëtsch gras", "Dammenhirsch", "Wëllschwäin",
+    "Rot fuchs", "Fëchs kand", "Hasen hoppel", "Ufermolch", "Bësch­ech spross",
+    "Vull zang", "Sief fluch", "Libelle schwéier", "Woll schwéi", 
+    "Kierch­téier", "Schlamm­fësch", "Mosel­tälchen", "Sauer­fiels", "Geesch­ter haff",
+    "Grenzregioun", "Gemeng zentrum", "Staddeel", "Al­stadmauer", "Bréckebau",
+    "Tramnetz", "Fluchhafenterminal", "Finanzzentral", "Multi­national­sëtz",
+    "Archäologesch Ausgruewung", "Historisch Festung", "Kulturlandschaft",
+    "Museks­szen", "Theater­schoul", "Galerie­raum", "Statuen­allee",
+    "Kultur­erbe", "Gemittlechkeet", "Noperschaft", "Zesummeliewen",
+    "Traditiouns­feier", "Fest­famill", "Gaascht­fleege", "Kulinaresch Genoss",
+    "Kachkéis", "Gromperekichelcher", "Bouneschlupp", "Quetschekraut", "Tiirpfanne",
+    "Jam­gläiwer", "Hamm­brout", "Haffrecht", "Wäin­rebe", "Eis­wäin", "Moselwein",
+    "Kaffi­genoss", "Téi­erëff", "Broutzeit", "Kéis­plat", "Ham­slice",
+    "Filmindustrie", "Zëntrum fir Kreatioun", "Lingua Luxemburgensis",
+    "Dialekt­faarf", "Stär­prominenz", "Berühmtheet", 
+    "Désirée Nosbusch", "Vicky Krieps", "Andy Schleck", "Léa Linster", 
+    "Jean-Claude Juncker", "Robert Schuman", "Henri Losch",
+    "Museé National d’Histoire et d’Art", "Mudam Musée d’Art Moderne Grand-Duc Jean",
+    "Philharmonie Grouss Stad Lëtzebuerg", "Ville Haute", "Grund Quartier",
+    "Schlass Benedictine", "Kuerf Chrëschtmaart", "Dräi Feier­dager",
+    "Lëtzebuerger Nationalfeierdag", "Dräikönneksdag", "Bollendorf­Moulin",
+    "Wollekenton", "Däischterheu­deeg", "Mueres­sonn", "Repowetter",
+    "Sonnenschein­moment", "Schnei­flock", "Reen­tropf", "Wollekekierch",
+    "Muer­dämmerung", "Nuecht­schaum", "Fiels­klotz", "Steebrocken", "Schlucht kleng",
+    "Häng­wëll", "Seil­bréck", "Sytë erzielen", "Spadséieren", "Heem heem",
+    "Famill­verband", "Frëndschafts­band", "Liewens­qualitéit", "Engagement fir d’Natur",
+    "Biergerengagement", "Binnen­markt", "Grenz­stäerkt", "Europa­zentral",
+    "Fer­nweh", "Heem­wäertlech", "Sesshaft­keet", "Mobilitéit", "Rural­charme"
+  ],
+
+  "Food": [
     "Pizza", "Burger", "Sushi", "Taco", "Pasta", "Ice Cream", "Curry", "Salad",
     "Steak", "Ramen", "Sandwich", "Burrito", "Lasagna", "Pancakes", "Waffles",
     "Croissant", "Bagel", "Donut", "Cake", "Pie", "Cookies", "Brownie",
@@ -11,7 +45,7 @@
     "Soup", "Stew", "Chili", "Fondue", "Kebab", "Shawarma", "Falafel",
     "Hummus", "Guacamole", "Salsa", "Pesto", "Marinara", "Alfredo"
   ],
-  "animals": [
+  "Animals": [
     "Dog", "Cat", "Elephant", "Lion", "Giraffe", "Zebra", "Dolphin", "Panda",
     "Tiger", "Bear", "Wolf", "Fox", "Rabbit", "Squirrel", "Deer", "Moose",
     "Horse", "Cow", "Pig", "Sheep", "Goat", "Chicken", "Duck", "Goose",
@@ -23,7 +57,7 @@
     "Rhino", "Hippo", "Crocodile", "Alligator", "Turtle", "Tortoise",
     "Snake", "Lizard", "Frog", "Toad", "Salamander", "Chameleon"
   ],
-  "movies": [
+  "Movies": [
     "Titanic", "Avatar", "Inception", "Matrix", "Gladiator", "Joker", "Dune", "Interstellar",
     "Avengers", "Batman", "Superman", "Spider-Man", "Iron Man", "Thor", "Hulk",
     "Star Wars", "Star Trek", "Alien", "Predator", "Terminator", "RoboCop",
@@ -38,7 +72,7 @@
     "Forrest Gump", "Shawshank Redemption", "Green Mile", "Godfather", "Scarface",
     "Goodfellas", "Casino", "Heat", "Pulp Fiction", "Reservoir Dogs", "Django"
   ],
-  "countries": [
+  "Countries": [
     "France", "Japan", "Brazil", "Canada", "Australia", "Egypt", "India", "Spain",
     "USA", "Mexico", "China", "Russia", "Germany", "Italy", "UK", "Greece",
     "Turkey", "Thailand", "Vietnam", "Indonesia", "Malaysia", "Philippines",
@@ -51,7 +85,7 @@
     "Saudi Arabia", "Iran", "Iraq", "Israel", "Jordan", "Lebanon",
     "Pakistan", "Bangladesh", "Nepal", "Sri Lanka", "Afghanistan", "Mongolia"
   ],
-  "sports": [
+  "Sports": [
     "Soccer", "Basketball", "Baseball", "Football", "Tennis", "Golf", "Hockey",
     "Volleyball", "Cricket", "Rugby", "Boxing", "Wrestling", "MMA", "Karate",
     "Judo", "Taekwondo", "Fencing", "Archery", "Swimming", "Diving",
@@ -60,7 +94,7 @@
     "Rock Climbing", "Parkour", "Polo", "Lacrosse", "Badminton", "Table Tennis",
     "Bowling", "Darts", "Billiards", "Snooker", "Chess", "Poker"
   ],
-  "occupations": [
+  "Occupations": [
     "Doctor", "Nurse", "Teacher", "Professor", "Lawyer", "Judge", "Police",
     "Firefighter", "Paramedic", "Pilot", "Astronaut", "Sailor", "Soldier",
     "Engineer", "Architect", "Designer", "Artist", "Painter", "Sculptor",
@@ -72,7 +106,7 @@
     "Developer", "Designer", "Technician", "Mechanic", "Electrician", "Plumber",
     "Carpenter", "Painter", "Gardener", "Farmer", "Veterinarian", "Zookeeper"
   ],
-  "brands": [
+  "Brands": [
     "Apple", "Samsung", "Google", "Microsoft", "Amazon", "Facebook", "Tesla",
     "Nike", "Adidas", "Puma", "Reebok", "Under Armour", "Vans", "Converse",
     "Coca-Cola", "Pepsi", "Sprite", "Fanta", "McDonald's", "Burger King",
@@ -82,7 +116,7 @@
     "Sony", "Nintendo", "PlayStation", "Xbox", "Disney", "Netflix", "Spotify",
     "YouTube", "Instagram", "Twitter", "TikTok", "Snapchat", "WhatsApp"
   ],
-  "colors": [
+  "Colors": [
     "Red", "Blue", "Green", "Yellow", "Orange", "Purple", "Pink", "Brown",
     "Black", "White", "Gray", "Silver", "Gold", "Beige", "Tan", "Cream",
     "Crimson", "Scarlet", "Maroon", "Navy", "Turquoise", "Cyan", "Teal",
@@ -90,7 +124,7 @@
     "Lavender", "Magenta", "Fuchsia", "Rose", "Coral", "Salmon", "Peach",
     "Amber", "Bronze", "Copper", "Rust", "Mahogany", "Chestnut", "Ivory"
   ],
-  "clothing": [
+  "Clothing": [
     "T-Shirt", "Shirt", "Blouse", "Sweater", "Hoodie", "Jacket", "Coat",
     "Jeans", "Pants", "Shorts", "Skirt", "Dress", "Suit", "Tie", "Scarf",
     "Hat", "Cap", "Beanie", "Gloves", "Mittens", "Socks", "Shoes", "Boots",
@@ -98,7 +132,7 @@
     "Underwear", "Bra", "Pajamas", "Robe", "Swimsuit", "Bikini", "Trunks",
     "Vest", "Cardigan", "Poncho", "Cape", "Apron", "Uniform", "Jersey"
   ],
-  "vehicles": [
+  "Vehicles": [
     "Car", "Truck", "Van", "SUV", "Bus", "Motorcycle", "Scooter", "Bicycle",
     "Skateboard", "Scooter", "Segway", "Hoverboard", "Train", "Subway",
     "Tram", "Trolley", "Taxi", "Uber", "Limousine", "Ambulance", "Fire Truck",
@@ -108,14 +142,14 @@
     "Airplane", "Jet", "Helicopter", "Drone", "Hot Air Balloon", "Blimp",
     "Rocket", "Spaceship", "UFO", "Satellite", "Rover", "Tank", "ATV"
   ],
-  "instruments": [
+  "Instruments": [
     "Guitar", "Piano", "Violin", "Cello", "Bass", "Drums", "Flute", "Trumpet",
     "Saxophone", "Clarinet", "Trombone", "Tuba", "Harp", "Banjo", "Ukulele",
     "Mandolin", "Accordion", "Harmonica", "Xylophone", "Marimba", "Tambourine",
     "Bongos", "Congas", "Cymbals", "Triangle", "Cowbell", "Gong", "Chimes",
     "Synthesizer", "Keyboard", "Organ", "Bagpipes", "Sitar", "Didgeridoo"
   ],
-  "technology": [
+  "Technology": [
     "Computer", "Laptop", "Desktop", "Tablet", "Phone", "Smartphone", "Watch",
     "Smartwatch", "TV", "Monitor", "Screen", "Projector", "Camera", "Webcam",
     "Microphone", "Speaker", "Headphones", "Earbuds", "Keyboard", "Mouse",
