@@ -41,3 +41,5 @@ yarn-error.*
 /ios
 /android
 .vercel
+
+app.json

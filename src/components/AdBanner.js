@@ -6,8 +6,7 @@ import { useAdConsentContext } from "../contexts/AdConsentContext";
 
 const adUnitId = __DEV__
   ? TestIds.BANNER
-  : (Constants.expoConfig?.extra?.adBannerUnitId ||
-     Constants.manifest?.extra?.adBannerUnitId || "");
+  : (Constants.expoConfig?.extra?.adBannerUnitId ||"");
 
 export const AdBanner = () => {
   const { isReady, canShowAds, canShowPersonalizedAds } = useAdConsentContext();

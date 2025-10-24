@@ -6,11 +6,11 @@ import mobileAds, {
   TestIds,
 } from "react-native-google-mobile-ads";
 import { ca } from "zod/v4/locales";
+import Constants from "expo-constants";
 
 const REWARDED_ID = __DEV__
   ? TestIds.REWARDED
-  : ca-app-pub-xxxxxxxxxxxxx/yyyyyyyyyyyyyy;
-  //: process.env.AD_REWARDED_UNIT_ID;
+  : Constants.expoConfig?.extra?.adRewardedUnitId || "";
 
 export async function initAds() {
   await mobileAds().setRequestConfiguration({
