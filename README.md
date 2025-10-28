@@ -61,47 +61,6 @@ Your goal: give hints, discuss, and vote out the impostor before they can figure
 
 ---
 
-## Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/YOUR_GITHUB_USERNAME/imposter-hunt.git
-cd imposter-hunt
-
-# Install dependencies
-npm install
-```
-
-### Environment Setup
-
-Create a `.env` file in the root directory:
-
-```env
-# API Configuration
-API_BASE_URL=your-api-url-here
-API_KEY=your-api-key-here
-
-# AdMob Configuration
-ADMOB_APP_ID_ANDROID=ca-app-pub-xxxxxxxxxxxxx~yyyyyyyyyy
-ADMOB_APP_ID_IOS=ca-app-pub-xxxxxxxxxxxxx~yyyyyyyyyy
-AD_BANNER_UNIT_ID=ca-app-pub-xxxxxxxxxxxxx/yyyyyyyyyy
-AD_REWARDED_UNIT_ID=ca-app-pub-xxxxxxxxxxxxx/yyyyyyyyyy
-```
-
-### Start Development Server
-
-```bash
-npx expo start
-```
-
-For Android development:
-
-```bash
-npx expo run:android
-```
-
----
-
 ## Project Structure
 
 ```
@@ -144,41 +103,6 @@ src/
   └── constants/
       ├── theme.js          # Design tokens
       └── icons.js          # Icon mappings
-```
-
----
-
-## Building for Production
-
-### Configure EAS Secrets
-
-```bash
-# Install EAS CLI
-npm install -g eas-cli
-
-# Login to Expo
-eas login
-
-# Set up secrets (one-time)
-eas secret:create --scope project --name API_BASE_URL --value "your-api-url"
-eas secret:create --scope project --name API_KEY --value "your-api-key"
-eas secret:create --scope project --name ADMOB_APP_ID_ANDROID --value "ca-app-pub-xxxxx~xxxxx"
-eas secret:create --scope project --name ADMOB_APP_ID_IOS --value "ca-app-pub-xxxxx~xxxxx"
-eas secret:create --scope project --name AD_BANNER_UNIT_ID --value "ca-app-pub-xxxxx/xxxxx"
-eas secret:create --scope project --name AD_REWARDED_UNIT_ID --value "ca-app-pub-xxxxx/xxxxx"
-```
-
-### Build Commands
-
-```bash
-# Preview APK (for testing)
-eas build -p android --profile preview
-
-# Production AAB (for Google Play)
-eas build -p android --profile production
-
-# Submit to Google Play
-eas submit -p android --latest
 ```
 
 ---
@@ -251,31 +175,6 @@ The app includes an AI-powered feature to generate custom topic lists:
 4. **Persistence** – Generated topics saved locally for reuse
 
 API integration handled via `src/lib/generateTopics.js` with credentials from environment variables.
-
----
-
-## Development Commands
-
-```bash
-# Start development server with cache clear
-npx expo start -c
-
-# Run on Android device/emulator
-npx expo run:android
-
-# Check for issues
-npx expo-doctor
-
-# Generate native folders
-npx expo prebuild
-
-# Clean install
-rm -rf node_modules
-npm install
-
-# Update dependencies
-npx expo install --check
-```
 
 ---
 
