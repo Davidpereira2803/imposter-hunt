@@ -133,24 +133,6 @@ Handles Google UMP SDK consent flow:
 
 ---
 
-## Ad Integration
-
-### Configuration
-
-Ads are configured via `app.config.js` using environment variables:
-
-```javascript
-plugins: [
-  [
-    "react-native-google-mobile-ads",
-    {
-      androidAppId: process.env.ADMOB_APP_ID_ANDROID,
-      iosAppId: process.env.ADMOB_APP_ID_IOS
-    }
-  ]
-]
-```
-
 ### Ad Types
 
 * **Banner Ads** – Non-intrusive bottom banners on main screens
@@ -193,32 +175,6 @@ API integration handled via `src/lib/generateTopics.js` with credentials from en
 * Users control ad personalization via settings
 
 See the [Privacy Policy](PRIVACY.md) for complete details.
-
----
-
-## Troubleshooting
-
-### App crashes on AI generation page
-* Verify environment variables are set in EAS secrets
-* Check API endpoint is reachable
-* Review logcat: `adb logcat | grep -E "Error|Exception"`
-
-### Ads not showing
-* Ensure AdMob app ID is configured in `app.config.js`
-* Check UMP consent message is published in AdMob console
-* Verify ad unit IDs are set in environment variables
-* Test with Google's test ad unit IDs first
-
-### Build fails
-* Run `npx expo-doctor` to check configuration
-* Verify `extra.eas.projectId` is set
-* Check all required secrets are configured: `eas secret:list`
-* Clear build cache: `eas build --clear-cache`
-
-### Consent form not appearing
-* Ensure UMP message is published in AdMob
-* Check AdMob app ID matches your account
-* For testing outside EEA, enable debug geography in `AdConsentContext.js`
 
 ---
 
