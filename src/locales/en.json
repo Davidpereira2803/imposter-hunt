@@ -5,7 +5,11 @@
     "save": "Save",
     "delete": "Delete",
     "settings": "Settings",
-    "back": "Back"
+    "back": "Back",
+    "yes": "Yes",
+    "no": "No",
+    "success": "Success",
+    "error": "Error"
   },
   "home": {
     "title": "Imposter Hunt",
@@ -44,5 +48,40 @@
     "imposterWins": "Imposter Wins!",
     "playAgain": "Play Again",
     "backHome": "Back to Home"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "help": "Help",
+    "privacyAndAds": "Privacy & Ads",
+    "consentStatus": "Consent Status",
+    "adsEnabled": "Ads Enabled",
+    "personalized": "Personalized",
+    "privacyPolicy": "Privacy Policy",
+    "managePrivacy": "Manage Privacy",
+    "resetConsentDev": "Reset Consent (Dev)",
+    "gameData": "Game Data",
+    "clearAllData": "Clear All Data",
+    "clearDataTitle": "Clear Data",
+    "clearDataMessage": "Remove all saved data?",
+    "clearData": "Clear",
+    "dataCleared": "Data cleared",
+    "updated": "Updated",
+    "privacyUpdatedMessage": "Privacy settings saved",
+    "resetConsentTitle": "Reset Consent",
+    "resetConsentMessage": "This will reset your consent preferences and show the form again.",
+    "reset": "Reset",
+    "consentUpdated": "Consent preferences updated",
+    "couldNotOpen": "Could not open settings",
+    "couldNotReset": "Could not reset consent",
+    "cannotOpenPrivacy": "Cannot open privacy policy link",
+    "version": "Version",
+    "consent": {
+      "unknown": "Unknown",
+      "required": "Required",
+      "notRequired": "Not Required",
+      "obtained": "Obtained",
+      "status": "Status"
+    }
   }
 }
