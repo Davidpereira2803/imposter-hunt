@@ -12,12 +12,13 @@ import Button from "../src/components/ui/Button";
 import Card from "../src/components/ui/Card";
 import { space, palette, type } from "../src/constants/theme";
 import { Icon } from "../src/constants/icons";
+import { useLanguageStore } from "../src/store/languageStore";
+import { useTranslation } from "../src/lib/useTranslation";
 import i18n from "../src/lib/i18n";
 
 
 const TUTORIAL_SEEN_KEY = "imposter-hunt-tutorial-seen";
 const PRIVACY_POLICY_URL = "https://davidpereira2803.github.io/imposter-hunt/Privacy";
-const LANGUAGE_KEY = "imposter-hunt-language";
 const AVAILABLE_LANGUAGES = [
   { code: "en", name: "English" },
   { code: "pt", name: "Português" },
@@ -37,30 +38,18 @@ export default function Settings() {
     isLoading 
   } = useAdConsentContext();
 
+  const { locale: currentLanguage, setLocale } = useLanguageStore();
+  const { t } = useTranslation();
+
   const [showDebug, setShowDebug] = useState(__DEV__);
   const [showLanguages, setShowLanguages] = useState(false);
-  const [currentLanguage, setCurrentLanguage] = useState(i18n?.locale || "en");
   const SUPPORTED_LANGUAGES = AVAILABLE_LANGUAGES.filter(l => i18n?.translations?.[l.code]);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const saved = await AsyncStorage.getItem(LANGUAGE_KEY);
-        if (saved && i18n?.translations?.[saved]) {
-          i18n.locale = saved;
-          setCurrentLanguage(saved);
-        }
-      } catch {}
-    })();
-  }, []);
-  
   const handleLanguageSelect = async (langCode) => {
     try { await Haptics.selectionAsync(); } catch {}
     try {
       if (!i18n?.translations?.[langCode]) return;
-      i18n.locale = langCode;
-      setCurrentLanguage(langCode);
-      await AsyncStorage.setItem(LANGUAGE_KEY, langCode);
+      setLocale(langCode);
       setShowLanguages(false);
     } catch {}
   };
@@ -81,10 +70,15 @@ export default function Settings() {
     router.push("/tutorial");
   };
 
-  // Local translate helper with fallback text
-  const t = (key, fallback) => {
-    const val = i18n.t(key);
-    return val === key ? (fallback ?? key) : val;
+  const getConsentStatus = () => {
+    if (!consentInfo) return { text: t("settings.consent.unknown", "Unknown"), icon: "help-circle", color: palette.textDim };
+    const statusMap = {
+      0: { text: t("settings.consent.unknown", "Unknown"), icon: "help-circle", color: palette.textDim },
+      1: { text: t("settings.consent.required", "Required"), icon: "alert-circle", color: palette.warn },
+      2: { text: t("settings.consent.notRequired", "Not Required"), icon: "check-circle", color: palette.success },
+      3: { text: t("settings.consent.obtained", "Obtained"), icon: "check-circle", color: palette.success },
+    };
+    return statusMap[consentInfo.status] ?? { text: `${consentInfo.status}`, icon: "information", color: palette.textDim };
   };
 
   const handlePrivacyPolicy = async () => {
@@ -154,17 +148,6 @@ export default function Settings() {
         }
       ]
     );
-  };
-
-  const getConsentStatus = () => {
-    if (!consentInfo) return t("settings.consent.unknown", "Unknown");
-    const map = {
-      0: t("settings.consent.unknown", "Unknown"),
-      1: t("settings.consent.required", "Required"),
-      2: t("settings.consent.notRequired", "Not Required"),
-      3: t("settings.consent.obtained", "Obtained"),
-    };
-    return map[consentInfo.status] ?? `${t("settings.consent.status", "Status")} ${consentInfo.status}`;
   };
 
   return (
@@ -239,12 +222,19 @@ export default function Settings() {
 
           <Card style={styles.infoRow}>
             <View style={styles.infoLeft}>
-              <Icon name="information" size={18} color={palette.textDim} />
+              <Icon name="shield-check" size={18} color={palette.textDim} />
               <Text style={styles.infoLabel}>{t("settings.consentStatus", "Consent Status")}</Text>
             </View>
-            <Text style={styles.infoValue}>
-              {isLoading ? "..." : getConsentStatus()}
-            </Text>
+            {isLoading ? (
+              <Text style={styles.infoValue}>...</Text>
+            ) : (
+              <View style={styles.statusBadge}>
+                <Icon name={getConsentStatus().icon} size={16} color={getConsentStatus().color} />
+                <Text style={[styles.statusText, { color: getConsentStatus().color }]}>
+                  {getConsentStatus().text}
+                </Text>
+              </View>
+            )}
           </Card>
 
           <Card style={styles.infoRow}>
@@ -454,5 +444,18 @@ const styles = StyleSheet.create({
     fontSize: type.small,
     textAlign: 'center',
     marginTop: space.sm,
+  },
+  statusBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: space.xs,
+    paddingHorizontal: space.sm,
+    paddingVertical: space.xs,
+    borderRadius: 12,
+    backgroundColor: palette.panel,
+  },
+  statusText: {
+    fontSize: type.small,
+    fontWeight: "700",
   },
 });

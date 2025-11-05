@@ -10,6 +10,7 @@ import Button from "../src/components/ui/Button";
 import Card from "../src/components/ui/Card";
 import { space, palette, type } from "../src/constants/theme";
 import { Icon } from "../src/constants/icons";
+import { useTranslation } from "../src/lib/useTranslation";
 
 export default function Round() {
   const router = useRouter();
@@ -19,6 +20,7 @@ export default function Round() {
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
   const intervalRef = useRef(null);
   const isNavigatingRef = useRef(false);
+  const { t } = useTranslation();
 
   const aliveNow = getAliveCount ? getAliveCount() : (players?.length || 0);
 
@@ -42,12 +44,12 @@ export default function Round() {
 
   const handleQuitRound = () => {
     Alert.alert(
-      "Quit Game",
-      "Are you sure you want to quit? Progress will be lost.",
+      t("round.quitTitle", "Quit Game"),
+      t("round.quitMessage", "Are you sure you want to quit? Progress will be lost."),
       [
-        { text: "Cancel", style: "cancel" },
+        { text: t("common.cancel", "Cancel"), style: "cancel" },
         { 
-          text: "Quit", 
+          text: t("round.quit", "Quit"),
           style: "destructive",
           onPress: async () => {
             try { 
@@ -69,7 +71,7 @@ export default function Round() {
 
     const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
     return () => backHandler.remove();
-  }, []);
+  }, [t]);
 
   useEffect(() => {
     if (isNavigatingRef.current) return;
@@ -111,10 +113,10 @@ export default function Round() {
       } catch {}
       
       Alert.alert(
-        "Time's Up",
-        "Proceed to voting",
+        t("round.timesUp", "Time's Up"),
+        t("round.proceedToVoting", "Proceed to voting"),
         [{ 
-          text: "Vote Now", 
+          text: t("round.voteNow", "Vote Now"),
           onPress: () => {
             isNavigatingRef.current = true;
             router.push("/vote");
@@ -122,7 +124,7 @@ export default function Round() {
         }]
       );
     }
-  }, [seconds, isRunning]);
+  }, [seconds, isRunning, t]);
 
   useEffect(() => {
     return () => {
@@ -199,7 +201,7 @@ export default function Round() {
 
         {/* Player Order Section */}
         <View style={styles.orderSection}>
-          <Text style={styles.orderTitle}>Speaking Order</Text>
+          <Text style={styles.orderTitle}>{t("round.speakingOrder", "Speaking Order")}</Text>
           
           <View style={styles.currentPlayerCard}>
             <View style={styles.navigationButtons}>
@@ -219,12 +221,12 @@ export default function Round() {
               </TouchableOpacity>
 
               <View style={styles.currentPlayer}>
-                <Text style={styles.turnLabel}>Current Turn</Text>
+                <Text style={styles.turnLabel}>{t("round.currentTurn", "Current Turn")}</Text>
                 <Text style={styles.currentPlayerName}>
                   {orderedPlayers[currentPlayerIndex]?.name || "—"}
                 </Text>
                 <Text style={styles.turnNumber}>
-                  {currentPlayerIndex + 1} of {orderedPlayers.length}
+                  {currentPlayerIndex + 1} / {orderedPlayers.length}
                 </Text>
               </View>
 
@@ -291,7 +293,7 @@ export default function Round() {
           <View style={styles.primaryActions}>
             {!isRunning ? (
               <Button 
-                title="Start" 
+                title={t("round.start", "Start")}
                 onPress={startTimer}
                 variant="success"
                 size="lg"
@@ -300,7 +302,7 @@ export default function Round() {
               />
             ) : (
               <Button 
-                title="Pause" 
+                title={t("round.pause", "Pause")}
                 onPress={pauseTimer}
                 variant="warn"
                 size="lg"
@@ -310,7 +312,7 @@ export default function Round() {
             )}
 
             <Button 
-              title="Vote" 
+              title={t("round.vote", "Vote")}
               onPress={handleVote}
               variant="primary"
               size="lg"
@@ -321,7 +323,7 @@ export default function Round() {
 
           <View style={styles.secondaryActions}>
             <Button 
-              title="Reset Timer" 
+              title={t("round.resetTimer", "Reset Timer")}
               onPress={resetTimer}
               variant="muted"
               size="md"
@@ -329,7 +331,7 @@ export default function Round() {
             />
 
             <Button 
-              title="Imposter Guess" 
+              title={t("round.imposterGuess", "Imposter Guess")}
               onPress={handleImposterGuess}
               variant="danger"
               size="md"

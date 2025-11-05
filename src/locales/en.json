@@ -15,7 +15,10 @@
     "title": "Imposter Hunt",
     "continueGame": "Continue Game",
     "newGame": "New Game",
-    "howToPlay": "How to Play"
+    "howToPlay": "How to Play",
+    "exitTitle": "Exit",
+    "exitMessage": "Exit game?",
+    "exit": "Exit"
   },
   "setup": {
     "title": "Setup",
@@ -25,15 +28,60 @@
     "topic": "Topic",
     "startGame": "Start Game",
     "needPlayers": "Need 3+ Players",
+    "needPlayersMessage": "Add more players to start",
     "chooseTopic": "Choose Topic",
+    "chooseTopicMessage": "Select a category first",
     "customTopic": "Custom Topic",
-    "generateAI": "Generate with AI"
+    "generateAI": "Generate with AI",
+    "playerExists": "Player already added",
+    "enterTopicName": "Please enter a topic name.",
+    "topicExists": "A topic with this name already exists.",
+    "wordsPlaceholder": "Add words (comma separated)",
+    "topicNamePlaceholder": "Topic Name",
+    "couldNotStart": "Failed to start game",
+    "aiGeneratedTopic": "AI generated topic",
+    "customTopicLabel": "Custom topic"
   },
   "topics": {
     "random": "Random",
+
+    "Luxembourg": "Luxembourg",
+
+    "Food": "Food",
     "food": "Food",
+
+    "Animals": "Animals",
+    "animals": "Animals",
+
+    "Movies": "Movies",
+    "movies": "Movies",
+
+    "Countries": "Countries",
     "countries": "Countries",
-    "animals": "Animals"
+
+    "Sports": "Sports",
+    "sports": "Sports",
+
+    "Occupations": "Occupations",
+    "occupations": "Occupations",
+
+    "Brands": "Brands",
+    "brands": "Brands",
+
+    "Colors": "Colors",
+    "colors": "Colors",
+
+    "Clothing": "Clothing",
+    "clothing": "Clothing",
+
+    "Vehicles": "Vehicles",
+    "vehicles": "Vehicles",
+
+    "Instruments": "Instruments",
+    "instruments": "Instruments",
+
+    "Technology": "Technology",
+    "technology": "Technology"
   },
   "game": {
     "round": "Round",
@@ -41,7 +89,20 @@
     "yourRole": "Your Role",
     "civilian": "Civilian",
     "imposter": "Imposter",
-    "eliminated": "Eliminated"
+    "eliminated": "Eliminated",
+    "quitTitle": "Quit Game",
+    "quitMessage": "Are you sure you want to quit? Progress will be lost.",
+    "quit": "Quit",
+    "timesUp": "Time's Up",
+    "proceedToVoting": "Proceed to voting",
+    "voteNow": "Vote Now",
+    "speakingOrder": "Speaking Order",
+    "currentTurn": "Current Turn",
+    "start": "Start",
+    "pause": "Pause",
+    "vote": "Vote",
+    "resetTimer": "Reset Timer",
+    "imposterGuess": "Imposter Guess"
   },
   "results": {
     "civiliansWin": "Civilians Win!",
@@ -80,8 +141,22 @@
       "unknown": "Unknown",
       "required": "Required",
       "notRequired": "Not Required",
-      "obtained": "Obtained",
-      "status": "Status"
+      "obtained": "Obtained"
     }
+  },
+  "role": {
+    "exitTitle": "Exit Game",
+    "exitMessage": "Return to setup?",
+    "exit": "Exit",
+    "passTo": "Pass to",
+    "revealRole": "Reveal Role",
+    "imposter": "IMPOSTER",
+    "civilian": "CIVILIAN",
+    "secretWordLabel": "Your Secret Word",
+    "missionTitle": "Your Mission",
+    "imposterMission": "• Blend in with civilians\n• Listen carefully to hints\n• Guess the secret word to win\n• Or survive until only 2 remain",
+    "civilianMission": "• Give subtle hints about the word\n• Don't say the word directly\n• Find and eliminate the imposter\n• Be careful - they're listening!",
+    "startRound": "Start Round",
+    "hideAndPass": "Hide & Pass"
   }
 }

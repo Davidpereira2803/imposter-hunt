@@ -10,25 +10,31 @@ import Title from "../src/components/ui/Title";
 import Button from "../src/components/ui/Button";
 import { space, palette } from "../src/constants/theme";
 import { Icon, icons } from "../src/constants/icons";
+import { useTranslation } from "../src/lib/useTranslation";
 
 const TUTORIAL_SEEN_KEY = "imposter-hunt-tutorial-seen";
 
 export default function Home() {
   const router = useRouter();
   const { players, topicKey } = useGameStore();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const backAction = () => {
-      Alert.alert("Exit", "Exit game?", [
-        { text: "Cancel", style: "cancel" },
-        { text: "Exit", onPress: () => BackHandler.exitApp() }
-      ]);
+      Alert.alert(
+        t("home.exitTitle", "Exit"),
+        t("home.exitMessage", "Exit game?"),
+        [
+          { text: t("common.cancel", "Cancel"), style: "cancel" },
+          { text: t("home.exit", "Exit"), onPress: () => BackHandler.exitApp() }
+        ]
+      );
       return true;
     };
 
     const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
     return () => backHandler.remove();
-  }, []);
+  }, [t]);
 
   const handleQuickStart = async () => {
     try { await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium); } catch {}
@@ -40,10 +46,7 @@ export default function Home() {
   };
 
   const handleViewTutorial = async () => {
-    try {
-      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    } catch {}
-    
+    try { await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium); } catch {}
     await AsyncStorage.removeItem(TUTORIAL_SEEN_KEY);
     router.push("/tutorial");
   };
@@ -65,18 +68,18 @@ export default function Home() {
       <View style={styles.container}>
         <View style={styles.content}>
           <View style={styles.header}>
-            <Icon 
-              name={icons.gameLogo.name} 
-              size={icons.gameLogo.size} 
+            <Icon
+              name={icons.gameLogo.name}
+              size={icons.gameLogo.size}
               color={palette.primary}
             />
-            <Title style={styles.title}>Imposter Hunt</Title>
+            <Title style={styles.title}>{t("home.title", "Imposter Hunt")}</Title>
           </View>
 
           <View style={styles.actions}>
             {canQuickStart && (
-              <Button 
-                title="Continue Game"
+              <Button
+                title={t("home.continueGame", "Continue Game")}
                 onPress={handleQuickStart}
                 variant="success"
                 size="lg"
@@ -84,8 +87,8 @@ export default function Home() {
               />
             )}
 
-            <Button 
-              title="New Game"
+            <Button
+              title={t("home.newGame", "New Game")}
               onPress={handleNewGame}
               variant="primary"
               size="lg"
@@ -94,26 +97,23 @@ export default function Home() {
           </View>
         </View>
 
-        {/* How to Play Button */}
-        <Button 
-          title="How to Play"
+        <Button
+          title={t("home.howToPlay", "How to Play")}
           onPress={handleViewTutorial}
-          variant="primary" 
+          variant="primary"
           size="lg"
           icon={<Icon name="help-circle" size={20} color={palette.text} />}
           style={styles.howToPlayButton}
         />
 
-        {/* Settings Button */}
-        <Button 
-          title="Settings"
+        <Button
+          title={t("common.settings", "Settings")}
           onPress={handleSettings}
           variant="primary"
           size="lg"
           icon={<Icon name={icons.settings.name} size={20} color={palette.text} />}
           style={styles.settingsButton}
         />
-
       </View>
 
       <AdBanner />
@@ -127,18 +127,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: space.lg,
   },
   howToPlayButton: {
-    position: 'absolute',
+    position: "absolute",
     bottom: space.md,
     left: space.md,
-    width: '40%',
+    width: "40%",
     height: 50,
     zIndex: 1,
   },
   settingsButton: {
-    position: 'absolute',
+    position: "absolute",
     bottom: space.md,
     right: space.md,
-    width: '40%',
+    width: "40%",
     height: 50,
     zIndex: 1,
   },

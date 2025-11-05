@@ -11,9 +11,11 @@ import Card from "../src/components/ui/Card";
 import Pill from "../src/components/ui/Pill";
 import { space, palette, radii, type } from "../src/constants/theme";
 import { Icon } from "../src/constants/icons";
+import { useTranslation } from "../src/lib/useTranslation";
 
 export default function Setup() {
   const router = useRouter();
+  const { t } = useTranslation();
 
   const players = useGameStore((s) => s.players);
   const topicKey = useGameStore((s) => s.topicKey);
@@ -30,24 +32,24 @@ export default function Setup() {
   const allTopics = useMemo(() => {
     const pre = Object.entries(predefinedTopics || {}).map(([key, words]) => ({
       key,
-      name: toTitleCase(key),
+      name: t(`topics.${key}`, toTitleCase(key)),
       words,
       isCustom: false,
       isAI: false,
     }));
-    const custom = (customTopics || []).map((t) => {
+    const custom = (customTopics || []).map((tpc) => {
       const isAI =
-        t?.isAI === true ||
-        t?.source === "ai" ||
-        /\(ai\)/i.test(t?.name || "");
+        tpc?.isAI === true ||
+        tpc?.source === "ai" ||
+        /\(ai\)/i.test(tpc?.name || "");
       return {
-        key: `custom:${(t.name || "")
+        key: `custom:${(tpc.name || "")
           .toLowerCase()
           .trim()
           .replace(/[^a-z0-9]+/g, "-")
           .replace(/(^-|-$)/g, "")}`,
-        name: t.name,
-        words: t.words || [],
+        name: tpc.name,
+        words: tpc.words || [],
         isCustom: true,
         isAI,
       };
@@ -60,14 +62,14 @@ export default function Setup() {
 
     const randomTopic = {
       key: "random",
-      name: "Random",
+      name: t("topics.random", "Random"),
       words: allWords,
       isCustom: false,
       isAI: false,
     };
 
     return [randomTopic, ...pre, ...custom];
-  }, [predefinedTopics, customTopics]);
+  }, [predefinedTopics, customTopics, t]);
 
   const [inputName, setInputName] = useState("");
   const [playerList, setPlayerList] = useState(players || []);
@@ -89,7 +91,7 @@ export default function Setup() {
     const name = inputName.trim();
     if (!name) return;
     if (playerList.includes(name)) {
-      Alert.alert("Duplicate", "Player already added");
+      Alert.alert(t("common.error", "Error"), t("setup.playerExists", "Player already added"));
       return;
     }
     const newList = [...playerList, name];
@@ -113,17 +115,17 @@ export default function Setup() {
 
   const handleStartGame = async () => {
     if (playerList.length < 3) {
-      Alert.alert("Need 3+ Players", "Add more players to start");
+      Alert.alert(t("setup.needPlayers", "Need 3+ Players"), t("setup.needPlayersMessage", "Add more players to start"));
       return;
     }
     if (!topicKey) {
-      Alert.alert("Choose Topic", "Select a category first");
+      Alert.alert(t("setup.chooseTopic", "Choose Topic"), t("setup.chooseTopicMessage", "Select a category first"));
       return;
     }
     try { await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium); } catch {}
     const success = startMatch();
     if (success) router.push("/role");
-    else Alert.alert("Error", "Failed to start game");
+    else Alert.alert(t("common.error", "Error"), t("setup.couldNotStart", "Failed to start game"));
   };
 
   const openModal = () => {
@@ -142,12 +144,12 @@ export default function Setup() {
     const name = topicName.trim();
     const words = topicWordsText.split(",").map((w) => w.trim()).filter(Boolean);
     if (!name) {
-      setError("Please enter a topic name.");
+      setError(t("setup.enterTopicName", "Please enter a topic name."));
       return;
     }
     const exists = allTopics.some((t) => t.name.toLowerCase() === name.toLowerCase());
     if (exists) {
-      setError("A topic with this name already exists.");
+      setError(t("setup.topicExists", "A topic with this name already exists."));
       return;
     }
     const res = await addCustomTopic?.({ name, words });
@@ -184,19 +186,19 @@ export default function Setup() {
             <TouchableOpacity onPress={handleGoHome} style={styles.backButton}>
               <Icon name="arrow-left" size={24} color={palette.text} />
             </TouchableOpacity>
-            <Title style={styles.title}>Setup</Title>
+            <Title style={styles.title}>{t("setup.title", "Setup")}</Title>
             <View style={styles.backButton} />
           </View>
 
           {/* Topic Section FIRST */}
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Topic</Text>
+            <Text style={styles.sectionTitle}>{t("setup.topic", "Topic")}</Text>
 
             {/* Top actions: AI + Custom */}
             <View style={styles.topicActionsRow}>
               <View style={{ flex: 1 }}>
                 <Button 
-                  title="Generate with AI"
+                  title={t("setup.generateAI", "Generate with AI")}
                   onPress={() => {
                     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(() => {});
                     router.push("/ai-topics");
@@ -210,7 +212,7 @@ export default function Setup() {
               <View style={{ width: space.sm }} />
               <View style={{ flex: 1 }}>
                 <Button
-                  title="Custom Topic"
+                  title={t("setup.customTopic", "Custom Topic")}
                   onPress={openModal}
                   size="md"
                   variant="ghost"
@@ -223,13 +225,13 @@ export default function Setup() {
             {/* Grid of topics */}
             {allTopics.length > 0 && (
               <View style={styles.topicGrid}>
-                {allTopics.map((t) => (
+                {allTopics.map((tpc) => (
                   <Card
-                    key={t.key}
-                    onPress={() => handleSelectTopic(t.key)}
+                    key={tpc.key}
+                    onPress={() => handleSelectTopic(tpc.key)}
                     style={[
                       styles.topicCard,
-                      topicKey === t.key && { borderColor: palette.primary, borderWidth: 2 },
+                      topicKey === tpc.key && { borderColor: palette.primary, borderWidth: 2 },
                     ]}
                   >
                     <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
@@ -238,12 +240,12 @@ export default function Setup() {
                         numberOfLines={1}
                         ellipsizeMode="tail"
                       >
-                        {t.name}
+                        {tpc.name}
                       </Text>
-                      {t.isCustom ? (
+                      {tpc.isCustom ? (
                         <View
-                          accessibilityLabel={t.isAI ? "AI generated topic" : "Custom topic"}
-                          style={[styles.dot, t.isAI ? styles.dotAI : styles.dotCustom]}
+                          accessibilityLabel={tpc.isAI ? t("setup.aiGeneratedTopic", "AI generated topic") : t("setup.customTopicLabel", "Custom topic")}
+                          style={[styles.dot, tpc.isAI ? styles.dotAI : styles.dotCustom]}
                         />
                       ) : null}
                     </View>
@@ -255,18 +257,18 @@ export default function Setup() {
 
           {/* Players Section */}
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Players ({playerList.length})</Text>
+            <Text style={styles.sectionTitle}>{t("setup.players", "Players")} ({playerList.length})</Text>
             <View style={styles.inputRow}>
               <Input
                 value={inputName}
                 onChangeText={setInputName}
-                placeholder="Player name"
+                placeholder={t("setup.playerPlaceholder", "Player name")}
                 maxLength={20}
                 onSubmitEditing={addPlayer}
                 returnKeyType="done"
                 style={styles.input}
               />
-              <Button title="Add" onPress={addPlayer} variant="primary" />
+              <Button title={t("setup.addPlayer", "Add")} onPress={addPlayer} variant="primary" />
             </View>
 
             {playerList.length > 0 && (
@@ -284,7 +286,7 @@ export default function Setup() {
           </View>
 
           <Button 
-            title="Start Game"
+            title={t("setup.startGame", "Start Game")}
             onPress={handleStartGame}
             variant="success"
             size="lg"
@@ -303,17 +305,17 @@ export default function Setup() {
       >
         <View style={styles.modalBackdrop}>
           <View style={styles.modalCard}>
-            <Text style={styles.modalTitle}>Custom Topic</Text>
+            <Text style={styles.modalTitle}>{t("setup.customTopic", "Custom Topic")}</Text>
 
             <Input
-              placeholder="Topic Name"
+              placeholder={t("setup.topicNamePlaceholder", "Topic Name")}
               value={topicName}
               onChangeText={setTopicName}
               style={styles.modalField}
             />
 
             <Input
-              placeholder="Add words (comma separated)"
+              placeholder={t("setup.wordsPlaceholder", "Add words (comma separated)")}
               value={topicWordsText}
               onChangeText={setTopicWordsText}
               multiline
@@ -325,12 +327,12 @@ export default function Setup() {
 
             <View style={styles.modalActions}>
               <Button
-                title="Cancel"
+                title={t("common.cancel", "Cancel")}
                 onPress={closeModal}
                 variant="ghost"
               />
               <Button
-                title="Save"
+                title={t("common.save", "Save")}
                 onPress={handleSaveTopic}
                 variant="primary"
                 icon={<Icon name="content-save" size={18} color={palette.text} />}

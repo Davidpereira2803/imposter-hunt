@@ -22,10 +22,12 @@ import Button from "../src/components/ui/Button";
 import Card from "../src/components/ui/Card";
 import { space, palette, type, radii } from "../src/constants/theme";
 import { Icon, icons } from "../src/constants/icons";
+import { useTranslation } from "../src/lib/useTranslation";
 
 export default function Role() {
   const router = useRouter();
   const { players, imposterIndex, secretWord } = useGameStore();
+  const { t } = useTranslation();
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
   const [revealed, setRevealed] = useState(false);
   const [showBlur, setShowBlur] = useState(false);
@@ -36,16 +38,20 @@ export default function Role() {
 
   useEffect(() => {
     const backAction = () => {
-      Alert.alert("Exit Game", "Return to setup?", [
-        { text: "Cancel", style: "cancel" },
-        { text: "Exit", onPress: () => router.replace("/setup") }
-      ]);
+      Alert.alert(
+        t("role.exitTitle", "Exit Game"),
+        t("role.exitMessage", "Return to setup?"),
+        [
+          { text: t("common.cancel", "Cancel"), style: "cancel" },
+          { text: t("role.exit", "Exit"), onPress: () => router.replace("/setup") }
+        ]
+      );
       return true;
     };
 
     const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
     return () => backHandler.remove();
-  }, []);
+  }, [router, t]);
 
   useEffect(() => {
     if (!players?.length || imposterIndex == null) {
@@ -125,7 +131,7 @@ export default function Role() {
             entering={FadeIn.duration(400)}
           >
             <View style={styles.passSection}>
-              <Text style={styles.passLabel}>Pass to</Text>
+              <Text style={styles.passLabel}>{t("role.passTo", "Pass to")}</Text>
               <Animated.View entering={ZoomIn.delay(200).duration(500)}>
                 <Title variant="giant" style={styles.playerName}>
                   {currentPlayer}
@@ -146,7 +152,7 @@ export default function Role() {
               >
                 <View style={styles.revealBtnContent}>
                   <Icon name="eye" size={28} color={palette.text} />
-                  <Text style={styles.revealBtnText}>Reveal Role</Text>
+                  <Text style={styles.revealBtnText}>{t("role.revealRole", "Reveal Role")}</Text>
                 </View>
               </Pressable>
             </Animated.View>
@@ -167,22 +173,19 @@ export default function Role() {
                       >
                         <Icon name="incognito" size={100} color={palette.danger} />
                         <View style={styles.imposterBadge}>
-                          <Text style={styles.imposterText}>IMPOSTER</Text>
+                          <Text style={styles.imposterText}>{t("role.imposter", "IMPOSTER")}</Text>
                         </View>
                       </Animated.View>
 
-                      {/* FIX: Separate wrapper for layout animation */}
-                      <Animated.View 
-                        entering={SlideInDown.delay(400).springify()}
-                      >
+                      <Animated.View entering={SlideInDown.delay(400).springify()}>
                         <Animated.View style={cardAnimatedStyle}>
                           <Card style={styles.infoCard}>
-                            <Text style={styles.infoTitle}>Your Mission</Text>
+                            <Text style={styles.infoTitle}>{t("role.missionTitle", "Your Mission")}</Text>
                             <Text style={styles.infoText}>
-                              • Blend in with civilians{'\n'}
-                              • Listen carefully to hints{'\n'}
-                              • Guess the secret word to win{'\n'}
-                              • Or survive until only 2 remain
+                              {t(
+                                "role.imposterMission",
+                                "• Blend in with civilians\n• Listen carefully to hints\n• Guess the secret word to win\n• Or survive until only 2 remain"
+                              )}
                             </Text>
                           </Card>
                         </Animated.View>
@@ -196,7 +199,7 @@ export default function Role() {
                       >
                         <Icon name="account-group" size={100} color={palette.success} />
                         <View style={styles.civilianBadge}>
-                          <Text style={styles.civilianText}>CIVILIAN</Text>
+                          <Text style={styles.civilianText}>{t("role.civilian", "CIVILIAN")}</Text>
                         </View>
                       </Animated.View>
 
@@ -204,24 +207,21 @@ export default function Role() {
                         entering={SlideInDown.delay(300).springify()}
                         style={styles.wordReveal}
                       >
-                        <Text style={styles.wordLabel}>Your Secret Word</Text>
+                        <Text style={styles.wordLabel}>{t("role.secretWordLabel", "Your Secret Word")}</Text>
                         <View style={styles.wordBox}>
                           <Text style={styles.wordText}>{secretWord}</Text>
                         </View>
                       </Animated.View>
 
-                      {/* FIX: Separate wrapper for layout animation */}
-                      <Animated.View 
-                        entering={SlideInDown.delay(500).springify()}
-                      >
+                      <Animated.View entering={SlideInDown.delay(500).springify()}>
                         <Animated.View style={cardAnimatedStyle}>
                           <Card style={styles.infoCard}>
-                            <Text style={styles.infoTitle}>Your Mission</Text>
+                            <Text style={styles.infoTitle}>{t("role.missionTitle", "Your Mission")}</Text>
                             <Text style={styles.infoText}>
-                              • Give subtle hints about the word{'\n'}
-                              • Don't say the word directly{'\n'}
-                              • Find and eliminate the imposter{'\n'}
-                              • Be careful - they're listening!
+                              {t(
+                                "role.civilianMission",
+                                "• Give subtle hints about the word\n• Don't say the word directly\n• Find and eliminate the imposter\n• Be careful - they're listening!"
+                              )}
                             </Text>
                           </Card>
                         </Animated.View>
@@ -234,7 +234,7 @@ export default function Role() {
                     style={styles.actionContainer}
                   >
                     <Button
-                      title={isLastPlayer ? "Start Round" : "Hide & Pass"}
+                      title={isLastPlayer ? t("role.startRound", "Start Round") : t("role.hideAndPass", "Hide & Pass")}
                       onPress={handleNext}
                       variant="success"
                       size="lg"

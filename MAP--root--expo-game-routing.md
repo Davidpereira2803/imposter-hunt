@@ -2,7 +2,7 @@
 folder: .
 owner: Davidpereira2803
 status: stable
-last_updated: 2025-11-05
+last_updated: 2025-11-06
 provides: [expo-router-app, game-entry, android-build]
 consumes: []
 dependencies: [expo, react-native, zustand, expo-router]

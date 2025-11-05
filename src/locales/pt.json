@@ -1,1 +1,164 @@
-{}
+{
+  "common": {
+    "continue": "Continuar",
+    "cancel": "Cancelar",
+    "save": "Salvar",
+    "delete": "Excluir",
+    "settings": "Configurações",
+    "back": "Voltar",
+    "yes": "Sim",
+    "no": "Não",
+    "success": "Sucesso",
+    "error": "Erro"
+  },
+  "home": {
+    "title": "Caça ao Impostor",
+    "continueGame": "Continuar Jogo",
+    "newGame": "Novo Jogo",
+    "howToPlay": "Como Jogar",
+    "exitTitle": "Sair",
+    "exitMessage": "Sair do jogo?",
+    "exit": "Sair"
+  },
+  "setup": {
+    "title": "Configuração",
+    "players": "Jogadores",
+    "addPlayer": "Adicionar",
+    "playerPlaceholder": "Nome do jogador",
+    "topic": "Tema",
+    "startGame": "Iniciar Jogo",
+    "needPlayers": "Precisa de 3+ jogadores",
+    "needPlayersMessage": "Adicione mais jogadores para começar",
+    "chooseTopic": "Escolher Tema",
+    "chooseTopicMessage": "Selecione uma categoria primeiro",
+    "customTopic": "Tema Personalizado",
+    "generateAI": "Gerar com IA",
+    "playerExists": "Jogador já adicionado",
+    "enterTopicName": "Digite um nome para o tema.",
+    "topicExists": "Já existe um tema com esse nome.",
+    "wordsPlaceholder": "Adicione palavras (separadas por vírgula)",
+    "topicNamePlaceholder": "Nome do Tema",
+    "couldNotStart": "Falha ao iniciar o jogo",
+    "aiGeneratedTopic": "Tema gerado por IA",
+    "customTopicLabel": "Tema personalizado"
+  },
+  "topics": {
+    "random": "Aleatório",
+
+    "Luxembourg": "Luxemburgo",
+
+    "Food": "Comida",
+    "food": "Comida",
+
+    "Animals": "Animais",
+    "animals": "Animais",
+
+    "Movies": "Filmes",
+    "movies": "Filmes",
+
+    "Countries": "Países",
+    "countries": "Países",
+
+    "Sports": "Esportes",
+    "sports": "Esportes",
+
+    "Occupations": "Profissões",
+    "occupations": "Profissões",
+
+    "Brands": "Marcas",
+    "brands": "Marcas",
+
+    "Colors": "Cores",
+    "colors": "Cores",
+
+    "Clothing": "Roupas",
+    "clothing": "Roupas",
+
+    "Vehicles": "Veículos",
+    "vehicles": "Veículos",
+
+    "Instruments": "Instrumentos",
+    "instruments": "Instrumentos",
+
+    "Technology": "Tecnologia",
+    "technology": "Tecnologia"
+  },
+  "game": {
+    "round": "Rodada",
+    "secretWord": "Palavra Secreta",
+    "yourRole": "Seu Papel",
+    "civilian": "Civil",
+    "imposter": "Impostor",
+    "eliminated": "Eliminado"
+  },
+  "results": {
+    "civiliansWin": "Civis Vencem!",
+    "imposterWins": "Impostor Vence!",
+    "playAgain": "Jogar Novamente",
+    "backHome": "Voltar ao Início"
+  },
+  "settings": {
+    "title": "Configurações",
+    "language": "Idioma",
+    "help": "Ajuda",
+    "privacyAndAds": "Privacidade e Anúncios",
+    "consentStatus": "Status do Consentimento",
+    "adsEnabled": "Anúncios Ativados",
+    "personalized": "Personalizados",
+    "privacyPolicy": "Política de Privacidade",
+    "managePrivacy": "Gerenciar Privacidade",
+    "resetConsentDev": "Redefinir Consentimento (Dev)",
+    "gameData": "Dados do Jogo",
+    "clearAllData": "Limpar Todos os Dados",
+    "clearDataTitle": "Limpar Dados",
+    "clearDataMessage": "Remover todos os dados salvos?",
+    "clearData": "Limpar",
+    "dataCleared": "Dados limpos",
+    "updated": "Atualizado",
+    "privacyUpdatedMessage": "Configurações de privacidade salvas",
+    "resetConsentTitle": "Redefinir Consentimento",
+    "resetConsentMessage": "Isso redefinirá suas preferências de consentimento e mostrará o formulário novamente.",
+    "reset": "Redefinir",
+    "consentUpdated": "Preferências de consentimento atualizadas",
+    "couldNotOpen": "Não foi possível abrir as configurações",
+    "couldNotReset": "Não foi possível redefinir o consentimento",
+    "cannotOpenPrivacy": "Não é possível abrir o link da política de privacidade",
+    "version": "Versão",
+    "consent": {
+      "unknown": "Desconhecido",
+      "required": "Obrigatório",
+      "notRequired": "Não obrigatório",
+      "obtained": "Obtido"
+    }
+  },
+  "role": {
+    "exitTitle": "Sair do Jogo",
+    "exitMessage": "Voltar para a configuração?",
+    "exit": "Sair",
+    "passTo": "Passe para",
+    "revealRole": "Revelar Papel",
+    "imposter": "IMPOSTOR",
+    "civilian": "CIVIL",
+    "secretWordLabel": "Sua Palavra Secreta",
+    "missionTitle": "Sua Missão",
+    "imposterMission": "• Se misture com os civis\n• Escute atentamente as dicas\n• Adivinhe a palavra secreta para vencer\n• Ou sobreviva até restarem apenas 2",
+    "civilianMission": "• Dê dicas sutis sobre a palavra\n• Não diga a palavra diretamente\n• Encontre e elimine o impostor\n• Cuidado — ele está ouvindo!",
+    "startRound": "Iniciar Rodada",
+    "hideAndPass": "Esconder e Passar"
+  },
+  "round": {
+    "quitTitle": "Sair do Jogo",
+    "quitMessage": "Tem certeza de que deseja sair? O progresso será perdido.",
+    "quit": "Sair",
+    "timesUp": "Tempo Esgotado",
+    "proceedToVoting": "Ir para a votação",
+    "voteNow": "Votar Agora",
+    "speakingOrder": "Ordem de Fala",
+    "currentTurn": "Vez Atual",
+    "start": "Iniciar",
+    "pause": "Pausar",
+    "vote": "Votar",
+    "resetTimer": "Reiniciar Temporizador",
+    "imposterGuess": "Palpite do Impostor"
+  }
+}

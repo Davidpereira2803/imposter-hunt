@@ -5,6 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useGameStore } from "../src/store/gameStore";
 import { AdConsentProvider } from "../src/contexts/AdConsentContext";
 import LoadingScreen from "../src/components/LoadingScreen";
+import { useLanguageStore } from "../src/store/languageStore";
 
 const TUTORIAL_SEEN_KEY = "imposter-hunt-tutorial-seen";
 
@@ -13,6 +14,7 @@ export default function RootLayout() {
   const [showTutorial, setShowTutorial] = useState(false);
   const [tutorialChecked, setTutorialChecked] = useState(false);
   const hasHydrated = useGameStore((state) => state._hasHydrated);
+  const locale = useLanguageStore((s) => s.locale);
 
   useEffect(() => {
     useGameStore.getState().loadCustomTopics?.();
@@ -56,6 +58,7 @@ export default function RootLayout() {
     <AdConsentProvider>
       <StatusBar style="light" backgroundColor="#000000" />
       <Stack
+        key={`stack-${locale}`}
         screenOptions={{
           headerShown: false,
           animation: "slide_from_right",
