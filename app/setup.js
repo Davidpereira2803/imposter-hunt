@@ -52,7 +52,21 @@ export default function Setup() {
         isAI,
       };
     });
-    return [...pre, ...custom];
+
+    const allWords = [
+      ...pre.flatMap(t => t.words),
+      ...custom.flatMap(t => t.words),
+    ];
+
+    const randomTopic = {
+      key: "random",
+      name: "Random",
+      words: allWords,
+      isCustom: false,
+      isAI: false,
+    };
+
+    return [randomTopic, ...pre, ...custom];
   }, [predefinedTopics, customTopics]);
 
   const [inputName, setInputName] = useState("");

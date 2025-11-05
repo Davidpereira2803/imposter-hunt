@@ -1,0 +1,48 @@
+{
+  "common": {
+    "continue": "Continue",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "settings": "Settings",
+    "back": "Back"
+  },
+  "home": {
+    "title": "Imposter Hunt",
+    "continueGame": "Continue Game",
+    "newGame": "New Game",
+    "howToPlay": "How to Play"
+  },
+  "setup": {
+    "title": "Setup",
+    "players": "Players",
+    "addPlayer": "Add",
+    "playerPlaceholder": "Player name",
+    "topic": "Topic",
+    "startGame": "Start Game",
+    "needPlayers": "Need 3+ Players",
+    "chooseTopic": "Choose Topic",
+    "customTopic": "Custom Topic",
+    "generateAI": "Generate with AI"
+  },
+  "topics": {
+    "random": "Random",
+    "food": "Food",
+    "countries": "Countries",
+    "animals": "Animals"
+  },
+  "game": {
+    "round": "Round",
+    "secretWord": "Secret Word",
+    "yourRole": "Your Role",
+    "civilian": "Civilian",
+    "imposter": "Imposter",
+    "eliminated": "Eliminated"
+  },
+  "results": {
+    "civiliansWin": "Civilians Win!",
+    "imposterWins": "Imposter Wins!",
+    "playAgain": "Play Again",
+    "backHome": "Back to Home"
+  }
+}
