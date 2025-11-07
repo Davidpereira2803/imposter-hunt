@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
 import { palette, radii, type } from "../../constants/theme";
+import { useAudioPlayer } from "expo-audio";
+
+const audioSource = require("../../../assets/sounds/button-click.wav");
 
 export default function Button({ 
   title, 
@@ -16,14 +19,55 @@ export default function Button({
   const sizeStyle = size === "lg" ? styles.lg : styles.md;
   const textColorStyle = variant === "success" ? styles.textBlack : styles.textWhite;
 
-  const handlePress = async () => {
-    onPress?.();
+  const player = useAudioPlayer(audioSource);
+  const playerRef = useRef(player);
+  playerRef.current = player;
+
+  useEffect(() => {
+    let mounted = true;
+    const p = playerRef.current;
+    (async () => {
+      try {
+        if (p?.loadAsync) await p.loadAsync().catch(() => {});
+      } catch {
+      }
+    })();
+    return () => {
+      mounted = false;
+      try {
+        if (p?.unloadAsync) p.unloadAsync().catch(() => {});
+      } catch {}
+    };
+  }, []);
+
+  const safePlay = () => {
+    try {
+      const p = playerRef.current;
+      if (!p) return;
+      if (typeof p.playAsync === "function") return p.playAsync().catch(() => {});
+      if (typeof p.replayAsync === "function") return p.replayAsync().catch(() => {});
+      if (typeof p.play === "function") return p.play();
+      if (typeof p === "function") return p();
+    } catch {
+    }
+  };
+
+  const handlePress = () => {
+    if (disabled) return;
+    safePlay();
+    try {
+      onPress?.();
+    } catch (e) {
+      console.warn("Button onPress error:", e);
+    }
   };
 
   return (
     <TouchableOpacity 
       onPress={handlePress} 
       disabled={disabled}
+      accessibilityRole="button"
+      accessibilityState={{ disabled }}
       style={[
         styles.base, 
         variantStyle, 

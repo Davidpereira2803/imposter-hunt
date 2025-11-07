@@ -14,17 +14,19 @@ Your goal: give hints, discuss, and vote out the impostor before they can figure
 
 ### How to Play
 
-1. **Setup** – Add 3+ players and pick a topic (Food, Animals, Movies, Countries).
+1. **Setup** – Add 3+ players and pick a topic (Food, Animals, Movies, Countries, or create custom topics).
 2. **Role Reveal** – Each player privately views their role (Civilian or Imposter).
 3. **Discussion** – Give subtle hints and try to expose the Imposter.
 4. **Voting** – Decide who to vote out each round.
-5. **Results** – Either the Imposter wins by guessing the word or Civilians win by catching them!
+5. **Imposter Guess** – The Imposter has one chance to guess the secret word.
+6. **Results** – Either the Imposter wins by guessing correctly or Civilians win by catching them!
 
 ### Win Conditions
 
-* **Civilians Win**: The imposter is correctly voted out.
+* **Civilians Win**: 
+  * The imposter is correctly voted out.
+  * The imposter guesses the secret word incorrectly.
 * **Imposter Wins**:
-
   * Correctly guesses the secret word.
   * Survives until only 2 players remain.
 
@@ -33,12 +35,17 @@ Your goal: give hints, discuss, and vote out the impostor before they can figure
 ## Features
 
 * **Pass-and-play multiplayer** — one device for all players.
+* **AI-powered topic generation** — create custom topic lists with AI assistance.
+* **Multiple game modes** — play with built-in topics or your own custom lists.
 * **Clean minimal UI** optimized for quick social play.
 * **Haptic feedback** for tactile interactions.
 * **Round timer** with controls for discussion pacing.
-* **Persistent storage** for player names & settings.
+* **Persistent storage** for player names, custom topics, and settings.
 * **Multi-round gameplay** with elimination tracking.
 * **Smart voting system** that handles ties and revotes.
+* **Rewarded ads** for additional AI generations.
+* **Privacy-first ad consent** using Google UMP SDK.
+* **Tutorial mode** for first-time players.
 
 ---
 
@@ -46,25 +53,11 @@ Your goal: give hints, discuss, and vote out the impostor before they can figure
 
 * **React Native** & **Expo (SDK 54)**
 * **Expo Router** – File-based routing system.
-* **Zustand** – Lightweight state management.
+* **Zustand** – Lightweight state management with persistence.
 * **AsyncStorage** – Persistent data storage.
-* **Expo Haptics** – For touch feedback.
-* **Google Mobile Ads (AdMob)** – Configured for banner and test ads.
-
----
-
-## Installation
-
-```bash
-# Clone and install dependencies
-npm install
-```
-
-### Start Development Server
-
-```bash
-npx expo start
-```
+* **Expo Haptics** – Touch feedback.
+* **Google Mobile Ads (AdMob)** – Banner and rewarded ads with UMP consent.
+* **Custom AI API** – For generating topic lists.
 
 ---
 
@@ -72,82 +65,133 @@ npx expo start
 
 ```
 app/
-  ├── index.js       # Main menu
-  ├── setup.js       # Player & topic selection
-  ├── role.js        # Role reveal screen
-  ├── round.js       # Discussion phase
-  ├── vote.js        # Voting phase
-  ├── results.js     # Game result screen
-  ├── settings.js    # Reset & preferences
-  └── _layout.js     # Root layout / navigation
+  ├── index.js              # Main menu
+  ├── setup.js              # Player & topic selection
+  ├── role.js               # Role reveal screen
+  ├── round.js              # Discussion phase
+  ├── vote.js               # Voting phase
+  ├── imposter-guess.js     # Imposter's final guess
+  ├── results.js            # Game result screen
+  ├── settings.js           # App settings & preferences
+  ├── ai-topics.js          # AI topic generation
+  ├── custom-topics.js      # Custom topic management
+  ├── tutorial.js           # First-time tutorial
+  └── _layout.js            # Root layout with consent provider
 src/
   ├── components/
+  │   ├── ui/               # Reusable UI components
+  │   │   ├── Screen.js
+  │   │   ├── Button.js
+  │   │   ├── Input.js
+  │   │   ├── Card.js
+  │   │   ├── Pill.js
+  │   │   └── Title.js
+  │   ├── AdBanner.js       # Banner ad component
+  │   └── LoadingScreen.js
+  ├── contexts/
+  │   └── AdConsentContext.js  # UMP consent management
+  ├── store/
+  │   ├── gameStore.js      # Game state management
+  │   └── aiStore.js        # AI generation tracking
+  ├── lib/
+  │   ├── generateTopics.js # AI topic generation API
+  │   └── rewardedAds.js    # Rewarded ad handling
+  ├── config/
+  │   └── api.js            # API configuration
   ├── data/
-  │   └── topics.json
-  └── store/
-      └── gameStore.js
+  │   └── topics.json       # Built-in topic lists
+  └── constants/
+      ├── theme.js          # Design tokens
+      └── icons.js          # Icon mappings
 ```
 
 ---
 
-## Building for Android
+## State Management
 
-```bash
-npx eas build -p android --profile preview
-```
+### Game Store (Zustand)
 
-To prepare a production build for Google Play:
+Manages core game state with AsyncStorage persistence:
+* Player list and elimination status
+* Current imposter and secret word
+* Round tracking and voting history
+* Custom topic management
 
-```bash
-npx eas build -p android --profile production
-```
+### AI Store
 
----
+Tracks AI generation usage:
+* Free generation count (1 per day)
+* Rewarded ad views (up to 5 per day)
+* Generated topic history
 
-## Privacy
+### Ad Consent Context
 
-This app uses Google AdMob for ads.
-
-* Only non-personalized ads are shown by default.
-* Player data is stored locally on your device (no cloud sync).
-
-See the [Privacy Policy](https://github.com/YOUR_GITHUB_USERNAME/imposter-hunt/blob/main/PRIVACY.md) for details.
-
----
-
-## Developer Notes
-
-For technical documentation (architecture, dependencies, troubleshooting), see the [Developer Section](#developer-section).
+Handles Google UMP SDK consent flow:
+* Auto-prompts on first launch (when required)
+* Manages personalized vs non-personalized ads
+* Privacy options accessible from settings
 
 ---
 
-## Developer Section
+### Ad Types
 
-### State Management
+* **Banner Ads** – Non-intrusive bottom banners on main screens
+* **Rewarded Ads** – Optional ads for additional AI generations
 
-Uses Zustand for centralized state (player list, topic, imposter, rounds). Persistent storage powered by AsyncStorage.
+### Privacy Compliance
 
-### Ads Setup
+* Uses Google UMP SDK for GDPR/CCPA compliance
+* Consent form shown on first launch when required
+* Users can manage privacy settings anytime
+* Non-personalized ads by default
 
-Configured in `app.json` via the `react-native-google-mobile-ads` plugin using test IDs.
+---
 
-### Native Build
+## AI Topic Generation
 
-To generate native folders:
+The app includes an AI-powered feature to generate custom topic lists:
 
-```bash
-npx expo prebuild
-```
+1. **Free Generation** – 1 free generation per day
+2. **Rewarded Generations** – Watch up to 5 ads per day for more
+3. **Customization** – Specify topic count, difficulty, and description
+4. **Persistence** – Generated topics saved locally for reuse
 
-To clear caches:
+API integration handled via `src/lib/generateTopics.js` with credentials from environment variables.
 
-```bash
-npx expo start -c
-npm cache clean --force
-```
+---
+
+## Privacy & Data
+
+### Local Storage Only
+
+* All game data stored locally via AsyncStorage
+* Player names, custom topics, and settings never leave device
+* No cloud sync or external data collection
+
+### Ad Tracking
+
+* Uses Google Mobile Ads SDK with UMP consent
+* Advertising ID permission declared for Android 13+
+* Users control ad personalization via settings
+
+See the [Privacy Policy](PRIVACY.md) for complete details.
+
+---
+
+## Contributing
+
+This is a personal project, but feedback and suggestions are welcome. Please open an issue for bugs or feature requests.
 
 ---
 
 ## License
 
-© 2025 David Pereira — All rights reserved.
+Copyright 2025 David Pereira — All rights reserved.
+
+This software and associated documentation files may not be copied, modified, merged, published, distributed, sublicensed, or sold without express written permission from the author.
+
+---
+
+## Acknowledgments
+
+Built with Expo, React Native, and the React Native community ecosystem.

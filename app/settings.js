@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Alert, ScrollView, TouchableOpacity, Linking } from "react-native";
 import { useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
@@ -12,10 +12,19 @@ import Button from "../src/components/ui/Button";
 import Card from "../src/components/ui/Card";
 import { space, palette, type } from "../src/constants/theme";
 import { Icon } from "../src/constants/icons";
+import { useLanguageStore } from "../src/store/languageStore";
+import { useTranslation } from "../src/lib/useTranslation";
+import i18n from "../src/lib/i18n";
 
 
 const TUTORIAL_SEEN_KEY = "imposter-hunt-tutorial-seen";
 const PRIVACY_POLICY_URL = "https://davidpereira2803.github.io/imposter-hunt/Privacy";
+const AVAILABLE_LANGUAGES = [
+  { code: "en", name: "English" },
+  { code: "pt", name: "Português" },
+  { code: "fr", name: "Français" },
+  { code: "de", name: "Deutsch" },
+];
 
 export default function Settings() {
   const router = useRouter();
@@ -29,7 +38,23 @@ export default function Settings() {
     isLoading 
   } = useAdConsentContext();
 
+  const { locale: currentLanguage, setLocale } = useLanguageStore();
+  const { t } = useTranslation();
+
   const [showDebug, setShowDebug] = useState(__DEV__);
+  const [showLanguages, setShowLanguages] = useState(false);
+  const SUPPORTED_LANGUAGES = AVAILABLE_LANGUAGES.filter(l => i18n?.translations?.[l.code]);
+
+  const handleLanguageSelect = async (langCode) => {
+    try { await Haptics.selectionAsync(); } catch {}
+    try {
+      if (!i18n?.translations?.[langCode]) return;
+      setLocale(langCode);
+      setShowLanguages(false);
+    } catch {}
+  };
+  const getCurrentLanguageName = () =>
+    SUPPORTED_LANGUAGES.find(l => l.code === currentLanguage)?.name || "English";
 
   const handleBack = async () => {
     try { await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); } catch {}
@@ -45,35 +70,45 @@ export default function Settings() {
     router.push("/tutorial");
   };
 
+  const getConsentStatus = () => {
+    if (!consentInfo) return { text: t("settings.consent.unknown", "Unknown"), icon: "help-circle", color: palette.textDim };
+    const statusMap = {
+      0: { text: t("settings.consent.unknown", "Unknown"), icon: "help-circle", color: palette.textDim },
+      1: { text: t("settings.consent.required", "Required"), icon: "alert-circle", color: palette.warn },
+      2: { text: t("settings.consent.notRequired", "Not Required"), icon: "check-circle", color: palette.success },
+      3: { text: t("settings.consent.obtained", "Obtained"), icon: "check-circle", color: palette.success },
+    };
+    return statusMap[consentInfo.status] ?? { text: `${consentInfo.status}`, icon: "information", color: palette.textDim };
+  };
+
   const handlePrivacyPolicy = async () => {
     try {
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     } catch {}
 
     const supported = await Linking.canOpenURL(PRIVACY_POLICY_URL);
-    
     if (supported) {
       await Linking.openURL(PRIVACY_POLICY_URL);
     } else {
-      Alert.alert("Error", "Cannot open privacy policy link");
+      Alert.alert(t("common.error", "Error"), t("settings.cannotOpenPrivacy", "Cannot open privacy policy link"));
     }
   };
 
   const handleClearData = async () => {
     Alert.alert(
-      "Clear Data",
-      "Remove all saved data?",
+      t("settings.clearDataTitle", "Clear Data"),
+      t("settings.clearDataMessage", "Remove all saved data?"),
       [
-        { text: "Cancel", style: "cancel" },
+        { text: t("common.cancel", "Cancel"), style: "cancel" },
         {
-          text: "Clear",
+          text: t("settings.clearData", "Clear"),
           style: "destructive",
           onPress: async () => {
             try {
               await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
             } catch {}
             await clearStorage();
-            Alert.alert("Success", "Data cleared");
+            Alert.alert(t("common.success", "Success"), t("settings.dataCleared", "Data cleared"));
           }
         }
       ]
@@ -84,20 +119,20 @@ export default function Settings() {
     try {
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
       await showConsentForm();
-      Alert.alert("Updated", "Privacy settings saved");
+      Alert.alert(t("settings.updated", "Updated"), t("settings.privacyUpdatedMessage", "Privacy settings saved"));
     } catch (error) {
-      Alert.alert("Error", error.message || "Could not open settings");
+      Alert.alert(t("common.error", "Error"), error?.message || t("settings.couldNotOpen", "Could not open settings"));
     }
   };
 
   const handleResetConsent = async () => {
     Alert.alert(
-      "Reset Consent",
-      "This will reset your consent preferences and show the form again.",
+      t("settings.resetConsentTitle", "Reset Consent"),
+      t("settings.resetConsentMessage", "This will reset your consent preferences and show the form again."),
       [
-        { text: "Cancel", style: "cancel" },
+        { text: t("common.cancel", "Cancel"), style: "cancel" },
         {
-          text: "Reset",
+          text: t("settings.reset", "Reset"),
           style: "destructive",
           onPress: async () => {
             try {
@@ -105,27 +140,14 @@ export default function Settings() {
               await resetConsent();
               await new Promise(resolve => setTimeout(resolve, 500));
               await showConsentForm();
-              Alert.alert("Success", "Consent preferences updated");
+              Alert.alert(t("common.success", "Success"), t("settings.consentUpdated", "Consent preferences updated"));
             } catch (error) {
-              Alert.alert("Error", error.message || "Could not reset consent");
+              Alert.alert(t("common.error", "Error"), error?.message || t("settings.couldNotReset", "Could not reset consent"));
             }
           }
         }
       ]
     );
-  };
-
-  const getConsentStatus = () => {
-    if (!consentInfo) return "Unknown";
-    
-    const statusMap = {
-      0: "Unknown",
-      1: "Required",
-      2: "Not Required",
-      3: "Obtained",
-    };
-    
-    return statusMap[consentInfo.status] || `Status ${consentInfo.status}`;
   };
 
   return (
@@ -136,19 +158,54 @@ export default function Settings() {
           <TouchableOpacity onPress={handleBack} style={styles.backButton}>
             <Icon name="arrow-left" size={24} color={palette.text} />
           </TouchableOpacity>
-          <Title style={styles.title}>Settings</Title>
+          <Title style={styles.title}>{t("settings.title", "Settings")}</Title>
           <View style={styles.backButton} />
+        </View>
+
+        {/* Language Section */}
+        <View style={styles.section}>
+          <View style={styles.sectionHeader}>
+            <Icon name="earth" size={20} color={palette.textDim} />
+            <Text style={styles.sectionTitle}>{t("settings.language", "Language")}</Text>
+          </View>
+
+          <Card style={styles.languageCard} onPress={() => setShowLanguages(v => !v)}>
+            <View style={styles.languageRow}>
+              <Text style={styles.settingLabel}>{getCurrentLanguageName()}</Text>
+              <Icon name={showLanguages ? "chevron-up" : "chevron-down"} size={20} color={palette.textDim} />
+            </View>
+          </Card>
+
+          {showLanguages && (
+            <View style={styles.languageList}>
+              {SUPPORTED_LANGUAGES.map((lang) => {
+                const active = currentLanguage === lang.code;
+                return (
+                  <TouchableOpacity
+                    key={lang.code}
+                    onPress={() => handleLanguageSelect(lang.code)}
+                    style={[styles.languageItem, active && styles.languageItemActive]}
+                  >
+                    <Text style={[styles.languageItemText, active && styles.languageItemTextActive]}>
+                      {lang.name}
+                    </Text>
+                    {active && <Icon name="check" size={18} color={palette.primary} />}
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          )}
         </View>
 
         {/* Help Section */}
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
             <Icon name="help-circle" size={20} color={palette.textDim} />
-            <Text style={styles.sectionTitle}>Help</Text>
+            <Text style={styles.sectionTitle}>{t("settings.help", "Help")}</Text>
           </View>
-          
-          <Button 
-            title="How to Play"
+
+          <Button
+            title={t("home.howToPlay", "How to Play")}
             onPress={handleViewTutorial}
             variant="primary"
             size="md"
@@ -160,47 +217,48 @@ export default function Settings() {
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
             <Icon name="shield-check" size={20} color={palette.textDim} />
-            <Text style={styles.sectionTitle}>Privacy & Ads</Text>
+            <Text style={styles.sectionTitle}>{t("settings.privacyAndAds", "Privacy & Ads")}</Text>
           </View>
-          
+
           <Card style={styles.infoRow}>
             <View style={styles.infoLeft}>
-              <Icon name="information" size={18} color={palette.textDim} />
-              <Text style={styles.infoLabel}>Consent Status</Text>
+              <Icon name="shield-check" size={18} color={palette.textDim} />
+              <Text style={styles.infoLabel}>{t("settings.consentStatus", "Consent Status")}</Text>
             </View>
-            <Text style={styles.infoValue}>
-              {isLoading ? "..." : getConsentStatus()}
-            </Text>
+            {isLoading ? (
+              <Text style={styles.infoValue}>...</Text>
+            ) : (
+              <View style={styles.statusBadge}>
+                <Icon name={getConsentStatus().icon} size={16} color={getConsentStatus().color} />
+                <Text style={[styles.statusText, { color: getConsentStatus().color }]}>
+                  {getConsentStatus().text}
+                </Text>
+              </View>
+            )}
           </Card>
 
           <Card style={styles.infoRow}>
             <View style={styles.infoLeft}>
               <Icon name="advertisements" size={18} color={palette.textDim} />
-              <Text style={styles.infoLabel}>Ads Enabled</Text>
+              <Text style={styles.infoLabel}>{t("settings.adsEnabled", "Ads Enabled")}</Text>
             </View>
-            <Text style={[
-              styles.infoValue,
-              { color: canShowAds ? palette.success : palette.danger }
-            ]}>
-              {isLoading ? "..." : canShowAds ? "Yes" : "No"}
+            <Text style={[styles.infoValue, { color: canShowAds ? palette.success : palette.danger }]}>
+              {isLoading ? "..." : canShowAds ? t("common.yes", "Yes") : t("common.no", "No")}
             </Text>
           </Card>
 
           <Card style={styles.infoRow}>
             <View style={styles.infoLeft}>
               <Icon name="account" size={18} color={palette.textDim} />
-              <Text style={styles.infoLabel}>Personalized</Text>
+              <Text style={styles.infoLabel}>{t("settings.personalized", "Personalized")}</Text>
             </View>
-            <Text style={[
-              styles.infoValue,
-              { color: canShowPersonalizedAds ? palette.warn : palette.success }
-            ]}>
-              {isLoading ? "..." : canShowPersonalizedAds ? "Yes" : "No"}
+            <Text style={[styles.infoValue, { color: canShowPersonalizedAds ? palette.warn : palette.success }]}>
+              {isLoading ? "..." : canShowPersonalizedAds ? t("common.yes", "Yes") : t("common.no", "No")}
             </Text>
           </Card>
 
-          <Button 
-            title="Privacy Policy"
+          <Button
+            title={t("settings.privacyPolicy", "Privacy Policy")}
             onPress={handlePrivacyPolicy}
             variant="ghost"
             size="md"
@@ -208,8 +266,8 @@ export default function Settings() {
             style={styles.privacyBtn}
           />
 
-          <Button 
-            title="Manage Privacy"
+          <Button
+            title={t("settings.managePrivacy", "Manage Privacy")}
             onPress={handleManagePrivacy}
             variant="primary"
             size="md"
@@ -218,8 +276,8 @@ export default function Settings() {
           />
 
           {__DEV__ && (
-            <Button 
-              title="Reset Consent (Dev)"
+            <Button
+              title={t("settings.resetConsentDev", "Reset Consent (Dev)")}
               onPress={handleResetConsent}
               variant="warn"
               size="md"
@@ -234,11 +292,11 @@ export default function Settings() {
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
             <Icon name="database" size={20} color={palette.textDim} />
-            <Text style={styles.sectionTitle}>Game Data</Text>
+            <Text style={styles.sectionTitle}>{t("settings.gameData", "Game Data")}</Text>
           </View>
-          
-          <Button 
-            title="Clear All Data"
+
+          <Button
+            title={t("settings.clearAllData", "Clear All Data")}
             onPress={handleClearData}
             variant="danger"
             size="md"
@@ -248,11 +306,10 @@ export default function Settings() {
 
         <View style={styles.version}>
           <Icon name="information-outline" size={16} color={palette.textDim} />
-          <Text style={styles.versionText}>Version 1.0.0</Text>
+          <Text style={styles.versionText}>{t("settings.version", "Version")} 1.0.0</Text>
         </View>
       </ScrollView>
 
-      {/* <AdBanner /> */}
       <AdBanner />
     </Screen>
   );
@@ -335,6 +392,39 @@ const styles = StyleSheet.create({
     color: palette.textDim,
     fontSize: type.small,
   },
+  languageCard: {
+    padding: space.md,
+    marginBottom: space.sm,
+  },
+  languageRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  languageList: {
+    gap: space.xs,
+    marginBottom: space.md,
+  },
+  languageItem: {
+    padding: space.md,
+    backgroundColor: palette.panel,
+    borderRadius: 8,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  languageItemActive: {
+    backgroundColor: palette.primary + "22",
+  },
+  languageItemText: {
+    color: palette.text,
+    fontSize: type.body,
+    fontWeight: "600",
+  },
+  languageItemTextActive: {
+    color: palette.primary,
+    fontWeight: "800",
+  },
   settingCard: {
     marginBottom: space.sm,
     padding: space.md,
@@ -354,5 +444,18 @@ const styles = StyleSheet.create({
     fontSize: type.small,
     textAlign: 'center',
     marginTop: space.sm,
+  },
+  statusBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: space.xs,
+    paddingHorizontal: space.sm,
+    paddingVertical: space.xs,
+    borderRadius: 12,
+    backgroundColor: palette.panel,
+  },
+  statusText: {
+    fontSize: type.small,
+    fontWeight: "700",
   },
 });

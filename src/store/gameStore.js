@@ -26,6 +26,21 @@ export const useGameStore = create(
 
       getTopicByKey: (key) => {
         if (!key) return null;
+        
+        if (key === "random") {
+          const { predefinedTopics, customTopics } = get();
+          const preWords = Object.values(predefinedTopics || {}).flat();
+          const customWords = (customTopics || []).flatMap(t => t.words || []);
+          const allWords = [...preWords, ...customWords];
+          
+          return {
+            key: "random",
+            name: "Random",
+            words: allWords,
+            isCustom: false
+          };
+        }
+        
         if (key.startsWith("custom:")) {
           const slug = key.slice("custom:".length);
           const t = (get().customTopics || []).find((x) => slugify(x.name) === slug);
@@ -188,7 +203,20 @@ export const useGameStore = create(
         const custom = (get().customTopics || []).map((t) => ({
           key: `custom:${slugify(t.name)}`, name: t.name, words: t.words || [], isCustom: true,
         }));
-        return [...pre, ...custom];
+        
+        const allWords = [
+          ...pre.flatMap(t => t.words),
+          ...custom.flatMap(t => t.words),
+        ];
+        
+        const randomTopic = {
+          key: "random",
+          name: "Random",
+          words: allWords,
+          isCustom: false,
+        };
+        
+        return [randomTopic, ...pre, ...custom];
       },
     }),
     {
