@@ -9,9 +9,11 @@ import Button from "../src/components/ui/Button";
 import Title from "../src/components/ui/Title";
 import { space, palette, type } from "../src/constants/theme";
 import { Icon } from "../src/constants/icons";
+import { useTranslation } from "../src/lib/useTranslation";
 
 export default function Vote() {
   const router = useRouter();
+  const { t } = useTranslation();
   const { 
     players, 
     alive,
@@ -25,11 +27,11 @@ export default function Vote() {
   useEffect(() => {
     const backAction = () => {
       Alert.alert(
-        "Go Back",
-        "Return to round?",
+        t("vote.goBackTitle", "Go Back"),
+        t("vote.goBackMessage", "Return to round?"),
         [
-          { text: "Cancel", style: "cancel" },
-          { text: "Yes", onPress: () => router.back() }
+          { text: t("common.cancel", "Cancel"), style: "cancel" },
+          { text: t("common.yes", "Yes"), onPress: () => router.back() }
         ]
       );
       return true;
@@ -37,7 +39,7 @@ export default function Vote() {
 
     const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
     return () => backHandler.remove();
-  }, []);
+  }, [t]);
 
   const handleSelectPlayer = async (index) => {
     setSelectedPlayer(index);
@@ -46,7 +48,10 @@ export default function Vote() {
 
   const handleVote = async () => {
     if (selectedPlayer === null) {
-      Alert.alert("Select Player", "Choose someone to vote out");
+      Alert.alert(
+        t("vote.selectPlayerTitle", "Select Player"),
+        t("vote.selectPlayerMessage", "Choose someone to vote out")
+      );
       return;
     }
 
@@ -85,11 +90,11 @@ export default function Vote() {
           <TouchableOpacity onPress={handleBack} style={styles.backButton}>
             <Icon name="arrow-left" size={24} color={palette.text} />
           </TouchableOpacity>
-          <Title style={styles.title}>Vote</Title>
+          <Title style={styles.title}>{t("vote.title", "Vote")}</Title>
           <View style={styles.backButton} />
         </View>
 
-        <Text style={styles.subtitle}>Who is the imposter?</Text>
+        <Text style={styles.subtitle}>{t("vote.subtitle", "Who is the imposter?")}</Text>
 
         <ScrollView 
           style={styles.playerList}
@@ -97,7 +102,7 @@ export default function Vote() {
           showsVerticalScrollIndicator={false}
         >
           {alivePlayers.length === 0 ? (
-            <Text style={styles.emptyText}>No players available</Text>
+            <Text style={styles.emptyText}>{t("vote.noPlayers", "No players available")}</Text>
           ) : (
             alivePlayers.map((player) => {
               const isSelected = selectedPlayer === player.index;
@@ -123,7 +128,7 @@ export default function Vote() {
 
         <View style={styles.actions}>
           <Button
-            title="Confirm Vote"
+            title={t("vote.confirmVote", "Confirm Vote")}
             onPress={handleVote}
             variant="danger"
             size="lg"

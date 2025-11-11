@@ -24,6 +24,7 @@ const AVAILABLE_LANGUAGES = [
   { code: "pt", name: "Português" },
   { code: "fr", name: "Français" },
   { code: "de", name: "Deutsch" },
+  { code: "lu", name: "Lëtzebuergesch" },
 ];
 
 export default function Settings() {

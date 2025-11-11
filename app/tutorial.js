@@ -4,6 +4,7 @@ import { useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Haptics from "expo-haptics";
 import { tutorialSteps } from "../src/data/tutorialSteps";
+import { useTranslation } from "../src/lib/useTranslation";
 import Screen from "../src/components/ui/Screen";
 import Title from "../src/components/ui/Title";
 import Button from "../src/components/ui/Button";
@@ -14,6 +15,7 @@ const TUTORIAL_SEEN_KEY = "imposter-hunt-tutorial-seen";
 
 export default function Tutorial() {
   const router = useRouter();
+  const { t } = useTranslation();
   const scrollRef = useRef(null);
   const { width: windowWidth } = useWindowDimensions();
   const [pageWidth, setPageWidth] = useState(0);
@@ -51,11 +53,11 @@ export default function Tutorial() {
       <View style={styles.container}>
         {/* Header */}
         <View style={styles.header}>
-          <Title style={styles.title}>How to Play</Title>
+          <Title style={styles.title}>{t("tutorial.title", "How to Play")}</Title>
           {/* Removed page count from header */}
           {!isLastStep && (
             <Pressable onPress={handleSkip} hitSlop={8}>
-              <Text style={styles.skipLink}>Skip</Text>
+              <Text style={styles.skipLink}>{t("tutorial.skip", "Skip")}</Text>
             </Pressable>
           )}
         </View>
@@ -75,19 +77,24 @@ export default function Tutorial() {
         >
           {tutorialSteps.map((step) => {
             const iconDef = ICONS[step.icon] || ICONS.gameLogo;
+            const stepKey = `step${step.id}`;
+            const title = t(`tutorial.${stepKey}.title`, "");
+            const description = t(`tutorial.${stepKey}.description`, "");
+            const tip = t(`tutorial.${stepKey}.tip`, "");
+
             return (
               <View key={step.id} style={[styles.slide, { width: PAGE }]}>
                 <View style={styles.iconContainer}>
                   <Icon name={iconDef.name} size={64} color={palette.primary} />
                 </View>
 
-                <Text style={styles.stepTitle}>{step.title}</Text>
-                <Text style={styles.stepDescription}>{step.description}</Text>
+                <Text style={styles.stepTitle}>{title}</Text>
+                <Text style={styles.stepDescription}>{description}</Text>
 
-                {step.tip && (
+                {tip && (
                   <View style={styles.tipContainer}>
                     <Icon name={ICONS.tip.name} size={ICONS.tip.size} color={palette.warn} />
-                    <Text style={styles.tipText}>{step.tip}</Text>
+                    <Text style={styles.tipText}>{tip}</Text>
                   </View>
                 )}
               </View>
@@ -113,7 +120,7 @@ export default function Tutorial() {
         <View style={styles.actions}>
           {currentStep > 0 && (
             <Button
-              title="Back"
+              title={t("tutorial.back", "Back")}
               onPress={handleBack}
               variant="ghost"
               size="md"
@@ -123,7 +130,7 @@ export default function Tutorial() {
 
           <View style={styles.primaryActions}>
             <Button
-              title={isLastStep ? "Get Started" : "Next"}
+              title={isLastStep ? t("tutorial.getStarted", "Get Started") : t("tutorial.next", "Next")}
               onPress={handleNext}
               variant="primary"
               size="lg"

@@ -12,10 +12,12 @@ import Animated, {
 } from "react-native-reanimated";
 import Svg, { Circle } from "react-native-svg";
 import { palette, type } from "../../constants/theme";
+import { useTranslation } from "../../lib/useTranslation";
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
 export default function CircularTimer({ seconds, totalSeconds = 60 }) {
+  const { t } = useTranslation();
   const progress = useSharedValue(1);
   const scale = useSharedValue(1);
 
@@ -102,7 +104,7 @@ export default function CircularTimer({ seconds, totalSeconds = 60 }) {
           <Text style={[styles.timeText, { color: getTimerColor() }]}>
             {formatTime(seconds)}
           </Text>
-          <Text style={styles.label}>remaining</Text>
+          <Text style={styles.label}>{t("timer.remaining", "remaining")}</Text>
         </View>
       </Animated.View>
     </View>

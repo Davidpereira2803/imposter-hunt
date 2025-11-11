@@ -15,6 +15,7 @@ import * as Haptics from "expo-haptics";
 import { useAIStore } from "../src/store/aiStore";
 import { useGameStore } from "../src/store/gameStore";
 import { generateTopics } from "../src/lib/generateTopics";
+import { useTranslation } from "../src/lib/useTranslation";
 import Screen from "../src/components/ui/Screen";
 import Title from "../src/components/ui/Title";
 import Button from "../src/components/ui/Button";
@@ -32,6 +33,7 @@ const slugify = (s = "") =>
 
 export default function AITopics() {
   const router = useRouter();
+  const { t } = useTranslation();
   const {
     canGenerate,
     generationsToday,
@@ -89,7 +91,10 @@ export default function AITopics() {
       try { await showConsentForm(); } catch {}
     }
     if (watchedAdsToday >= maxAdsPerDay) {
-      Alert.alert("Limit Reached", "You've watched the maximum rewarded ads for today.");
+      Alert.alert(
+        t("aiTopics.limitReached", "Limit Reached"),
+        t("aiTopics.maxAdsMessage", "You've watched the maximum rewarded ads for today.")
+      );
       return;
     }
     setIsShowingAd(true);
@@ -99,26 +104,35 @@ export default function AITopics() {
     if (res.earned) {
       incrementAdsWatched();
       try { await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success); } catch {}
-      Alert.alert("Thanks!", "You earned +1 AI generation.");
+      Alert.alert(
+        t("aiTopics.thanks", "Thanks!"),
+        t("aiTopics.earnedGeneration", "You earned +1 AI generation.")
+      );
     } else {
-      Alert.alert("No reward", res.error?.message || "Ad closed before completion. Try again.");
+      Alert.alert(
+        t("aiTopics.noReward", "No reward"),
+        res.error?.message || t("aiTopics.adClosedEarly", "Ad closed before completion. Try again.")
+      );
     }
   };
 
   const handleGenerate = async () => {
     if (!description.trim()) {
-      Alert.alert("Missing Input", "Please enter a topic description");
+      Alert.alert(
+        t("aiTopics.missingInput", "Missing Input"),
+        t("aiTopics.enterDescription", "Please enter a topic description")
+      );
       return;
     }
 
     if (!canGenerate()) {
       Alert.alert(
-        "Generation Limit",
-        `You've used ${generationsToday}/${maxGenerations} generations today.\n\nWatch an ad to get more!`,
+        t("aiTopics.generationLimit", "Generation Limit"),
+        `${t("aiTopics.limitMessagePart1", "You've used")} ${generationsToday}/${maxGenerations} ${t("aiTopics.limitMessagePart2", "generations today")}.\n\n${t("aiTopics.limitMessagePart3", "Watch an ad to get more!")}`,
         [
-          { text: "Cancel", style: "cancel" },
+          { text: t("common.cancel", "Cancel"), style: "cancel" },
           {
-            text: "Watch Ad",
+            text: t("aiTopics.watchAd", "Watch Ad"),
             onPress: handleWatchAd,
           },
         ]
@@ -144,7 +158,7 @@ export default function AITopics() {
         incrementGenerations();
         addGeneratedTopic(result.data);
 
-        const baseName = (result.data.topicGroup || description || "AI Topics").trim();
+        const baseName = (result.data.topicGroup || description || t("aiTopics.aiTopicsFallback", "AI Topics")).trim();
         let finalName = `${baseName} (AI)`;
         let attempts = 0;
         let added = { ok: false };
@@ -167,17 +181,17 @@ export default function AITopics() {
         } catch {}
 
         Alert.alert(
-          "Success",
-          `Generated ${result.data.items?.length || 0} topics.\nAdded "${finalName}" to your list.`,
+          t("common.success", "Success"),
+          `${t("aiTopics.generated", "Generated")} ${result.data.items?.length || 0} ${t("aiTopics.topicsCount", "topics")}.\n${t("aiTopics.addedToList", "Added")} "${finalName}" ${t("aiTopics.toYourList", "to your list")}.`,
           [
-            { text: "Go to Setup", onPress: () => router.push("/setup") },
-            { text: "Stay", style: "cancel" },
+            { text: t("aiTopics.goToSetup", "Go to Setup"), onPress: () => router.push("/setup") },
+            { text: t("aiTopics.stay", "Stay"), style: "cancel" },
           ]
         );
 
         setDescription("");
       } else {
-        throw new Error(result.error || "Generation failed");
+        throw new Error(result.error || t("aiTopics.generationFailed", "Generation failed"));
       }
     } catch (error) {
       console.error("Generation error:", error);
@@ -189,9 +203,9 @@ export default function AITopics() {
       } catch {}
 
       Alert.alert(
-        "Generation Failed",
-        error.message || "Could not generate topics. Please try again.",
-        [{ text: "OK" }]
+        t("aiTopics.generationFailedTitle", "Generation Failed"),
+        error.message || t("aiTopics.generationFailedMessage", "Could not generate topics. Please try again."),
+        [{ text: t("common.ok", "OK") }]
       );
     } finally {
       setIsLoading(false);
@@ -215,7 +229,7 @@ export default function AITopics() {
             <TouchableOpacity onPress={handleBack} style={styles.backButton}>
               <Icon name="arrow-left" size={24} color={palette.text} />
             </TouchableOpacity>
-            <Title style={styles.title}>AI Topic Builder</Title>
+            <Title style={styles.title}>{t("aiTopics.title", "AI Topic Builder")}</Title>
             <View style={styles.backButton} />
           </View>
 
@@ -225,16 +239,16 @@ export default function AITopics() {
               <Icon name="lightning-bolt" size={20} color={palette.primary} />
               <View style={{ flex: 1 }}>
                 <Text style={styles.usageText}>
-                  {remaining} generations remaining today
+                  {remaining} {t("aiTopics.generationsRemaining", "generations remaining today")}
                 </Text>
                 <Text style={styles.usageSubText}>
-                  Free left: {freeRemaining} • Ads used: {watchedAdsToday}/{maxAdsPerDay}
+                  {t("aiTopics.freeLeft", "Free left")}: {freeRemaining} • {t("aiTopics.adsUsed", "Ads used")}: {watchedAdsToday}/{maxAdsPerDay}
                 </Text>
               </View>
             </View>
             {watchedAdsToday < maxAdsPerDay && (
               <Button
-                title="Watch Ad for +1"
+                title={t("aiTopics.watchAdButton", "Watch Ad for +1")}
                 onPress={handleWatchAd}
                 variant="ghost"
                 size="sm"
@@ -247,9 +261,9 @@ export default function AITopics() {
 
           {/* Description Input */}
           <View style={styles.section}>
-            <Text style={styles.label}>Topic Description</Text>
+            <Text style={styles.label}>{t("aiTopics.topicDescription", "Topic Description")}</Text>
             <Input
-              placeholder="e.g., Clash Royale cards, Harry Potter spells..."
+              placeholder={t("aiTopics.descriptionPlaceholder", "e.g., Clash Royale cards, Harry Potter spells...")}
               value={description}
               onChangeText={setDescription}
               multiline
@@ -258,18 +272,18 @@ export default function AITopics() {
               style={styles.descriptionInput}
             />
             <Text style={styles.hint}>
-              {description.length}/200 characters
+              {description.length}/200 {t("aiTopics.charactersLabel", "characters")}
             </Text>
           </View>
 
           {/* Number of Topics Selection */}
           <View style={styles.section}>
             <View style={styles.labelRow}>
-              <Text style={styles.label}>Number of Topics</Text>
+              <Text style={styles.label}>{t("aiTopics.numberOfTopics", "Number of Topics")}</Text>
               <Text style={styles.sliderValue}>{numTopics}</Text>
             </View>
             <View style={styles.chipContainer}>
-              {[10, 15, 20, 30, 40, 50, 60].map((num) => (
+              {[10, 20, 30, 40, 50].map((num) => (
                 <TouchableOpacity
                   key={num}
                   onPress={() => {
@@ -296,7 +310,7 @@ export default function AITopics() {
 
           {/* Difficulty Selection */}
           <View style={styles.section}>
-            <Text style={styles.label}>Difficulty</Text>
+            <Text style={styles.label}>{t("aiTopics.difficulty", "Difficulty")}</Text>
             <View style={styles.chipContainer}>
               {DIFFICULTIES.map((diff) => {
                 const isSelected = difficulty === diff;
@@ -318,7 +332,7 @@ export default function AITopics() {
                         isSelected && styles.chipTextSelected,
                       ]}
                     >
-                      {diff.charAt(0).toUpperCase() + diff.slice(1)}
+                      {t(`aiTopics.difficulty${diff.charAt(0).toUpperCase() + diff.slice(1)}`, diff.charAt(0).toUpperCase() + diff.slice(1))}
                     </Text>
                   </TouchableOpacity>
                 );
@@ -326,27 +340,9 @@ export default function AITopics() {
             </View>
           </View>
 
-          {/* Language Input */}
-          {/*
-          <View style={styles.section}>
-            <Text style={styles.label}>Language (optional)</Text>
-            <Input
-              placeholder="en, fr, pt, es..."
-              value={language}
-              onChangeText={(text) => setLanguage(text.toLowerCase())}
-              maxLength={5}
-              autoCapitalize="none"
-            />
-            <Text style={styles.hint}>
-              Leave as "en" for English or specify your language code
-            </Text>
-          </View>
-
-          */}
-
           {/* Generate Button */}
           <Button
-            title={isLoading ? "Generating..." : "Generate Topics"}
+            title={isLoading ? t("aiTopics.generating", "Generating...") : t("aiTopics.generateButton", "Generate Topics")}
             onPress={handleGenerate}
             variant="primary"
             size="lg"
@@ -365,8 +361,7 @@ export default function AITopics() {
           <Card style={styles.infoCard}>
             <Icon name="information" size={20} color={palette.textDim} />
             <Text style={styles.infoText}>
-              AI will generate creative topics based on your description. You
-              can use them immediately in your games!
+              {t("aiTopics.infoText", "AI will generate creative topics based on your description. You can use them immediately in your games!")}
             </Text>
           </Card>
         </ScrollView>

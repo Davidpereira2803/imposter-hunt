@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Keyboard, BackHandler, KeyboardAvoidingView, Pl
 import { useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
 import { useGameStore } from "../src/store/gameStore";
+import { useTranslation } from "../src/lib/useTranslation";
 import Screen from "../src/components/ui/Screen";
 import Title from "../src/components/ui/Title";
 import Button from "../src/components/ui/Button";
@@ -12,23 +13,24 @@ import { space, palette, type } from "../src/constants/theme";
 
 export default function ImposterGuess() {
   const router = useRouter();
+  const { t } = useTranslation();
   const { players, imposterIndex, secretWord, _hydrated } = useGameStore();
   const [guess, setGuess] = useState("");
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
       Alert.alert(
-        "Cancel Guess?",
-        "Going back counts as passing your guess. Civilians will win.",
+        t("imposterGuess.cancelTitle", "Cancel Guess?"),
+        t("imposterGuess.backWarning", "Going back counts as passing your guess. Civilians will win."),
         [
-          { text: "Stay", style: "cancel" },
-          { text: "Cancel", style: "destructive", onPress: handleCancel }
+          { text: t("imposterGuess.stay", "Stay"), style: "cancel" },
+          { text: t("common.cancel", "Cancel"), style: "destructive", onPress: handleCancel }
         ]
       );
       return true;
     });
     return () => backHandler.remove();
-  }, []);
+  }, [t]);
 
   useEffect(() => {
     if (_hydrated === false) return;
@@ -72,16 +74,16 @@ export default function ImposterGuess() {
 
   const cancel = () => {
     Alert.alert(
-      "Cancel Guess?",
-      "This is your only chance. Canceling means you pass and civilians win.",
+      t("imposterGuess.cancelTitle", "Cancel Guess?"),
+      t("imposterGuess.cancelWarning", "This is your only chance. Canceling means you pass and civilians win."),
       [
-        { text: "Stay", style: "cancel" },
-        { text: "Pass & Lose", style: "destructive", onPress: handleCancel }
+        { text: t("imposterGuess.stay", "Stay"), style: "cancel" },
+        { text: t("imposterGuess.passAndLose", "Pass & Lose"), style: "destructive", onPress: handleCancel }
       ]
     );
   };
 
-  const imposterName = players?.[imposterIndex] || "Imposter";
+  const imposterName = players?.[imposterIndex] || t("imposterGuess.imposterFallback", "Imposter");
 
   return (
     <Screen>
@@ -91,20 +93,19 @@ export default function ImposterGuess() {
         keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
       >
         <View style={styles.content}>
-          <Title style={styles.title}>Final Guess</Title>
+          <Title style={styles.title}>{t("imposterGuess.title", "Final Guess")}</Title>
           
           <Card style={styles.infoCard}>
-            <Text style={styles.imposterLabel}>Imposter</Text>
+            <Text style={styles.imposterLabel}>{t("role.imposter", "Imposter")}</Text>
             <Text style={styles.imposterName}>{imposterName}</Text>
             <Text style={styles.instruction}>
-              One chance only. Guess the secret word.{'\n'}
-              Correct = you win. Wrong = civilians win.
+              {t("imposterGuess.instruction", "One chance only. Guess the secret word.\nCorrect = you win. Wrong = civilians win.")}
             </Text>
           </Card>
 
           <Input
             autoFocus
-            placeholder="Type your guess..."
+            placeholder={t("imposterGuess.placeholder", "Type your guess...")}
             value={guess}
             onChangeText={setGuess}
             onSubmitEditing={submit}
@@ -116,7 +117,7 @@ export default function ImposterGuess() {
 
           <View style={styles.actions}>
             <Button
-              title="Submit Guess"
+              title={t("imposterGuess.submit", "Submit Guess")}
               onPress={submit}
               variant="primary"
               size="lg"
@@ -124,7 +125,7 @@ export default function ImposterGuess() {
             />
 
             <Button
-              title="Pass (Lose)"
+              title={t("imposterGuess.passButton", "Pass (Lose)")}
               onPress={cancel}
               variant="ghost"
               size="md"

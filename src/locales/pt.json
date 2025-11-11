@@ -9,7 +9,8 @@
     "yes": "Sim",
     "no": "Não",
     "success": "Sucesso",
-    "error": "Erro"
+    "error": "Erro",
+    "ok": "OK"
   },
   "home": {
     "title": "Caça ao Impostor",
@@ -44,42 +45,29 @@
   },
   "topics": {
     "random": "Aleatório",
-
     "Luxembourg": "Luxemburgo",
-
     "Food": "Comida",
     "food": "Comida",
-
     "Animals": "Animais",
     "animals": "Animais",
-
     "Movies": "Filmes",
     "movies": "Filmes",
-
     "Countries": "Países",
     "countries": "Países",
-
     "Sports": "Esportes",
     "sports": "Esportes",
-
     "Occupations": "Profissões",
     "occupations": "Profissões",
-
     "Brands": "Marcas",
     "brands": "Marcas",
-
     "Colors": "Cores",
     "colors": "Cores",
-
     "Clothing": "Roupas",
     "clothing": "Roupas",
-
     "Vehicles": "Veículos",
     "vehicles": "Veículos",
-
     "Instruments": "Instrumentos",
     "instruments": "Instrumentos",
-
     "Technology": "Tecnologia",
     "technology": "Tecnologia"
   },
@@ -92,10 +80,14 @@
     "eliminated": "Eliminado"
   },
   "results": {
-    "civiliansWin": "Civis Vencem!",
-    "imposterWins": "Impostor Vence!",
+    "unknown": "Desconhecido",
+    "imposterWins": "Impostor Venceu!",
+    "civiliansWin": "Civis Venceram!",
+    "secretWord": "Palavra Secreta",
+    "theImposter": "O Impostor",
     "playAgain": "Jogar Novamente",
-    "backHome": "Voltar ao Início"
+    "newSetup": "Nova Configuração",
+    "failedToStart": "Falha ao iniciar novo jogo"
   },
   "settings": {
     "title": "Configurações",
@@ -160,5 +152,109 @@
     "vote": "Votar",
     "resetTimer": "Reiniciar Temporizador",
     "imposterGuess": "Palpite do Impostor"
+  },
+  "imposterGuess": {
+    "title": "Palpite Final",
+    "cancelTitle": "Cancelar Palpite?",
+    "backWarning": "Voltar conta como passar sua vez. Os civis vencerão.",
+    "cancelWarning": "Esta é sua única chance. Cancelar significa que você passa e os civis vencem.",
+    "stay": "Ficar",
+    "passAndLose": "Passar e Perder",
+    "imposterFallback": "Impostor",
+    "instruction": "Apenas uma chance. Adivinhe a palavra secreta.\nCerto = você vence. Errado = civis vencem.",
+    "placeholder": "Digite seu palpite...",
+    "submit": "Enviar Palpite",
+    "passButton": "Passar (Perder)"
+  },
+  "tutorial": {
+    "title": "Como Jogar",
+    "skip": "Pular",
+    "back": "Voltar",
+    "next": "Próximo",
+    "getStarted": "Começar",
+    "step1": {
+      "title": "Bem-vindo ao Caça ao Impostor",
+      "description": "Um jogo de dedução social onde você encontra o impostor entre seus amigos."
+    },
+    "step2": {
+      "title": "Civis",
+      "description": "A maioria dos jogadores são civis. Você verá a palavra secreta. Dê dicas sutis sem dizê-la diretamente.",
+      "tip": "Cuidado - o impostor está ouvindo!"
+    },
+    "step3": {
+      "title": "O Impostor",
+      "description": "Um jogador é o impostor. Você não sabe a palavra. Se misture e tente adivinhar pelas dicas.",
+      "tip": "Aja como se soubesse a palavra!"
+    },
+    "step4": {
+      "title": "Fase de Discussão",
+      "description": "Deem dicas de uma palavra sobre a palavra secreta por turnos. O impostor deve participar sem saber o que é.",
+      "tip": "Mantenha vago o suficiente para confundir o impostor"
+    },
+    "step5": {
+      "title": "Hora da Votação",
+      "description": "Após a discussão, votem para eliminar quem acham ser o impostor. A maioria decide o destino.",
+      "tip": "Confie nos seus instintos!"
+    },
+    "step6": {
+      "title": "Condições de Vitória",
+      "description": "Os civis vencem eliminando o impostor. O impostor vence adivinhando a palavra secreta ou sobrevivendo até 2 jogadores.",
+      "tip": "Que vença o melhor enganador!"
+    }
+  },
+  "vote": {
+    "title": "Votar",
+    "subtitle": "Quem é o impostor?",
+    "goBackTitle": "Voltar",
+    "goBackMessage": "Retornar à rodada?",
+    "selectPlayerTitle": "Selecionar Jogador",
+    "selectPlayerMessage": "Escolha alguém para eliminar",
+    "noPlayers": "Nenhum jogador disponível",
+    "confirmVote": "Confirmar Voto"
+  },
+  "aiTopics": {
+    "title": "Criador de Temas com IA",
+    "limitReached": "Limite Atingido",
+    "maxAdsMessage": "Você assistiu o máximo de anúncios recompensados para hoje.",
+    "thanks": "Obrigado!",
+    "earnedGeneration": "Você ganhou +1 geração de IA.",
+    "noReward": "Sem recompensa",
+    "adClosedEarly": "Anúncio fechado antes de concluir. Tente novamente.",
+    "missingInput": "Entrada Faltando",
+    "enterDescription": "Por favor, insira uma descrição do tema",
+    "generationLimit": "Limite de Geração",
+    "limitMessagePart1": "Você usou",
+    "limitMessagePart2": "gerações hoje",
+    "limitMessagePart3": "Assista a um anúncio para obter mais!",
+    "watchAd": "Assistir Anúncio",
+    "aiTopicsFallback": "Temas IA",
+    "generated": "Gerados",
+    "topicsCount": "temas",
+    "addedToList": "Adicionado",
+    "toYourList": "à sua lista",
+    "goToSetup": "Ir para Configuração",
+    "stay": "Ficar",
+    "generationFailed": "Falha na geração",
+    "generationFailedTitle": "Falha na Geração",
+    "generationFailedMessage": "Não foi possível gerar temas. Tente novamente.",
+    "generationsRemaining": "gerações restantes hoje",
+    "freeLeft": "Grátis restante",
+    "adsUsed": "Anúncios usados",
+    "watchAdButton": "Assistir Anúncio para +1",
+    "topicDescription": "Descrição do Tema",
+    "descriptionPlaceholder": "ex: cartas Clash Royale, feitiços Harry Potter...",
+    "charactersLabel": "caracteres",
+    "numberOfTopics": "Número de Temas",
+    "difficulty": "Dificuldade",
+    "difficultyEasy": "Fácil",
+    "difficultyMedium": "Médio",
+    "difficultyHard": "Difícil",
+    "difficultyMixed": "Misto",
+    "generating": "Gerando...",
+    "generateButton": "Gerar Temas",
+    "infoText": "A IA gerará temas criativos com base na sua descrição. Você pode usá-los imediatamente em seus jogos!"
+  },
+  "timer": {
+    "remaining": "restante"
   }
 }
