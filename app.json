@@ -49,7 +49,8 @@
       "expo-system-ui",
       "expo-router",
       "expo-audio",
-      "expo-localization"
+      "expo-localization",
+      "expo-asset"
     ],
     "newArchEnabled": true,
     "experiments": {
