@@ -4,9 +4,10 @@ import * as Localization from "expo-localization";
 import en from "../locales/en.json";
 import pt from "../locales/pt.json";
 import fr from "../locales/fr.json";
-import it from "../locales/de.json";
+import de from "../locales/de.json";
+import lu from "../locales/lu.json";
 
-const translations = { en, pt, fr, it };
+const translations = { en, pt, fr, de, lu };
 
 const resolveLocale = () => {
   try {

@@ -9,14 +9,16 @@ import Button from "../src/components/ui/Button";
 import Card from "../src/components/ui/Card";
 import { space, palette, type } from "../src/constants/theme";
 import { Icon } from "../src/constants/icons";
+import { useTranslation } from "../src/lib/useTranslation";
 
 export default function Results() {
   const router = useRouter();
+  const { t } = useTranslation();
   const { outcome } = useLocalSearchParams();
   const { players, imposterIndex, secretWord, startMatch, resetMatch } = useGameStore();
 
   const imposterWon = outcome === "imposter";
-  const imposterName = players?.[imposterIndex] || "Unknown";
+  const imposterName = players?.[imposterIndex] || t("results.unknown", "Unknown");
 
   useEffect(() => {
     const backAction = () => true;
@@ -37,7 +39,6 @@ export default function Results() {
     triggerHaptics();
   }, [imposterWon]);
 
-
   const handlePlayAgain = async () => {
     try { await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium); } catch {}
     
@@ -45,7 +46,7 @@ export default function Results() {
     if (success) {
       router.replace("/role");
     } else {
-      Alert.alert("Error", "Failed to start new game");
+      Alert.alert(t("common.error", "Error"), t("results.failedToStart", "Failed to start new game"));
     }
   };
 
@@ -69,32 +70,32 @@ export default function Results() {
             variant="h1" 
             style={[styles.outcome, imposterWon ? styles.imposterWin : styles.civilianWin]}
           >
-            {imposterWon ? "Imposter Wins!" : "Civilians Win!"}
+            {imposterWon ? t("results.imposterWins", "Imposter Wins!") : t("results.civiliansWin", "Civilians Win!")}
           </Title>
         </View>
 
         <View style={styles.info}>
           <Card style={styles.infoCard}>
-            <Text style={styles.label}>Secret Word</Text>
+            <Text style={styles.label}>{t("results.secretWord", "Secret Word")}</Text>
             <Text style={styles.wordText}>{secretWord}</Text>
           </Card>
 
           <Card style={styles.infoCard}>
-            <Text style={styles.label}>The Imposter</Text>
+            <Text style={styles.label}>{t("results.theImposter", "The Imposter")}</Text>
             <Text style={[styles.imposterText]}>{imposterName}</Text>
           </Card>
         </View>
 
         <View style={styles.actions}>
           <Button
-            title="Play Again"
+            title={t("results.playAgain", "Play Again")}
             onPress={handlePlayAgain}
             variant="success"
             size="lg"
           />
 
           <Button
-            title="New Setup"
+            title={t("results.newSetup", "New Setup")}
             onPress={handleNewSetup}
             variant="ghost"
             size="md"

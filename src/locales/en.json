@@ -9,7 +9,8 @@
     "yes": "Yes",
     "no": "No",
     "success": "Success",
-    "error": "Error"
+    "error": "Error",
+    "ok": "OK"
   },
   "home": {
     "title": "Imposter Hunt",
@@ -44,42 +45,29 @@
   },
   "topics": {
     "random": "Random",
-
     "Luxembourg": "Luxembourg",
-
     "Food": "Food",
     "food": "Food",
-
     "Animals": "Animals",
     "animals": "Animals",
-
     "Movies": "Movies",
     "movies": "Movies",
-
     "Countries": "Countries",
     "countries": "Countries",
-
     "Sports": "Sports",
     "sports": "Sports",
-
     "Occupations": "Occupations",
     "occupations": "Occupations",
-
     "Brands": "Brands",
     "brands": "Brands",
-
     "Colors": "Colors",
     "colors": "Colors",
-
     "Clothing": "Clothing",
     "clothing": "Clothing",
-
     "Vehicles": "Vehicles",
     "vehicles": "Vehicles",
-
     "Instruments": "Instruments",
     "instruments": "Instruments",
-
     "Technology": "Technology",
     "technology": "Technology"
   },
@@ -89,26 +77,17 @@
     "yourRole": "Your Role",
     "civilian": "Civilian",
     "imposter": "Imposter",
-    "eliminated": "Eliminated",
-    "quitTitle": "Quit Game",
-    "quitMessage": "Are you sure you want to quit? Progress will be lost.",
-    "quit": "Quit",
-    "timesUp": "Time's Up",
-    "proceedToVoting": "Proceed to voting",
-    "voteNow": "Vote Now",
-    "speakingOrder": "Speaking Order",
-    "currentTurn": "Current Turn",
-    "start": "Start",
-    "pause": "Pause",
-    "vote": "Vote",
-    "resetTimer": "Reset Timer",
-    "imposterGuess": "Imposter Guess"
+    "eliminated": "Eliminated"
   },
   "results": {
-    "civiliansWin": "Civilians Win!",
+    "unknown": "Unknown",
     "imposterWins": "Imposter Wins!",
+    "civiliansWin": "Civilians Win!",
+    "secretWord": "Secret Word",
+    "theImposter": "The Imposter",
     "playAgain": "Play Again",
-    "backHome": "Back to Home"
+    "newSetup": "New Setup",
+    "failedToStart": "Failed to start new game"
   },
   "settings": {
     "title": "Settings",
@@ -158,5 +137,124 @@
     "civilianMission": "• Give subtle hints about the word\n• Don't say the word directly\n• Find and eliminate the imposter\n• Be careful - they're listening!",
     "startRound": "Start Round",
     "hideAndPass": "Hide & Pass"
+  },
+  "round": {
+    "quitTitle": "Quit Game",
+    "quitMessage": "Are you sure you want to quit? Progress will be lost.",
+    "quit": "Quit",
+    "timesUp": "Time's Up",
+    "proceedToVoting": "Proceed to voting",
+    "voteNow": "Vote Now",
+    "speakingOrder": "Speaking Order",
+    "currentTurn": "Current Turn",
+    "start": "Start",
+    "pause": "Pause",
+    "vote": "Vote",
+    "resetTimer": "Reset Timer",
+    "imposterGuess": "Imposter Guess"
+  },
+  "imposterGuess": {
+    "title": "Final Guess",
+    "cancelTitle": "Cancel Guess?",
+    "backWarning": "Going back counts as passing your guess. Civilians will win.",
+    "cancelWarning": "This is your only chance. Canceling means you pass and civilians win.",
+    "stay": "Stay",
+    "passAndLose": "Pass & Lose",
+    "imposterFallback": "Imposter",
+    "instruction": "One chance only. Guess the secret word.\nCorrect = you win. Wrong = civilians win.",
+    "placeholder": "Type your guess...",
+    "submit": "Submit Guess",
+    "passButton": "Pass (Lose)"
+  },
+  "tutorial": {
+    "title": "How to Play",
+    "skip": "Skip",
+    "back": "Back",
+    "next": "Next",
+    "getStarted": "Get Started",
+    "step1": {
+      "title": "Welcome to Imposter Hunt",
+      "description": "A social deduction game where you find the imposter among your friends."
+    },
+    "step2": {
+      "title": "Civilians",
+      "description": "Most players are civilians. You'll see the secret word. Give subtle hints without saying it directly.",
+      "tip": "Be careful - the imposter is listening!"
+    },
+    "step3": {
+      "title": "The Imposter",
+      "description": "One player is the imposter. You don't know the word. Blend in and try to guess it from the hints.",
+      "tip": "Act like you know the word!"
+    },
+    "step4": {
+      "title": "Discussion Phase",
+      "description": "Take turns giving one-word hints about the secret word. The imposter must participate without knowing what it is.",
+      "tip": "Keep it vague enough to confuse the imposter"
+    },
+    "step5": {
+      "title": "Voting Time",
+      "description": "After discussion, vote to eliminate who you think is the imposter. Majority decides their fate.",
+      "tip": "Trust your instincts!"
+    },
+    "step6": {
+      "title": "Win Conditions",
+      "description": "Civilians win by eliminating the imposter. Imposter wins by guessing the secret word or surviving to 2 players.",
+      "tip": "May the best deceiver win!"
+    }
+  },
+  "vote": {
+    "title": "Vote",
+    "subtitle": "Who is the imposter?",
+    "goBackTitle": "Go Back",
+    "goBackMessage": "Return to round?",
+    "selectPlayerTitle": "Select Player",
+    "selectPlayerMessage": "Choose someone to vote out",
+    "noPlayers": "No players available",
+    "confirmVote": "Confirm Vote"
+  },
+  "aiTopics": {
+    "title": "AI Topic Builder",
+    "limitReached": "Limit Reached",
+    "maxAdsMessage": "You've watched the maximum rewarded ads for today.",
+    "thanks": "Thanks!",
+    "earnedGeneration": "You earned +1 AI generation.",
+    "noReward": "No reward",
+    "adClosedEarly": "Ad closed before completion. Try again.",
+    "missingInput": "Missing Input",
+    "enterDescription": "Please enter a topic description",
+    "generationLimit": "Generation Limit",
+    "limitMessagePart1": "You've used",
+    "limitMessagePart2": "generations today",
+    "limitMessagePart3": "Watch an ad to get more!",
+    "watchAd": "Watch Ad",
+    "aiTopicsFallback": "AI Topics",
+    "generated": "Generated",
+    "topicsCount": "topics",
+    "addedToList": "Added",
+    "toYourList": "to your list",
+    "goToSetup": "Go to Setup",
+    "stay": "Stay",
+    "generationFailed": "Generation failed",
+    "generationFailedTitle": "Generation Failed",
+    "generationFailedMessage": "Could not generate topics. Please try again.",
+    "generationsRemaining": "generations remaining today",
+    "freeLeft": "Free left",
+    "adsUsed": "Ads used",
+    "watchAdButton": "Watch Ad for +1",
+    "topicDescription": "Topic Description",
+    "descriptionPlaceholder": "e.g., Clash Royale cards, Harry Potter spells...",
+    "charactersLabel": "characters",
+    "numberOfTopics": "Number of Topics",
+    "difficulty": "Difficulty",
+    "difficultyEasy": "Easy",
+    "difficultyMedium": "Medium",
+    "difficultyHard": "Hard",
+    "difficultyMixed": "Mixed",
+    "generating": "Generating...",
+    "generateButton": "Generate Topics",
+    "infoText": "AI will generate creative topics based on your description. You can use them immediately in your games!"
+  },
+  "timer": {
+    "remaining": "remaining"
   }
 }

@@ -66,8 +66,6 @@ When you use the **AI Topic Builder**:
 - The API uses AI to generate word lists based on your description
 - Results are cached locally on your device
 
-**Backend URL**: `https://imposter-hunt-fug1yg03x-pearlabs-projects.vercel.app/api/complete`
-
 ---
 
 ## Children's Privacy
