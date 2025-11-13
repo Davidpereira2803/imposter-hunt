@@ -174,7 +174,8 @@
     "getStarted": "Get Started",
     "step1": {
       "title": "Welcome to Imposter Hunt",
-      "description": "A social deduction game where you find the imposter among your friends."
+      "description": "A social deduction game where you find the imposter among your friends.",
+      "tip": "Pay attention to subtle clues!"
     },
     "step2": {
       "title": "Civilians",
@@ -256,5 +257,11 @@
   },
   "timer": {
     "remaining": "remaining"
+  },
+  "elimination": {
+    "civilianEliminated": "Civilian Eliminated",
+    "playersRemainingLabel": "players remaining",
+    "continue": "Continue",
+    "unknown": "Unknown"
   }
 }
