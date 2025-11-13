@@ -1,6 +1,6 @@
 title: "Imposter Hunt"
-description: "The ultimate social deduction game - find the imposter before it's too late!"
-baseurl: "/imposter-hunt" # IMPORTANT: Add your repo name here for GitHub Pages
+description: "The ultimate social deduction game! Find the imposter before it's too late!"
+baseurl: "/imposter-hunt"
 url: "https://davidpereira2803.github.io"
 
 author:
@@ -8,7 +8,7 @@ author:
   github: "davidpereira2803"
 
 markdown: kramdown
-remote_theme: pages-themes/slate@v0.2.0 # Use a dark theme that works on GitHub Pages
+remote_theme: pages-themes/slate@v0.2.0
 
 plugins:
   - jekyll-feed

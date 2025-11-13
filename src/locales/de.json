@@ -174,7 +174,8 @@
     "getStarted": "Los Geht's",
     "step1": {
       "title": "Willkommen bei Hochstapler-Jagd",
-      "description": "Ein soziales Deduktionsspiel, bei dem du den Hochstapler unter deinen Freunden findest."
+      "description": "Ein soziales Deduktionsspiel, bei dem du den Hochstapler unter deinen Freunden findest.",
+      "tip": "Achte auf subtile Hinweise!"
     },
     "step2": {
       "title": "Zivilisten",
@@ -210,7 +211,11 @@
     "selectPlayerTitle": "Spieler Auswählen",
     "selectPlayerMessage": "Wähle jemanden zum Rauswählen",
     "noPlayers": "Keine Spieler verfügbar",
-    "confirmVote": "Abstimmung Bestätigen"
+    "confirmVote": "Abstimmung Bestätigen",
+    "playerEliminated": "Spieler Ausgeschieden",
+    "notTheImposter": "Nicht der Hochstapler!",
+    "playersRemain": "{{count}} Spieler übrig",
+    "continueToRound": "Weiter zu Runde {{round}}"
   },
   "aiTopics": {
     "title": "KI-Themen-Generator",
@@ -256,5 +261,11 @@
   },
   "timer": {
     "remaining": "übrig"
+  },
+  "elimination": {
+    "civilianEliminated": "Zivilist Ausgeschieden",
+    "playersRemainingLabel": "Spieler übrig",
+    "continue": "Weiter",
+    "unknown": "Unbekannt"
   }
 }

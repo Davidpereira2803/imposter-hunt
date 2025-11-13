@@ -174,7 +174,8 @@
     "getStarted": "Começar",
     "step1": {
       "title": "Bem-vindo ao Caça ao Impostor",
-      "description": "Um jogo de dedução social onde você encontra o impostor entre seus amigos."
+      "description": "Um jogo de dedução social onde você encontra o impostor entre seus amigos.",
+      "tip": "Preste atenção às pistas sutis!"
     },
     "step2": {
       "title": "Civis",
@@ -210,7 +211,11 @@
     "selectPlayerTitle": "Selecionar Jogador",
     "selectPlayerMessage": "Escolha alguém para eliminar",
     "noPlayers": "Nenhum jogador disponível",
-    "confirmVote": "Confirmar Voto"
+    "confirmVote": "Confirmar Voto",
+    "playerEliminated": "Jogador Eliminado",
+    "notTheImposter": "Não é o impostor!",
+    "playersRemain": "{{count}} jogadores restantes",
+    "continueToRound": "Continuar para Rodada {{round}}"
   },
   "aiTopics": {
     "title": "Criador de Temas com IA",
@@ -256,5 +261,11 @@
   },
   "timer": {
     "remaining": "restante"
+  },
+  "elimination": {
+    "civilianEliminated": "Civil Eliminado",
+    "playersRemainingLabel": "jogadores restantes",
+    "continue": "Continuar",
+    "unknown": "Desconhecido"
   }
 }

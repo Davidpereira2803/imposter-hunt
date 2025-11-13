@@ -7,9 +7,10 @@ import Screen from "../src/components/ui/Screen";
 import Card from "../src/components/ui/Card";
 import Button from "../src/components/ui/Button";
 import Title from "../src/components/ui/Title";
-import { space, palette, type } from "../src/constants/theme";
+import { space, palette, type, radii } from "../src/constants/theme";
 import { Icon } from "../src/constants/icons";
 import { useTranslation } from "../src/lib/useTranslation";
+import EliminationModal from "../src/components/EliminationModal";
 
 export default function Vote() {
   const router = useRouter();
@@ -17,12 +18,17 @@ export default function Vote() {
   const { 
     players, 
     alive,
+    imposterIndex,
+    round,
     eliminatePlayer, 
     checkGameOver,
-    nextRound 
+    nextRound,
+    aliveCount
   } = useGameStore();
 
   const [selectedPlayer, setSelectedPlayer] = useState(null);
+  const [showEliminationModal, setShowEliminationModal] = useState(false);
+  const [eliminatedPlayerData, setEliminatedPlayerData] = useState(null);
 
   useEffect(() => {
     const backAction = () => {
@@ -65,9 +71,34 @@ export default function Vote() {
         params: { outcome }
       });
     } else {
+      const eliminatedName = players[selectedPlayer];
+      const remaining = aliveCount ? aliveCount() : 0;
+      
+      setEliminatedPlayerData({
+        name: eliminatedName,
+        remainingCount: remaining,
+        nextRound: (round || 1) + 1
+      });
+      
+      setShowEliminationModal(true);
+      
+      try { 
+        await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning); 
+      } catch {}
+    }
+  };
+
+  const handleContinueToNextRound = async () => {
+    try { 
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); 
+    } catch {}
+    
+    setShowEliminationModal(false);
+    
+    setTimeout(() => {
       nextRound?.();
       router.replace("/round");
-    }
+    }, 300);
   };
 
   const handleBack = async () => {
@@ -137,6 +168,14 @@ export default function Vote() {
           />
         </View>
       </View>
+
+      <EliminationModal
+        visible={showEliminationModal}
+        playerName={eliminatedPlayerData?.name}
+        remainingCount={eliminatedPlayerData?.remainingCount}
+        nextRound={eliminatedPlayerData?.nextRound}
+        onContinue={handleContinueToNextRound}
+      />
     </Screen>
   );
 }

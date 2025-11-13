@@ -97,7 +97,7 @@ If you have questions or concerns about this Privacy Policy, please contact:
 
 **David Pereira**  
 GitHub: [davidpereira2803](https://github.com/davidpereira2803)  
-Email: your-email@example.com
+Email: perda.business@gmail.com
 
 ---
 
