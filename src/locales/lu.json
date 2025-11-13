@@ -219,6 +219,7 @@
   },
   "aiTopics": {
     "title": "KI-Themen-Generator",
+    "dailyGenerations": "Deeglech Generéierungen",
     "limitReached": "Limit Erreecht",
     "maxAdsMessage": "Du hues déi maximal Unzuel beluunegt Reklammen fir haut gesi.",
     "thanks": "Merci!",

@@ -219,6 +219,7 @@
   },
   "aiTopics": {
     "title": "Créateur de Thèmes IA",
+    "dailyGenerations": "Générations Quotidiennes",
     "limitReached": "Limite Atteinte",
     "maxAdsMessage": "Vous avez regardé le maximum de publicités récompensées pour aujourd'hui.",
     "thanks": "Merci !",

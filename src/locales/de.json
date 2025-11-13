@@ -219,6 +219,7 @@
   },
   "aiTopics": {
     "title": "KI-Themen-Generator",
+    "dailyGenerations": "Tägliche Generierungen",
     "limitReached": "Limit Erreicht",
     "maxAdsMessage": "Du hast die maximale Anzahl belohnter Werbungen für heute gesehen.",
     "thanks": "Danke!",

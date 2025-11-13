@@ -219,6 +219,7 @@
   },
   "aiTopics": {
     "title": "AI Topic Builder",
+    "dailyGenerations": "Daily Generations",
     "limitReached": "Limit Reached",
     "maxAdsMessage": "You've watched the maximum rewarded ads for today.",
     "thanks": "Thanks!",

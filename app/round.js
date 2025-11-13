@@ -8,7 +8,7 @@ import CircularTimer from "../src/components/ui/CircularTimer";
 import Screen from "../src/components/ui/Screen";
 import Button from "../src/components/ui/Button";
 import Card from "../src/components/ui/Card";
-import { space, palette, type } from "../src/constants/theme";
+import { space, palette, type, radii } from "../src/constants/theme";
 import { Icon } from "../src/constants/icons";
 import { useTranslation } from "../src/lib/useTranslation";
 
@@ -17,7 +17,6 @@ export default function Round() {
   const { players, alive, round, secretWord, imposterIndex, aliveCount: getAliveCount } = useGameStore();
   const [seconds, setSeconds] = useState(60);
   const [isRunning, setIsRunning] = useState(false);
-  const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
   const intervalRef = useRef(null);
   const isNavigatingRef = useRef(false);
   const { t } = useTranslation();
@@ -150,20 +149,6 @@ export default function Round() {
     try { await Haptics.selectionAsync(); } catch {}
   };
 
-  const handleNextPlayer = async () => {
-    if (currentPlayerIndex < orderedPlayers.length - 1) {
-      setCurrentPlayerIndex(prev => prev + 1);
-      try { await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); } catch {}
-    }
-  };
-
-  const handlePreviousPlayer = async () => {
-    if (currentPlayerIndex > 0) {
-      setCurrentPlayerIndex(prev => prev - 1);
-      try { await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); } catch {}
-    }
-  };
-
   const handleImposterGuess = async () => {
     try {
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
@@ -199,87 +184,27 @@ export default function Round() {
           <HUD round={round || 1} aliveCount={aliveNow} />
         </View>
 
-        {/* Player Order Section */}
+        {/* Clean Horizontal Player Cards */}
         <View style={styles.orderSection}>
           <Text style={styles.orderTitle}>{t("round.speakingOrder", "Speaking Order")}</Text>
           
-          <View style={styles.currentPlayerCard}>
-            <View style={styles.navigationButtons}>
-              <TouchableOpacity 
-                onPress={handlePreviousPlayer}
-                disabled={currentPlayerIndex === 0}
-                style={[
-                  styles.navButton,
-                  currentPlayerIndex === 0 && styles.navButtonDisabled
-                ]}
-              >
-                <Icon 
-                  name="chevron-left" 
-                  size={24} 
-                  color={currentPlayerIndex === 0 ? palette.textDim : palette.text} 
-                />
-              </TouchableOpacity>
-
-              <View style={styles.currentPlayer}>
-                <Text style={styles.turnLabel}>{t("round.currentTurn", "Current Turn")}</Text>
-                <Text style={styles.currentPlayerName}>
-                  {orderedPlayers[currentPlayerIndex]?.name || "—"}
-                </Text>
-                <Text style={styles.turnNumber}>
-                  {currentPlayerIndex + 1} / {orderedPlayers.length}
-                </Text>
-              </View>
-
-              <TouchableOpacity 
-                onPress={handleNextPlayer}
-                disabled={currentPlayerIndex === orderedPlayers.length - 1}
-                style={[
-                  styles.navButton,
-                  currentPlayerIndex === orderedPlayers.length - 1 && styles.navButtonDisabled
-                ]}
-              >
-                <Icon 
-                  name="chevron-right" 
-                  size={24} 
-                  color={currentPlayerIndex === orderedPlayers.length - 1 ? palette.textDim : palette.text} 
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-
-          {/* Player List */}
           <ScrollView 
             horizontal 
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.playerListContent}
+            contentContainerStyle={styles.playerCardsContainer}
+            style={styles.playerCardsScroll}
           >
             {orderedPlayers.map((player, idx) => (
               <Card
                 key={player.index}
-                style={[
-                  styles.playerOrderCard,
-                  idx === currentPlayerIndex && styles.activePlayerCard,
-                  idx < currentPlayerIndex && styles.completedPlayerCard
-                ]}
-                onPress={() => {
-                  setCurrentPlayerIndex(idx);
-                  Haptics.selectionAsync().catch(() => {});
-                }}
+                style={styles.playerCard}
               >
-                <Text style={styles.playerOrderNumber}>{idx + 1}</Text>
-                <Text style={[
-                  styles.playerOrderName,
-                  idx === currentPlayerIndex && styles.activePlayerName,
-                  idx < currentPlayerIndex && styles.completedPlayerName
-                ]}>
+                <View style={styles.playerNumberBadge}>
+                  <Text style={styles.playerNumberText}>{idx + 1}</Text>
+                </View>
+                <Text style={styles.playerCardName} numberOfLines={2}>
                   {player.name}
                 </Text>
-                {idx === currentPlayerIndex && (
-                  <Icon name="account-voice" size={16} color={palette.primary} />
-                )}
-                {idx < currentPlayerIndex && (
-                  <Icon name="check" size={16} color={palette.success} />
-                )}
               </Card>
             ))}
           </ScrollView>
@@ -367,8 +292,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  
+  // Player Order Section
   orderSection: {
-    marginBottom: space.lg,
+    marginBottom: space.xl,
   },
   orderTitle: {
     fontSize: type.h4,
@@ -376,90 +303,49 @@ const styles = StyleSheet.create({
     color: palette.text,
     marginBottom: space.md,
     textAlign: "center",
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
   },
-  currentPlayerCard: {
-    marginBottom: space.md,
+  playerCardsScroll: {
+    marginHorizontal: -space.lg, // Extend to screen edges
+    paddingHorizontal: space.lg,
   },
-  navigationButtons: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: palette.panel,
-    borderRadius: 16,
-    padding: space.md,
+  playerCardsContainer: {
+    gap: space.md,
+    paddingRight: space.lg,
   },
-  navButton: {
-    width: 40,
-    height: 40,
+  playerCard: {
+    width: 100,
+    minHeight: 120,
     alignItems: "center",
     justifyContent: "center",
+    padding: space.md,
+    gap: space.sm,
   },
-  navButtonDisabled: {
-    opacity: 0.3,
-  },
-  currentPlayer: {
-    flex: 1,
+  playerNumberBadge: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: palette.primary,
     alignItems: "center",
+    justifyContent: "center",
+    marginBottom: space.xs,
   },
-  turnLabel: {
-    fontSize: type.small,
-    fontWeight: "700",
-    color: palette.textDim,
-    textTransform: "uppercase",
-    letterSpacing: 1,
-    marginBottom: 4,
-  },
-  currentPlayerName: {
+  playerNumberText: {
     fontSize: type.h3,
     fontWeight: "900",
-    color: palette.primary,
-    marginBottom: 4,
+    color: palette.background,
   },
-  turnNumber: {
-    fontSize: type.small,
-    fontWeight: "600",
-    color: palette.textDim,
-  },
-  playerListContent: {
-    gap: space.sm,
-    paddingHorizontal: 4,
-  },
-  playerOrderCard: {
-    minWidth: 80,
-    alignItems: "center",
-    paddingVertical: space.sm,
-    paddingHorizontal: space.xs,
-  },
-  activePlayerCard: {
-    borderColor: palette.primary,
-    borderWidth: 2,
-    backgroundColor: palette.primaryDim,
-  },
-  completedPlayerCard: {
-    opacity: 0.5,
-  },
-  playerOrderNumber: {
-    fontSize: type.caption,
-    fontWeight: "700",
-    color: palette.textDim,
-    marginBottom: 4,
-  },
-  playerOrderName: {
-    fontSize: type.small,
+  playerCardName: {
+    fontSize: type.body,
     fontWeight: "700",
     color: palette.text,
     textAlign: "center",
-    marginBottom: 4,
   },
-  activePlayerName: {
-    color: palette.primary,
-  },
-  completedPlayerName: {
-    color: palette.textDim,
-  },
+  
   timerSection: {
     alignItems: "center",
-    marginVertical: space.lg,
+    marginVertical: space.xl,
   },
   actions: {
     gap: space.md,
