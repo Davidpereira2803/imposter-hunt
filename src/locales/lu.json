@@ -174,7 +174,8 @@
     "getStarted": "Lass Ufänken",
     "step1": {
       "title": "Wëllkomm bei Impostor Juegd",
-      "description": "E sozial Deduktionsspill wou s de den Impostor ënter denge Frënn fënns."
+      "description": "E sozial Deduktionsspill wou s de den Impostor ënter denge Frënn fënns.",
+      "tip": "Oppassen op subtil Hiweiser!"
     },
     "step2": {
       "title": "Zivilisten",
@@ -210,7 +211,11 @@
     "selectPlayerTitle": "Spiller Wielen",
     "selectPlayerMessage": "Wiel een fir erauszestëmmen",
     "noPlayers": "Keng Spiller verfügbar",
-    "confirmVote": "Ofstëmmung Bestätegen"
+    "confirmVote": "Ofstëmmung Bestätegen",
+    "playerEliminated": "Spiller Erausgeholl",
+    "notTheImposter": "Net den Impostor!",
+    "playersRemain": "{{count}} Spiller iwwreg",
+    "continueToRound": "Weider zu Ronn {{round}}"
   },
   "aiTopics": {
     "title": "KI-Themen-Generator",
@@ -256,5 +261,11 @@
   },
   "timer": {
     "remaining": "iwwreg"
+  },
+  "elimination": {
+    "civilianEliminated": "Zivilist Erausgeholl",
+    "playersRemainingLabel": "Spiller iwwreg",
+    "continue": "Weiderfueren",
+    "unknown": "Onbekannt"
   }
 }

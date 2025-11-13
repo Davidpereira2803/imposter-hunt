@@ -211,7 +211,11 @@
     "selectPlayerTitle": "Selecionar Jogador",
     "selectPlayerMessage": "Escolha alguém para eliminar",
     "noPlayers": "Nenhum jogador disponível",
-    "confirmVote": "Confirmar Voto"
+    "confirmVote": "Confirmar Voto",
+    "playerEliminated": "Jogador Eliminado",
+    "notTheImposter": "Não é o impostor!",
+    "playersRemain": "{{count}} jogadores restantes",
+    "continueToRound": "Continuar para Rodada {{round}}"
   },
   "aiTopics": {
     "title": "Criador de Temas com IA",
@@ -259,7 +263,7 @@
     "remaining": "restante"
   },
   "elimination": {
-    "civilianEliminated": "Civil eliminado",
+    "civilianEliminated": "Civil Eliminado",
     "playersRemainingLabel": "jogadores restantes",
     "continue": "Continuar",
     "unknown": "Desconhecido"

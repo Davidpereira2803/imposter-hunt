@@ -174,7 +174,8 @@
     "getStarted": "Commencer",
     "step1": {
       "title": "Bienvenue à Chasse à l'Imposteur",
-      "description": "Un jeu de déduction sociale où vous trouvez l'imposteur parmi vos amis."
+      "description": "Un jeu de déduction sociale où vous trouvez l'imposteur parmi vos amis.",
+      "tip": "Faites attention aux indices subtils !"
     },
     "step2": {
       "title": "Civils",
@@ -210,7 +211,11 @@
     "selectPlayerTitle": "Sélectionner un Joueur",
     "selectPlayerMessage": "Choisissez quelqu'un à éliminer",
     "noPlayers": "Aucun joueur disponible",
-    "confirmVote": "Confirmer le Vote"
+    "confirmVote": "Confirmer le Vote",
+    "playerEliminated": "Joueur Éliminé",
+    "notTheImposter": "Pas l'imposteur !",
+    "playersRemain": "{{count}} joueurs restants",
+    "continueToRound": "Continuer à la Manche {{round}}"
   },
   "aiTopics": {
     "title": "Créateur de Thèmes IA",
@@ -256,5 +261,11 @@
   },
   "timer": {
     "remaining": "restant"
+  },
+  "elimination": {
+    "civilianEliminated": "Civil Éliminé",
+    "playersRemainingLabel": "joueurs restants",
+    "continue": "Continuer",
+    "unknown": "Inconnu"
   }
 }

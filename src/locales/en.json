@@ -211,7 +211,11 @@
     "selectPlayerTitle": "Select Player",
     "selectPlayerMessage": "Choose someone to vote out",
     "noPlayers": "No players available",
-    "confirmVote": "Confirm Vote"
+    "confirmVote": "Confirm Vote",
+    "playerEliminated": "Player Eliminated",
+    "notTheImposter": "Not the imposter!",
+    "playersRemain": "{{count}} players remain",
+    "continueToRound": "Continue to Round {{round}}"
   },
   "aiTopics": {
     "title": "AI Topic Builder",
