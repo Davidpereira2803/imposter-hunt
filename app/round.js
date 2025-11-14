@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, Text, StyleSheet, Alert, BackHandler, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, StyleSheet, Alert, BackHandler, TouchableOpacity, ScrollView, Modal } from "react-native";
 import { useRouter } from "expo-router";
+import Animated, { FadeIn, FadeOut, ZoomIn } from "react-native-reanimated";
+import { BlurView } from "expo-blur";
 import * as Haptics from "expo-haptics";
 import { useGameStore } from "../src/store/gameStore";
 import HUD from "../src/components/HUD";
@@ -17,6 +19,7 @@ export default function Round() {
   const { players, alive, round, secretWord, imposterIndex, aliveCount: getAliveCount } = useGameStore();
   const [seconds, setSeconds] = useState(60);
   const [isRunning, setIsRunning] = useState(false);
+  const [selectedPlayer, setSelectedPlayer] = useState(null);
   const intervalRef = useRef(null);
   const isNavigatingRef = useRef(false);
   const { t } = useTranslation();
@@ -60,6 +63,20 @@ export default function Round() {
         }
       ]
     );
+  };
+
+  const handlePlayerPress = async (player) => {
+    try {
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    } catch {}
+    setSelectedPlayer(player);
+  };
+
+  const handleCloseModal = async () => {
+    try {
+      await Haptics.selectionAsync();
+    } catch {}
+    setSelectedPlayer(null);
   };
 
   useEffect(() => {
@@ -170,6 +187,8 @@ export default function Round() {
     return null;
   }
 
+  const isImposter = selectedPlayer && selectedPlayer.index === imposterIndex;
+
   return (
     <Screen>
       <ScrollView 
@@ -195,17 +214,28 @@ export default function Round() {
             style={styles.playerCardsScroll}
           >
             {orderedPlayers.map((player, idx) => (
-              <Card
+              <TouchableOpacity
                 key={player.index}
-                style={styles.playerCard}
+                onPress={() => handlePlayerPress(player)}
+                activeOpacity={0.7}
               >
-                <View style={styles.playerNumberBadge}>
-                  <Text style={styles.playerNumberText}>{idx + 1}</Text>
-                </View>
-                <Text style={styles.playerCardName} numberOfLines={2}>
-                  {player.name}
-                </Text>
-              </Card>
+                <Card style={styles.playerCard}>
+                  <View style={styles.playerNumberBadge}>
+                    <Text style={styles.playerNumberText}>{idx + 1}</Text>
+                  </View>
+                  <Text 
+                    style={styles.playerCardName} 
+                    numberOfLines={2}
+                    adjustsFontSizeToFit
+                    minimumFontScale={0.7}
+                  >
+                    {player.name}
+                  </Text>
+                  <View style={styles.eyeIcon}>
+                    <Icon name="eye" size={16} color={palette.textDim} />
+                  </View>
+                </Card>
+              </TouchableOpacity>
             ))}
           </ScrollView>
         </View>
@@ -265,6 +295,89 @@ export default function Round() {
           </View>
         </View>
       </ScrollView>
+
+      {/* Role Reveal Modal */}
+      <Modal
+        visible={!!selectedPlayer}
+        transparent
+        animationType="none"
+        onRequestClose={handleCloseModal}
+      >
+        <BlurView intensity={90} style={styles.modalOverlay}>
+          <TouchableOpacity 
+            style={styles.modalTouchable}
+            activeOpacity={1}
+            onPress={handleCloseModal}
+          >
+            <Animated.View 
+              entering={FadeIn.duration(200)}
+              exiting={FadeOut.duration(150)}
+              style={styles.modalBackground}
+            >
+              <Animated.View
+                entering={ZoomIn.duration(300).springify()}
+                style={styles.roleModal}
+                onStartShouldSetResponder={() => true}
+              >
+                {/* Close Button */}
+                <TouchableOpacity 
+                  style={styles.closeButton}
+                  onPress={handleCloseModal}
+                >
+                  <Icon name="close" size={24} color={palette.textDim} />
+                </TouchableOpacity>
+
+                {/* Role Icon */}
+                <View style={[
+                  styles.roleIconContainer,
+                  isImposter ? styles.imposterBg : styles.civilianBg
+                ]}>
+                  <Icon 
+                    name={isImposter ? "incognito" : "account"} 
+                    size={64} 
+                    color={isImposter ? palette.danger : palette.success} 
+                  />
+                </View>
+
+                {/* Player Name */}
+                <Text style={styles.modalPlayerName}>
+                  {selectedPlayer?.name}
+                </Text>
+
+                {/* Role Badge */}
+                <View style={[
+                  styles.roleBadge,
+                  isImposter ? styles.imposterBadge : styles.civilianBadge
+                ]}>
+                  <Text style={styles.roleText}>
+                    {isImposter 
+                      ? t("role.imposter", "IMPOSTER")
+                      : t("role.civilian", "CIVILIAN")
+                    }
+                  </Text>
+                </View>
+
+                {/* Secret Word (only for civilians) */}
+                {!isImposter && (
+                  <View style={styles.secretWordContainer}>
+                    <Text style={styles.secretWordLabel}>
+                      {t("game.secretWord", "Secret Word")}
+                    </Text>
+                    <Text style={styles.secretWordText}>
+                      {secretWord}
+                    </Text>
+                  </View>
+                )}
+
+                {/* Tap to Close Hint */}
+                <Text style={styles.tapHint}>
+                  {t("common.tapToClose", "Tap anywhere to close")}
+                </Text>
+              </Animated.View>
+            </Animated.View>
+          </TouchableOpacity>
+        </BlurView>
+      </Modal>
     </Screen>
   );
 }
@@ -293,7 +406,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   
-  // Player Order Section
   orderSection: {
     marginBottom: space.xl,
   },
@@ -307,7 +419,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
   playerCardsScroll: {
-    marginHorizontal: -space.lg, // Extend to screen edges
+    marginHorizontal: -space.lg,
     paddingHorizontal: space.lg,
   },
   playerCardsContainer: {
@@ -321,6 +433,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: space.md,
     gap: space.sm,
+    position: "relative",
   },
   playerNumberBadge: {
     width: 44,
@@ -342,6 +455,11 @@ const styles = StyleSheet.create({
     color: palette.text,
     textAlign: "center",
   },
+  eyeIcon: {
+    position: "absolute",
+    top: space.xs,
+    right: space.xs,
+  },
   
   timerSection: {
     alignItems: "center",
@@ -359,5 +477,116 @@ const styles = StyleSheet.create({
   },
   secondaryActions: {
     gap: space.sm,
+  },
+
+  modalOverlay: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalTouchable: {
+    flex: 1,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalBackground: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    paddingHorizontal: space.lg,
+  },
+  roleModal: {
+    backgroundColor: '#0d1117',
+    borderRadius: radii.xl,
+    padding: space.xl,
+    width: "100%",
+    maxWidth: 360,
+    alignItems: "center",
+    borderWidth: 3,
+    borderColor: palette.primary,
+    shadowColor: palette.primary,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.3,
+    shadowRadius: 24,
+    elevation: 16,
+  },
+  closeButton: {
+    position: "absolute",
+    top: space.md,
+    right: space.md,
+    zIndex: 10,
+    width: 32,
+    height: 32,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  roleIconContainer: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: space.lg,
+  },
+  imposterBg: {
+    backgroundColor: `${palette.danger}20`,
+  },
+  civilianBg: {
+    backgroundColor: `${palette.success}20`,
+  },
+  modalPlayerName: {
+    fontSize: type.h2,
+    fontWeight: "900",
+    color: palette.text,
+    marginBottom: space.md,
+    textAlign: "center",
+  },
+  roleBadge: {
+    paddingVertical: space.sm,
+    paddingHorizontal: space.lg,
+    borderRadius: radii.lg,
+    marginBottom: space.lg,
+  },
+  imposterBadge: {
+    backgroundColor: palette.danger,
+  },
+  civilianBadge: {
+    backgroundColor: palette.success,
+  },
+  roleText: {
+    fontSize: type.h4,
+    fontWeight: "900",
+    color: palette.background,
+    letterSpacing: 1,
+  },
+  secretWordContainer: {
+    width: "100%",
+    backgroundColor: palette.backgroundDim,
+    padding: space.lg,
+    borderRadius: radii.lg,
+    alignItems: "center",
+    borderLeftWidth: 4,
+    borderLeftColor: palette.success,
+    marginBottom: space.md,
+  },
+  secretWordLabel: {
+    fontSize: type.small,
+    fontWeight: "700",
+    color: palette.textDim,
+    textTransform: "uppercase",
+    letterSpacing: 1,
+    marginBottom: space.xs,
+  },
+  secretWordText: {
+    fontSize: type.h3,
+    fontWeight: "900",
+    color: palette.success,
+  },
+  tapHint: {
+    fontSize: type.small,
+    color: palette.textDim,
+    marginTop: space.sm,
   },
 });

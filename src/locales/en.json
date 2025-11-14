@@ -10,7 +10,8 @@
     "no": "No",
     "success": "Success",
     "error": "Error",
-    "ok": "OK"
+    "ok": "OK",
+    "tapToClose": "Tap anywhere to close"
   },
   "home": {
     "title": "Imposter Hunt",

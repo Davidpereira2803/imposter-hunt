@@ -10,7 +10,8 @@
     "no": "Não",
     "success": "Sucesso",
     "error": "Erro",
-    "ok": "OK"
+    "ok": "OK",
+    "tapToClose": "Toque em qualquer lugar para fechar"
   },
   "home": {
     "title": "Caça ao Impostor",

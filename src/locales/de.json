@@ -10,7 +10,8 @@
     "no": "Nein",
     "success": "Erfolg",
     "error": "Fehler",
-    "ok": "OK"
+    "ok": "OK",
+    "tapToClose": "Überall tippen zum Schließen"
   },
   "home": {
     "title": "Hochstapler-Jagd",
