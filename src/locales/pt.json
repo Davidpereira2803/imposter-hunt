@@ -15,6 +15,7 @@
   },
   "home": {
     "title": "Caça ao Impostor",
+    "subtitle": "Um jogo social de dedução por turnos",
     "continueGame": "Continuar Jogo",
     "newGame": "Novo Jogo",
     "howToPlay": "Como Jogar",

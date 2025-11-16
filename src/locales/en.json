@@ -15,6 +15,7 @@
   },
   "home": {
     "title": "Imposter Hunt",
+    "subtitle": "A social, pass-and-play word deduction game",
     "continueGame": "Continue Game",
     "newGame": "New Game",
     "howToPlay": "How to Play",

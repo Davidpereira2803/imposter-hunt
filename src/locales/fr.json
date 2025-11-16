@@ -15,6 +15,7 @@
   },
   "home": {
     "title": "Chasse à l'Imposteur",
+    "subtitle": "Un jeu de déduction sociale où vous trouvez l'imposteur parmi vos amis.",
     "continueGame": "Continuer la Partie",
     "newGame": "Nouvelle Partie",
     "howToPlay": "Comment Jouer",
