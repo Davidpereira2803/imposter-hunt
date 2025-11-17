@@ -10,10 +10,12 @@
     "no": "Non",
     "success": "Succès",
     "error": "Erreur",
-    "ok": "OK"
+    "ok": "OK",
+    "tapToClose": "Appuyez n'importe où pour fermer"
   },
   "home": {
     "title": "Chasse à l'Imposteur",
+    "subtitle": "Un jeu de déduction sociale où vous trouvez l'imposteur parmi vos amis.",
     "continueGame": "Continuer la Partie",
     "newGame": "Nouvelle Partie",
     "howToPlay": "Comment Jouer",
@@ -219,6 +221,7 @@
   },
   "aiTopics": {
     "title": "Créateur de Thèmes IA",
+    "dailyGenerations": "Générations Quotidiennes",
     "limitReached": "Limite Atteinte",
     "maxAdsMessage": "Vous avez regardé le maximum de publicités récompensées pour aujourd'hui.",
     "thanks": "Merci !",

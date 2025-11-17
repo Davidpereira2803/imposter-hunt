@@ -1,15 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-  Platform,
-  Alert,
-  ActivityIndicator,
-} from "react-native";
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, KeyboardAvoidingView, Platform, Alert, ActivityIndicator } from "react-native";
 import { useRouter, useFocusEffect } from "expo-router";
 import * as Haptics from "expo-haptics";
 import { useAIStore } from "../src/store/aiStore";
@@ -235,28 +225,34 @@ export default function AITopics() {
 
           {/* Usage Info */}
           <Card style={styles.usageCard}>
-            <View style={styles.usageRow}>
-              <Icon name="lightning-bolt" size={20} color={palette.primary} />
-              <View style={{ flex: 1 }}>
-                <Text style={styles.usageText}>
-                  {remaining} {t("aiTopics.generationsRemaining", "generations remaining today")}
-                </Text>
-                <Text style={styles.usageSubText}>
-                  {t("aiTopics.freeLeft", "Free left")}: {freeRemaining} • {t("aiTopics.adsUsed", "Ads used")}: {watchedAdsToday}/{maxAdsPerDay}
-                </Text>
+            <View style={styles.usageHeader}>
+              <View style={styles.usageTitle}>
+                <Icon name="lightning-bolt" size={20} color={palette.primary} />
+                <Text style={styles.usageLabel}>{t("aiTopics.dailyGenerations", "Daily Generations")}</Text>
               </View>
+              {watchedAdsToday < maxAdsPerDay && (
+                <TouchableOpacity 
+                  style={styles.adButton}
+                  onPress={handleWatchAd}
+                  disabled={isShowingAd || !canShowAds}
+                >
+                  <Icon name="video" size={18} color={palette.text} />
+                  <Text style={styles.adButtonText}>+1</Text>
+                </TouchableOpacity>
+              )}
             </View>
-            {watchedAdsToday < maxAdsPerDay && (
-              <Button
-                title={t("aiTopics.watchAdButton", "Watch Ad for +1")}
-                onPress={handleWatchAd}
-                variant="ghost"
-                size="sm"
-                icon={<Icon name="video" size={16} color={palette.text} />}
-                style={styles.adButton}
-                disabled={isShowingAd || watchedAdsToday >= maxAdsPerDay || !canShowAds}
-              />
-            )}
+            
+            <View style={styles.progressContainer}>
+              <View style={styles.progressBar}>
+                <View 
+                  style={[
+                    styles.progressFill, 
+                    { width: `${(remaining / getMaxAllowedToday()) * 100}%` }
+                  ]} 
+                />
+              </View>
+              <Text style={styles.progressText}>{remaining} / {getMaxAllowedToday()}</Text>
+            </View>
           </Card>
 
           {/* Description Input */}
@@ -396,29 +392,60 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   usageCard: {
+    marginBottom: space.lg,
+    padding: space.lg,
+    gap: space.md,
+  },
+  usageHeader: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: space.lg,
   },
-  usageRow: {
+  usageTitle: {
     flexDirection: "row",
     alignItems: "center",
-    gap: space.sm,
-    flex: 1,
+    gap: space.xs,
   },
-  usageText: {
+  usageLabel: {
     fontSize: type.body,
-    fontWeight: "600",
+    fontWeight: "700",
     color: palette.text,
   },
-  usageSubText: {
-    fontSize: type.small,
-    color: palette.textDim,
-    marginTop: 2,
-  },
   adButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: space.xs,
+    paddingVertical: space.xs,
     paddingHorizontal: space.sm,
+    borderRadius: 16,
+    backgroundColor: palette.primaryDim,
+    borderWidth: 1,
+    borderColor: palette.primary,
+  },
+  adButtonText: {
+    fontSize: type.small,
+    fontWeight: "800",
+    color: palette.primary,
+  },
+  progressContainer: {
+    gap: space.xs,
+  },
+  progressBar: {
+    height: 8,
+    backgroundColor: palette.backgroundDim,
+    borderRadius: 4,
+    overflow: "hidden",
+  },
+  progressFill: {
+    height: "100%",
+    backgroundColor: palette.primary,
+    borderRadius: 4,
+  },
+  progressText: {
+    fontSize: type.small,
+    fontWeight: "700",
+    color: palette.textDim,
+    textAlign: "right",
   },
   section: {
     marginBottom: space.lg,

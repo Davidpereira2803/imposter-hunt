@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, Text, StyleSheet, Alert, BackHandler, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, StyleSheet, Alert, BackHandler, TouchableOpacity, ScrollView, Modal } from "react-native";
 import { useRouter } from "expo-router";
+import Animated, { FadeIn, FadeOut, ZoomIn } from "react-native-reanimated";
+import { BlurView } from "expo-blur";
 import * as Haptics from "expo-haptics";
 import { useGameStore } from "../src/store/gameStore";
 import HUD from "../src/components/HUD";
@@ -8,7 +10,7 @@ import CircularTimer from "../src/components/ui/CircularTimer";
 import Screen from "../src/components/ui/Screen";
 import Button from "../src/components/ui/Button";
 import Card from "../src/components/ui/Card";
-import { space, palette, type } from "../src/constants/theme";
+import { space, palette, type, radii } from "../src/constants/theme";
 import { Icon } from "../src/constants/icons";
 import { useTranslation } from "../src/lib/useTranslation";
 
@@ -17,7 +19,7 @@ export default function Round() {
   const { players, alive, round, secretWord, imposterIndex, aliveCount: getAliveCount } = useGameStore();
   const [seconds, setSeconds] = useState(60);
   const [isRunning, setIsRunning] = useState(false);
-  const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
+  const [selectedPlayer, setSelectedPlayer] = useState(null);
   const intervalRef = useRef(null);
   const isNavigatingRef = useRef(false);
   const { t } = useTranslation();
@@ -61,6 +63,20 @@ export default function Round() {
         }
       ]
     );
+  };
+
+  const handlePlayerPress = async (player) => {
+    try {
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    } catch {}
+    setSelectedPlayer(player);
+  };
+
+  const handleCloseModal = async () => {
+    try {
+      await Haptics.selectionAsync();
+    } catch {}
+    setSelectedPlayer(null);
   };
 
   useEffect(() => {
@@ -150,20 +166,6 @@ export default function Round() {
     try { await Haptics.selectionAsync(); } catch {}
   };
 
-  const handleNextPlayer = async () => {
-    if (currentPlayerIndex < orderedPlayers.length - 1) {
-      setCurrentPlayerIndex(prev => prev + 1);
-      try { await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); } catch {}
-    }
-  };
-
-  const handlePreviousPlayer = async () => {
-    if (currentPlayerIndex > 0) {
-      setCurrentPlayerIndex(prev => prev - 1);
-      try { await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); } catch {}
-    }
-  };
-
   const handleImposterGuess = async () => {
     try {
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
@@ -185,6 +187,8 @@ export default function Round() {
     return null;
   }
 
+  const isImposter = selectedPlayer && selectedPlayer.index === imposterIndex;
+
   return (
     <Screen>
       <ScrollView 
@@ -199,88 +203,39 @@ export default function Round() {
           <HUD round={round || 1} aliveCount={aliveNow} />
         </View>
 
-        {/* Player Order Section */}
+        {/* Clean Horizontal Player Cards */}
         <View style={styles.orderSection}>
           <Text style={styles.orderTitle}>{t("round.speakingOrder", "Speaking Order")}</Text>
           
-          <View style={styles.currentPlayerCard}>
-            <View style={styles.navigationButtons}>
-              <TouchableOpacity 
-                onPress={handlePreviousPlayer}
-                disabled={currentPlayerIndex === 0}
-                style={[
-                  styles.navButton,
-                  currentPlayerIndex === 0 && styles.navButtonDisabled
-                ]}
-              >
-                <Icon 
-                  name="chevron-left" 
-                  size={24} 
-                  color={currentPlayerIndex === 0 ? palette.textDim : palette.text} 
-                />
-              </TouchableOpacity>
-
-              <View style={styles.currentPlayer}>
-                <Text style={styles.turnLabel}>{t("round.currentTurn", "Current Turn")}</Text>
-                <Text style={styles.currentPlayerName}>
-                  {orderedPlayers[currentPlayerIndex]?.name || "—"}
-                </Text>
-                <Text style={styles.turnNumber}>
-                  {currentPlayerIndex + 1} / {orderedPlayers.length}
-                </Text>
-              </View>
-
-              <TouchableOpacity 
-                onPress={handleNextPlayer}
-                disabled={currentPlayerIndex === orderedPlayers.length - 1}
-                style={[
-                  styles.navButton,
-                  currentPlayerIndex === orderedPlayers.length - 1 && styles.navButtonDisabled
-                ]}
-              >
-                <Icon 
-                  name="chevron-right" 
-                  size={24} 
-                  color={currentPlayerIndex === orderedPlayers.length - 1 ? palette.textDim : palette.text} 
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-
-          {/* Player List */}
           <ScrollView 
             horizontal 
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.playerListContent}
+            contentContainerStyle={styles.playerCardsContainer}
+            style={styles.playerCardsScroll}
           >
             {orderedPlayers.map((player, idx) => (
-              <Card
+              <TouchableOpacity
                 key={player.index}
-                style={[
-                  styles.playerOrderCard,
-                  idx === currentPlayerIndex && styles.activePlayerCard,
-                  idx < currentPlayerIndex && styles.completedPlayerCard
-                ]}
-                onPress={() => {
-                  setCurrentPlayerIndex(idx);
-                  Haptics.selectionAsync().catch(() => {});
-                }}
+                onPress={() => handlePlayerPress(player)}
+                activeOpacity={0.7}
               >
-                <Text style={styles.playerOrderNumber}>{idx + 1}</Text>
-                <Text style={[
-                  styles.playerOrderName,
-                  idx === currentPlayerIndex && styles.activePlayerName,
-                  idx < currentPlayerIndex && styles.completedPlayerName
-                ]}>
-                  {player.name}
-                </Text>
-                {idx === currentPlayerIndex && (
-                  <Icon name="account-voice" size={16} color={palette.primary} />
-                )}
-                {idx < currentPlayerIndex && (
-                  <Icon name="check" size={16} color={palette.success} />
-                )}
-              </Card>
+                <Card style={styles.playerCard}>
+                  <View style={styles.playerNumberBadge}>
+                    <Text style={styles.playerNumberText}>{idx + 1}</Text>
+                  </View>
+                  <Text 
+                    style={styles.playerCardName} 
+                    numberOfLines={2}
+                    adjustsFontSizeToFit
+                    minimumFontScale={0.7}
+                  >
+                    {player.name}
+                  </Text>
+                  <View style={styles.eyeIcon}>
+                    <Icon name="eye" size={16} color={palette.textDim} />
+                  </View>
+                </Card>
+              </TouchableOpacity>
             ))}
           </ScrollView>
         </View>
@@ -340,6 +295,89 @@ export default function Round() {
           </View>
         </View>
       </ScrollView>
+
+      {/* Role Reveal Modal */}
+      <Modal
+        visible={!!selectedPlayer}
+        transparent
+        animationType="none"
+        onRequestClose={handleCloseModal}
+      >
+        <BlurView intensity={90} style={styles.modalOverlay}>
+          <TouchableOpacity 
+            style={styles.modalTouchable}
+            activeOpacity={1}
+            onPress={handleCloseModal}
+          >
+            <Animated.View 
+              entering={FadeIn.duration(200)}
+              exiting={FadeOut.duration(150)}
+              style={styles.modalBackground}
+            >
+              <Animated.View
+                entering={ZoomIn.duration(300).springify()}
+                style={styles.roleModal}
+                onStartShouldSetResponder={() => true}
+              >
+                {/* Close Button */}
+                <TouchableOpacity 
+                  style={styles.closeButton}
+                  onPress={handleCloseModal}
+                >
+                  <Icon name="close" size={24} color={palette.textDim} />
+                </TouchableOpacity>
+
+                {/* Role Icon */}
+                <View style={[
+                  styles.roleIconContainer,
+                  isImposter ? styles.imposterBg : styles.civilianBg
+                ]}>
+                  <Icon 
+                    name={isImposter ? "incognito" : "account"} 
+                    size={64} 
+                    color={isImposter ? palette.danger : palette.success} 
+                  />
+                </View>
+
+                {/* Player Name */}
+                <Text style={styles.modalPlayerName}>
+                  {selectedPlayer?.name}
+                </Text>
+
+                {/* Role Badge */}
+                <View style={[
+                  styles.roleBadge,
+                  isImposter ? styles.imposterBadge : styles.civilianBadge
+                ]}>
+                  <Text style={styles.roleText}>
+                    {isImposter 
+                      ? t("role.imposter", "IMPOSTER")
+                      : t("role.civilian", "CIVILIAN")
+                    }
+                  </Text>
+                </View>
+
+                {/* Secret Word (only for civilians) */}
+                {!isImposter && (
+                  <View style={styles.secretWordContainer}>
+                    <Text style={styles.secretWordLabel}>
+                      {t("game.secretWord", "Secret Word")}
+                    </Text>
+                    <Text style={styles.secretWordText}>
+                      {secretWord}
+                    </Text>
+                  </View>
+                )}
+
+                {/* Tap to Close Hint */}
+                <Text style={styles.tapHint}>
+                  {t("common.tapToClose", "Tap anywhere to close")}
+                </Text>
+              </Animated.View>
+            </Animated.View>
+          </TouchableOpacity>
+        </BlurView>
+      </Modal>
     </Screen>
   );
 }
@@ -367,8 +405,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  
   orderSection: {
-    marginBottom: space.lg,
+    marginBottom: space.xl,
   },
   orderTitle: {
     fontSize: type.h4,
@@ -376,90 +415,55 @@ const styles = StyleSheet.create({
     color: palette.text,
     marginBottom: space.md,
     textAlign: "center",
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
   },
-  currentPlayerCard: {
-    marginBottom: space.md,
+  playerCardsScroll: {
+    marginHorizontal: -space.lg,
+    paddingHorizontal: space.lg,
   },
-  navigationButtons: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: palette.panel,
-    borderRadius: 16,
-    padding: space.md,
+  playerCardsContainer: {
+    gap: space.md,
+    paddingRight: space.lg,
   },
-  navButton: {
-    width: 40,
-    height: 40,
+  playerCard: {
+    width: 100,
+    minHeight: 120,
     alignItems: "center",
     justifyContent: "center",
+    padding: space.md,
+    gap: space.sm,
+    position: "relative",
   },
-  navButtonDisabled: {
-    opacity: 0.3,
-  },
-  currentPlayer: {
-    flex: 1,
+  playerNumberBadge: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: palette.primary,
     alignItems: "center",
+    justifyContent: "center",
+    marginBottom: space.xs,
   },
-  turnLabel: {
-    fontSize: type.small,
-    fontWeight: "700",
-    color: palette.textDim,
-    textTransform: "uppercase",
-    letterSpacing: 1,
-    marginBottom: 4,
-  },
-  currentPlayerName: {
+  playerNumberText: {
     fontSize: type.h3,
     fontWeight: "900",
-    color: palette.primary,
-    marginBottom: 4,
+    color: palette.background,
   },
-  turnNumber: {
-    fontSize: type.small,
-    fontWeight: "600",
-    color: palette.textDim,
-  },
-  playerListContent: {
-    gap: space.sm,
-    paddingHorizontal: 4,
-  },
-  playerOrderCard: {
-    minWidth: 80,
-    alignItems: "center",
-    paddingVertical: space.sm,
-    paddingHorizontal: space.xs,
-  },
-  activePlayerCard: {
-    borderColor: palette.primary,
-    borderWidth: 2,
-    backgroundColor: palette.primaryDim,
-  },
-  completedPlayerCard: {
-    opacity: 0.5,
-  },
-  playerOrderNumber: {
-    fontSize: type.caption,
-    fontWeight: "700",
-    color: palette.textDim,
-    marginBottom: 4,
-  },
-  playerOrderName: {
-    fontSize: type.small,
+  playerCardName: {
+    fontSize: type.body,
     fontWeight: "700",
     color: palette.text,
     textAlign: "center",
-    marginBottom: 4,
   },
-  activePlayerName: {
-    color: palette.primary,
+  eyeIcon: {
+    position: "absolute",
+    top: space.xs,
+    right: space.xs,
   },
-  completedPlayerName: {
-    color: palette.textDim,
-  },
+  
   timerSection: {
     alignItems: "center",
-    marginVertical: space.lg,
+    marginVertical: space.xl,
   },
   actions: {
     gap: space.md,
@@ -473,5 +477,116 @@ const styles = StyleSheet.create({
   },
   secondaryActions: {
     gap: space.sm,
+  },
+
+  modalOverlay: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalTouchable: {
+    flex: 1,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalBackground: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    paddingHorizontal: space.lg,
+  },
+  roleModal: {
+    backgroundColor: '#0d1117',
+    borderRadius: radii.xl,
+    padding: space.xl,
+    width: "100%",
+    maxWidth: 360,
+    alignItems: "center",
+    borderWidth: 3,
+    borderColor: palette.primary,
+    shadowColor: palette.primary,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.3,
+    shadowRadius: 24,
+    elevation: 16,
+  },
+  closeButton: {
+    position: "absolute",
+    top: space.md,
+    right: space.md,
+    zIndex: 10,
+    width: 32,
+    height: 32,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  roleIconContainer: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: space.lg,
+  },
+  imposterBg: {
+    backgroundColor: `${palette.danger}20`,
+  },
+  civilianBg: {
+    backgroundColor: `${palette.success}20`,
+  },
+  modalPlayerName: {
+    fontSize: type.h2,
+    fontWeight: "900",
+    color: palette.text,
+    marginBottom: space.md,
+    textAlign: "center",
+  },
+  roleBadge: {
+    paddingVertical: space.sm,
+    paddingHorizontal: space.lg,
+    borderRadius: radii.lg,
+    marginBottom: space.lg,
+  },
+  imposterBadge: {
+    backgroundColor: palette.danger,
+  },
+  civilianBadge: {
+    backgroundColor: palette.success,
+  },
+  roleText: {
+    fontSize: type.h4,
+    fontWeight: "900",
+    color: palette.background,
+    letterSpacing: 1,
+  },
+  secretWordContainer: {
+    width: "100%",
+    backgroundColor: palette.backgroundDim,
+    padding: space.lg,
+    borderRadius: radii.lg,
+    alignItems: "center",
+    borderLeftWidth: 4,
+    borderLeftColor: palette.success,
+    marginBottom: space.md,
+  },
+  secretWordLabel: {
+    fontSize: type.small,
+    fontWeight: "700",
+    color: palette.textDim,
+    textTransform: "uppercase",
+    letterSpacing: 1,
+    marginBottom: space.xs,
+  },
+  secretWordText: {
+    fontSize: type.h3,
+    fontWeight: "900",
+    color: palette.success,
+  },
+  tapHint: {
+    fontSize: type.small,
+    color: palette.textDim,
+    marginTop: space.sm,
   },
 });

@@ -3,6 +3,17 @@ layout: default
 title: How to Play
 ---
 
+#### (v1.0.2) What is new?
+* Add civilian elimination modal
+* Correct and complete the languages locale, to be complete
+* Restrucutre the main homepage
+
+#### (v1.0.3) What is new?
+* Add view role feature during the round (based on my own feedback)
+* Redesigned the structure of the AI Topics Generator Screen (based on reddit feedback)
+* Improved the text inside buttons, depending on the language
+* Improve homescreen (Add more information about the game)
+
 # How to Play Imposter Hunt
 
 **Imposter Hunt** is a fast-paced social deduction game where players try to uncover who among them is the imposter — all on a single shared device.

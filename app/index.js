@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, StyleSheet, BackHandler, Alert } from "react-native";
+import { View, StyleSheet, BackHandler, Alert, Text } from "react-native";
 import { useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -74,6 +74,10 @@ export default function Home() {
               color={palette.primary}
             />
             <Title style={styles.title}>{t("home.title", "Imposter Hunt")}</Title>
+            {/* Short, discreet subtitle */}
+            <Text style={styles.subtitle}>
+              {t("home.subtitle", "A social, pass-and-play word deduction game")}
+            </Text>
           </View>
 
           <View style={styles.actions}>
@@ -153,6 +157,11 @@ const styles = StyleSheet.create({
   },
   title: {
     marginTop: space.md,
+  },
+  subtitle: {
+    marginTop: 6,
+    color: palette.textDim,
+    textAlign: "center",
   },
   actions: {
     gap: space.md,

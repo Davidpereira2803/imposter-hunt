@@ -10,10 +10,12 @@
     "no": "Não",
     "success": "Sucesso",
     "error": "Erro",
-    "ok": "OK"
+    "ok": "OK",
+    "tapToClose": "Toque em qualquer lugar para fechar"
   },
   "home": {
     "title": "Caça ao Impostor",
+    "subtitle": "Um jogo social de dedução por turnos",
     "continueGame": "Continuar Jogo",
     "newGame": "Novo Jogo",
     "howToPlay": "Como Jogar",
@@ -219,6 +221,7 @@
   },
   "aiTopics": {
     "title": "Criador de Temas com IA",
+    "dailyGenerations": "Gerações Diárias",
     "limitReached": "Limite Atingido",
     "maxAdsMessage": "Você assistiu o máximo de anúncios recompensados para hoje.",
     "thanks": "Obrigado!",

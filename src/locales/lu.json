@@ -10,10 +10,12 @@
     "no": "Nee",
     "success": "Erfolleg",
     "error": "Feeler",
-    "ok": "OK"
+    "ok": "OK",
+    "tapToClose": "Unerstallt fir zouzemaachen"
   },
   "home": {
     "title": "Impostor Juegd",
+    "subtitle": "E sozial, pass-and-play Wuert-Deduktiounsspill",
     "continueGame": "Spill Weiderfueren",
     "newGame": "Neit Spill",
     "howToPlay": "Wéi Spillen",
@@ -219,6 +221,7 @@
   },
   "aiTopics": {
     "title": "KI-Themen-Generator",
+    "dailyGenerations": "Deeglech Generéierungen",
     "limitReached": "Limit Erreecht",
     "maxAdsMessage": "Du hues déi maximal Unzuel beluunegt Reklammen fir haut gesi.",
     "thanks": "Merci!",
