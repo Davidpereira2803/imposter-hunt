@@ -7,6 +7,7 @@ import { AdConsentProvider } from "../src/contexts/AdConsentContext";
 import LoadingScreen from "../src/components/LoadingScreen";
 import { useLanguageStore } from "../src/store/languageStore";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from "expo-audio";
 
 const TUTORIAL_SEEN_KEY = "imposter-hunt-tutorial-seen";
 
@@ -50,6 +51,22 @@ export default function RootLayout() {
 
     return () => clearTimeout(timeout);
   }, [hasHydrated, tutorialChecked]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        await Audio.setAudioModeAsync({
+          allowsRecordingIOS: false,
+          playsInSilentModeIOS: true,
+          interruptionModeIOS: InterruptionModeIOS.MixWithOthers,
+          shouldDuckAndroid: true,
+          interruptionModeAndroid: InterruptionModeAndroid.DuckOthers,
+          playThroughEarpieceAndroid: false,
+          staysActiveInBackground: false,
+        });
+      } catch {}
+    })();
+  }, []);
 
   if (!isReady) {
     return <LoadingScreen />;

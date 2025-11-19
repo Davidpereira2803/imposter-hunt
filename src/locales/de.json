@@ -21,7 +21,9 @@
     "howToPlay": "Spielanleitung",
     "exitTitle": "Beenden",
     "exitMessage": "Spiel verlassen?",
-    "exit": "Beenden"
+    "exit": "Beenden",
+    "players": "Spieler",
+    "aiTopics": "KI Themen"
   },
   "setup": {
     "title": "Einstellungen",
@@ -43,7 +45,8 @@
     "topicNamePlaceholder": "Themaname",
     "couldNotStart": "Spielstart fehlgeschlagen",
     "aiGeneratedTopic": "KI-generiertes Thema",
-    "customTopicLabel": "Eigenes Thema"
+    "customTopicLabel": "Eigenes Thema",
+    "words": "Wörter" 
   },
   "topics": {
     "random": "Zufällig",

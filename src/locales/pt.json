@@ -21,7 +21,9 @@
     "howToPlay": "Como Jogar",
     "exitTitle": "Sair",
     "exitMessage": "Sair do jogo?",
-    "exit": "Sair"
+    "exit": "Sair",
+    "players": "Jogadores",
+    "aiTopics": "Temas de IA"
   },
   "setup": {
     "title": "Configuração",
@@ -43,7 +45,8 @@
     "topicNamePlaceholder": "Nome do Tema",
     "couldNotStart": "Falha ao iniciar o jogo",
     "aiGeneratedTopic": "Tema gerado por IA",
-    "customTopicLabel": "Tema personalizado"
+    "customTopicLabel": "Tema personalizado",
+    "words": "palavras"
   },
   "topics": {
     "random": "Aleatório",

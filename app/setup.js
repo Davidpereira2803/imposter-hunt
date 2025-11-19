@@ -192,7 +192,7 @@ export default function Setup() {
 
           {/* Topic Section FIRST */}
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>{t("setup.topic", "Topic")}</Text>
+            <Text style={styles.sectionTitle}>{t("setup.topic", "Topics")}</Text>
 
             {/* Top actions: AI + Custom */}
             <View style={styles.topicActionsRow}>
@@ -225,39 +225,70 @@ export default function Setup() {
             {/* Grid of topics */}
             {allTopics.length > 0 && (
               <View style={styles.topicGrid}>
-                {allTopics.map((tpc) => (
-                  <Card
-                    key={tpc.key}
-                    onPress={() => handleSelectTopic(tpc.key)}
-                    style={[
-                      styles.topicCard,
-                      topicKey === tpc.key && { borderColor: palette.primary, borderWidth: 2 },
-                    ]}
-                  >
-                    <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
-                      <Text
-                        style={styles.topicName}
-                        numberOfLines={1}
-                        ellipsizeMode="tail"
-                      >
-                        {tpc.name}
-                      </Text>
-                      {tpc.isCustom ? (
-                        <View
-                          accessibilityLabel={tpc.isAI ? t("setup.aiGeneratedTopic", "AI generated topic") : t("setup.customTopicLabel", "Custom topic")}
-                          style={[styles.dot, tpc.isAI ? styles.dotAI : styles.dotCustom]}
-                        />
-                      ) : null}
-                    </View>
-                  </Card>
-                ))}
+                {allTopics.map((tpc) => {
+                  const wordCount = tpc.words?.length || 0;
+                  
+                  return (
+                    <Card
+                      key={tpc.key}
+                      onPress={() => handleSelectTopic(tpc.key)}
+                      style={[
+                        styles.topicCard,
+                        topicKey === tpc.key && { borderColor: palette.primary, borderWidth: 2 },
+                      ]}
+                    >
+                      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
+                        <Text
+                          style={styles.topicName}
+                          numberOfLines={1}
+                          ellipsizeMode="tail"
+                        >
+                          {tpc.name}
+                        </Text>
+                        {tpc.isCustom ? (
+                          <View
+                            accessibilityLabel={tpc.isAI ? t("setup.aiGeneratedTopic", "AI generated topic") : t("setup.customTopicLabel", "Custom topic")}
+                            style={[styles.dot, tpc.isAI ? styles.dotAI : styles.dotCustom]}
+                          />
+                        ) : null}
+                      </View>
+                      
+                      {/* New: Word count row */}
+                      <View style={styles.wordCountRow}>
+                        <Icon name="text-box-multiple" size={12} color={palette.textDim} />
+                        <Text style={styles.wordCountText}>
+                          {wordCount} {t("setup.words", "words")}
+                        </Text>
+                      </View>
+                    </Card>
+                  );
+                })}
               </View>
             )}
           </View>
 
           {/* Players Section */}
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>{t("setup.players", "Players")} ({playerList.length})</Text>
+            <View style={styles.sectionHeader}>
+              <Text style={styles.sectionTitle}>{t("setup.players", "Players")}</Text>
+              <View style={[
+                styles.countBadge,
+                playerList.length >= 3 ? styles.countBadgeReady : styles.countBadgeNotReady
+              ]}>
+                <Icon 
+                  name={playerList.length >= 3 ? "check-circle" : "alert-circle"} 
+                  size={14} 
+                  color={playerList.length >= 3 ? palette.success : palette.textDim} 
+                />
+                <Text style={[
+                  styles.countText,
+                  playerList.length >= 3 ? styles.countTextReady : styles.countTextNotReady
+                ]}>
+                  {playerList.length}/3
+                </Text>
+              </View>
+            </View>
+
             <View style={styles.inputRow}>
               <Input
                 value={inputName}
@@ -369,19 +400,55 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   section: { marginBottom: space.xl },
+  
+  sectionHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: space.md,
+  },
+  
   sectionTitle: { 
     color: palette.textDim, 
     fontSize: type.small, 
     fontWeight: "700", 
     textTransform: "uppercase",
     letterSpacing: 1,
-    marginBottom: space.md 
+  },
+
+  countBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    paddingVertical: 4,
+    paddingHorizontal: 10,
+    borderRadius: 12,
+    borderWidth: 1,
+  },
+  countBadgeReady: {
+    backgroundColor: `${palette.success}20`,
+    borderColor: palette.success,
+  },
+  countBadgeNotReady: {
+    backgroundColor: palette.backgroundDim,
+    borderColor: palette.line,
+  },
+  countText: {
+    fontSize: type.small,
+    fontWeight: "800",
+  },
+  countTextReady: {
+    color: palette.success,
+  },
+  countTextNotReady: {
+    color: palette.textDim,
   },
 
   topicActionsRow: {
     flexDirection: "row",
     alignItems: "stretch",
     marginBottom: space.md,
+    marginTop: space.sm,
   },
   topicActionBtn: {
     minHeight: 52,
@@ -398,7 +465,8 @@ const styles = StyleSheet.create({
     width: "48%",
     padding: space.md,
     borderRadius: radii.md,
-    justifyContent: "center",
+    justifyContent: "space-between",
+    minHeight: 50,
   },
   topicName: {
     color: palette.text,
@@ -418,6 +486,17 @@ const styles = StyleSheet.create({
   },
   dotCustom: {
     backgroundColor: "#EF4444",
+  },
+  wordCountRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    marginTop: space.xs,
+  },
+  wordCountText: {
+    fontSize: type.small,
+    color: palette.textDim,
+    fontWeight: "600",
   },
 
   inputRow: { 

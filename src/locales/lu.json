@@ -21,7 +21,9 @@
     "howToPlay": "Wéi Spillen",
     "exitTitle": "Erauszéien",
     "exitMessage": "Spill verloossen?",
-    "exit": "Erauszéien"
+    "exit": "Erauszéien",
+    "players": "Spiller",
+    "aiTopics": "KI Themen"
   },
   "setup": {
     "title": "Astellung",
@@ -43,7 +45,8 @@
     "topicNamePlaceholder": "Themanumm",
     "couldNotStart": "Spillstart feelgeschloen",
     "aiGeneratedTopic": "KI-generéiert Thema",
-    "customTopicLabel": "Eegent Thema"
+    "customTopicLabel": "Eegent Thema",
+    "words": "Wierder"
   },
   "topics": {
     "random": "Zoufälleg",

@@ -21,7 +21,9 @@
     "howToPlay": "Comment Jouer",
     "exitTitle": "Quitter",
     "exitMessage": "Quitter le jeu ?",
-    "exit": "Quitter"
+    "exit": "Quitter",
+    "players": "Joueurs",
+    "aiTopics": "Sujets IA"
   },
   "setup": {
     "title": "Configuration",
@@ -43,7 +45,8 @@
     "topicNamePlaceholder": "Nom du Thème",
     "couldNotStart": "Échec du démarrage du jeu",
     "aiGeneratedTopic": "Thème généré par IA",
-    "customTopicLabel": "Thème personnalisé"
+    "customTopicLabel": "Thème personnalisé",
+    "words": "mots"
   },
   "topics": {
     "random": "Aléatoire",

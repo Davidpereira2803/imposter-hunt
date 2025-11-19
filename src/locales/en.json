@@ -21,7 +21,9 @@
     "howToPlay": "How to Play",
     "exitTitle": "Exit",
     "exitMessage": "Exit game?",
-    "exit": "Exit"
+    "exit": "Exit",
+    "players": "players",
+    "aiTopics": "AI Topics"
   },
   "setup": {
     "title": "Setup",
@@ -43,7 +45,8 @@
     "topicNamePlaceholder": "Topic Name",
     "couldNotStart": "Failed to start game",
     "aiGeneratedTopic": "AI generated topic",
-    "customTopicLabel": "Custom topic"
+    "customTopicLabel": "Custom topic",
+    "words": "words"
   },
   "topics": {
     "random": "Random",
