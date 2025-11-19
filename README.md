@@ -17,7 +17,7 @@ title: How to Play
 ### (v1.0.4) What is new?
 * Restructure home screen -> add quick access to topic generator
 * Clarify minimum number of players (based on reddit feedback)
-*
+* Add Italien & Spanish as languages
 
 # How to Play Imposter Hunt
 
