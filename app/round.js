@@ -16,10 +16,24 @@ import { useTranslation } from "../src/lib/useTranslation";
 
 export default function Round() {
   const router = useRouter();
-  const { players, alive, round, secretWord, imposterIndex, aliveCount: getAliveCount } = useGameStore();
+  const { 
+    players, 
+    alive, 
+    round, 
+    secretWord, 
+    imposterIndex, 
+    aliveCount: getAliveCount, 
+    roles,
+    sheriffUsedAbility,
+    setSheriffUsedAbility
+  } = useGameStore();
+  
   const [seconds, setSeconds] = useState(60);
   const [isRunning, setIsRunning] = useState(false);
   const [selectedPlayer, setSelectedPlayer] = useState(null);
+  const [showSheriffModal, setShowSheriffModal] = useState(false);
+  const [sheriffCheckResult, setSheriffCheckResult] = useState(null);
+  
   const intervalRef = useRef(null);
   const isNavigatingRef = useRef(false);
   const { t } = useTranslation();
@@ -43,6 +57,9 @@ export default function Round() {
     
     return alivePlayers;
   }, [alivePlayers, round, imposterIndex]);
+
+  const sheriffIndex = roles?.indexOf("sheriff");
+  const isSheriff = sheriffIndex !== -1 && alive?.[sheriffIndex] !== false;
 
   const handleQuitRound = () => {
     Alert.alert(
@@ -77,6 +94,39 @@ export default function Round() {
       await Haptics.selectionAsync();
     } catch {}
     setSelectedPlayer(null);
+  };
+
+  const handleSheriffAbility = async () => {
+    if (!isSheriff || sheriffUsedAbility) return;
+
+    try {
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    } catch {}
+
+    setShowSheriffModal(true);
+  };
+
+  const handleSheriffCheck = async (player) => {
+    try {
+      await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+    } catch {}
+
+    const checkedRole = roles?.[player.index];
+    
+    setSheriffCheckResult({
+      playerName: player.name,
+      role: checkedRole,
+    });
+
+    setSheriffUsedAbility(true);
+  };
+
+  const handleCloseSheriffResult = async () => {
+    try {
+      await Haptics.selectionAsync();
+    } catch {}
+    setSheriffCheckResult(null);
+    setShowSheriffModal(false);
   };
 
   useEffect(() => {
@@ -187,7 +237,54 @@ export default function Round() {
     return null;
   }
 
-  const isImposter = selectedPlayer && selectedPlayer.index === imposterIndex;
+  const playerRole = selectedPlayer && roles?.[selectedPlayer.index];
+  const isImposter = playerRole === "imposter";
+  const isJester = playerRole === "jester";
+  const isSheriffRole = playerRole === "sheriff";
+  const isCivilian = playerRole === "civilian" || (!isImposter && !isJester && !isSheriffRole);
+
+  const getRoleConfig = () => {
+    if (isImposter) {
+      return {
+        color: palette.danger,
+        icon: "incognito",
+        label: t("role.imposter", "IMPOSTER"),
+        bgStyle: styles.imposterBg,
+        badgeStyle: styles.imposterBadge,
+        showWord: false,
+      };
+    }
+    if (isJester) {
+      return {
+        color: "#A855F7",
+        icon: "emoticon-devil",
+        label: t("role.jester", "JESTER"),
+        bgStyle: styles.jesterBg,
+        badgeStyle: styles.jesterBadge,
+        showWord: true,
+      };
+    }
+    if (isSheriffRole) {
+      return {
+        color: "#3B82F6",
+        icon: "shield-star",
+        label: t("role.sheriff", "SHERIFF"),
+        bgStyle: styles.sheriffBg,
+        badgeStyle: styles.sheriffBadge,
+        showWord: true,
+      };
+    }
+    return {
+      color: palette.success,
+      icon: "account",
+      label: t("role.civilian", "CIVILIAN"),
+      bgStyle: styles.civilianBg,
+      badgeStyle: styles.civilianBadge,
+      showWord: true,
+    };
+  };
+
+  const roleConfig = getRoleConfig();
 
   return (
     <Screen>
@@ -203,7 +300,6 @@ export default function Round() {
           <HUD round={round || 1} aliveCount={aliveNow} />
         </View>
 
-        {/* Clean Horizontal Player Cards */}
         <View style={styles.orderSection}>
           <Text style={styles.orderTitle}>{t("round.speakingOrder", "Speaking Order")}</Text>
           
@@ -240,32 +336,21 @@ export default function Round() {
           </ScrollView>
         </View>
 
+        {/* Timer with built-in controls */}
         <View style={styles.timerSection}>
-          <CircularTimer seconds={seconds} totalSeconds={60} />
+          <CircularTimer 
+            seconds={seconds} 
+            totalSeconds={60}
+            isRunning={isRunning}
+            onStart={startTimer}
+            onPause={pauseTimer}
+            onReset={resetTimer}
+          />
         </View>
 
+        {/* Only Vote and Sheriff buttons remain */}
         <View style={styles.actions}>
           <View style={styles.primaryActions}>
-            {!isRunning ? (
-              <Button 
-                title={t("round.start", "Start")}
-                onPress={startTimer}
-                variant="success"
-                size="lg"
-                style={styles.controlBtn}
-                icon={<Icon name="play" size={24} color="#000" />}
-              />
-            ) : (
-              <Button 
-                title={t("round.pause", "Pause")}
-                onPress={pauseTimer}
-                variant="warn"
-                size="lg"
-                style={styles.controlBtn}
-                icon={<Icon name="pause" size={24} color="#000" />}
-              />
-            )}
-
             <Button 
               title={t("round.vote", "Vote")}
               onPress={handleVote}
@@ -274,29 +359,41 @@ export default function Round() {
               style={styles.controlBtn}
               icon={<Icon name="vote" size={24} color={palette.text} />}
             />
-          </View>
-
-          <View style={styles.secondaryActions}>
-            <Button 
-              title={t("round.resetTimer", "Reset Timer")}
-              onPress={resetTimer}
-              variant="muted"
-              size="md"
-              icon={<Icon name="refresh" size={20} color={palette.text} />}
-            />
 
             <Button 
               title={t("round.imposterGuess", "Imposter Guess")}
               onPress={handleImposterGuess}
               variant="danger"
-              size="md"
-              icon={<Icon name="incognito" size={20} color={palette.text} />}
+              size="lg"
+              style={styles.controlBtn}
+              icon={<Icon name="incognito" size={24} color={palette.text} />}
             />
           </View>
+
+          {/* Sheriff Ability Section */}
+          {isSheriff && !sheriffUsedAbility && (
+            <Button 
+              title={t("role.sheriffAbility", "Inspect Player")}
+              onPress={handleSheriffAbility}
+              variant="primary"
+              size="md"
+              icon={<Icon name="shield-star" size={20} color={palette.text} />}
+              style={styles.sheriffButton}
+            />
+          )}
+
+          {isSheriff && sheriffUsedAbility && (
+            <View style={styles.abilityUsedBadge}>
+              <Icon name="check-circle" size={16} color={palette.success} />
+              <Text style={styles.abilityUsedText}>
+                {t("role.abilityUsed", "Ability Used")}
+              </Text>
+            </View>
+          )}
         </View>
       </ScrollView>
 
-      {/* Role Reveal Modal */}
+      {/* Existing Role Reveal Modal */}
       <Modal
         visible={!!selectedPlayer}
         transparent
@@ -319,7 +416,6 @@ export default function Round() {
                 style={styles.roleModal}
                 onStartShouldSetResponder={() => true}
               >
-                {/* Close Button */}
                 <TouchableOpacity 
                   style={styles.closeButton}
                   onPress={handleCloseModal}
@@ -327,49 +423,164 @@ export default function Round() {
                   <Icon name="close" size={24} color={palette.textDim} />
                 </TouchableOpacity>
 
-                {/* Role Icon */}
-                <View style={[
-                  styles.roleIconContainer,
-                  isImposter ? styles.imposterBg : styles.civilianBg
-                ]}>
+                <View style={[styles.roleIconContainer, roleConfig.bgStyle]}>
                   <Icon 
-                    name={isImposter ? "incognito" : "account"} 
+                    name={roleConfig.icon} 
                     size={64} 
-                    color={isImposter ? palette.danger : palette.success} 
+                    color={roleConfig.color} 
                   />
                 </View>
 
-                {/* Player Name */}
                 <Text style={styles.modalPlayerName}>
                   {selectedPlayer?.name}
                 </Text>
 
-                {/* Role Badge */}
-                <View style={[
-                  styles.roleBadge,
-                  isImposter ? styles.imposterBadge : styles.civilianBadge
-                ]}>
+                <View style={[styles.roleBadge, roleConfig.badgeStyle]}>
                   <Text style={styles.roleText}>
-                    {isImposter 
-                      ? t("role.imposter", "IMPOSTER")
-                      : t("role.civilian", "CIVILIAN")
-                    }
+                    {roleConfig.label}
                   </Text>
                 </View>
 
-                {/* Secret Word (only for civilians) */}
-                {!isImposter && (
-                  <View style={styles.secretWordContainer}>
+                {roleConfig.showWord && (
+                  <View style={[styles.secretWordContainer, { borderLeftColor: roleConfig.color }]}>
                     <Text style={styles.secretWordLabel}>
                       {t("game.secretWord", "Secret Word")}
                     </Text>
-                    <Text style={styles.secretWordText}>
+                    <Text style={[styles.secretWordText, { color: roleConfig.color }]}>
                       {secretWord}
                     </Text>
                   </View>
                 )}
 
-                {/* Tap to Close Hint */}
+                <Text style={styles.tapHint}>
+                  {t("common.tapToClose", "Tap anywhere to close")}
+                </Text>
+              </Animated.View>
+            </Animated.View>
+          </TouchableOpacity>
+        </BlurView>
+      </Modal>
+
+      {/* NEW: Sheriff Selection Modal */}
+      <Modal
+        visible={showSheriffModal && !sheriffCheckResult}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setShowSheriffModal(false)}
+      >
+        <BlurView intensity={90} style={styles.modalOverlay}>
+          <View style={styles.sheriffModalContainer}>
+            <Animated.View
+              entering={ZoomIn.duration(300).springify()}
+              style={styles.sheriffModalContent}
+            >
+              <View style={styles.sheriffModalHeader}>
+                <Icon name="shield-star" size={40} color="#3B82F6" />
+                <Text style={styles.sheriffModalTitle}>
+                  {t("role.sheriffAbility", "Inspect Player")}
+                </Text>
+                <Text style={styles.sheriffModalSubtitle}>
+                  {t("role.sheriffInstruction", "Choose one player to reveal their role")}
+                </Text>
+              </View>
+
+              <ScrollView style={styles.sheriffPlayerList}>
+                {alivePlayers
+                  .filter(p => p.index !== sheriffIndex)
+                  .map((player) => (
+                    <TouchableOpacity
+                      key={player.index}
+                      onPress={() => handleSheriffCheck(player)}
+                      style={styles.sheriffPlayerCard}
+                    >
+                      <Text style={styles.sheriffPlayerName}>{player.name}</Text>
+                      <Icon name="arrow-right" size={20} color={palette.textDim} />
+                    </TouchableOpacity>
+                  ))}
+              </ScrollView>
+
+              <Button
+                title={t("common.cancel", "Cancel")}
+                onPress={() => setShowSheriffModal(false)}
+                variant="ghost"
+                size="md"
+                style={{ marginTop: space.md }}
+              />
+            </Animated.View>
+          </View>
+        </BlurView>
+      </Modal>
+
+      {/* NEW: Sheriff Result Modal */}
+      <Modal
+        visible={!!sheriffCheckResult}
+        transparent
+        animationType="none"
+        onRequestClose={handleCloseSheriffResult}
+      >
+        <BlurView intensity={90} style={styles.modalOverlay}>
+          <TouchableOpacity 
+            style={styles.modalTouchable}
+            activeOpacity={1}
+            onPress={handleCloseSheriffResult}
+          >
+            <Animated.View 
+              entering={FadeIn.duration(200)}
+              style={styles.modalBackground}
+            >
+              <Animated.View
+                entering={ZoomIn.duration(400).springify()}
+                style={styles.sheriffResultModal}
+                onStartShouldSetResponder={() => true}
+              >
+                <View style={styles.sheriffResultHeader}>
+                  <Icon name="shield-check" size={48} color="#3B82F6" />
+                  <Text style={styles.sheriffResultTitle}>
+                    {t("role.inspectionResult", "Inspection Result")}
+                  </Text>
+                </View>
+
+                <Text style={styles.sheriffResultPlayerName}>
+                  {sheriffCheckResult?.playerName}
+                </Text>
+
+                <View style={styles.sheriffResultDivider} />
+
+                {(() => {
+                  const checkedRole = sheriffCheckResult?.role;
+                  let roleLabel = "";
+                  let roleColor = palette.text;
+                  let roleIcon = "account";
+
+                  if (checkedRole === "imposter") {
+                    roleLabel = t("role.imposter", "IMPOSTER");
+                    roleColor = palette.danger;
+                    roleIcon = "incognito";
+                  } else if (checkedRole === "jester") {
+                    roleLabel = t("role.jester", "JESTER");
+                    roleColor = "#A855F7";
+                    roleIcon = "emoticon-devil";
+                  } else {
+                    roleLabel = t("role.civilian", "CIVILIAN");
+                    roleColor = palette.success;
+                    roleIcon = "account";
+                  }
+
+                  return (
+                    <>
+                      <View style={[styles.sheriffResultRoleIcon, { backgroundColor: `${roleColor}20` }]}>
+                        <Icon name={roleIcon} size={56} color={roleColor} />
+                      </View>
+
+                      <View style={[styles.sheriffResultRoleBadge, { backgroundColor: roleColor }]}>
+                        <Text style={styles.sheriffResultRoleText}>
+                          {roleLabel}
+                        </Text>
+                      </View>
+                    </>
+                  );
+                })()}
+
                 <Text style={styles.tapHint}>
                   {t("common.tapToClose", "Tap anywhere to close")}
                 </Text>
@@ -475,8 +686,24 @@ const styles = StyleSheet.create({
   controlBtn: {
     flex: 1,
   },
-  secondaryActions: {
-    gap: space.sm,
+  sheriffButton: {
+    backgroundColor: "#3B82F6",
+  },
+  abilityUsedBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: space.xs,
+    padding: space.md,
+    backgroundColor: palette.backgroundDim,
+    borderRadius: radii.md,
+    borderWidth: 1,
+    borderColor: palette.success,
+  },
+  abilityUsedText: {
+    fontSize: type.body,
+    fontWeight: "700",
+    color: palette.success,
   },
 
   modalOverlay: {
@@ -536,6 +763,12 @@ const styles = StyleSheet.create({
   civilianBg: {
     backgroundColor: `${palette.success}20`,
   },
+  jesterBg: {
+    backgroundColor: `#A855F720`,
+  },
+  sheriffBg: {
+    backgroundColor: `#3B82F620`,
+  },
   modalPlayerName: {
     fontSize: type.h2,
     fontWeight: "900",
@@ -555,6 +788,12 @@ const styles = StyleSheet.create({
   civilianBadge: {
     backgroundColor: palette.success,
   },
+  jesterBadge: {
+    backgroundColor: "#A855F7",
+  },
+  sheriffBadge: {
+    backgroundColor: "#3B82F6",
+  },
   roleText: {
     fontSize: type.h4,
     fontWeight: "900",
@@ -568,7 +807,6 @@ const styles = StyleSheet.create({
     borderRadius: radii.lg,
     alignItems: "center",
     borderLeftWidth: 4,
-    borderLeftColor: palette.success,
     marginBottom: space.md,
   },
   secretWordLabel: {
@@ -582,11 +820,119 @@ const styles = StyleSheet.create({
   secretWordText: {
     fontSize: type.h3,
     fontWeight: "900",
-    color: palette.success,
   },
   tapHint: {
     fontSize: type.small,
     color: palette.textDim,
     marginTop: space.sm,
+  },
+
+  sheriffModalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: space.lg,
+  },
+  sheriffModalContent: {
+    backgroundColor: palette.panel,
+    borderRadius: radii.xl,
+    padding: space.xl,
+    width: "100%",
+    maxWidth: 400,
+    maxHeight: "80%",
+  },
+  sheriffModalHeader: {
+    alignItems: "center",
+    marginBottom: space.lg,
+  },
+  sheriffModalTitle: {
+    fontSize: type.h2,
+    fontWeight: "900",
+    color: palette.text,
+    marginTop: space.md,
+    marginBottom: space.xs,
+  },
+  sheriffModalSubtitle: {
+    fontSize: type.body,
+    color: palette.textDim,
+    textAlign: "center",
+  },
+  sheriffPlayerList: {
+    maxHeight: 300,
+  },
+  sheriffPlayerCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: palette.backgroundDim,
+    padding: space.md,
+    borderRadius: radii.md,
+    marginBottom: space.sm,
+  },
+  sheriffPlayerName: {
+    fontSize: type.h4,
+    fontWeight: "700",
+    color: palette.text,
+  },
+
+  sheriffResultModal: {
+    backgroundColor: '#0d1117',
+    borderRadius: radii.xl,
+    padding: space.xl,
+    width: "100%",
+    maxWidth: 360,
+    alignItems: "center",
+    borderWidth: 3,
+    borderColor: "#3B82F6",
+    shadowColor: "#3B82F6",
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.4,
+    shadowRadius: 24,
+    elevation: 16,
+  },
+  sheriffResultHeader: {
+    alignItems: "center",
+    marginBottom: space.lg,
+  },
+  sheriffResultTitle: {
+    fontSize: type.h3,
+    fontWeight: "900",
+    color: "#3B82F6",
+    marginTop: space.md,
+    textTransform: "uppercase",
+    letterSpacing: 1,
+  },
+  sheriffResultPlayerName: {
+    fontSize: type.h1,
+    fontWeight: "900",
+    color: palette.text,
+    marginBottom: space.md,
+    textAlign: "center",
+  },
+  sheriffResultDivider: {
+    width: "100%",
+    height: 2,
+    backgroundColor: palette.line,
+    marginVertical: space.lg,
+  },
+  sheriffResultRoleIcon: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: space.lg,
+  },
+  sheriffResultRoleBadge: {
+    paddingVertical: space.md,
+    paddingHorizontal: space.xl,
+    borderRadius: radii.full,
+    marginBottom: space.lg,
+  },
+  sheriffResultRoleText: {
+    fontSize: type.h2,
+    fontWeight: "900",
+    color: palette.background,
+    letterSpacing: 2,
   },
 });

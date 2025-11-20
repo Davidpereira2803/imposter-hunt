@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Animated, {
   useSharedValue,
   useAnimatedProps,
@@ -11,12 +11,20 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 import Svg, { Circle } from "react-native-svg";
-import { palette, type } from "../../constants/theme";
+import { palette, type, space } from "../../constants/theme";
 import { useTranslation } from "../../lib/useTranslation";
+import { Icon } from "../../constants/icons";
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
-export default function CircularTimer({ seconds, totalSeconds = 60 }) {
+export default function CircularTimer({ 
+  seconds, 
+  totalSeconds = 60,
+  isRunning,
+  onStart,
+  onPause,
+  onReset
+}) {
   const { t } = useTranslation();
   const progress = useSharedValue(1);
   const scale = useSharedValue(1);
@@ -65,9 +73,9 @@ export default function CircularTimer({ seconds, totalSeconds = 60 }) {
 
   const getTimerColor = () => {
     const progressValue = seconds / totalSeconds;
-    if (progressValue <= 0.16) return palette.danger; // 0-10s
-    if (progressValue <= 0.33) return palette.warn;   // 11-20s
-    return palette.text;                               // 21-60s
+    if (progressValue <= 0.16) return palette.danger;
+    if (progressValue <= 0.33) return palette.warn;
+    return palette.text;
   };
 
   return (
@@ -99,12 +107,44 @@ export default function CircularTimer({ seconds, totalSeconds = 60 }) {
           />
         </Svg>
 
-        {/* Timer Text - Absolutely positioned in center */}
+        {/* Timer Content - Centered */}
         <View style={styles.timeContainer}>
           <Text style={[styles.timeText, { color: getTimerColor() }]}>
             {formatTime(seconds)}
           </Text>
           <Text style={styles.label}>{t("timer.remaining", "remaining")}</Text>
+          
+          {/* Timer Controls - Below the time */}
+          <View style={styles.controls}>
+            {/* Play/Pause Button */}
+            <TouchableOpacity
+              onPress={isRunning ? onPause : onStart}
+              style={[
+                styles.controlButton,
+                isRunning ? styles.pauseButton : styles.playButton
+              ]}
+              activeOpacity={0.7}
+            >
+              <Icon 
+                name={isRunning ? "pause" : "play"} 
+                size={20} 
+                color={palette.background} 
+              />
+            </TouchableOpacity>
+
+            {/* Reset Button */}
+            <TouchableOpacity
+              onPress={onReset}
+              style={styles.resetButton}
+              activeOpacity={0.7}
+            >
+              <Icon 
+                name="refresh" 
+                size={18} 
+                color={palette.textDim} 
+              />
+            </TouchableOpacity>
+          </View>
         </View>
       </Animated.View>
     </View>
@@ -138,5 +178,40 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     letterSpacing: 1,
     marginTop: 4,
+    marginBottom: space.sm,
+  },
+  controls: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: space.sm,
+    marginTop: space.xs,
+  },
+  controlButton: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  playButton: {
+    backgroundColor: palette.success,
+  },
+  pauseButton: {
+    backgroundColor: palette.warn,
+  },
+  resetButton: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: palette.backgroundDim,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: palette.line,
   },
 });

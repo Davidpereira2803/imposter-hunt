@@ -46,7 +46,13 @@
     "couldNotStart": "Failed to start game",
     "aiGeneratedTopic": "AI generated topic",
     "customTopicLabel": "Custom topic",
-    "words": "words"
+    "words": "words",
+    "specialRoles": "Special Roles",
+    "jester": "Jester",
+    "jesterDesc": "Wins if voted out",
+    "sheriff": "Sheriff",
+    "sheriffDesc": "Can check one role",
+    "minPlayersForRoles": "Need 4+ players for special roles"
   },
   "topics": {
     "random": "Random",
@@ -82,7 +88,8 @@
     "yourRole": "Your Role",
     "civilian": "Civilian",
     "imposter": "Imposter",
-    "eliminated": "Eliminated"
+    "jester": "Jester",
+    "sheriff": "Sheriff"
   },
   "results": {
     "unknown": "Unknown",
@@ -92,7 +99,10 @@
     "theImposter": "The Imposter",
     "playAgain": "Play Again",
     "newSetup": "New Setup",
-    "failedToStart": "Failed to start new game"
+    "failedToStart": "Failed to start new game",
+    "jesterWins": "The Jester Wins!",
+    "jesterFooled": "fooled everyone!",
+    "wasTheImposter": "was the imposter"
   },
   "settings": {
     "title": "Settings",
@@ -136,12 +146,22 @@
     "revealRole": "Reveal Role",
     "imposter": "IMPOSTER",
     "civilian": "CIVILIAN",
+    "jester": "JESTER",
+    "sheriff": "SHERIFF",
     "secretWordLabel": "Your Secret Word",
+    "noWord": "You don't know the secret word",
     "missionTitle": "Your Mission",
     "imposterMission": "• Blend in with civilians\n• Listen carefully to hints\n• Guess the secret word to win\n• Or survive until only 2 remain",
     "civilianMission": "• Give subtle hints about the word\n• Don't say the word directly\n• Find and eliminate the imposter\n• Be careful - they're listening!",
+    "jesterMission": "• Act suspicious but not too obvious\n• Trick them into voting for you\n• If you get voted out, you win alone!",
+    "sheriffMission": "• You are on the Civilian team\n• You can check one player's role once\n• Use your info to lead the vote",
+    "sheriffAbility": "Inspect Player",
+    "sheriffInstruction": "Choose one player to reveal their role",
+    "abilityUsed": "Ability Used",
+    "inspectionResult": "Inspection Result",
+    "hideAndPass": "Hide & Pass",
     "startRound": "Start Round",
-    "hideAndPass": "Hide & Pass"
+    "unknown": "Unknown"
   },
   "round": {
     "quitTitle": "Quit Game",

@@ -17,12 +17,11 @@ export default function Vote() {
   const { t } = useTranslation();
   const { 
     players, 
-    alive,
-    imposterIndex,
-    round,
+    alive, 
     eliminatePlayer, 
-    checkGameOver,
     nextRound,
+    roles,
+    round,
     aliveCount
   } = useGameStore();
 
@@ -63,29 +62,51 @@ export default function Vote() {
 
     try { await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium); } catch {}
 
+    const eliminatedRole = roles?.[selectedPlayer];
+    
     const outcome = eliminatePlayer?.(selectedPlayer);
     
-    if (outcome === "civilians" || outcome === "imposter") {
+    if (outcome === "jester") {
       router.replace({
         pathname: "/results",
-        params: { outcome }
+        params: {
+          winner: "jester",
+          eliminatedPlayer: players[selectedPlayer],
+        },
       });
-    } else {
-      const eliminatedName = players[selectedPlayer];
-      const remaining = aliveCount ? aliveCount() : 0;
-      
-      setEliminatedPlayerData({
-        name: eliminatedName,
-        remainingCount: remaining,
-        nextRound: (round || 1) + 1
-      });
-      
-      setShowEliminationModal(true);
-      
-      try { 
-        await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning); 
-      } catch {}
+      return;
     }
+    
+    if (outcome === "civilians") {
+      router.replace({
+        pathname: "/results",
+        params: { winner: "civilians" }
+      });
+      return;
+    }
+    
+    if (outcome === "imposter") {
+      router.replace({
+        pathname: "/results",
+        params: { winner: "imposter" }
+      });
+      return;
+    }
+    
+    const eliminatedName = players[selectedPlayer];
+    const remaining = aliveCount ? aliveCount() : 0;
+    
+    setEliminatedPlayerData({
+      name: eliminatedName,
+      remainingCount: remaining,
+      nextRound: (round || 1) + 1
+    });
+    
+    setShowEliminationModal(true);
+    
+    try { 
+      await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning); 
+    } catch {}
   };
 
   const handleContinueToNextRound = async () => {

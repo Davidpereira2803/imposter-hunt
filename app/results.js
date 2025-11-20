@@ -14,10 +14,10 @@ import { useTranslation } from "../src/lib/useTranslation";
 export default function Results() {
   const router = useRouter();
   const { t } = useTranslation();
-  const { outcome } = useLocalSearchParams();
+  const { winner, eliminatedPlayer } = useLocalSearchParams();
   const { players, imposterIndex, secretWord, startMatch, resetMatch } = useGameStore();
 
-  const imposterWon = outcome === "imposter";
+  const imposterWon = winner === "imposter";
   const imposterName = players?.[imposterIndex] || t("results.unknown", "Unknown");
 
   useEffect(() => {
@@ -56,22 +56,58 @@ export default function Results() {
     router.replace("/setup");
   };
 
+  const getWinnerInfo = () => {
+    if (winner === "jester") {
+      return {
+        title: t("results.jesterWins", "The Jester Wins!"),
+        subtitle: eliminatedPlayer 
+          ? `${eliminatedPlayer} ${t("results.jesterFooled", "fooled everyone!")}`
+          : t("results.jesterFooled", "The Jester fooled everyone!"),
+        color: "#A855F7",
+        icon: "emoticon-devil",
+      };
+    }
+
+    if (winner === "imposter") {
+      return {
+        title: t("results.imposterWins", "Imposter Wins!"),
+        subtitle: imposterName 
+          ? `${imposterName} ${t("results.wasTheImposter", "was the imposter")}`
+          : t("results.theImposter", "The Imposter"),
+        color: palette.danger,
+        icon: "incognito",
+      };
+    }
+
+    return {
+      title: t("results.civiliansWin", "Civilians Win!"),
+      subtitle: imposterName 
+        ? `${imposterName} ${t("results.wasTheImposter", "was the imposter")}`
+        : t("results.theImposter", "The Imposter"),
+      color: palette.success,
+      icon: "account-group",
+    };
+  };
+
+  const { title, subtitle, color, icon } = getWinnerInfo();
+
   return (
     <Screen>
       <View style={styles.content}>
         <View style={styles.header}>
           <Icon 
-            name={imposterWon ? "skull" : "trophy"} 
+            name={icon} 
             size={100} 
-            color={imposterWon ? palette.danger : palette.success}
+            color={color}
             style={styles.icon}
           />
           <Title 
             variant="h1" 
             style={[styles.outcome, imposterWon ? styles.imposterWin : styles.civilianWin]}
           >
-            {imposterWon ? t("results.imposterWins", "Imposter Wins!") : t("results.civiliansWin", "Civilians Win!")}
+            {title}
           </Title>
+          <Text style={styles.subtitle}>{subtitle}</Text>
         </View>
 
         <View style={styles.info}>
@@ -127,6 +163,12 @@ const styles = StyleSheet.create({
   },
   civilianWin: {
     color: palette.success,
+  },
+  subtitle: {
+    color: palette.textDim,
+    fontSize: type.medium,
+    textAlign: "center",
+    marginTop: space.sm,
   },
   info: {
     gap: space.lg,

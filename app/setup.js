@@ -1,173 +1,137 @@
-import React, { useState, useMemo, useEffect } from "react";
-import { View, ScrollView, StyleSheet, Alert, BackHandler, KeyboardAvoidingView, Platform, Modal, Text, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet, ScrollView, Alert, TouchableOpacity, Modal, Switch, KeyboardAvoidingView, Platform } from "react-native";
 import { useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
 import { useGameStore } from "../src/store/gameStore";
 import Screen from "../src/components/ui/Screen";
 import Title from "../src/components/ui/Title";
-import Button from "../src/components/ui/Button";
 import Input from "../src/components/ui/Input";
+import Button from "../src/components/ui/Button";
 import Card from "../src/components/ui/Card";
-import Pill from "../src/components/ui/Pill";
-import { space, palette, radii, type } from "../src/constants/theme";
+import { space, palette, type, radii } from "../src/constants/theme";
 import { Icon } from "../src/constants/icons";
 import { useTranslation } from "../src/lib/useTranslation";
 
 export default function Setup() {
   const router = useRouter();
   const { t } = useTranslation();
-
-  const players = useGameStore((s) => s.players);
-  const topicKey = useGameStore((s) => s.topicKey);
-  const setPlayers = useGameStore((s) => s.setPlayers);
-  const setTopicKey = useGameStore((s) => s.setTopicKey);
-  const startMatch = useGameStore((s) => s.startMatch);
-  const addCustomTopic = useGameStore((s) => s.addCustomTopic);
-  const predefinedTopics = useGameStore((s) => s.predefinedTopics);
-  const customTopics = useGameStore((s) => s.customTopics);
-
-  const toTitleCase = (str) => 
-    str.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
-
-  const allTopics = useMemo(() => {
-    const pre = Object.entries(predefinedTopics || {}).map(([key, words]) => ({
-      key,
-      name: t(`topics.${key}`, toTitleCase(key)),
-      words,
-      isCustom: false,
-      isAI: false,
-    }));
-    const custom = (customTopics || []).map((tpc) => {
-      const isAI =
-        tpc?.isAI === true ||
-        tpc?.source === "ai" ||
-        /\(ai\)/i.test(tpc?.name || "");
-      return {
-        key: `custom:${(tpc.name || "")
-          .toLowerCase()
-          .trim()
-          .replace(/[^a-z0-9]+/g, "-")
-          .replace(/(^-|-$)/g, "")}`,
-        name: tpc.name,
-        words: tpc.words || [],
-        isCustom: true,
-        isAI,
-      };
-    });
-
-    const allWords = [
-      ...pre.flatMap(t => t.words),
-      ...custom.flatMap(t => t.words),
-    ];
-
-    const randomTopic = {
-      key: "random",
-      name: t("topics.random", "Random"),
-      words: allWords,
-      isCustom: false,
-      isAI: false,
-    };
-
-    return [randomTopic, ...pre, ...custom];
-  }, [predefinedTopics, customTopics, t]);
+  const {
+    players: storedPlayers,
+    setPlayers,
+    topicKey: storedTopicKey,
+    setTopicKey,
+    customTopics,
+    startMatch,
+    addCustomTopic,
+    enableJester,
+    setEnableJester,
+    enableSheriff,
+    setEnableSheriff,
+    getAllTopics,
+  } = useGameStore();
 
   const [inputName, setInputName] = useState("");
-  const [playerList, setPlayerList] = useState(players || []);
+  const [playerList, setPlayerList] = useState(storedPlayers || []);
+  const [topicKey, setLocalTopicKey] = useState(storedTopicKey || null);
+  
   const [modalVisible, setModalVisible] = useState(false);
   const [topicName, setTopicName] = useState("");
   const [topicWordsText, setTopicWordsText] = useState("");
   const [error, setError] = useState("");
 
+  const allTopics = getAllTopics();
+
   useEffect(() => {
-    const backAction = () => {
-      router.replace("/");
-      return true;
-    };
-    const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
-    return () => backHandler.remove();
-  }, [router]);
+    if (storedPlayers?.length) setPlayerList(storedPlayers);
+    if (storedTopicKey) setLocalTopicKey(storedTopicKey);
+  }, [storedPlayers, storedTopicKey]);
 
   const addPlayer = async () => {
-    const name = inputName.trim();
-    if (!name) return;
-    if (playerList.includes(name)) {
-      Alert.alert(t("common.error", "Error"), t("setup.playerExists", "Player already added"));
+    const trimmed = inputName.trim();
+    if (!trimmed) return;
+
+    if (playerList.includes(trimmed)) {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error).catch(() => {});
+      Alert.alert(t("setup.playerExists", "Player already added"), "", [{ text: "OK" }]);
       return;
     }
-    const newList = [...playerList, name];
-    setPlayerList(newList);
-    setPlayers(newList);
+
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => {});
+    const updated = [...playerList, trimmed];
+    setPlayerList(updated);
+    setPlayers(updated);
     setInputName("");
-    try { await Haptics.selectionAsync(); } catch {}
   };
 
   const removePlayer = async (index) => {
-    const newList = playerList.filter((_, i) => i !== index);
-    setPlayerList(newList);
-    setPlayers(newList);
-    try { await Haptics.selectionAsync(); } catch {}
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(() => {});
+    const updated = playerList.filter((_, i) => i !== index);
+    setPlayerList(updated);
+    setPlayers(updated);
   };
 
   const handleSelectTopic = async (key) => {
+    Haptics.selectionAsync().catch(() => {});
+    setLocalTopicKey(key);
     setTopicKey(key);
-    try { await Haptics.selectionAsync(); } catch {}
   };
 
   const handleStartGame = async () => {
     if (playerList.length < 3) {
-      Alert.alert(t("setup.needPlayers", "Need 3+ Players"), t("setup.needPlayersMessage", "Add more players to start"));
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning).catch(() => {});
+      Alert.alert(
+        t("setup.needPlayers", "Need 3+ Players"),
+        t("setup.needPlayersMessage", "Add more players to start"),
+        [{ text: "OK" }]
+      );
       return;
     }
+
     if (!topicKey) {
-      Alert.alert(t("setup.chooseTopic", "Choose Topic"), t("setup.chooseTopicMessage", "Select a category first"));
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning).catch(() => {});
+      Alert.alert(
+        t("setup.chooseTopic", "Choose Topic"),
+        t("setup.chooseTopicMessage", "Select a category first"),
+        [{ text: "OK" }]
+      );
       return;
     }
-    try { await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium); } catch {}
+
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy).catch(() => {});
+    
     const success = startMatch();
-    if (success) router.push("/role");
-    else Alert.alert(t("common.error", "Error"), t("setup.couldNotStart", "Failed to start game"));
+    if (success) {
+      router.push("/role");
+    } else {
+      Alert.alert(t("setup.couldNotStart", "Failed to start game"), "", [{ text: "OK" }]);
+    }
+  };
+
+  const handleGoHome = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => {});
+    router.back();
   };
 
   const openModal = () => {
-    setError("");
-    setModalVisible(true);
-  };
-
-  const closeModal = () => {
-    setModalVisible(false);
     setTopicName("");
     setTopicWordsText("");
     setError("");
+    setModalVisible(true);
   };
+  const closeModal = () => setModalVisible(false);
 
   const handleSaveTopic = async () => {
-    const name = topicName.trim();
-    const words = topicWordsText.split(",").map((w) => w.trim()).filter(Boolean);
-    if (!name) {
-      setError(t("setup.enterTopicName", "Please enter a topic name."));
+    const words = topicWordsText.split(",").map(w => w.trim()).filter(Boolean);
+    if (words.length < 3) {
+      setError("Please add at least 3 words");
       return;
     }
-    const exists = allTopics.some((t) => t.name.toLowerCase() === name.toLowerCase());
-    if (exists) {
-      setError(t("setup.topicExists", "A topic with this name already exists."));
-      return;
-    }
-    const res = await addCustomTopic?.({ name, words });
-    if (res?.ok) {
-      const key = `custom:${name.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")}`;
-      setTopicKey(key);
-      setModalVisible(false);
-      setTopicName("");
-      setTopicWordsText("");
-      setError("");
-    } else if (res?.error) {
+    const res = await addCustomTopic({ name: topicName, words });
+    if (!res.ok) {
       setError(res.error);
+      return;
     }
-  };
-
-  const handleGoHome = async () => {
-    try { await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); } catch {}
-    router.replace("/");
+    closeModal();
   };
 
   return (
@@ -190,11 +154,10 @@ export default function Setup() {
             <View style={styles.backButton} />
           </View>
 
-          {/* Topic Section FIRST */}
+          {/* Topic Section */}
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>{t("setup.topic", "Topics")}</Text>
+            <Text style={styles.sectionTitle}>{t("setup.topic", "Topic")}</Text>
 
-            {/* Top actions: AI + Custom */}
             <View style={styles.topicActionsRow}>
               <View style={{ flex: 1 }}>
                 <Button 
@@ -222,12 +185,10 @@ export default function Setup() {
               </View>
             </View>
 
-            {/* Grid of topics */}
-            {allTopics.length > 0 && (
+            {allTopics && allTopics.length > 0 && (
               <View style={styles.topicGrid}>
                 {allTopics.map((tpc) => {
                   const wordCount = tpc.words?.length || 0;
-                  
                   return (
                     <Card
                       key={tpc.key}
@@ -247,13 +208,11 @@ export default function Setup() {
                         </Text>
                         {tpc.isCustom ? (
                           <View
-                            accessibilityLabel={tpc.isAI ? t("setup.aiGeneratedTopic", "AI generated topic") : t("setup.customTopicLabel", "Custom topic")}
                             style={[styles.dot, tpc.isAI ? styles.dotAI : styles.dotCustom]}
                           />
                         ) : null}
                       </View>
                       
-                      {/* New: Word count row */}
                       <View style={styles.wordCountRow}>
                         <Icon name="text-box-multiple" size={12} color={palette.textDim} />
                         <Text style={styles.wordCountText}>
@@ -315,6 +274,64 @@ export default function Setup() {
               </View>
             )}
           </View>
+
+          {/* NEW: Special Roles Section - Only shows with 4+ players */}
+          {playerList.length >= 4 && (
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>{t("setup.specialRoles", "Special Roles")}</Text>
+              
+              <Card style={styles.rolesCard}>
+                {/* Jester Toggle */}
+                <View style={styles.roleToggleRow}>
+                  <View style={styles.roleInfo}>
+                    <View style={styles.roleHeader}>
+                      <Icon name="emoticon-devil" size={20} color="#A855F7" />
+                      <Text style={styles.roleName}>{t("setup.jester", "Jester")}</Text>
+                    </View>
+                    <Text style={styles.roleDesc}>{t("setup.jesterDesc", "Wins if voted out")}</Text>
+                  </View>
+                  <Switch
+                    value={enableJester}
+                    onValueChange={(v) => {
+                      Haptics.selectionAsync().catch(() => {});
+                      setEnableJester(v);
+                    }}
+                    trackColor={{ false: palette.line, true: "#A855F7" }}
+                    thumbColor={palette.background}
+                  />
+                </View>
+
+                <View style={styles.separator} />
+
+                {/* Sheriff Toggle */}
+                <View style={styles.roleToggleRow}>
+                  <View style={styles.roleInfo}>
+                    <View style={styles.roleHeader}>
+                      <Icon name="shield-star" size={20} color="#3B82F6" />
+                      <Text style={styles.roleName}>{t("setup.sheriff", "Sheriff")}</Text>
+                    </View>
+                    <Text style={styles.roleDesc}>{t("setup.sheriffDesc", "Can check one role")}</Text>
+                  </View>
+                  <Switch
+                    value={enableSheriff}
+                    onValueChange={(v) => {
+                      Haptics.selectionAsync().catch(() => {});
+                      setEnableSheriff(v);
+                    }}
+                    trackColor={{ false: palette.line, true: "#3B82F6" }}
+                    thumbColor={palette.background}
+                  />
+                </View>
+              </Card>
+            </View>
+          )}
+
+          {/* Hint Text for Special Roles */}
+          {playerList.length > 0 && playerList.length < 4 && (
+            <Text style={styles.hintText}>
+              {t("setup.minPlayersForRoles", "Need 4+ players for special roles")}
+            </Text>
+          )}
 
           <Button 
             title={t("setup.startGame", "Start Game")}
@@ -407,13 +424,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginBottom: space.md,
   },
-  
   sectionTitle: { 
     color: palette.textDim, 
     fontSize: type.small, 
     fontWeight: "700", 
     textTransform: "uppercase",
     letterSpacing: 1,
+    marginBottom: space.sm,
   },
 
   countBadge: {
@@ -448,7 +465,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "stretch",
     marginBottom: space.md,
-    marginTop: space.sm,
   },
   topicActionBtn: {
     minHeight: 52,
@@ -466,7 +482,7 @@ const styles = StyleSheet.create({
     padding: space.md,
     borderRadius: radii.md,
     justifyContent: "space-between",
-    minHeight: 50,
+    minHeight: 90,
   },
   topicName: {
     color: palette.text,
@@ -531,7 +547,49 @@ const styles = StyleSheet.create({
     fontWeight: "700" 
   },
 
-  startBtn: { marginTop: space.lg },
+  rolesCard: {
+    padding: space.md,
+  },
+  roleToggleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingVertical: space.sm,
+  },
+  roleInfo: {
+    flex: 1,
+    paddingRight: space.md,
+  },
+  roleHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    marginBottom: 4,
+  },
+  roleName: {
+    fontSize: type.body,
+    fontWeight: "700",
+    color: palette.text,
+  },
+  roleDesc: {
+    fontSize: type.small,
+    color: palette.textDim,
+    marginTop: 2,
+  },
+  separator: {
+    height: 1,
+    backgroundColor: palette.line,
+    marginVertical: space.sm,
+  },
+  hintText: {
+    textAlign: "center",
+    color: palette.textDim,
+    fontSize: type.small,
+    marginBottom: space.md,
+    fontStyle: "italic",
+  },
+
+  startBtn: { marginTop: space.sm },
 
   modalBackdrop: {
     flex: 1,
