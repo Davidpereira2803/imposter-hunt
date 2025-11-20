@@ -15,7 +15,7 @@
   },
   "home": {
     "title": "Caccia all'Impostore",
-    "subtitle": "Un gioco di deduzione di parole sociale e pass-and-play",
+    "subtitle": "Un gioco sociale di deduzione dove trovi l'impostore tra i tuoi amici",
     "continueGame": "Continua Partita",
     "newGame": "Nuova Partita",
     "howToPlay": "Come Giocare",
@@ -40,13 +40,19 @@
     "generateAI": "Genera con IA",
     "playerExists": "Giocatore già aggiunto",
     "enterTopicName": "Inserisci un nome per l'argomento.",
-    "topicExists": "Un argomento con questo nome esiste già.",
-    "wordsPlaceholder": "Aggiungi parole (separate da virgola)",
+    "topicExists": "Esiste già un argomento con questo nome.",
+    "wordsPlaceholder": "Aggiungi parole (separate da virgole)",
     "topicNamePlaceholder": "Nome Argomento",
     "couldNotStart": "Impossibile avviare la partita",
     "aiGeneratedTopic": "Argomento generato da IA",
     "customTopicLabel": "Argomento personalizzato",
-    "words": "parole"
+    "words": "parole",
+    "specialRoles": "Ruoli Speciali",
+    "jester": "Giullare",
+    "jesterDesc": "Vince se eliminato",
+    "sheriff": "Sceriffo",
+    "sheriffDesc": "Può controllare un ruolo",
+    "minPlayersForRoles": "Servono 4+ giocatori per i ruoli speciali"
   },
   "topics": {
     "random": "Casuale",
@@ -63,8 +69,8 @@
     "sports": "Sport",
     "Occupations": "Professioni",
     "occupations": "Professioni",
-    "Brands": "Marche",
-    "brands": "Marche",
+    "Brands": "Marchi",
+    "brands": "Marchi",
     "Colors": "Colori",
     "colors": "Colori",
     "Clothing": "Abbigliamento",
@@ -82,6 +88,8 @@
     "yourRole": "Il Tuo Ruolo",
     "civilian": "Civile",
     "imposter": "Impostore",
+    "jester": "Giullare",
+    "sheriff": "Sceriffo",
     "eliminated": "Eliminato"
   },
   "results": {
@@ -92,7 +100,10 @@
     "theImposter": "L'Impostore",
     "playAgain": "Gioca Ancora",
     "newSetup": "Nuova Configurazione",
-    "failedToStart": "Impossibile avviare una nuova partita"
+    "failedToStart": "Impossibile avviare nuova partita",
+    "jesterWins": "Il Giullare Vince!",
+    "jesterFooled": "ha ingannato tutti!",
+    "wasTheImposter": "era l'impostore"
   },
   "settings": {
     "title": "Impostazioni",
@@ -100,7 +111,7 @@
     "help": "Aiuto",
     "privacyAndAds": "Privacy e Pubblicità",
     "consentStatus": "Stato del Consenso",
-    "adsEnabled": "Pubblicità Abilitate",
+    "adsEnabled": "Pubblicità Attivate",
     "personalized": "Personalizzate",
     "privacyPolicy": "Informativa sulla Privacy",
     "managePrivacy": "Gestisci Privacy",
@@ -114,7 +125,7 @@
     "updated": "Aggiornato",
     "privacyUpdatedMessage": "Impostazioni privacy salvate",
     "resetConsentTitle": "Reimposta Consenso",
-    "resetConsentMessage": "Questo reinizializzerà le tue preferenze di consenso e mostrerà nuovamente il modulo.",
+    "resetConsentMessage": "Questo reimposterà le tue preferenze di consenso e mostrerà nuovamente il modulo.",
     "reset": "Reimposta",
     "consentUpdated": "Preferenze di consenso aggiornate",
     "couldNotOpen": "Impossibile aprire le impostazioni",
@@ -129,40 +140,50 @@
     }
   },
   "role": {
-    "exitTitle": "Esci dalla Partita",
+    "exitTitle": "Esci dal Gioco",
     "exitMessage": "Tornare alla configurazione?",
     "exit": "Esci",
     "passTo": "Passa a",
     "revealRole": "Rivela Ruolo",
     "imposter": "IMPOSTORE",
     "civilian": "CIVILE",
+    "jester": "GIULLARE",
+    "sheriff": "SCERIFFO",
     "secretWordLabel": "La Tua Parola Segreta",
+    "noWord": "Non conosci la parola segreta",
     "missionTitle": "La Tua Missione",
-    "imposterMission": "• Mimetizzati con i civili\n• Ascolta attentamente gli indizi\n• Indovina la parola segreta per vincere\n• Oppure sopravvivi fino a rimanere in 2",
+    "imposterMission": "• Confonditi con i civili\n• Ascolta attentamente gli indizi\n• Indovina la parola segreta per vincere\n• Oppure sopravvivi finché restano solo 2",
     "civilianMission": "• Dai indizi sottili sulla parola\n• Non dire la parola direttamente\n• Trova ed elimina l'impostore\n• Attenzione - stanno ascoltando!",
+    "jesterMission": "• Comportati in modo sospetto ma non troppo ovvio\n• Ingannali per farti votare\n• Se vieni eliminato, vinci tu solo!",
+    "sheriffMission": "• Sei nella squadra dei Civili\n• Puoi controllare il ruolo di un giocatore una volta\n• Usa le tue informazioni per guidare il voto",
+    "sheriffAbility": "Ispeziona Giocatore",
+    "sheriffInstruction": "Scegli un giocatore per rivelare il suo ruolo",
+    "abilityUsed": "Abilità Usata",
+    "inspectionResult": "Risultato Ispezione",
+    "hideAndPass": "Nascondi e Passa",
     "startRound": "Inizia Round",
-    "hideAndPass": "Nascondi e Passa"
+    "unknown": "Sconosciuto"
   },
   "round": {
     "quitTitle": "Abbandona Partita",
-    "quitMessage": "Sei sicuro di voler abbandonare? I progressi andranno persi.",
+    "quitMessage": "Sei sicuro di voler abbandonare? Il progresso andrà perso.",
     "quit": "Abbandona",
     "timesUp": "Tempo Scaduto",
     "proceedToVoting": "Procedi alla votazione",
     "voteNow": "Vota Ora",
     "speakingOrder": "Ordine di Parola",
-    "currentTurn": "Turno Corrente",
-    "start": "Inizia",
+    "currentTurn": "Turno Attuale",
+    "start": "Avvia",
     "pause": "Pausa",
     "vote": "Vota",
     "resetTimer": "Reimposta Timer",
-    "imposterGuess": "Supposizione Impostore"
+    "imposterGuess": "Tentativo dell'Impostore"
   },
   "imposterGuess": {
     "title": "Tentativo Finale",
-    "cancelTitle": "Annullare Tentativo?",
-    "backWarning": "Tornare indietro equivale a passare il turno. I civili vinceranno.",
-    "cancelWarning": "Questa è la tua unica possibilità. Annullare significa passare e i civili vincono.",
+    "cancelTitle": "Annullare il Tentativo?",
+    "backWarning": "Tornare indietro conta come passare il turno. I civili vinceranno.",
+    "cancelWarning": "Questa è la tua unica possibilità. Annullare significa che passi e i civili vincono.",
     "stay": "Resta",
     "passAndLose": "Passa e Perdi",
     "imposterFallback": "Impostore",
@@ -183,29 +204,29 @@
       "tip": "Fai attenzione agli indizi sottili!"
     },
     "step2": {
-      "title": "I Civili",
+      "title": "Civili",
       "description": "La maggior parte dei giocatori sono civili. Vedrai la parola segreta. Dai indizi sottili senza dirla direttamente.",
       "tip": "Attenzione - l'impostore sta ascoltando!"
     },
     "step3": {
       "title": "L'Impostore",
-      "description": "Un giocatore è l'impostore. Non conosci la parola. Mimetizzati e prova a indovinarla dagli indizi.",
+      "description": "Un giocatore è l'impostore. Non conosci la parola. Confonditi e prova a indovinarla dagli indizi.",
       "tip": "Comportati come se conoscessi la parola!"
     },
     "step4": {
       "title": "Fase di Discussione",
-      "description": "A turno, date indizi di una parola sulla parola segreta. L'impostore deve partecipare senza sapere qual è.",
+      "description": "A turno, date indizi di una parola sulla parola segreta. L'impostore deve partecipare senza sapere cos'è.",
       "tip": "Mantienilo abbastanza vago da confondere l'impostore"
     },
     "step5": {
-      "title": "Tempo di Votazione",
-      "description": "Dopo la discussione, vota per eliminare chi pensi sia l'impostore. La maggioranza decide il suo destino.",
+      "title": "Momento del Voto",
+      "description": "Dopo la discussione, vota per eliminare chi pensi sia l'impostore. La maggioranza decide il loro destino.",
       "tip": "Fidati del tuo istinto!"
     },
     "step6": {
       "title": "Condizioni di Vittoria",
       "description": "I civili vincono eliminando l'impostore. L'impostore vince indovinando la parola segreta o sopravvivendo fino a 2 giocatori.",
-      "tip": "Vinca il miglior ingannatore!"
+      "tip": "Che vinca il miglior ingannatore!"
     }
   },
   "vote": {
@@ -223,10 +244,10 @@
     "continueToRound": "Continua al Round {{round}}"
   },
   "aiTopics": {
-    "title": "Creatore di Argomenti IA",
+    "title": "Generatore di Argomenti IA",
     "dailyGenerations": "Generazioni Giornaliere",
     "limitReached": "Limite Raggiunto",
-    "maxAdsMessage": "Hai guardato il numero massimo di annunci premiati per oggi.",
+    "maxAdsMessage": "Hai guardato il massimo di annunci premiati per oggi.",
     "thanks": "Grazie!",
     "earnedGeneration": "Hai guadagnato +1 generazione IA.",
     "noReward": "Nessuna ricompensa",
@@ -236,7 +257,7 @@
     "generationLimit": "Limite di Generazione",
     "limitMessagePart1": "Hai usato",
     "limitMessagePart2": "generazioni oggi",
-    "limitMessagePart3": "Guarda un annuncio per ottenerne altre!",
+    "limitMessagePart3": "Guarda un annuncio per ottenerne di più!",
     "watchAd": "Guarda Annuncio",
     "aiTopicsFallback": "Argomenti IA",
     "generated": "Generato",
@@ -250,10 +271,10 @@
     "generationFailedMessage": "Impossibile generare argomenti. Riprova.",
     "generationsRemaining": "generazioni rimanenti oggi",
     "freeLeft": "Gratuite rimaste",
-    "adsUsed": "Annunci usati",
+    "adsUsed": "Annunci guardati",
     "watchAdButton": "Guarda Annuncio per +1",
     "topicDescription": "Descrizione Argomento",
-    "descriptionPlaceholder": "es. carte Clash Royale, incantesimi Harry Potter...",
+    "descriptionPlaceholder": "es: carte Clash Royale, incantesimi Harry Potter...",
     "charactersLabel": "caratteri",
     "numberOfTopics": "Numero di Argomenti",
     "difficulty": "Difficoltà",

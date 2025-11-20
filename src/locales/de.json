@@ -46,7 +46,13 @@
     "couldNotStart": "Spielstart fehlgeschlagen",
     "aiGeneratedTopic": "KI-generiertes Thema",
     "customTopicLabel": "Eigenes Thema",
-    "words": "Wörter" 
+    "words": "Wörter",
+    "specialRoles": "Spezialrollen",
+    "jester": "Narr",
+    "jesterDesc": "Gewinnt bei Rauswahl",
+    "sheriff": "Sheriff",
+    "sheriffDesc": "Kann eine Rolle prüfen",
+    "minPlayersForRoles": "4+ Spieler für Spezialrollen nötig"
   },
   "topics": {
     "random": "Zufällig",
@@ -82,7 +88,8 @@
     "yourRole": "Deine Rolle",
     "civilian": "Zivilist",
     "imposter": "Hochstapler",
-    "eliminated": "Ausgeschieden"
+    "jester": "Narr",
+    "sheriff": "Sheriff"
   },
   "results": {
     "unknown": "Unbekannt",
@@ -92,7 +99,10 @@
     "theImposter": "Der Hochstapler",
     "playAgain": "Nochmal Spielen",
     "newSetup": "Neue Einstellungen",
-    "failedToStart": "Neues Spiel konnte nicht gestartet werden"
+    "failedToStart": "Neues Spiel konnte nicht gestartet werden",
+    "jesterWins": "Der Narr Gewinnt!",
+    "jesterFooled": "hat alle ausgetrickst!",
+    "wasTheImposter": "war der Hochstapler"
   },
   "settings": {
     "title": "Einstellungen",
@@ -136,12 +146,22 @@
     "revealRole": "Rolle Aufdecken",
     "imposter": "HOCHSTAPLER",
     "civilian": "ZIVILIST",
+    "jester": "NARR",
+    "sheriff": "SHERIFF",
     "secretWordLabel": "Dein Geheimwort",
+    "noWord": "Du kennst das Geheimwort nicht",
     "missionTitle": "Deine Mission",
     "imposterMission": "• Füge dich unter die Zivilisten ein\n• Höre aufmerksam auf Hinweise\n• Errate das Geheimwort, um zu gewinnen\n• Oder überlebe, bis nur noch 2 übrig sind",
     "civilianMission": "• Gib subtile Hinweise zum Wort\n• Sag das Wort nicht direkt\n• Finde und eliminiere den Hochstapler\n• Vorsicht - er hört zu!",
+    "jesterMission": "• Verhalte dich verdächtig, aber nicht zu offensichtlich\n• Trick sie aus, damit sie für dich stimmen\n• Wenn du rausgewählt wirst, gewinnst du allein!",
+    "sheriffMission": "• Du bist im Zivilisten-Team\n• Du kannst einmal die Rolle eines Spielers prüfen\n• Nutze deine Info, um die Abstimmung zu leiten",
+    "sheriffAbility": "Spieler Prüfen",
+    "sheriffInstruction": "Wähle einen Spieler, um seine Rolle aufzudecken",
+    "abilityUsed": "Fähigkeit Verwendet",
+    "inspectionResult": "Prüfungsergebnis",
+    "hideAndPass": "Verbergen & Weitergeben",
     "startRound": "Runde Starten",
-    "hideAndPass": "Verbergen & Weitergeben"
+    "unknown": "Unbekannt"
   },
   "round": {
     "quitTitle": "Spiel Beenden",

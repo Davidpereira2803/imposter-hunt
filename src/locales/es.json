@@ -46,7 +46,13 @@
     "couldNotStart": "Error al iniciar la partida",
     "aiGeneratedTopic": "Tema generado por IA",
     "customTopicLabel": "Tema personalizado",
-    "words": "palabras"
+    "words": "palabras",
+    "specialRoles": "Roles Especiales",
+    "jester": "Bufón",
+    "jesterDesc": "Gana si lo eliminan",
+    "sheriff": "Sheriff",
+    "sheriffDesc": "Puede revisar un rol",
+    "minPlayersForRoles": "Se necesitan 4+ jugadores para roles especiales"
   },
   "topics": {
     "random": "Aleatorio",
@@ -82,6 +88,8 @@
     "yourRole": "Tu Rol",
     "civilian": "Civil",
     "imposter": "Impostor",
+    "jester": "Bufón",
+    "sheriff": "Sheriff",
     "eliminated": "Eliminado"
   },
   "results": {
@@ -92,7 +100,10 @@
     "theImposter": "El Impostor",
     "playAgain": "Jugar de Nuevo",
     "newSetup": "Nueva Configuración",
-    "failedToStart": "Error al iniciar nueva partida"
+    "failedToStart": "Error al iniciar nueva partida",
+    "jesterWins": "¡El Bufón Gana!",
+    "jesterFooled": "¡engañó a todos!",
+    "wasTheImposter": "era el impostor"
   },
   "settings": {
     "title": "Configuración",
@@ -136,12 +147,22 @@
     "revealRole": "Revelar Rol",
     "imposter": "IMPOSTOR",
     "civilian": "CIVIL",
+    "jester": "BUFÓN",
+    "sheriff": "SHERIFF",
     "secretWordLabel": "Tu Palabra Secreta",
+    "noWord": "No conoces la palabra secreta",
     "missionTitle": "Tu Misión",
     "imposterMission": "• Confúndete con los civiles\n• Escucha atentamente las pistas\n• Adivina la palabra secreta para ganar\n• O sobrevive hasta que solo queden 2",
     "civilianMission": "• Da pistas sutiles sobre la palabra\n• No digas la palabra directamente\n• Encuentra y elimina al impostor\n• Ten cuidado - ¡están escuchando!",
+    "jesterMission": "• Actúa sospechoso pero no demasiado obvio\n• Engáñalos para que voten por ti\n• ¡Si te eliminan, ganas tú solo!",
+    "sheriffMission": "• Estás en el equipo Civil\n• Puedes revisar el rol de un jugador una vez\n• Usa tu información para liderar la votación",
+    "sheriffAbility": "Inspeccionar Jugador",
+    "sheriffInstruction": "Elige un jugador para revelar su rol",
+    "abilityUsed": "Habilidad Usada",
+    "inspectionResult": "Resultado de Inspección",
+    "hideAndPass": "Ocultar y Pasar",
     "startRound": "Iniciar Ronda",
-    "hideAndPass": "Ocultar y Pasar"
+    "unknown": "Desconocido"
   },
   "round": {
     "quitTitle": "Abandonar Partida",

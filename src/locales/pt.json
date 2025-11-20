@@ -15,15 +15,15 @@
   },
   "home": {
     "title": "Caça ao Impostor",
-    "subtitle": "Um jogo social de dedução por turnos",
+    "subtitle": "Um jogo social de dedução de palavras",
     "continueGame": "Continuar Jogo",
     "newGame": "Novo Jogo",
     "howToPlay": "Como Jogar",
     "exitTitle": "Sair",
     "exitMessage": "Sair do jogo?",
     "exit": "Sair",
-    "players": "Jogadores",
-    "aiTopics": "Temas de IA"
+    "players": "jogadores",
+    "aiTopics": "Temas IA"
   },
   "setup": {
     "title": "Configuração",
@@ -32,21 +32,27 @@
     "playerPlaceholder": "Nome do jogador",
     "topic": "Tema",
     "startGame": "Iniciar Jogo",
-    "needPlayers": "Precisa de 3+ jogadores",
+    "needPlayers": "3+ Jogadores Necessários",
     "needPlayersMessage": "Adicione mais jogadores para começar",
     "chooseTopic": "Escolher Tema",
-    "chooseTopicMessage": "Selecione uma categoria primeiro",
+    "chooseTopicMessage": "Selecione primeiro uma categoria",
     "customTopic": "Tema Personalizado",
     "generateAI": "Gerar com IA",
     "playerExists": "Jogador já adicionado",
-    "enterTopicName": "Digite um nome para o tema.",
-    "topicExists": "Já existe um tema com esse nome.",
-    "wordsPlaceholder": "Adicione palavras (separadas por vírgula)",
+    "enterTopicName": "Por favor, insira um nome de tema.",
+    "topicExists": "Já existe um tema com este nome.",
+    "wordsPlaceholder": "Adicionar palavras (separadas por vírgula)",
     "topicNamePlaceholder": "Nome do Tema",
     "couldNotStart": "Falha ao iniciar o jogo",
     "aiGeneratedTopic": "Tema gerado por IA",
     "customTopicLabel": "Tema personalizado",
-    "words": "palavras"
+    "words": "palavras",
+    "specialRoles": "Funções Especiais",
+    "jester": "Bobo",
+    "jesterDesc": "Ganha se for eliminado",
+    "sheriff": "Xerife",
+    "sheriffDesc": "Pode verificar uma função",
+    "minPlayersForRoles": "4+ jogadores necessários para funções especiais"
   },
   "topics": {
     "random": "Aleatório",
@@ -79,27 +85,32 @@
   "game": {
     "round": "Rodada",
     "secretWord": "Palavra Secreta",
-    "yourRole": "Seu Papel",
+    "yourRole": "Sua Função",
     "civilian": "Civil",
     "imposter": "Impostor",
+    "jester": "Bobo",
+    "sheriff": "Xerife",
     "eliminated": "Eliminado"
   },
   "results": {
     "unknown": "Desconhecido",
-    "imposterWins": "Impostor Venceu!",
-    "civiliansWin": "Civis Venceram!",
+    "imposterWins": "O Impostor Vence!",
+    "civiliansWin": "Os Civis Vencem!",
     "secretWord": "Palavra Secreta",
     "theImposter": "O Impostor",
     "playAgain": "Jogar Novamente",
     "newSetup": "Nova Configuração",
-    "failedToStart": "Falha ao iniciar novo jogo"
+    "failedToStart": "Falha ao iniciar novo jogo",
+    "jesterWins": "O Bobo Vence!",
+    "jesterFooled": "enganou todo mundo!",
+    "wasTheImposter": "era o impostor"
   },
   "settings": {
     "title": "Configurações",
     "language": "Idioma",
     "help": "Ajuda",
     "privacyAndAds": "Privacidade e Anúncios",
-    "consentStatus": "Status do Consentimento",
+    "consentStatus": "Status de Consentimento",
     "adsEnabled": "Anúncios Ativados",
     "personalized": "Personalizados",
     "privacyPolicy": "Política de Privacidade",
@@ -119,56 +130,66 @@
     "consentUpdated": "Preferências de consentimento atualizadas",
     "couldNotOpen": "Não foi possível abrir as configurações",
     "couldNotReset": "Não foi possível redefinir o consentimento",
-    "cannotOpenPrivacy": "Não é possível abrir o link da política de privacidade",
+    "cannotOpenPrivacy": "Não foi possível abrir o link da política de privacidade",
     "version": "Versão",
     "consent": {
       "unknown": "Desconhecido",
       "required": "Obrigatório",
-      "notRequired": "Não obrigatório",
+      "notRequired": "Não Obrigatório",
       "obtained": "Obtido"
     }
   },
   "role": {
     "exitTitle": "Sair do Jogo",
-    "exitMessage": "Voltar para a configuração?",
+    "exitMessage": "Retornar à configuração?",
     "exit": "Sair",
-    "passTo": "Passe para",
-    "revealRole": "Revelar Papel",
+    "passTo": "Passar para",
+    "revealRole": "Revelar Função",
     "imposter": "IMPOSTOR",
     "civilian": "CIVIL",
+    "jester": "BOBO",
+    "sheriff": "XERIFE",
     "secretWordLabel": "Sua Palavra Secreta",
+    "noWord": "Você não conhece a palavra secreta",
     "missionTitle": "Sua Missão",
-    "imposterMission": "• Se misture com os civis\n• Escute atentamente as dicas\n• Adivinhe a palavra secreta para vencer\n• Ou sobreviva até restarem apenas 2",
-    "civilianMission": "• Dê dicas sutis sobre a palavra\n• Não diga a palavra diretamente\n• Encontre e elimine o impostor\n• Cuidado — ele está ouvindo!",
+    "imposterMission": "• Misture-se com os civis\n• Ouça atentamente as dicas\n• Adivinhe a palavra secreta para vencer\n• Ou sobreviva até restarem apenas 2",
+    "civilianMission": "• Dê dicas sutis sobre a palavra\n• Não diga a palavra diretamente\n• Encontre e elimine o impostor\n• Cuidado - eles estão ouvindo!",
+    "jesterMission": "• Aja de forma suspeita, mas não muito óbvio\n• Engane-os para votarem em você\n• Se for eliminado, você vence sozinho!",
+    "sheriffMission": "• Você está no time dos Civis\n• Você pode verificar a função de um jogador uma vez\n• Use suas informações para liderar a votação",
+    "sheriffAbility": "Inspecionar Jogador",
+    "sheriffInstruction": "Escolha um jogador para revelar sua função",
+    "abilityUsed": "Habilidade Usada",
+    "inspectionResult": "Resultado da Inspeção",
+    "hideAndPass": "Esconder e Passar",
     "startRound": "Iniciar Rodada",
-    "hideAndPass": "Esconder e Passar"
+    "unknown": "Desconhecido"
   },
   "round": {
-    "quitTitle": "Sair do Jogo",
+    "quitTitle": "Abandonar Jogo",
     "quitMessage": "Tem certeza de que deseja sair? O progresso será perdido.",
-    "quit": "Sair",
+    "quit": "Abandonar",
     "timesUp": "Tempo Esgotado",
-    "proceedToVoting": "Ir para a votação",
+    "proceedToVoting": "Prosseguir para votação",
     "voteNow": "Votar Agora",
     "speakingOrder": "Ordem de Fala",
-    "currentTurn": "Vez Atual",
+    "currentTurn": "Turno Atual",
     "start": "Iniciar",
     "pause": "Pausar",
     "vote": "Votar",
-    "resetTimer": "Reiniciar Temporizador",
-    "imposterGuess": "Palpite do Impostor"
+    "resetTimer": "Redefinir Temporizador",
+    "imposterGuess": "Tentativa do Impostor"
   },
   "imposterGuess": {
-    "title": "Palpite Final",
-    "cancelTitle": "Cancelar Palpite?",
-    "backWarning": "Voltar conta como passar sua vez. Os civis vencerão.",
+    "title": "Tentativa Final",
+    "cancelTitle": "Cancelar Tentativa?",
+    "backWarning": "Voltar conta como passar sua tentativa. Os civis vencerão.",
     "cancelWarning": "Esta é sua única chance. Cancelar significa que você passa e os civis vencem.",
     "stay": "Ficar",
     "passAndLose": "Passar e Perder",
     "imposterFallback": "Impostor",
-    "instruction": "Apenas uma chance. Adivinhe a palavra secreta.\nCerto = você vence. Errado = civis vencem.",
-    "placeholder": "Digite seu palpite...",
-    "submit": "Enviar Palpite",
+    "instruction": "Apenas uma chance. Adivinhe a palavra secreta.\nCorreto = você vence. Errado = civis vencem.",
+    "placeholder": "Digite sua tentativa...",
+    "submit": "Enviar Tentativa",
     "passButton": "Passar (Perder)"
   },
   "tutorial": {
@@ -178,9 +199,9 @@
     "next": "Próximo",
     "getStarted": "Começar",
     "step1": {
-      "title": "Bem-vindo ao Caça ao Impostor",
+      "title": "Bem-vindo à Caça ao Impostor",
       "description": "Um jogo de dedução social onde você encontra o impostor entre seus amigos.",
-      "tip": "Preste atenção às pistas sutis!"
+      "tip": "Preste atenção às dicas sutis!"
     },
     "step2": {
       "title": "Civis",
@@ -189,18 +210,18 @@
     },
     "step3": {
       "title": "O Impostor",
-      "description": "Um jogador é o impostor. Você não sabe a palavra. Se misture e tente adivinhar pelas dicas.",
-      "tip": "Aja como se soubesse a palavra!"
+      "description": "Um jogador é o impostor. Você não conhece a palavra. Misture-se e tente adivinhar pelas dicas.",
+      "tip": "Aja como se conhecesse a palavra!"
     },
     "step4": {
       "title": "Fase de Discussão",
-      "description": "Deem dicas de uma palavra sobre a palavra secreta por turnos. O impostor deve participar sem saber o que é.",
+      "description": "Revezem-se dando dicas de uma palavra sobre a palavra secreta. O impostor deve participar sem saber o que é.",
       "tip": "Mantenha vago o suficiente para confundir o impostor"
     },
     "step5": {
-      "title": "Hora da Votação",
-      "description": "Após a discussão, votem para eliminar quem acham ser o impostor. A maioria decide o destino.",
-      "tip": "Confie nos seus instintos!"
+      "title": "Hora de Votar",
+      "description": "Após a discussão, vote para eliminar quem você acha que é o impostor. A maioria decide o destino.",
+      "tip": "Confie no seu instinto!"
     },
     "step6": {
       "title": "Condições de Vitória",
