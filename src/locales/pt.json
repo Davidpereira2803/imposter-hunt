@@ -199,34 +199,44 @@
     "next": "Próximo",
     "getStarted": "Começar",
     "step1": {
-      "title": "Bem-vindo à Caça ao Impostor",
-      "description": "Um jogo de dedução social onde você encontra o impostor entre seus amigos.",
-      "tip": "Preste atenção às dicas sutis!"
+      "title": "Bem-vindo à Caça ao Impostor!",
+      "description": "Um jogo de dedução social onde um jogador é o impostor tentando se misturar ao grupo.",
+      "tip": "Ideal para 3–10 jogadores."
     },
     "step2": {
-      "title": "Civis",
-      "description": "A maioria dos jogadores são civis. Você verá a palavra secreta. Dê dicas sutis sem dizê-la diretamente.",
-      "tip": "Cuidado - o impostor está ouvindo!"
+      "title": "Configurar Jogadores",
+      "description": "Adicione todos os participantes. Você precisa de pelo menos 3 jogadores para iniciar o jogo.",
+      "tip": "Suporta até 10 jogadores."
     },
     "step3": {
       "title": "O Impostor",
-      "description": "Um jogador é o impostor. Você não conhece a palavra. Misture-se e tente adivinhar pelas dicas.",
-      "tip": "Aja como se conhecesse a palavra!"
+      "description": "O impostor não vê a palavra secreta. Ele precisa se misturar e coletar pistas para tentar adivinhar.",
+      "tip": "Fale com confiança."
     },
     "step4": {
-      "title": "Fase de Discussão",
-      "description": "Revezem-se dando dicas de uma palavra sobre a palavra secreta. O impostor deve participar sem saber o que é.",
-      "tip": "Mantenha vago o suficiente para confundir o impostor"
+      "title": "O Bobo (Opcional)",
+      "description": "Com 4+ jogadores, o Bobo pode ser habilitado. Seu objetivo é ser eliminado pelo voto. Se isso acontecer, ele ganha sozinho.",
+      "tip": "Pode gerar confusão."
     },
     "step5": {
-      "title": "Hora de Votar",
-      "description": "Após a discussão, vote para eliminar quem você acha que é o impostor. A maioria decide o destino.",
-      "tip": "Confie no seu instinto!"
+      "title": "O Xerife (Opcional)",
+      "description": "Com 4+ jogadores, o Xerife pode ser habilitado. Ele pode inspecionar um jogador uma única vez para ver sua função.",
+      "tip": "Use no momento crítico."
     },
     "step6": {
+      "title": "Fase de Discussão",
+      "description": "Cada jogador dá pistas sutis sobre a palavra senza dizê-la. O impostor tenta parecer legítimo.",
+      "tip": "Equilíbrio entre claro e vago."
+    },
+    "step7": {
+      "title": "Fase de Votação",
+      "description": "Após as pistas, todos votam em quem acham que é o impostor. Quem tiver mais votos é eliminado.",
+      "tip": "Observe hesitações."
+    },
+    "step8": {
       "title": "Condições de Vitória",
-      "description": "Os civis vencem eliminando o impostor. O impostor vence adivinhando a palavra secreta ou sobrevivendo até 2 jogadores.",
-      "tip": "Que vença o melhor enganador!"
+      "description": "• Civis: eliminam o impostor\n• Impostor: adivinha a palavra ou sobrevive até restarem 2\n• Bobo: vence se for eliminado\n• Xerife: ajuda os civis com a inspeção",
+      "tip": "Boa sorte!"
     }
   },
   "vote": {

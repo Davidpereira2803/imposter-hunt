@@ -198,35 +198,46 @@
     "back": "Atrás",
     "next": "Siguiente",
     "getStarted": "Comenzar",
+    
     "step1": {
-      "title": "Bienvenido a Caza del Impostor",
-      "description": "Un juego de deducción social donde encuentras al impostor entre tus amigos.",
-      "tip": "¡Presta atención a las pistas sutiles!"
+      "title": "¡Bienvenido a Caza del Impostor!",
+      "description": "Un juego de deducción social donde un jugador es el impostor tratando de mezclarse.",
+      "tip": "¡Perfecto para fiestas con 3-10 jugadores!"
     },
     "step2": {
-      "title": "Civiles",
-      "description": "La mayoría de los jugadores son civiles. Verás la palabra secreta. Da pistas sutiles sin decirla directamente.",
-      "tip": "¡Ten cuidado - el impostor está escuchando!"
+      "title": "Configurar Jugadores",
+      "description": "Añade todos los jugadores que participarán. Necesitas al menos 3 jugadores para empezar el juego.",
+      "tip": "¡Puedes añadir hasta 10 jugadores para grupos más grandes!"
     },
     "step3": {
       "title": "El Impostor",
-      "description": "Un jugador es el impostor. No conoces la palabra. Confúndete e intenta adivinarla por las pistas.",
-      "tip": "¡Actúa como si conocieras la palabra!"
+      "description": "¡Un jugador es secretamente el impostor! Todos los demás ven la palabra secreta, pero el impostor no. El impostor debe mezclarse y descubrir la palabra.",
+      "tip": "¡El impostor puede ganar adivinando la palabra correctamente!"
     },
     "step4": {
-      "title": "Fase de Discusión",
-      "description": "Por turnos, dad pistas de una palabra sobre la palabra secreta. El impostor debe participar sin saber cuál es.",
-      "tip": "Mantenlo lo suficientemente vago para confundir al impostor"
+      "title": "El Bufón (Opcional)",
+      "description": "Con 4+ jugadores, puedes habilitar el rol de Bufón. ¡El objetivo del Bufón es ser eliminado! Si el Bufón es votado, gana el juego.",
+      "tip": "¡El Bufón añade caos - ten cuidado a quién votas!"
     },
     "step5": {
-      "title": "Momento de Votar",
-      "description": "Después de la discusión, vota para eliminar a quien crees que es el impostor. La mayoría decide su destino.",
-      "tip": "¡Confía en tu instinto!"
+      "title": "El Sheriff (Opcional)",
+      "description": "Con 4+ jugadores, puedes habilitar el rol de Sheriff. El Sheriff puede inspeccionar a un jugador durante el juego para descubrir su rol.",
+      "tip": "¡Usa el poder del Sheriff sabiamente - solo tienes una inspección!"
     },
     "step6": {
+      "title": "Fase de Discusión",
+      "description": "Los jugadores se turnan para describir la palabra secreta sin decirla directamente. ¡El impostor debe intentar encajar sin conocer la palabra!",
+      "tip": "¡Sé lo suficientemente vago para que el impostor no pueda adivinar, pero lo suficientemente claro para demostrar que la conoces!"
+    },
+    "step7": {
+      "title": "Fase de Votación",
+      "description": "Después de la discusión, vota para eliminar al jugador que creas que es el impostor. El jugador con más votos es eliminado.",
+      "tip": "¡Presta atención a quién parece inseguro o evita detalles!"
+    },
+    "step8": {
       "title": "Condiciones de Victoria",
-      "description": "Los civiles ganan eliminando al impostor. El impostor gana adivinando la palabra secreta o sobreviviendo hasta 2 jugadores.",
-      "tip": "¡Que gane el mejor engañador!"
+      "description": "• Los civiles ganan eliminando al impostor\n• El impostor gana adivinando la palabra o sobreviviendo hasta los 2 finales\n• El Bufón gana siendo eliminado\n• El Sheriff ayuda a los civiles a encontrar al impostor",
+      "tip": "¡Buena suerte y diviértete!"
     }
   },
   "vote": {

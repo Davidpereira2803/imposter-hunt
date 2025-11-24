@@ -89,7 +89,8 @@
     "civilian": "Zivilist",
     "imposter": "Hochstapler",
     "jester": "Narr",
-    "sheriff": "Sheriff"
+    "sheriff": "Sheriff",
+    "eliminated": "Ausgeschieden"
   },
   "results": {
     "unknown": "Unbekannt",
@@ -197,35 +198,46 @@
     "back": "Zurück",
     "next": "Weiter",
     "getStarted": "Los Geht's",
+    
     "step1": {
-      "title": "Willkommen bei Hochstapler-Jagd",
-      "description": "Ein soziales Deduktionsspiel, bei dem du den Hochstapler unter deinen Freunden findest.",
-      "tip": "Achte auf subtile Hinweise!"
+      "title": "Willkommen bei Hochstapler-Jagd!",
+      "description": "Ein soziales Deduktionsspiel, bei dem ein Spieler der Hochstapler ist und versucht, sich einzufügen.",
+      "tip": "Perfekt für Partys mit 3-10 Spielern!"
     },
     "step2": {
-      "title": "Zivilisten",
-      "description": "Die meisten Spieler sind Zivilisten. Du siehst das Geheimwort. Gib subtile Hinweise, ohne es direkt zu sagen.",
-      "tip": "Vorsicht - der Hochstapler hört zu!"
+      "title": "Spieler Einrichten",
+      "description": "Füge alle teilnehmenden Spieler hinzu. Du benötigst mindestens 3 Spieler, um das Spiel zu starten.",
+      "tip": "Du kannst bis zu 10 Spieler für größere Gruppen hinzufügen!"
     },
     "step3": {
       "title": "Der Hochstapler",
-      "description": "Ein Spieler ist der Hochstapler. Du kennst das Wort nicht. Füge dich ein und versuche, es aus den Hinweisen zu erraten.",
-      "tip": "Tu so, als würdest du das Wort kennen!"
+      "description": "Ein Spieler ist heimlich der Hochstapler! Alle anderen sehen das Geheimwort, aber der Hochstapler nicht. Der Hochstapler muss sich einfügen und das Wort herausfinden.",
+      "tip": "Der Hochstapler kann gewinnen, indem er das Wort richtig errät!"
     },
     "step4": {
-      "title": "Diskussionsphase",
-      "description": "Gebt abwechselnd Ein-Wort-Hinweise zum Geheimwort. Der Hochstapler muss mitmachen, ohne zu wissen, was es ist.",
-      "tip": "Bleib vage genug, um den Hochstapler zu verwirren"
+      "title": "Der Narr (Optional)",
+      "description": "Mit 4+ Spielern kannst du die Narr-Rolle aktivieren. Das Ziel des Narren ist es, eliminiert zu werden! Wenn der Narr ausgewählt wird, gewinnt er das Spiel.",
+      "tip": "Der Narr bringt Chaos - sei vorsichtig, wen du wählst!"
     },
     "step5": {
-      "title": "Abstimmungszeit",
-      "description": "Nach der Diskussion stimmt ab, wen ihr für den Hochstapler haltet. Die Mehrheit entscheidet.",
-      "tip": "Vertraue deinem Instinkt!"
+      "title": "Der Sheriff (Optional)",
+      "description": "Mit 4+ Spielern kannst du die Sheriff-Rolle aktivieren. Der Sheriff kann während des Spiels einen Spieler überprüfen, um dessen Rolle zu entdecken.",
+      "tip": "Nutze die Kraft des Sheriffs weise - du bekommst nur eine Überprüfung!"
     },
     "step6": {
-      "title": "Siegbedingungen",
-      "description": "Zivilisten gewinnen, indem sie den Hochstapler eliminieren. Der Hochstapler gewinnt, indem er das Geheimwort errät oder bis auf 2 Spieler überlebt.",
-      "tip": "Möge der beste Täuscher gewinnen!"
+      "title": "Diskussionsphase",
+      "description": "Die Spieler beschreiben abwechselnd das Geheimwort, ohne es direkt zu sagen. Der Hochstapler muss versuchen, sich einzufügen, ohne das Wort zu kennen!",
+      "tip": "Sei vage genug, damit der Hochstapler nicht raten kann, aber klar genug, um zu beweisen, dass du es kennst!"
+    },
+    "step7": {
+      "title": "Abstimmungsphase",
+      "description": "Nach der Diskussion stimmt ab, um den Spieler zu eliminieren, von dem ihr denkt, dass er der Hochstapler ist. Der Spieler mit den meisten Stimmen wird eliminiert.",
+      "tip": "Achte darauf, wer unsicher wirkt oder Spezifika vermeidet!"
+    },
+    "step8": {
+      "title": "Gewinnbedingungen",
+      "description": "• Zivilisten gewinnen durch Eliminierung des Hochstaplers\n• Hochstapler gewinnt durch Erraten des Wortes oder Überleben bis zu den letzten 2\n• Narr gewinnt durch Eliminierung\n• Sheriff hilft Zivilisten, den Hochstapler zu finden",
+      "tip": "Viel Glück und viel Spaß!"
     }
   },
   "vote": {

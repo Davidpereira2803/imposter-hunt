@@ -30,7 +30,7 @@ title: How to Play
 #### (v1.0.5) What is new?
 * BUG: Fix homescreen topic information bar
 * BUG: Fix imposter guess
-* Update Tutorial (to do)
+* Update Tutorial
 
 # How to Play Imposter Hunt
 

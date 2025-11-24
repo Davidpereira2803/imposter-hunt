@@ -199,34 +199,44 @@
     "next": "Weider",
     "getStarted": "Lass Ufänken",
     "step1": {
-      "title": "Wëllkomm bei Impostor Juegd",
-      "description": "E sozial Deduktionsspill wou s de den Impostor ënter denge Frënn fënns.",
-      "tip": "Oppassen op subtil Hiweiser!"
+      "title": "Wëllkomm bei Impostor Juegd!",
+      "description": "E sozial Deduktionsspill wou ee Spiller den Impostor ass an sech versicht ze verstoppen.",
+      "tip": "Perfekt fir 3–10 Spiller!"
     },
     "step2": {
-      "title": "Zivilisten",
-      "description": "Déi meescht Spiller sinn Zivilisten. Du gesees dat Geheimwuert. Gëff subtil Hiweiser ouni et direkt ze soen.",
-      "tip": "Opgepasst - den Impostor lauschtert!"
+      "title": "Spiller Ariichten",
+      "description": "Setz all d'Spiller dobäi déi matmaachen. Op mannst 3 Spiller gebraucht fir unzefänken.",
+      "tip": "Bis zu 10 Spiller méiglech!"
     },
     "step3": {
       "title": "Den Impostor",
-      "description": "Ee Spiller ass den Impostor. Du kenns d'Wuert net. Mësch dech an an versich et aus den Hiweiser ze eroden.",
-      "tip": "Maach esou wéi wann s de d'Wuert kenns!"
+      "description": "Den Impostor gesäit d'Geheimwuert NET. Hie muss sech ënnermëschen an d'Wuert aus den Hiweiser eroden.",
+      "tip": "Lauschter a sammelen Informatioun!"
     },
     "step4": {
-      "title": "Diskussiounsphase",
-      "description": "Gitt der Rei no Een-Wuert-Hiweiser iwwert dat Geheimwuert. Den Impostor muss matmaachen ouni ze wëssen wat et ass.",
-      "tip": "Bleif vag genuch fir den Impostor ze verwierren"
+      "title": "Den Narr (Optional)",
+      "description": "Ab 4+ Spiller kann den Narr aktivéiert ginn. Säi Ziel: erausgestëmmt ginn. Wann hien eliminéiert gëtt, gewënnt hien eleng.",
+      "tip": "Passt op chaotesch Hiweiser!"
     },
     "step5": {
-      "title": "Ofstëmmungszäit",
-      "description": "No der Diskussioun stëmmt of, wien dir mengt datt den Impostor ass. D'Majoritéit entscheed.",
-      "tip": "Vertrau dengem Instinkt!"
+      "title": "De Sheriff (Optional)",
+      "description": "Ab 4+ Spiller kann de Sheriff aktivéiert ginn. Hie kann eng Kéier eng Spillerroll kontrolléieren.",
+      "tip": "Benotz d'Kontroll zum richtegen Zäitpunkt!"
     },
     "step6": {
+      "title": "Diskussiounsphase",
+      "description": "All Spiller gëtt ee subtile Hiweis zum Wuert. Net direkt soen. Den Impostor probéiert matzemaachen ouni et ze kennen.",
+      "tip": "Net ze kloer, net ze vag."
+    },
+    "step7": {
+      "title": "Ofstëmmungsphase",
+      "description": "No den Hiweiser stëmmt dir of wien den Impostor ass. D'Majoritéit eliminéiert ee Spiller.",
+      "tip": "Observéier Onsécherheeten."
+    },
+    "step8": {
       "title": "Gewënnbedéngungen",
-      "description": "Zivilisten gewannen andeems si den Impostor eliminéieren. Den Impostor gewënnt andeems hien dat Geheimwuert erëtt oder bis op 2 Spiller iwwerliewt.",
-      "tip": "Dee beschte Täuscher gewënnt!"
+      "description": "• Zivilisten: eliminéieren den Impostor\n• Impostor: erued d'Wuert oder iwwerlieft bis 2 Spiller\n• Narr: gewënnt wann eliminéiert\n• Sheriff: hëlleft Zivilisten mat senger Kontroll",
+      "tip": "Vill Gléck a vill Spaass!"
     }
   },
   "vote": {

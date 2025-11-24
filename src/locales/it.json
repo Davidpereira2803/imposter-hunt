@@ -199,34 +199,44 @@
     "next": "Avanti",
     "getStarted": "Inizia",
     "step1": {
-      "title": "Benvenuto a Caccia all'Impostore",
-      "description": "Un gioco di deduzione sociale dove trovi l'impostore tra i tuoi amici.",
-      "tip": "Fai attenzione agli indizi sottili!"
+      "title": "Benvenuto a Caccia all'Impostore!",
+      "description": "Un gioco di deduzione sociale in cui un giocatore è l'impostore e cerca di mimetizzarsi.",
+      "tip": "Perfetto per feste con 3-10 giocatori!"
     },
     "step2": {
-      "title": "Civili",
-      "description": "La maggior parte dei giocatori sono civili. Vedrai la parola segreta. Dai indizi sottili senza dirla direttamente.",
-      "tip": "Attenzione - l'impostore sta ascoltando!"
+      "title": "Configura i Giocatori",
+      "description": "Aggiungi tutti i partecipanti. Servono almeno 3 giocatori per iniziare la partita.",
+      "tip": "Puoi aggiungere fino a 10 giocatori!"
     },
     "step3": {
       "title": "L'Impostore",
-      "description": "Un giocatore è l'impostore. Non conosci la parola. Confonditi e prova a indovinarla dagli indizi.",
-      "tip": "Comportati come se conoscessi la parola!"
+      "description": "Un giocatore è segretamente l'impostore. Gli altri vedono la parola segreta, lui no. Deve confondersi e cercare di scoprirla.",
+      "tip": "Può vincere indovinando la parola!"
     },
     "step4": {
-      "title": "Fase di Discussione",
-      "description": "A turno, date indizi di una parola sulla parola segreta. L'impostore deve partecipare senza sapere cos'è.",
-      "tip": "Mantienilo abbastanza vago da confondere l'impostore"
+      "title": "Il Giullare (Opzionale)",
+      "description": "Con 4+ giocatori puoi attivare il Giullare. Il suo obiettivo è farsi eliminare. Se viene votato, vince da solo.",
+      "tip": "Aggiunge caos alla partita!"
     },
     "step5": {
-      "title": "Momento del Voto",
-      "description": "Dopo la discussione, vota per eliminare chi pensi sia l'impostore. La maggioranza decide il loro destino.",
-      "tip": "Fidati del tuo istinto!"
+      "title": "Lo Sceriffo (Opzionale)",
+      "description": "Con 4+ giocatori puoi attivare lo Sceriffo. Può ispezionare un giocatore una sola volta per rivelarne il ruolo.",
+      "tip": "Usa l'ispezione con cura!"
     },
     "step6": {
+      "title": "Fase di Discussione",
+      "description": "A turno i giocatori danno indizi senza dire la parola. L'impostore prova a sembrare credibile senza sapere il termine.",
+      "tip": "Sii vago ma abbastanza chiaro!"
+    },
+    "step7": {
+      "title": "Fase di Votazione",
+      "description": "Si vota chi eliminare. Il giocatore con più voti esce dalla partita.",
+      "tip": "Osserva esitazioni e risposte vaghe!"
+    },
+    "step8": {
       "title": "Condizioni di Vittoria",
-      "description": "I civili vincono eliminando l'impostore. L'impostore vince indovinando la parola segreta o sopravvivendo fino a 2 giocatori.",
-      "tip": "Che vinca il miglior ingannatore!"
+      "description": "• I civili vincono eliminando l'impostore\n• L'impostore vince indovinando la parola o sopravvivendo fino a 2 giocatori\n• Il Giullare vince se viene eliminato\n• Lo Sceriffo aiuta i civili con l'ispezione",
+      "tip": "Divertiti e buona fortuna!"
     }
   },
   "vote": {
