@@ -42,3 +42,11 @@ yarn-error.*
 /android
 .vercel
 
+# Test coverage
+coverage/
+.nyc_output/
+
+# Jest
+jest-results.json
+.jest-cache/
+

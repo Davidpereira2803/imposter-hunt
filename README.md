@@ -27,6 +27,10 @@ title: How to Play
 * Added role-specific missions and objectives for better gameplay clarity
 * Improved UI consistency across all game screens
 
+#### (v1.0.5) What is new?
+* BUG: Fix homescreen topic information bar
+* BUG: Fix imposter guess
+
 # How to Play Imposter Hunt
 
 **Imposter Hunt** is a fast-paced social deduction game where players try to uncover who among them is the imposter — all on a single shared device.
