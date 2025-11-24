@@ -16,7 +16,7 @@ const TUTORIAL_SEEN_KEY = "imposter-hunt-tutorial-seen";
 
 export default function Home() {
   const router = useRouter();
-  const { players, topicKey } = useGameStore();
+  const { players, topicKey, getTopicByKey } = useGameStore();
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -68,6 +68,21 @@ export default function Home() {
 
   const canQuickStart = players?.length >= 3 && topicKey;
 
+  const getTopicDisplayName = (key) => {
+    if (!key) return "";
+    
+    const topic = getTopicByKey(key);
+    
+    if (!topic) return key;
+    
+    if (topic.isCustom) {
+      return topic.name;
+    }
+    
+    const translated = t(`topics.${key}`, topic.name);
+    return translated;
+  };
+
   return (
     <Screen>
       <View style={styles.container}>
@@ -91,7 +106,7 @@ export default function Home() {
                 <View style={styles.gameInfoChip}>
                   <Icon name="account-multiple" size={16} color={palette.primary} />
                   <Text style={styles.gameInfoText}>
-                    {players.length} {t("home.players", "players")} • {t(`topics.${topicKey}`, topicKey)}
+                    {players.length} {t("home.players", "players")} • {getTopicDisplayName(topicKey)}
                   </Text>
                 </View>
 
