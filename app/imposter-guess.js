@@ -40,8 +40,21 @@ export default function ImposterGuess() {
   }, [players, imposterIndex, secretWord, _hydrated, router]);
 
   const submit = async () => {
-    const clean = (s) => (s || "").trim().toLowerCase();
-    const isCorrect = clean(guess) === clean(secretWord);
+    const clean = (s) => {
+      if (!s) return "";
+      return String(s)
+        .trim()
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^\w\s]/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
+    };
+    
+    const cleanedGuess = clean(guess);
+    const cleanedSecret = clean(secretWord);
+    const isCorrect = cleanedGuess === cleanedSecret;
     
     try {
       if (isCorrect) {
@@ -55,7 +68,7 @@ export default function ImposterGuess() {
     
     router.replace({
       pathname: "/results",
-      params: { outcome: isCorrect ? "imposter" : "civilians" }
+      params: { winner: isCorrect ? "imposter" : "civilians" }
     });
   };
 
@@ -68,7 +81,7 @@ export default function ImposterGuess() {
     
     router.replace({
       pathname: "/results",
-      params: { outcome: "civilians" }
+      params: { winner: "civilians" }
     });
   };
 
@@ -112,6 +125,8 @@ export default function ImposterGuess() {
             returnKeyType="done"
             autoCapitalize="none"
             autoCorrect={false}
+            autoComplete="off"
+            spellCheck={false}
             style={styles.input}
           />
 
