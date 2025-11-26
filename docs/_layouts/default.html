@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: "en-US" }}">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    {% seo %}
+  </head>
+
+  <body>
+    <header>
+      <div class="container">
+        <a id="a-title" href="{{ site.baseurl }}/">
+          <h1>{{ site.title }}</h1>
+        </a>
+        <h2>{{ site.description }}</h2>
+
+        <section id="downloads">
+          {% if site.github.is_project_page %}
+            <a href="{{ site.github.repository_url }}" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+          {% endif %}
+        </section>
+
+        <nav style="margin-top:20px;padding:10px 0;border-top:1px solid rgba(255,255,255,0.1);">
+          <a href="{{ site.baseurl }}/" style="color:#fff;margin-right:20px;text-decoration:none;">Home</a>
+          <a href="{{ site.baseurl }}/docs/HowToPlay" style="color:#fff;margin-right:20px;text-decoration:none;">How to Play</a>
+          <a href="{{ site.baseurl }}/docs/Privacy" style="color:#fff;text-decoration:none;">Privacy</a>
+        </nav>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        {{ content }}
+      </section>
+    </div>
+  </body>
+</html>
