@@ -182,7 +182,7 @@ API integration handled via `src/lib/generateTopics.js` with credentials from en
 * Advertising ID permission declared for Android 13+
 * Users control ad personalization via settings
 
-See the [Privacy Policy](PRIVACY.md) for complete details.
+See the [Privacy Policy](docs/PRIVACY.md) for complete details.
 
 ---
 
