@@ -1,40 +1,3 @@
----
-layout: default
-title: How to Play
----
-
-#### (v1.0.2) What is new?
-* Add civilian elimination modal
-* Correct and complete the languages locale, to be complete
-* Restrucutre the main homepage
-
-#### (v1.0.3) What is new?
-* Add view role feature during the round (based on my own feedback)
-* Redesigned the structure of the AI Topics Generator Screen (based on reddit feedback)
-* Improved the text inside buttons, depending on the language
-* Improve homescreen (Add more information about the game)
-
-#### (v1.0.4) What is new?
-* Restructure home screen -> add quick access to topic generator
-* Clarify minimum number of players (based on reddit feedback)
-* Add Italian & Spanish as languages
-* **NEW: Special Roles System** - Added Jester and Sheriff roles (requires 4+ players)
-* **NEW: Jester Role** - Win by getting voted out! Act suspicious and trick others into eliminating you
-* **NEW: Sheriff Role** - Inspect one player's role during the round to help civilians find the imposter
-* Redesigned role reveal screen with distinct colors and icons for all roles
-* Improved round screen with discrete timer controls (icon-only buttons inside timer)
-* Enhanced voting system to handle Jester win condition
-* Added role-specific missions and objectives for better gameplay clarity
-* Improved UI consistency across all game screens
-
-#### (v1.0.5) What is new?
-* BUG: Fix homescreen topic information bar
-* BUG: Fix imposter guess
-* Update Tutorial
-
-### (v1.0.6) What is new?
-* First Production release
-
 # How to Play Imposter Hunt
 
 **Imposter Hunt** is a fast-paced social deduction game where players try to uncover who among them is the imposter — all on a single shared device.
@@ -220,6 +183,41 @@ API integration handled via `src/lib/generateTopics.js` with credentials from en
 * Users control ad personalization via settings
 
 See the [Privacy Policy](PRIVACY.md) for complete details.
+
+---
+
+### Releases
+#### (v1.0.2) What is new?
+* Add civilian elimination modal
+* Correct and complete the languages locale, to be complete
+* Restrucutre the main homepage
+
+#### (v1.0.3) What is new?
+* Add view role feature during the round (based on my own feedback)
+* Redesigned the structure of the AI Topics Generator Screen (based on reddit feedback)
+* Improved the text inside buttons, depending on the language
+* Improve homescreen (Add more information about the game)
+
+#### (v1.0.4) What is new?
+* Restructure home screen -> add quick access to topic generator
+* Clarify minimum number of players (based on reddit feedback)
+* Add Italian & Spanish as languages
+* **NEW: Special Roles System** - Added Jester and Sheriff roles (requires 4+ players)
+* **NEW: Jester Role** - Win by getting voted out! Act suspicious and trick others into eliminating you
+* **NEW: Sheriff Role** - Inspect one player's role during the round to help civilians find the imposter
+* Redesigned role reveal screen with distinct colors and icons for all roles
+* Improved round screen with discrete timer controls (icon-only buttons inside timer)
+* Enhanced voting system to handle Jester win condition
+* Added role-specific missions and objectives for better gameplay clarity
+* Improved UI consistency across all game screens
+
+#### (v1.0.5) What is new?
+* BUG: Fix homescreen topic information bar
+* BUG: Fix imposter guess
+* Update Tutorial
+
+### (v1.0.6) What is new?
+* First Production release
 
 ---
 
