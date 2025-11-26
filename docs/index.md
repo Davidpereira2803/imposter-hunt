@@ -23,7 +23,7 @@ Find the imposter among your friends before it's too late. One player receives a
 
 ## Documentation
 
-- [How to Play](/imposter-hunt/docs/HowToPlay)
+- [How to Play](HowToPlay)
 - [Privacy Policy](Privacy)
 
 ## Built With
