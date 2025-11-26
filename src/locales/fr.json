@@ -21,7 +21,9 @@
     "howToPlay": "Comment Jouer",
     "exitTitle": "Quitter",
     "exitMessage": "Quitter le jeu ?",
-    "exit": "Quitter"
+    "exit": "Quitter",
+    "players": "Joueurs",
+    "aiTopics": "Sujets IA"
   },
   "setup": {
     "title": "Configuration",
@@ -43,7 +45,14 @@
     "topicNamePlaceholder": "Nom du Thème",
     "couldNotStart": "Échec du démarrage du jeu",
     "aiGeneratedTopic": "Thème généré par IA",
-    "customTopicLabel": "Thème personnalisé"
+    "customTopicLabel": "Thème personnalisé",
+    "words": "mots",
+    "specialRoles": "Rôles Spéciaux",
+    "jester": "Bouffon",
+    "jesterDesc": "Gagne s'il est éliminé",
+    "sheriff": "Shérif",
+    "sheriffDesc": "Peut vérifier un rôle",
+    "minPlayersForRoles": "4+ joueurs requis pour les rôles spéciaux"
   },
   "topics": {
     "random": "Aléatoire",
@@ -79,6 +88,8 @@
     "yourRole": "Votre Rôle",
     "civilian": "Civil",
     "imposter": "Imposteur",
+    "jester": "Bouffon",
+    "sheriff": "Shérif",
     "eliminated": "Éliminé"
   },
   "results": {
@@ -89,7 +100,10 @@
     "theImposter": "L'Imposteur",
     "playAgain": "Rejouer",
     "newSetup": "Nouvelle Configuration",
-    "failedToStart": "Échec du démarrage d'une nouvelle partie"
+    "failedToStart": "Échec du démarrage d'une nouvelle partie",
+    "jesterWins": "Le Bouffon Gagne !",
+    "jesterFooled": "a trompé tout le monde !",
+    "wasTheImposter": "était l'imposteur"
   },
   "settings": {
     "title": "Paramètres",
@@ -133,12 +147,22 @@
     "revealRole": "Révéler le Rôle",
     "imposter": "IMPOSTEUR",
     "civilian": "CIVIL",
+    "jester": "BOUFFON",
+    "sheriff": "SHÉRIF",
     "secretWordLabel": "Votre Mot Secret",
+    "noWord": "Vous ne connaissez pas le mot secret",
     "missionTitle": "Votre Mission",
     "imposterMission": "• Intégrez-vous aux civils\n• Écoutez attentivement les indices\n• Devinez le mot secret pour gagner\n• Ou survivez jusqu'à ce qu'il ne reste que 2",
     "civilianMission": "• Donnez des indices subtils sur le mot\n• Ne dites pas le mot directement\n• Trouvez et éliminez l'imposteur\n• Attention - il écoute !",
+    "jesterMission": "• Agissez de manière suspecte mais pas trop évidente\n• Trompez-les pour qu'ils votent pour vous\n• Si vous êtes éliminé, vous gagnez seul !",
+    "sheriffMission": "• Vous êtes dans l'équipe des Civils\n• Vous pouvez vérifier le rôle d'un joueur une fois\n• Utilisez vos infos pour diriger le vote",
+    "sheriffAbility": "Inspecter un Joueur",
+    "sheriffInstruction": "Choisissez un joueur pour révéler son rôle",
+    "abilityUsed": "Capacité Utilisée",
+    "inspectionResult": "Résultat de l'Inspection",
+    "hideAndPass": "Cacher et Passer",
     "startRound": "Commencer la Manche",
-    "hideAndPass": "Cacher et Passer"
+    "unknown": "Inconnu"
   },
   "round": {
     "quitTitle": "Quitter le Jeu",
@@ -174,35 +198,46 @@
     "back": "Retour",
     "next": "Suivant",
     "getStarted": "Commencer",
+    
     "step1": {
-      "title": "Bienvenue à Chasse à l'Imposteur",
-      "description": "Un jeu de déduction sociale où vous trouvez l'imposteur parmi vos amis.",
-      "tip": "Faites attention aux indices subtils !"
+      "title": "Bienvenue à Chasse à l'Imposteur !",
+      "description": "Un jeu de déduction sociale où un joueur est l'imposteur qui essaie de se fondre dans la masse.",
+      "tip": "Parfait pour les fêtes avec 3-10 joueurs !"
     },
     "step2": {
-      "title": "Civils",
-      "description": "La plupart des joueurs sont des civils. Vous verrez le mot secret. Donnez des indices subtils sans le dire directement.",
-      "tip": "Attention - l'imposteur écoute !"
+      "title": "Configurer les Joueurs",
+      "description": "Ajoutez tous les joueurs qui participeront. Vous avez besoin d'au moins 3 joueurs pour commencer le jeu.",
+      "tip": "Vous pouvez ajouter jusqu'à 10 joueurs pour les plus grands groupes !"
     },
     "step3": {
       "title": "L'Imposteur",
-      "description": "Un joueur est l'imposteur. Vous ne connaissez pas le mot. Intégrez-vous et essayez de le deviner grâce aux indices.",
-      "tip": "Agissez comme si vous connaissiez le mot !"
+      "description": "Un joueur est secrètement l'imposteur ! Tous les autres voient le mot secret, mais pas l'imposteur. L'imposteur doit se fondre dans la masse et deviner le mot.",
+      "tip": "L'imposteur peut gagner en devinant correctement le mot !"
     },
     "step4": {
-      "title": "Phase de Discussion",
-      "description": "Donnez à tour de rôle des indices d'un mot sur le mot secret. L'imposteur doit participer sans savoir ce que c'est.",
-      "tip": "Restez assez vague pour confondre l'imposteur"
+      "title": "Le Bouffon (Optionnel)",
+      "description": "Avec 4+ joueurs, vous pouvez activer le rôle de Bouffon. L'objectif du Bouffon est de se faire éliminer ! Si le Bouffon est éliminé par vote, il gagne la partie.",
+      "tip": "Le Bouffon ajoute du chaos - faites attention à qui vous votez !"
     },
     "step5": {
-      "title": "Temps de Vote",
-      "description": "Après la discussion, votez pour éliminer qui vous pensez être l'imposteur. La majorité décide de leur sort.",
-      "tip": "Faites confiance à votre instinct !"
+      "title": "Le Shérif (Optionnel)",
+      "description": "Avec 4+ joueurs, vous pouvez activer le rôle de Shérif. Le Shérif peut inspecter un joueur pendant la partie pour découvrir son rôle.",
+      "tip": "Utilisez le pouvoir du Shérif sagement - vous n'avez qu'une seule inspection !"
     },
     "step6": {
+      "title": "Phase de Discussion",
+      "description": "Les joueurs décrivent à tour de rôle le mot secret sans le dire directement. L'imposteur doit essayer de s'intégrer sans connaître le mot !",
+      "tip": "Soyez assez vague pour que l'imposteur ne puisse pas deviner, mais assez clair pour prouver que vous le connaissez !"
+    },
+    "step7": {
+      "title": "Phase de Vote",
+      "description": "Après la discussion, votez pour éliminer le joueur que vous pensez être l'imposteur. Le joueur avec le plus de votes est éliminé.",
+      "tip": "Faites attention à qui semble incertain ou évite les détails !"
+    },
+    "step8": {
       "title": "Conditions de Victoire",
-      "description": "Les civils gagnent en éliminant l'imposteur. L'imposteur gagne en devinant le mot secret ou en survivant jusqu'à 2 joueurs.",
-      "tip": "Que le meilleur trompeur gagne !"
+      "description": "• Les civils gagnent en éliminant l'imposteur\n• L'imposteur gagne en devinant le mot ou en survivant jusqu'aux 2 derniers\n• Le Bouffon gagne en se faisant éliminer\n• Le Shérif aide les civils à trouver l'imposteur",
+      "tip": "Bonne chance et amusez-vous bien !"
     }
   },
   "vote": {

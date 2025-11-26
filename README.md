@@ -14,6 +14,27 @@ title: How to Play
 * Improved the text inside buttons, depending on the language
 * Improve homescreen (Add more information about the game)
 
+#### (v1.0.4) What is new?
+* Restructure home screen -> add quick access to topic generator
+* Clarify minimum number of players (based on reddit feedback)
+* Add Italian & Spanish as languages
+* **NEW: Special Roles System** - Added Jester and Sheriff roles (requires 4+ players)
+* **NEW: Jester Role** - Win by getting voted out! Act suspicious and trick others into eliminating you
+* **NEW: Sheriff Role** - Inspect one player's role during the round to help civilians find the imposter
+* Redesigned role reveal screen with distinct colors and icons for all roles
+* Improved round screen with discrete timer controls (icon-only buttons inside timer)
+* Enhanced voting system to handle Jester win condition
+* Added role-specific missions and objectives for better gameplay clarity
+* Improved UI consistency across all game screens
+
+#### (v1.0.5) What is new?
+* BUG: Fix homescreen topic information bar
+* BUG: Fix imposter guess
+* Update Tutorial
+
+### (v1.0.6) What is new?
+* First Production release
+
 # How to Play Imposter Hunt
 
 **Imposter Hunt** is a fast-paced social deduction game where players try to uncover who among them is the imposter — all on a single shared device.
@@ -26,11 +47,13 @@ Your goal: give hints, discuss, and vote out the impostor before they can figure
 ### How to Play
 
 1. **Setup** – Add 3+ players and pick a topic (Food, Animals, Movies, Countries, or create custom topics).
-2. **Role Reveal** – Each player privately views their role (Civilian or Imposter).
+   * **Optional**: Enable special roles (Jester & Sheriff) with 4+ players for added strategy!
+2. **Role Reveal** – Each player privately views their role (Civilian, Imposter, Jester, or Sheriff).
 3. **Discussion** – Give subtle hints and try to expose the Imposter.
+   * **Sheriff Ability**: The Sheriff can inspect one player's role once per game!
 4. **Voting** – Decide who to vote out each round.
 5. **Imposter Guess** – The Imposter has one chance to guess the secret word.
-6. **Results** – Either the Imposter wins by guessing correctly or Civilians win by catching them!
+6. **Results** – Either the Imposter wins by guessing correctly, Civilians win by catching them, or the Jester wins by getting eliminated!
 
 ### Win Conditions
 
@@ -40,20 +63,26 @@ Your goal: give hints, discuss, and vote out the impostor before they can figure
 * **Imposter Wins**:
   * Correctly guesses the secret word.
   * Survives until only 2 players remain.
+* **Jester Wins** *(NEW)*:
+  * Gets voted out during any voting round (wins alone!).
+* **Sheriff** *(NEW)*:
+  * Part of the Civilian team with a special ability to inspect one player's role.
 
 ---
 
 ## Features
 
 * **Pass-and-play multiplayer** — one device for all players.
+* **Special roles system** *(NEW)* — Jester and Sheriff add strategic depth (4+ players required).
+* **Role inspection ability** *(NEW)* — Sheriff can reveal one player's true role.
 * **AI-powered topic generation** — create custom topic lists with AI assistance.
 * **Multiple game modes** — play with built-in topics or your own custom lists.
 * **Clean minimal UI** optimized for quick social play.
 * **Haptic feedback** for tactile interactions.
-* **Round timer** with controls for discussion pacing.
+* **Round timer** with discrete controls (icon-only buttons inside timer circle).
 * **Persistent storage** for player names, custom topics, and settings.
 * **Multi-round gameplay** with elimination tracking.
-* **Smart voting system** that handles ties and revotes.
+* **Smart voting system** that handles ties, revotes, and Jester wins.
 * **Rewarded ads** for additional AI generations.
 * **Privacy-first ad consent** using Google UMP SDK.
 * **Tutorial mode** for first-time players.
@@ -77,12 +106,12 @@ Your goal: give hints, discuss, and vote out the impostor before they can figure
 ```
 app/
   ├── index.js              # Main menu
-  ├── setup.js              # Player & topic selection
-  ├── role.js               # Role reveal screen
-  ├── round.js              # Discussion phase
-  ├── vote.js               # Voting phase
+  ├── setup.js              # Player & topic selection (with special roles toggle)
+  ├── role.js               # Role reveal screen (supports 4 roles)
+  ├── round.js              # Discussion phase (with Sheriff inspection)
+  ├── vote.js               # Voting phase (handles Jester wins)
   ├── imposter-guess.js     # Imposter's final guess
-  ├── results.js            # Game result screen
+  ├── results.js            # Game result screen (all win conditions)
   ├── settings.js           # App settings & preferences
   ├── ai-topics.js          # AI topic generation
   ├── custom-topics.js      # Custom topic management
@@ -96,13 +125,14 @@ src/
   │   │   ├── Input.js
   │   │   ├── Card.js
   │   │   ├── Pill.js
+  │   │   ├── CircularTimer.js  # (Updated with built-in controls)
   │   │   └── Title.js
   │   ├── AdBanner.js       # Banner ad component
   │   └── LoadingScreen.js
   ├── contexts/
   │   └── AdConsentContext.js  # UMP consent management
   ├── store/
-  │   ├── gameStore.js      # Game state management
+  │   ├── gameStore.js      # Game state (now includes special roles)
   │   └── aiStore.js        # AI generation tracking
   ├── lib/
   │   ├── generateTopics.js # AI topic generation API
@@ -111,6 +141,8 @@ src/
   │   └── api.js            # API configuration
   ├── data/
   │   └── topics.json       # Built-in topic lists
+  ├── locales/              # Translations
+  │   └── en.json           # (Updated with special role strings)
   └── constants/
       ├── theme.js          # Design tokens
       └── icons.js          # Icon mappings
@@ -125,6 +157,8 @@ src/
 Manages core game state with AsyncStorage persistence:
 * Player list and elimination status
 * Current imposter and secret word
+* **Role assignments** *(NEW)* — Tracks Civilian, Imposter, Jester, and Sheriff roles
+* **Special role states** *(NEW)* — Jester/Sheriff enabled flags, Sheriff ability usage
 * Round tracking and voting history
 * Custom topic management
 

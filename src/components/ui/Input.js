@@ -5,7 +5,9 @@ import { palette, radii, space, type } from "../../constants/theme";
 export default function Input({ 
   value, 
   onChangeText, 
-  placeholder, 
+  placeholder,
+  autoCapitalize = "sentences",
+  autoCorrect = true,
   style,
   ...props 
 }) {
@@ -15,6 +17,8 @@ export default function Input({
       onChangeText={onChangeText}
       placeholder={placeholder}
       placeholderTextColor={palette.textDim}
+      autoCapitalize={autoCapitalize}
+      autoCorrect={autoCorrect}
       style={[styles.input, style]}
       {...props}
     />

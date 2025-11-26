@@ -21,7 +21,9 @@
     "howToPlay": "How to Play",
     "exitTitle": "Exit",
     "exitMessage": "Exit game?",
-    "exit": "Exit"
+    "exit": "Exit",
+    "players": "players",
+    "aiTopics": "AI Topics"
   },
   "setup": {
     "title": "Setup",
@@ -43,7 +45,14 @@
     "topicNamePlaceholder": "Topic Name",
     "couldNotStart": "Failed to start game",
     "aiGeneratedTopic": "AI generated topic",
-    "customTopicLabel": "Custom topic"
+    "customTopicLabel": "Custom topic",
+    "words": "words",
+    "specialRoles": "Special Roles",
+    "jester": "Jester",
+    "jesterDesc": "Wins if voted out",
+    "sheriff": "Sheriff",
+    "sheriffDesc": "Can check one role",
+    "minPlayersForRoles": "Need 4+ players for special roles"
   },
   "topics": {
     "random": "Random",
@@ -79,7 +88,8 @@
     "yourRole": "Your Role",
     "civilian": "Civilian",
     "imposter": "Imposter",
-    "eliminated": "Eliminated"
+    "jester": "Jester",
+    "sheriff": "Sheriff"
   },
   "results": {
     "unknown": "Unknown",
@@ -89,7 +99,10 @@
     "theImposter": "The Imposter",
     "playAgain": "Play Again",
     "newSetup": "New Setup",
-    "failedToStart": "Failed to start new game"
+    "failedToStart": "Failed to start new game",
+    "jesterWins": "The Jester Wins!",
+    "jesterFooled": "fooled everyone!",
+    "wasTheImposter": "was the imposter"
   },
   "settings": {
     "title": "Settings",
@@ -133,12 +146,22 @@
     "revealRole": "Reveal Role",
     "imposter": "IMPOSTER",
     "civilian": "CIVILIAN",
+    "jester": "JESTER",
+    "sheriff": "SHERIFF",
     "secretWordLabel": "Your Secret Word",
+    "noWord": "You don't know the secret word",
     "missionTitle": "Your Mission",
     "imposterMission": "• Blend in with civilians\n• Listen carefully to hints\n• Guess the secret word to win\n• Or survive until only 2 remain",
     "civilianMission": "• Give subtle hints about the word\n• Don't say the word directly\n• Find and eliminate the imposter\n• Be careful - they're listening!",
+    "jesterMission": "• Act suspicious but not too obvious\n• Trick them into voting for you\n• If you get voted out, you win alone!",
+    "sheriffMission": "• You are on the Civilian team\n• You can check one player's role once\n• Use your info to lead the vote",
+    "sheriffAbility": "Inspect Player",
+    "sheriffInstruction": "Choose one player to reveal their role",
+    "abilityUsed": "Ability Used",
+    "inspectionResult": "Inspection Result",
+    "hideAndPass": "Hide & Pass",
     "startRound": "Start Round",
-    "hideAndPass": "Hide & Pass"
+    "unknown": "Unknown"
   },
   "round": {
     "quitTitle": "Quit Game",
@@ -174,35 +197,46 @@
     "back": "Back",
     "next": "Next",
     "getStarted": "Get Started",
+    
     "step1": {
-      "title": "Welcome to Imposter Hunt",
-      "description": "A social deduction game where you find the imposter among your friends.",
-      "tip": "Pay attention to subtle clues!"
+      "title": "Welcome to Imposter Hunt!",
+      "description": "A social deduction game where one player is the imposter trying to blend in.",
+      "tip": "Perfect for parties with 3-10 players!"
     },
     "step2": {
-      "title": "Civilians",
-      "description": "Most players are civilians. You'll see the secret word. Give subtle hints without saying it directly.",
-      "tip": "Be careful - the imposter is listening!"
+      "title": "Setup Players",
+      "description": "Add all players who will participate. You need at least 3 players to start the game.",
+      "tip": "You can add up to 10 players for bigger groups!"
     },
     "step3": {
       "title": "The Imposter",
-      "description": "One player is the imposter. You don't know the word. Blend in and try to guess it from the hints.",
-      "tip": "Act like you know the word!"
+      "description": "One player is secretly the imposter! Everyone else sees the secret word, but the imposter doesn't. The imposter must blend in and figure out the word.",
+      "tip": "The imposter can win by guessing the word correctly!"
     },
     "step4": {
-      "title": "Discussion Phase",
-      "description": "Take turns giving one-word hints about the secret word. The imposter must participate without knowing what it is.",
-      "tip": "Keep it vague enough to confuse the imposter"
+      "title": "The Jester (Optional)",
+      "description": "With 4+ players, you can enable the Jester role. The Jester's goal is to get eliminated! If the Jester is voted out, they win the game.",
+      "tip": "The Jester adds chaos - be careful who you vote for!"
     },
     "step5": {
-      "title": "Voting Time",
-      "description": "After discussion, vote to eliminate who you think is the imposter. Majority decides their fate.",
-      "tip": "Trust your instincts!"
+      "title": "The Sheriff (Optional)",
+      "description": "With 4+ players, you can enable the Sheriff role. The Sheriff can inspect one player during the game to discover their role.",
+      "tip": "Use the Sheriff's power wisely - you only get one inspection!"
     },
     "step6": {
+      "title": "Discussion Phase",
+      "description": "Players take turns describing the secret word without saying it directly. The imposter must try to fit in without knowing the word!",
+      "tip": "Be vague enough so the imposter can't guess, but clear enough to prove you know it!"
+    },
+    "step7": {
+      "title": "Voting Phase",
+      "description": "After discussion, vote to eliminate the player you think is the imposter. The player with the most votes is eliminated.",
+      "tip": "Pay attention to who seems uncertain or avoids specifics!"
+    },
+    "step8": {
       "title": "Win Conditions",
-      "description": "Civilians win by eliminating the imposter. Imposter wins by guessing the secret word or surviving to 2 players.",
-      "tip": "May the best deceiver win!"
+      "description": "• Civilians win by eliminating the imposter\n• Imposter wins by guessing the word or surviving to final 2\n• Jester wins by getting eliminated\n• Sheriff helps civilians find the imposter",
+      "tip": "Good luck and have fun!"
     }
   },
   "vote": {

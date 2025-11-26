@@ -13,14 +13,22 @@ export const tutorialSteps = [
   },
   {
     id: 4,
-    icon: "discussion",
+    icon: "jester",
   },
   {
     id: 5,
-    icon: "vote",
+    icon: "sheriff",
   },
   {
     id: 6,
+    icon: "discussion",
+  },
+  {
+    id: 7,
+    icon: "vote",
+  },
+  {
+    id: 8,
     icon: "trophy",
   },
 ];

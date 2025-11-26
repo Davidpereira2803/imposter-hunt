@@ -21,7 +21,9 @@
     "howToPlay": "Wéi Spillen",
     "exitTitle": "Erauszéien",
     "exitMessage": "Spill verloossen?",
-    "exit": "Erauszéien"
+    "exit": "Erauszéien",
+    "players": "Spiller",
+    "aiTopics": "KI Themen"
   },
   "setup": {
     "title": "Astellung",
@@ -43,7 +45,14 @@
     "topicNamePlaceholder": "Themanumm",
     "couldNotStart": "Spillstart feelgeschloen",
     "aiGeneratedTopic": "KI-generéiert Thema",
-    "customTopicLabel": "Eegent Thema"
+    "customTopicLabel": "Eegent Thema",
+    "words": "Wierder",
+    "specialRoles": "Spezialrollen",
+    "jester": "Narr",
+    "jesterDesc": "Gewënnt wann erausgewielt",
+    "sheriff": "Sheriff",
+    "sheriffDesc": "Kann eng Roll kontrolléieren",
+    "minPlayersForRoles": "4+ Spiller gebraucht fir Spezialrollen"
   },
   "topics": {
     "random": "Zoufälleg",
@@ -79,6 +88,8 @@
     "yourRole": "Däin Roll",
     "civilian": "Zivilist",
     "imposter": "Impostor",
+    "jester": "Narr",
+    "sheriff": "Sheriff",
     "eliminated": "Erausgeholl"
   },
   "results": {
@@ -89,7 +100,10 @@
     "theImposter": "Den Impostor",
     "playAgain": "Nach Eng Kéier Spillen",
     "newSetup": "Nei Astellung",
-    "failedToStart": "Neit Spill konnt net gestart ginn"
+    "failedToStart": "Neit Spill konnt net gestart ginn",
+    "jesterWins": "Den Narr Gewënnt!",
+    "jesterFooled": "huet jiddereen ausgetrickst!",
+    "wasTheImposter": "war den Impostor"
   },
   "settings": {
     "title": "Astellungen",
@@ -133,12 +147,22 @@
     "revealRole": "Roll Ophiewen",
     "imposter": "IMPOSTOR",
     "civilian": "ZIVILIST",
+    "jester": "NARR",
+    "sheriff": "SHERIFF",
     "secretWordLabel": "Däi Geheimwuert",
+    "noWord": "Du kenns dat Geheimwuert net",
     "missionTitle": "Däi Missioun",
     "imposterMission": "• Mësch dech ënner d'Zivilisten\n• Lauschter opmierksam op Hiweiser\n• Eroed dat Geheimwuert fir ze gewannen\n• Oder iwwerlief bis nëmmen nach 2 iwwreg sinn",
     "civilianMission": "• Gëff subtil Hiweiser iwwert d'Wuert\n• Seet d'Wuert net direkt\n• Fann an eliminéier den Impostor\n• Opgepasst - hien lauschtert!",
+    "jesterMission": "• Behuef dech verdächteg mee net ze offensichtlech\n• Trick se aus fir dech ze wielen\n• Wann s de erausgewielt gëss, gewënns du eleng!",
+    "sheriffMission": "• Du bass am Zivilisten-Team\n• Du kanns eng Kéier d'Roll vun engem Spiller kontrolléieren\n• Benotz deng Info fir d'Ofstëmmung ze leeden",
+    "sheriffAbility": "Spiller Kontrolléieren",
+    "sheriffInstruction": "Wiel ee Spiller fir seng Roll ze enthëllen",
+    "abilityUsed": "Fäegkeet Benotzt",
+    "inspectionResult": "Kontrollresultat",
+    "hideAndPass": "Verstoppen & Weiderginn",
     "startRound": "Ronn Starten",
-    "hideAndPass": "Verstoppen & Weiderginn"
+    "unknown": "Onbekannt"
   },
   "round": {
     "quitTitle": "Spill Ophalen",
@@ -175,34 +199,44 @@
     "next": "Weider",
     "getStarted": "Lass Ufänken",
     "step1": {
-      "title": "Wëllkomm bei Impostor Juegd",
-      "description": "E sozial Deduktionsspill wou s de den Impostor ënter denge Frënn fënns.",
-      "tip": "Oppassen op subtil Hiweiser!"
+      "title": "Wëllkomm bei Impostor Juegd!",
+      "description": "E sozial Deduktionsspill wou ee Spiller den Impostor ass an sech versicht ze verstoppen.",
+      "tip": "Perfekt fir 3–10 Spiller!"
     },
     "step2": {
-      "title": "Zivilisten",
-      "description": "Déi meescht Spiller sinn Zivilisten. Du gesees dat Geheimwuert. Gëff subtil Hiweiser ouni et direkt ze soen.",
-      "tip": "Opgepasst - den Impostor lauschtert!"
+      "title": "Spiller Ariichten",
+      "description": "Setz all d'Spiller dobäi déi matmaachen. Op mannst 3 Spiller gebraucht fir unzefänken.",
+      "tip": "Bis zu 10 Spiller méiglech!"
     },
     "step3": {
       "title": "Den Impostor",
-      "description": "Ee Spiller ass den Impostor. Du kenns d'Wuert net. Mësch dech an an versich et aus den Hiweiser ze eroden.",
-      "tip": "Maach esou wéi wann s de d'Wuert kenns!"
+      "description": "Den Impostor gesäit d'Geheimwuert NET. Hie muss sech ënnermëschen an d'Wuert aus den Hiweiser eroden.",
+      "tip": "Lauschter a sammelen Informatioun!"
     },
     "step4": {
-      "title": "Diskussiounsphase",
-      "description": "Gitt der Rei no Een-Wuert-Hiweiser iwwert dat Geheimwuert. Den Impostor muss matmaachen ouni ze wëssen wat et ass.",
-      "tip": "Bleif vag genuch fir den Impostor ze verwierren"
+      "title": "Den Narr (Optional)",
+      "description": "Ab 4+ Spiller kann den Narr aktivéiert ginn. Säi Ziel: erausgestëmmt ginn. Wann hien eliminéiert gëtt, gewënnt hien eleng.",
+      "tip": "Passt op chaotesch Hiweiser!"
     },
     "step5": {
-      "title": "Ofstëmmungszäit",
-      "description": "No der Diskussioun stëmmt of, wien dir mengt datt den Impostor ass. D'Majoritéit entscheed.",
-      "tip": "Vertrau dengem Instinkt!"
+      "title": "De Sheriff (Optional)",
+      "description": "Ab 4+ Spiller kann de Sheriff aktivéiert ginn. Hie kann eng Kéier eng Spillerroll kontrolléieren.",
+      "tip": "Benotz d'Kontroll zum richtegen Zäitpunkt!"
     },
     "step6": {
+      "title": "Diskussiounsphase",
+      "description": "All Spiller gëtt ee subtile Hiweis zum Wuert. Net direkt soen. Den Impostor probéiert matzemaachen ouni et ze kennen.",
+      "tip": "Net ze kloer, net ze vag."
+    },
+    "step7": {
+      "title": "Ofstëmmungsphase",
+      "description": "No den Hiweiser stëmmt dir of wien den Impostor ass. D'Majoritéit eliminéiert ee Spiller.",
+      "tip": "Observéier Onsécherheeten."
+    },
+    "step8": {
       "title": "Gewënnbedéngungen",
-      "description": "Zivilisten gewannen andeems si den Impostor eliminéieren. Den Impostor gewënnt andeems hien dat Geheimwuert erëtt oder bis op 2 Spiller iwwerliewt.",
-      "tip": "Dee beschte Täuscher gewënnt!"
+      "description": "• Zivilisten: eliminéieren den Impostor\n• Impostor: erued d'Wuert oder iwwerlieft bis 2 Spiller\n• Narr: gewënnt wann eliminéiert\n• Sheriff: hëlleft Zivilisten mat senger Kontroll",
+      "tip": "Vill Gléck a vill Spaass!"
     }
   },
   "vote": {

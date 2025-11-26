@@ -26,7 +26,7 @@ import { useTranslation } from "../src/lib/useTranslation";
 
 export default function Role() {
   const router = useRouter();
-  const { players, imposterIndex, secretWord } = useGameStore();
+  const { players, imposterIndex, secretWord, roles } = useGameStore();
   const { t } = useTranslation();
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
   const [revealed, setRevealed] = useState(false);
@@ -122,6 +122,10 @@ export default function Role() {
   const isImposter = currentPlayerIndex === imposterIndex;
   const isLastPlayer = currentPlayerIndex === players.length - 1;
 
+  const currentRole = roles?.[currentPlayerIndex] || "civilian";
+  const isJester = currentRole === "jester";
+  const isSheriff = currentRole === "sheriff";
+
   return (
     <Screen>
       <View style={styles.container}>
@@ -185,6 +189,78 @@ export default function Role() {
                               {t(
                                 "role.imposterMission",
                                 "• Blend in with civilians\n• Listen carefully to hints\n• Guess the secret word to win\n• Or survive until only 2 remain"
+                              )}
+                            </Text>
+                          </Card>
+                        </Animated.View>
+                      </Animated.View>
+                    </>
+                  ) : isJester ? (
+                    <>
+                      <Animated.View 
+                        entering={ZoomIn.delay(100).springify()}
+                        style={styles.roleContainer}
+                      >
+                        <Icon name="emoticon-devil" size={100} color="#A855F7" />
+                        <View style={styles.jesterBadge}>
+                          <Text style={styles.jesterText}>{t("role.jester", "JESTER")}</Text>
+                        </View>
+                      </Animated.View>
+
+                      <Animated.View 
+                        entering={SlideInDown.delay(300).springify()}
+                        style={styles.wordReveal}
+                      >
+                        <Text style={styles.wordLabel}>{t("role.secretWordLabel", "Your Secret Word")}</Text>
+                        <View style={[styles.wordBox, styles.wordBoxJester]}>
+                          <Text style={styles.wordTextJester}>{secretWord}</Text>
+                        </View>
+                      </Animated.View>
+
+                      <Animated.View entering={SlideInDown.delay(500).springify()}>
+                        <Animated.View style={cardAnimatedStyle}>
+                          <Card style={styles.infoCard}>
+                            <Text style={styles.infoTitle}>{t("role.missionTitle", "Your Mission")}</Text>
+                            <Text style={styles.infoText}>
+                              {t(
+                                "role.jesterMission",
+                                "• Act suspicious but not too obvious\n• Trick them into voting for you\n• If you get voted out, you win alone!"
+                              )}
+                            </Text>
+                          </Card>
+                        </Animated.View>
+                      </Animated.View>
+                    </>
+                  ) : isSheriff ? (
+                    <>
+                      <Animated.View 
+                        entering={ZoomIn.delay(100).springify()}
+                        style={styles.roleContainer}
+                      >
+                        <Icon name="shield-star" size={100} color="#3B82F6" />
+                        <View style={styles.sheriffBadge}>
+                          <Text style={styles.sheriffText}>{t("role.sheriff", "SHERIFF")}</Text>
+                        </View>
+                      </Animated.View>
+
+                      <Animated.View 
+                        entering={SlideInDown.delay(300).springify()}
+                        style={styles.wordReveal}
+                      >
+                        <Text style={styles.wordLabel}>{t("role.secretWordLabel", "Your Secret Word")}</Text>
+                        <View style={[styles.wordBox, styles.wordBoxSheriff]}>
+                          <Text style={styles.wordTextSheriff}>{secretWord}</Text>
+                        </View>
+                      </Animated.View>
+
+                      <Animated.View entering={SlideInDown.delay(500).springify()}>
+                        <Animated.View style={cardAnimatedStyle}>
+                          <Card style={styles.infoCard}>
+                            <Text style={styles.infoTitle}>{t("role.missionTitle", "Your Mission")}</Text>
+                            <Text style={styles.infoText}>
+                              {t(
+                                "role.sheriffMission",
+                                "• You are on the Civilian team\n• You can check one player's role once\n• Use your info to lead the vote"
                               )}
                             </Text>
                           </Card>
@@ -352,6 +428,40 @@ const styles = StyleSheet.create({
     fontWeight: "900",
     letterSpacing: 3,
   },
+  jesterBadge: {
+    backgroundColor: "#A855F7",
+    paddingVertical: space.md,
+    paddingHorizontal: space.xl * 2,
+    borderRadius: radii.full,
+    shadowColor: "#A855F7",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.6,
+    shadowRadius: 12,
+    elevation: 6,
+  },
+  jesterText: {
+    color: "#000",
+    fontSize: type.h1,
+    fontWeight: "900",
+    letterSpacing: 3,
+  },
+  sheriffBadge: {
+    backgroundColor: "#3B82F6",
+    paddingVertical: space.md,
+    paddingHorizontal: space.xl * 2,
+    borderRadius: radii.full,
+    shadowColor: "#3B82F6",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.6,
+    shadowRadius: 12,
+    elevation: 6,
+  },
+  sheriffText: {
+    color: "#000",
+    fontSize: type.h1,
+    fontWeight: "900",
+    letterSpacing: 3,
+  },
   wordReveal: {
     alignItems: "center",
     marginBottom: space.xl,
@@ -379,6 +489,28 @@ const styles = StyleSheet.create({
   },
   wordText: {
     color: palette.success,
+    fontSize: type.giant * 0.7,
+    fontWeight: "900",
+    letterSpacing: 1,
+  },
+  wordBoxJester: {
+    backgroundColor: "#A855F7" + "20",
+    borderColor: "#A855F7",
+    shadowColor: "#A855F7",
+  },
+  wordTextJester: {
+    color: "#A855F7",
+    fontSize: type.giant * 0.7,
+    fontWeight: "900",
+    letterSpacing: 1,
+  },
+  wordBoxSheriff: {
+    backgroundColor: "#3B82F6" + "20",
+    borderColor: "#3B82F6",
+    shadowColor: "#3B82F6",
+  },
+  wordTextSheriff: {
+    color: "#3B82F6",
     fontSize: type.giant * 0.7,
     fontWeight: "900",
     letterSpacing: 1,

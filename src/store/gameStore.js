@@ -21,8 +21,17 @@ export const useGameStore = create(
       predefinedTopics: topics,
       customTopics: [],
 
+      enableJester: false,
+      enableSheriff: false,
+      roles: [],
+      sheriffUsedAbility: false,
+
       setPlayers: (players) => set({ players }),
       setTopicKey: (topicKey) => set({ topicKey }),
+
+      setEnableJester: (enable) => set({ enableJester: enable }),
+      setEnableSheriff: (enable) => set({ enableSheriff: enable }),
+      setSheriffUsedAbility: (used) => set({ sheriffUsedAbility: used }),
 
       getTopicByKey: (key) => {
         if (!key) return null;
@@ -58,7 +67,7 @@ export const useGameStore = create(
       },
 
       startMatch: () => {
-        const { players, topicKey } = get();
+        const { players, topicKey, enableJester, enableSheriff } = get();
         if (!players || players.length < 3) return false;
 
         const words = get().getTopicWordsByKey(topicKey);
@@ -68,15 +77,33 @@ export const useGameStore = create(
         }
 
         const secretWord = words[Math.floor(Math.random() * words.length)];
-        const imposterIndex = Math.floor(Math.random() * players.length);
 
+        let availableRoles = ["imposter"];
+
+        if (players.length >= 4) {
+          if (enableJester) availableRoles.push("jester");
+          if (enableSheriff) availableRoles.push("sheriff");
+        }
+
+        while (availableRoles.length < players.length) {
+          availableRoles.push("civilian");
+        }
+
+        for (let i = availableRoles.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [availableRoles[i], availableRoles[j]] = [availableRoles[j], availableRoles[i]];
+        }
+
+        const imposterIndex = availableRoles.indexOf("imposter");
         const alive = players.map(() => true);
 
         set({
           secretWord,
           imposterIndex,
+          roles: availableRoles,
           alive,
           round: 1,
+          sheriffUsedAbility: false,
         });
 
         return true;
@@ -92,11 +119,13 @@ export const useGameStore = create(
           imposterIndex: null,
           alive: [],
           round: 1,
+          roles: [],
+          sheriffUsedAbility: false,
         });
       },
 
       eliminatePlayer: (index) => {
-        const { alive, imposterIndex, players } = get();
+        const { alive, imposterIndex, players, roles } = get();
         
         if (!alive || !players || index == null) return null;
 
@@ -105,12 +134,15 @@ export const useGameStore = create(
 
         set({ alive: newAlive });
 
+        if (roles && roles[index] === "jester") {
+          return "jester";
+        }
+
         if (index === imposterIndex) {
           return "civilians";
         }
 
         const aliveCount = newAlive.filter(Boolean).length;
-        
         if (aliveCount <= 2) {
           return "imposter";
         }
@@ -150,6 +182,10 @@ export const useGameStore = create(
           imposterIndex: null,
           alive: [],
           round: 1,
+          roles: [],
+          enableJester: false,
+          enableSheriff: false,
+          sheriffUsedAbility: false,
         });
       },
 
