@@ -20,9 +20,9 @@ lang: en_US
 
 # Navigation order
 header_pages:
-  - index.md
-  - README.md
-  - Privacy.md
+  - docs/index.md
+  - docs/HowToPlay.md
+  - docs/Privacy.md
 
 exclude:
   - node_modules/

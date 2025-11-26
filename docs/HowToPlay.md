@@ -5,6 +5,20 @@ title: How to Play
 
 # How to Play
 
+## Demo Video
+
+<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;max-width:100%;">
+  <iframe
+    src="https://drive.google.com/file/d/1f71bGV4Pncx9Dl5tS2joxhqwqcijohDz/preview"
+    style="position:absolute;top:0;left:0;width:100%;height:100%;"
+    frameborder="0"
+    allow="autoplay; encrypted-media"
+    allowfullscreen>
+  </iframe>
+</div>
+
+---
+
 Imposter Hunt is a social deduction game. One player is the imposter and doesn’t see the secret word. Can you find them?
 
 ## Setup
