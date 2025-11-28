@@ -219,7 +219,7 @@ See the [Privacy Policy](docs/PRIVACY.md) for complete details.
 ### (v1.0.6) What is new?
 * First Production release
 
-### (v1.0.6) What is new?
+### (v1.0.7) What is new?
 * Implement production ads
 
 ---
