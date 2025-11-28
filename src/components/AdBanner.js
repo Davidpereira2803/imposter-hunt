@@ -3,11 +3,12 @@ import { View, StyleSheet } from "react-native";
 import Constants from "expo-constants";
 import { BannerAd, BannerAdSize, TestIds } from "react-native-google-mobile-ads";
 import { useAdConsentContext } from "../contexts/AdConsentContext";
+import ADS_CONFIG from "../config/adshelper";
 
 const adUnitId = __DEV__
   ? TestIds.BANNER
-  : (Constants.expoConfig?.extra?.adBannerUnitId ||"");
-
+  : (ADS_CONFIG.BANNER_UNIT_ID || "");
+  
 export const AdBanner = () => {
   const { isReady, canShowAds, canShowPersonalizedAds } = useAdConsentContext();
 
