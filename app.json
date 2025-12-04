@@ -3,7 +3,7 @@
     "name": "Imposter Hunt",
     "slug": "imposter-hunt",
     "version": "1.0.7",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
     "scheme": "impostor-hunt",
