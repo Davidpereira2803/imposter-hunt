@@ -296,6 +296,31 @@
     "generateButton": "Generate Topics",
     "infoText": "AI will generate creative topics based on your description. You can use them immediately in your games!"
   },
+  "aiTutorial": {
+    "title": "How AI Generation Works",
+    "gotIt": "Got it!",
+    "whatIsIt": "What is it?",
+    "whatIsItText": "AI Topic Builder uses artificial intelligence to generate custom word lists based on your description. Perfect for creating unique game topics!",
+    "howToUse": "How to Use",
+    "step1Title": "Describe Your Topic",
+    "step1Text": "Enter a clear description of what you want. Be specific!",
+    "step2Title": "Choose Settings",
+    "step2Text": "Select how many words you want and the difficulty level.",
+    "step3Title": "Generate & Play",
+    "step3Text": "Hit generate and your custom topic list will be ready to use immediately!",
+    "examples": "Good Examples",
+    "example1": "Clash Royale cards",
+    "example2": "Harry Potter spells",
+    "example3": "Marvel superheroes",
+    "example4": "Programming languages",
+    "example5": "Football teams in Europe",
+    "dailyLimit": "Daily Generations",
+    "dailyLimitText": "You get 1 free generation per day. Watch rewarded ads to unlock up to 5 more generations daily!",
+    "tips": "Pro Tips",
+    "tip1": "Be specific in your description for better results",
+    "tip2": "Use 'Mixed' difficulty for varied word lengths",
+    "tip3": "Generated topics are automatically saved to your custom list"
+  },
   "timer": {
     "remaining": "remaining"
   },

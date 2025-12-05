@@ -15,6 +15,7 @@ import { space, palette, type } from "../src/constants/theme";
 import { Icon } from "../src/constants/icons";
 import { initAds, showRewarded } from "../src/lib/rewardedAds";
 import { useAdConsentContext } from "../src/contexts/AdConsentContext";
+import AITutorialModal from "../src/components/AITutorialModal";
 
 const DIFFICULTIES = ["easy", "medium", "hard", "mixed"];
 
@@ -49,6 +50,18 @@ export default function AITopics() {
   const [language, setLanguage] = useState("en");
   const [isLoading, setIsLoading] = useState(false);
 
+  const [showTutorial, setShowTutorial] = useState(false);
+
+  const [placeholderIndex, setPlaceholderIndex] = useState(0);
+
+  const placeholderExamples = [
+    t("aiTutorial.example1", "Clash Royale cards"),
+    t("aiTutorial.example2", "Harry Potter spells"),
+    t("aiTutorial.example3", "Marvel superheroes"),
+    t("aiTutorial.example4", "Programming languages"),
+    t("aiTutorial.example5", "Football teams in Europe"),
+  ];
+
   useEffect(() => {
     initAds().catch(() => {});
   }, []);
@@ -56,6 +69,14 @@ export default function AITopics() {
   useEffect(() => {
     ensureDailyReset();
   }, [ensureDailyReset]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPlaceholderIndex((prev) => (prev + 1) % placeholderExamples.length);
+    }, 3000); // Change every 3 seconds
+
+    return () => clearInterval(interval);
+  }, []);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -220,7 +241,15 @@ export default function AITopics() {
               <Icon name="arrow-left" size={24} color={palette.text} />
             </TouchableOpacity>
             <Title style={styles.title}>{t("aiTopics.title", "AI Topic Builder")}</Title>
-            <View style={styles.backButton} />
+            <TouchableOpacity 
+              onPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => {});
+                setShowTutorial(true);
+              }} 
+              style={styles.helpButton}
+            >
+              <Icon name="help-circle" size={24} color={palette.primary} />
+            </TouchableOpacity>
           </View>
 
           {/* Usage Info */}
@@ -259,7 +288,7 @@ export default function AITopics() {
           <View style={styles.section}>
             <Text style={styles.label}>{t("aiTopics.topicDescription", "Topic Description")}</Text>
             <Input
-              placeholder={t("aiTopics.descriptionPlaceholder", "e.g., Clash Royale cards, Harry Potter spells...")}
+              placeholder={placeholderExamples[placeholderIndex]}
               value={description}
               onChangeText={setDescription}
               multiline
@@ -362,6 +391,11 @@ export default function AITopics() {
           </Card>
         </ScrollView>
       </KeyboardAvoidingView>
+      
+      <AITutorialModal 
+        visible={showTutorial} 
+        onClose={() => setShowTutorial(false)} 
+      />
     </Screen>
   );
 }
@@ -390,6 +424,12 @@ const styles = StyleSheet.create({
   title: {
     flex: 1,
     textAlign: "center",
+  },
+  helpButton: {
+    width: 40,
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
   },
   usageCard: {
     marginBottom: space.lg,

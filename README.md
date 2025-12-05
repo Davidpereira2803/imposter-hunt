@@ -225,7 +225,8 @@ See the [Privacy Policy](docs/PRIVACY.md) for complete details.
 ### (v1.0.8) What is new?
 * Improved screen adaptation for OS buttons
 * Removed orientation and resizeability restriction
-* 
+* Correct version in settings
+* Change Theme color to red
 
 ---
 
