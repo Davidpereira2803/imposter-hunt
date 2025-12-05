@@ -3,11 +3,35 @@ export const palette = {
   panel:   "#131722",  // cards/panels
   line:    "#1F2430",  // dividers, strokes
   text:    "#F4F7FF",  // primary text (very light)
-  textDim: "#AEB6C2",  // secondary text
-  primary: "#4F8BFF",  // actions / links (blue)
-  success: "#30D37D",  // positive
-  danger:  "#FF5964",  // destructive
+  textDim: "#C2A8A9",  // secondary text
+  primary: "#D32F2F",  // actions / links (blue)
+  success: "#4CAF50",  // positive
+  danger:  "#F44336",  // destructive
   warn:    "#FFB020",  // caution / pause
+};
+
+export const paletteblue = {
+  bg:      "#0B0D12",
+  panel:   "#131722",
+  line:    "#1F2430",
+  text:    "#F4F7FF",
+  textDim: "#AEB6C2",
+  primary: "#4F8BFF",
+  success: "#30D37D",
+  danger:  "#FF5964",
+  warn:    "#FFB020",
+};
+
+export const palettered = {
+  bg:      "#0D090B",
+  panel:   "#1A0F11",
+  line:    "#301B1D",
+  text:    "#FCF7F6",
+  textDim: "#C2A8A9",
+  primary: "#D32F2F",
+  success: "#4CAF50",
+  danger:  "#F44336",
+  warn:    "#FF8A65",
 };
 
 export const radii = { sm: 8, md: 12, lg: 16, xl: 24, full: 999 };

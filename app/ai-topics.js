@@ -16,6 +16,7 @@ import { Icon } from "../src/constants/icons";
 import { initAds, showRewarded } from "../src/lib/rewardedAds";
 import { useAdConsentContext } from "../src/contexts/AdConsentContext";
 import AITutorialModal from "../src/components/AITutorialModal";
+import aiExamples from "../src/data/aiTopicExamples.json";
 
 const DIFFICULTIES = ["easy", "medium", "hard", "mixed"];
 
@@ -54,13 +55,7 @@ export default function AITopics() {
 
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
 
-  const placeholderExamples = [
-    t("aiTutorial.example1", "Clash Royale cards"),
-    t("aiTutorial.example2", "Harry Potter spells"),
-    t("aiTutorial.example3", "Marvel superheroes"),
-    t("aiTutorial.example4", "Programming languages"),
-    t("aiTutorial.example5", "Football teams in Europe"),
-  ];
+  const placeholderExamples = aiExamples.examples;
 
   useEffect(() => {
     initAds().catch(() => {});
@@ -73,7 +68,7 @@ export default function AITopics() {
   useEffect(() => {
     const interval = setInterval(() => {
       setPlaceholderIndex((prev) => (prev + 1) % placeholderExamples.length);
-    }, 3000); // Change every 3 seconds
+    }, 5000);
 
     return () => clearInterval(interval);
   }, []);
@@ -288,7 +283,7 @@ export default function AITopics() {
           <View style={styles.section}>
             <Text style={styles.label}>{t("aiTopics.topicDescription", "Topic Description")}</Text>
             <Input
-              placeholder={placeholderExamples[placeholderIndex]}
+              placeholder={`e.g.: ${placeholderExamples[placeholderIndex]}...`}
               value={description}
               onChangeText={setDescription}
               multiline

@@ -227,6 +227,8 @@ See the [Privacy Policy](docs/PRIVACY.md) for complete details.
 * Removed orientation and resizeability restriction
 * Correct version in settings
 * Change Theme color to red
+* Add rotating AI Topic examples
+* Add AI generator Tutorial
 
 ---
 
