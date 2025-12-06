@@ -229,6 +229,7 @@ See the [Privacy Policy](docs/PRIVACY.md) for complete details.
 * Change Theme color to red
 * Add rotating AI Topic examples
 * Add AI generator Tutorial
+* Add icons for jester and sherif in setup
 
 ---
 

@@ -9,7 +9,7 @@ import Input from "../src/components/ui/Input";
 import Button from "../src/components/ui/Button";
 import Card from "../src/components/ui/Card";
 import { space, palette, type, radii } from "../src/constants/theme";
-import { Icon } from "../src/constants/icons";
+import { Icon, icons } from "../src/constants/icons";
 import { useTranslation } from "../src/lib/useTranslation";
 
 export default function Setup() {
@@ -285,7 +285,11 @@ export default function Setup() {
                 <View style={styles.roleToggleRow}>
                   <View style={styles.roleInfo}>
                     <View style={styles.roleHeader}>
-                      <Icon name="emoticon-devil" size={20} color="#A855F7" />
+                      <Icon
+                        name={icons.jester.name}
+                        size={icons.jester.size}
+                        color="#A855F7" 
+                      />
                       <Text style={styles.roleName}>{t("setup.jester", "Jester")}</Text>
                     </View>
                     <Text style={styles.roleDesc}>{t("setup.jesterDesc", "Wins if voted out")}</Text>
@@ -307,7 +311,11 @@ export default function Setup() {
                 <View style={styles.roleToggleRow}>
                   <View style={styles.roleInfo}>
                     <View style={styles.roleHeader}>
-                      <Icon name="shield-star" size={20} color="#3B82F6" />
+                      <Icon
+                        name={icons.sheriff.name}
+                        size={icons.sheriff.size}
+                        color="#3B82F6"
+                      />
                       <Text style={styles.roleName}>{t("setup.sheriff", "Sheriff")}</Text>
                     </View>
                     <Text style={styles.roleDesc}>{t("setup.sheriffDesc", "Can check one role")}</Text>
