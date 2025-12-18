@@ -534,4 +534,4 @@ Master the art of deception and deduction with advanced strategies for every rol
 
 ---
 
-[Home]({{ site.baseurl }}/) | [How to Play]({{ site.baseurl }}/HowToPlay) | [FAQ]({{ site.baseurl }}/FAQ) | [Features]({{ site.baseurl }}/Features)
+[Back to Home]({{ site.baseurl }}/) | [How to Play](HowToPlay) | [Features](Features) | [FAQ](FAQ) | [Screenshots](Screenshots) | [Changelog](Changelog) | [Privacy](Privacy)

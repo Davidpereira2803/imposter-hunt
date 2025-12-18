@@ -561,4 +561,4 @@ Ready to experience all these features?
 
 ---
 
-[Home]({{ site.baseurl }}/) | [How to Play]({{ site.baseurl }}/HowToPlay) | [FAQ]({{ site.baseurl }}/FAQ)
+[Back to Home]({{ site.baseurl }}/) | [How to Play](HowToPlay) | [Strategy Guide](Strategy-Guide) | [FAQ](FAQ) | [Screenshots](Screenshots) | [Changelog](Changelog) | [Privacy](Privacy)

@@ -246,4 +246,4 @@ Ready to play? Get Imposter Hunt on Google Play.
 
 ---
 
-[Home]({{ site.baseurl }}/) | [How to Play]({{ site.baseurl }}/HowToPlay) | [FAQ]({{ site.baseurl }}/FAQ) | [Features]({{ site.baseurl }}/Features)
+[Back to Home]({{ site.baseurl }}/) | [How to Play](HowToPlay) | [Strategy Guide](Strategy-Guide) | [Features](Features) | [FAQ](FAQ) | [Changelog](Changelog) | [Privacy](Privacy)

@@ -314,4 +314,4 @@ Check the roadmap for details (coming soon).
 
 ---
 
-[Home]({{ site.baseurl }}/) | [How to Play]({{ site.baseurl }}/HowToPlay) | [Privacy]({{ site.baseurl }}/Privacy)
+[Back to Home]({{ site.baseurl }}/) | [How to Play](HowToPlay) | [Strategy Guide](Strategy-Guide) | [Features](Features) | [Screenshots](Screenshots) | [Changelog](Changelog) | [Privacy](Privacy)

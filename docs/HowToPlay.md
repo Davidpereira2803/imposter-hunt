@@ -62,4 +62,4 @@ Imposter Hunt is a social deduction game. One player is the imposter and doesnâ€
 
 Enjoy!
 
-[Back to Home]({{ site.baseurl }}/) | [How to Play]({{ site.baseurl }}/HowToPlay)
+[Back to Home]({{ site.baseurl }}/) | [Strategy Guide](Strategy-Guide) | [Features](Features) | [FAQ](FAQ) | [Screenshots](Screenshots) | [Changelog](Changelog) | [Privacy](Privacy)

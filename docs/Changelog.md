@@ -237,4 +237,4 @@ Get the newest release on Google Play:
 
 ---
 
-[Home]({{ site.baseurl }}/) | [How to Play]({{ site.baseurl }}/HowToPlay) | [FAQ]({{ site.baseurl }}/FAQ)
+[Back to Home]({{ site.baseurl }}/) | [How to Play](HowToPlay) | [Strategy Guide](Strategy-Guide) | [Features](Features) | [Screenshots](Screenshots) | [Changelog](Changelog) | [Privacy](Privacy)
