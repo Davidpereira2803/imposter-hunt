@@ -39,6 +39,8 @@ Find the imposter among your friends before it's too late. One player receives a
 - **Beautiful UI** - Modern, polished design with haptic feedback
 - **Privacy First** - All data stays on your device, no accounts needed
 
+[See All Features](Features)
+
 ---
 
 ## Download
@@ -53,8 +55,43 @@ Find the imposter among your friends before it's too late. One player receives a
 
 ## Documentation
 
-- **[How to Play](HowToPlay)** - Full game rules, roles, and strategies
-- **[Privacy Policy](Privacy)** - Your data stays private, guaranteed
+<div class="feature-grid">
+  <div class="feature-card">
+    <h4>How to Play</h4>
+    <p>Complete rules, role explanations, and demo video</p>
+    <a href="{{ site.baseurl }}/HowToPlay">Read Guide →</a>
+  </div>
+  
+  <div class="feature-card">
+    <h4>Strategy Guide</h4>
+    <p>Advanced tactics for Civilian, Imposter, Jester, and Sheriff</p>
+    <a href="{{ site.baseurl }}/Strategy-Guide">Learn Strategies →</a>
+  </div>
+  
+  <div class="feature-card">
+    <h4>Features</h4>
+    <p>Deep dive into AI topics, special roles, and all capabilities</p>
+    <a href="{{ site.baseurl }}/Features">Explore Features →</a>
+  </div>
+  
+  <div class="feature-card">
+    <h4>FAQ</h4>
+    <p>Frequently asked questions and troubleshooting</p>
+    <a href="{{ site.baseurl }}/FAQ">Get Answers →</a>
+  </div>
+  
+  <div class="feature-card">
+    <h4>Screenshots</h4>
+    <p>Visual tour of the game interface and features</p>
+    <a href="{{ site.baseurl }}/Screenshots">View Gallery →</a>
+  </div>
+  
+  <div class="feature-card">
+    <h4>Changelog</h4>
+    <p>Version history and what's new in each release</p>
+    <a href="{{ site.baseurl }}/Changelog">See Updates →</a>
+  </div>
+</div>
 
 ---
 
@@ -67,7 +104,7 @@ Find the imposter among your friends before it's too late. One player receives a
 
 ---
 
-## 🛠 Built With
+## Built With
 
 **React Native** • **Expo** • **Zustand** • **AI Integration** • **Google AdMob**
 
@@ -85,9 +122,15 @@ Want to see gameplay first? Check out our **[How to Play](HowToPlay)** page for 
 
 Found a bug or have a feature request? 
 
-- Open an issue on [GitHub](https://github.com/Davidpereira2803/imposter-hunt/issues)
-- Reach out to [@davidpereira2803](https://github.com/davidpereira2803)
+- [Open an issue on GitHub](https://github.com/Davidpereira2803/imposter-hunt/issues)
+- [Reach out to @davidpereira2803](https://github.com/davidpereira2803)
+- Questions? Check the [FAQ](FAQ) first
 
 ---
 
-Made with ❤️ by [David Pereira](https://github.com/davidpereira2803) | [Privacy](Privacy) | [How to Play](HowToPlay)
+**Quick Links:**  
+[How to Play](HowToPlay) • [Strategy Guide](Strategy-Guide) • [Features](Features) • [FAQ](FAQ) • [Screenshots](Screenshots) • [Changelog](Changelog) • [Privacy](Privacy)
+
+---
+
+Made with ❤️ by [David Pereira](https://github.com/davidpereira2803)
