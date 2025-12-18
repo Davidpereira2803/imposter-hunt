@@ -52,13 +52,14 @@ export const useAIStore = create(
       },
 
       canGenerate: () => {
-        const s = get();
+        let s = get();
         if (isNewDay(s.lastGenerationDate)) {
           set({
             generationsToday: 0,
             watchedAdsToday: 0,
             lastGenerationDate: new Date().toISOString(),
           });
+          s = get();
         }
         const allowed = get().getMaxAllowedToday();
         return s.generationsToday < allowed;

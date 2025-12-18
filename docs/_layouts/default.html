@@ -4,7 +4,7 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
     {% seo %}
   </head>
 
@@ -35,5 +35,17 @@
         {{ content }}
       </section>
     </div>
+
+    <section class="hero">
+      <h1>Imposter Hunt</h1>
+      <p>AI-powered party game of bluffing and deduction. Offline, one device, playable anywhere.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="{{ site.baseurl }}/HowToPlay">How to Play</a>
+        <a class="btn btn-secondary" href="{{ site.baseurl }}/Privacy">Privacy Policy</a>
+        <a class="btn btn-secondary" href="https://play.google.com/store/apps/details?id=com.imposterhunt">Get on Google Play</a>
+      </div>
+    </section>
   </body>
 </html>
+
+

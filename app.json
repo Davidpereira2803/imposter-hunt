@@ -2,8 +2,8 @@
   "expo": {
     "name": "Imposter Hunt",
     "slug": "imposter-hunt",
-    "version": "1.0.6",
-    "orientation": "portrait",
+    "version": "1.0.7",
+    "orientation": "default",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
     "scheme": "impostor-hunt",

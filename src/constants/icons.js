@@ -14,6 +14,8 @@ export const icons = {
   // Roles
   imposter: { name: "incognito", size: 100 },
   civilian: { name: "account-group", size: 100 },
+  jester: { name: "emoticon-devil", size: 20 },
+  sheriff: { name: "shield-check", size: 20 },
   
   // UI elements
   timer: { name: "timer-outline", size: 24 },

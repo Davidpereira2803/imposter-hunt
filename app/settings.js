@@ -309,7 +309,7 @@ export default function Settings() {
 
         <View style={styles.version}>
           <Icon name="information-outline" size={16} color={palette.textDim} />
-          <Text style={styles.versionText}>{t("settings.version", "Version")} 1.0.0</Text>
+          <Text style={styles.versionText}>{t("settings.version", "Version")} 1.0.7</Text>
         </View>
       </ScrollView>
 
