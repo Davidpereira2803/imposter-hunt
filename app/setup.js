@@ -33,6 +33,7 @@ export default function Setup() {
   const [inputName, setInputName] = useState("");
   const [playerList, setPlayerList] = useState(storedPlayers || []);
   const [topicKey, setLocalTopicKey] = useState(storedTopicKey || null);
+  const [topicExpanded, setTopicExpanded] = useState(true);
   
   const [modalVisible, setModalVisible] = useState(false);
   const [topicName, setTopicName] = useState("");
@@ -156,8 +157,6 @@ export default function Setup() {
 
           {/* Topic Section */}
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>{t("setup.topic", "Topic")}</Text>
-
             <View style={styles.topicActionsRow}>
               <View style={{ flex: 1 }}>
                 <Button 
@@ -185,7 +184,22 @@ export default function Setup() {
               </View>
             </View>
 
-            {allTopics && allTopics.length > 0 && (
+            <TouchableOpacity 
+              onPress={() => {
+                Haptics.selectionAsync().catch(() => {});
+                setTopicExpanded(!topicExpanded);
+              }}
+              style={styles.topicHeader}
+            >
+              <Text style={styles.sectionTitle}>{t("setup.topic", "Topic")}</Text>
+              <Icon 
+                name={topicExpanded ? "chevron-up" : "chevron-down"} 
+                size={20} 
+                color={palette.textDim} 
+              />
+            </TouchableOpacity>
+
+            {topicExpanded && allTopics && allTopics.length > 0 && (
               <View style={styles.topicGrid}>
                 {allTopics.map((tpc) => {
                   const wordCount = tpc.words?.length || 0;
@@ -469,6 +483,13 @@ const styles = StyleSheet.create({
     color: palette.textDim,
   },
 
+  topicHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingBottom: space.sm,
+    marginBottom: space.md,
+  },
   topicActionsRow: {
     flexDirection: "row",
     alignItems: "stretch",
