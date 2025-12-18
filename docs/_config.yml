@@ -8,8 +8,7 @@ author:
   github: "davidpereira2803"
 
 markdown: kramdown
-remote_theme: "mmistakes/minimal-mistakes@4.24.0"
-minimal_mistakes_skin: "dark"
+remote_theme: pages-themes/slate@v0.2.0
 
 plugins:
   - jekyll-feed
