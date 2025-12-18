@@ -1,6 +1,14 @@
 ---
-layout: default
-title: Imposter Hunt - Social Deduction Game
+layout: splash
+title: Imposter Hunt
+header:
+  overlay_color: "#000"
+  overlay_filter: "0.5"
+  overlay_image: /assets/images/header.png
+  actions:
+    - label: "Download"
+      url: "https://play.google.com/..."
+
 ---
 
 # Imposter Hunt
@@ -19,7 +27,7 @@ Find the imposter among your friends before it's too late. One player receives a
 
 ## Download
 
-[Get it on Google Play](#) | [Download APK](#)
+[Get it on Google Play](https://play.google.com/store/apps/details?id=com.davidpereira2803.imposterhunt) | [Download APK](#)
 
 ## Documentation
 

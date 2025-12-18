@@ -61,3 +61,5 @@ Imposter Hunt is a social deduction game. One player is the imposter and doesnâ€
 - Jester: be suspicious, not obvious
 
 Enjoy!
+
+[Back to Home]({{ site.baseurl }}/) | [How to Play]({{ site.baseurl }}/HowToPlay)
