@@ -230,6 +230,10 @@ See the [Privacy Policy](docs/PRIVACY.md) for complete details.
 * Add rotating AI Topic examples
 * Add AI generator Tutorial
 * Add icons for jester and sherif in setup
+* **Collapsible topic section** in setup screen - Reduces scrolling by hiding topic grid by default
+* **Vote confirmation dialog** with player name - Prevents accidental eliminations
+* **Round information display** in voting screen - Shows current round and players remaining
+* **Smooth animations** on voting selection - Enhanced visual feedback with spring animations
 
 ---
 
