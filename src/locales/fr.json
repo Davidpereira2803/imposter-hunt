@@ -249,10 +249,19 @@
     "selectPlayerMessage": "Choisissez quelqu'un à éliminer",
     "noPlayers": "Aucun joueur disponible",
     "confirmVote": "Confirmer le Vote",
+    "confirmTitle": "Confirmer le Vote",
+    "confirmMessage": "Éliminer {{player}} ?",
     "playerEliminated": "Joueur Éliminé",
     "notTheImposter": "Pas l'imposteur !",
     "playersRemain": "{{count}} joueurs restants",
-    "continueToRound": "Continuer à la Manche {{round}}"
+    "continueToRound": "Continuer à la Manche {{round}}",
+    "roundInfo": "Manche {{round}} • {{count}} Joueurs Restants",
+    "eliminate": "Éliminer",
+    "playersAlive": "Vivants",
+    "eliminated": "Éliminé",
+    "tieTitle": "Votes Égalisés",
+    "tieMessage": "Un nouveau vote est nécessaire",
+    "revoteNeeded": "Les votes sont égalisés. Revotez maintenant !"
   },
   "aiTopics": {
     "title": "Créateur de Thèmes IA",

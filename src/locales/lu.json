@@ -248,10 +248,19 @@
     "selectPlayerMessage": "Wiel een fir erauszestëmmen",
     "noPlayers": "Keng Spiller verfügbar",
     "confirmVote": "Ofstëmmung Bestätegen",
+    "confirmTitle": "Ofstëmmung Bestätegen",
+    "confirmMessage": "{{player}} erauszestëmmen?",
     "playerEliminated": "Spiller Erausgeholl",
     "notTheImposter": "Net den Impostor!",
     "playersRemain": "{{count}} Spiller iwwreg",
-    "continueToRound": "Weider zu Ronn {{round}}"
+    "continueToRound": "Weider zu Ronn {{round}}",
+    "roundInfo": "Ronn {{round}} • {{count}} Spiller iwwreg",
+    "eliminate": "Erauszestëmmen",
+    "playersAlive": "Lieweg",
+    "eliminated": "Erausgeholl",
+    "tieTitle": "Ofstëmmung Gléich",
+    "tieMessage": "Nei Ofstëmmung erfuerderlech",
+    "revoteNeeded": "Ofstëmmunge sinn gläich. Stëmmt nach eng Kéier of!"
   },
   "aiTopics": {
     "title": "KI-Themen-Generator",

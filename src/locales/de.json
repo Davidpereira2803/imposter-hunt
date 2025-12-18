@@ -249,10 +249,19 @@
     "selectPlayerMessage": "Wähle jemanden zum Rauswählen",
     "noPlayers": "Keine Spieler verfügbar",
     "confirmVote": "Abstimmung Bestätigen",
+    "confirmTitle": "Abstimmung Bestätigen",
+    "confirmMessage": "{{player}} eliminieren?",
     "playerEliminated": "Spieler Ausgeschieden",
     "notTheImposter": "Nicht der Hochstapler!",
     "playersRemain": "{{count}} Spieler übrig",
-    "continueToRound": "Weiter zu Runde {{round}}"
+    "continueToRound": "Weiter zu Runde {{round}}",
+    "roundInfo": "Runde {{round}} • {{count}} Spieler übrig",
+    "eliminate": "Eliminieren",
+    "playersAlive": "Am Leben",
+    "eliminated": "Eliminiert",
+    "tieTitle": "Stimmen Gebunden",
+    "tieMessage": "Erneute Abstimmung erforderlich",
+    "revoteNeeded": "Die Stimmen sind gebunden. Stimmt erneut ab!"
   },
   "aiTopics": {
     "title": "KI-Themen-Generator",

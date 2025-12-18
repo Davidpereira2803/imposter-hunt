@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Alert, BackHandler, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, StyleSheet, Alert, BackHandler, TouchableOpacity, ScrollView, Animated } from "react-native";
 import { useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
 import { useGameStore } from "../src/store/gameStore";
@@ -28,6 +28,7 @@ export default function Vote() {
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [showEliminationModal, setShowEliminationModal] = useState(false);
   const [eliminatedPlayerData, setEliminatedPlayerData] = useState(null);
+  const scaleAnim = new Animated.Value(1);
 
   useEffect(() => {
     const backAction = () => {
@@ -46,12 +47,32 @@ export default function Vote() {
     return () => backHandler.remove();
   }, [t]);
 
-  const handleSelectPlayer = async (index) => {
+  const handleSelectPlayer = (index) => {
     setSelectedPlayer(index);
-    try { await Haptics.selectionAsync(); } catch {}
+    Animated.spring(scaleAnim, {
+      toValue: 1.05,
+      useNativeDriver: true
+    }).start();
   };
 
   const handleVote = async () => {
+    if (selectedPlayer === null) return;
+    
+    Alert.alert(
+      t("vote.confirmTitle", "Confirm Vote"),
+      t("vote.confirmMessage", { player: players[selectedPlayer] }),
+      [
+        { text: t("common.cancel"), style: "cancel" },
+        { 
+          text: t("vote.eliminate", "Eliminate"), 
+          style: "destructive",
+          onPress: executeVote 
+        }
+      ]
+    );
+  };
+
+  const executeVote = async () => {
     if (selectedPlayer === null) {
       Alert.alert(
         t("vote.selectPlayerTitle", "Select Player"),
@@ -146,7 +167,13 @@ export default function Vote() {
           <View style={styles.backButton} />
         </View>
 
-        <Text style={styles.subtitle}>{t("vote.subtitle", "Who is the imposter?")}</Text>
+        <Text style={styles.subtitle}>{t("vote.subtitle", "Who is the Munkeler?")}</Text>
+
+        <View style={styles.roundInfo}>
+          <Text style={styles.roundText}>
+            Round {round} • {alivePlayers.length} Players Left
+          </Text>
+        </View>
 
         <ScrollView 
           style={styles.playerList}
@@ -229,6 +256,20 @@ const styles = StyleSheet.create({
     color: palette.textDim,
     textAlign: "center",
     marginBottom: space.xl,
+  },
+  roundInfo: {
+    paddingVertical: space.md,
+    paddingHorizontal: space.sm,
+    borderRadius: radii.md,
+    backgroundColor: palette.background,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: space.lg,
+  },
+  roundText: {
+    fontSize: type.body,
+    fontWeight: "500",
+    color: palette.text,
   },
   playerList: {
     flex: 1,

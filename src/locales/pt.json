@@ -248,10 +248,19 @@
     "selectPlayerMessage": "Escolha alguém para eliminar",
     "noPlayers": "Nenhum jogador disponível",
     "confirmVote": "Confirmar Voto",
+    "confirmTitle": "Confirmar Voto",
+    "confirmMessage": "Eliminar {{player}}?",
     "playerEliminated": "Jogador Eliminado",
     "notTheImposter": "Não é o impostor!",
     "playersRemain": "{{count}} jogadores restantes",
-    "continueToRound": "Continuar para Rodada {{round}}"
+    "continueToRound": "Continuar para Rodada {{round}}",
+    "roundInfo": "Rodada {{round}} • {{count}} Jogadores Restantes",
+    "eliminate": "Eliminar",
+    "playersAlive": "Vivos",
+    "eliminated": "Eliminado",
+    "tieTitle": "Votos Empatados",
+    "tieMessage": "Nova votação necessária",
+    "revoteNeeded": "Os votos estão empatados. Votem novamente!"
   },
   "aiTopics": {
     "title": "Criador de Temas com IA",
