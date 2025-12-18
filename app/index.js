@@ -93,7 +93,7 @@ export default function Home() {
               size={icons.gameLogo.size}
               color={palette.primary}
             />
-            <Title style={styles.title}>{t("home.title", "Imposter Hunt")}</Title>
+            <Title style={styles.title}>{t("home.title", "Who's the Munkeler?")}</Title>
             <Text style={styles.subtitle}>
               {t("home.subtitle", "A social, pass-and-play word deduction game")}
             </Text>
