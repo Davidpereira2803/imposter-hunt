@@ -313,5 +313,30 @@
     "playersRemainingLabel": "Spiller iwwreg",
     "continue": "Weiderfueren",
     "unknown": "Onbekannt"
-  }
+  },
+  "aiTutorial": {
+  "title": "Wéi funktionéiert d'KI-Generéierung",
+  "gotIt": "Verstanen!",
+  "whatIsIt": "Wat ass dat?",
+  "whatIsItText": "De KI-Themen-Generator benotzt kënschtlech Intelligenz fir personaliséiert Wuertlëschten op Basis vun denger Beschreiwung ze generéieren. Perfekt fir eenzegaarteg Spillthemen!",
+  "howToUse": "Wéi benotzen",
+  "step1Title": "Beschreiw däin Thema",
+  "step1Text": "Gëff eng kloer Beschreiwung vun deem, wat s du wëlls. Gëff esou spezifesch wéi méiglech!",
+  "step2Title": "Wiel d'Astellungen",
+  "step2Text": "Wiel, wéi vill Wierder s du wëlls, an de Schwieregkeetsgrad.",
+  "step3Title": "Generéieren & Spillen",
+  "step3Text": "Dréck op Generéieren an deng personaliséiert Themenlëscht ass direkt fäerdeg fir benotzt ze ginn!",
+  "examples": "Gutt Beispiller",
+  "example1": "Clash Royale-Kaarten",
+  "example2": "Harry Potter-Zauber",
+  "example3": "Marvel-Superhelden",
+  "example4": "Programméiersproochen",
+  "example5": "Fussball-Equippen an Europa",
+  "dailyLimit": "Deeglech Generéierungen",
+  "dailyLimitText": "Du kriss 1 gratis Generéierung pro Dag. Kuck beluunegt Reklammen fir bis zu 5 weider deeglech Generéierungen fräizeschalten!",
+  "tips": "Pro-Rotschléi",
+  "tip1": "Säi esou spezifesch wéi méiglech an denger Beschreiwung fir besser Resultater",
+  "tip2": "Benotz \"Gemëscht\" als Schwieregkeetsgrad fir variéiert Wuertlängten",
+  "tip3": "Generéiert Themen ginn automatesch an deng personaliséiert Lëscht gespäichert"
+}
 }

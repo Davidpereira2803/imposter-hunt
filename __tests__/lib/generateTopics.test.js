@@ -3,21 +3,18 @@ import { useAIStore } from '../../src/store/aiStore';
 import NetInfo from '@react-native-community/netinfo';
 import API_CONFIG from '../../src/config/api';
 
-// Mock dependencies
 jest.mock('@react-native-community/netinfo');
 jest.mock('../../src/config/api', () => ({
   BASE_URL: 'https://test-api.com',
   API_KEY: 'test-key-123',
 }));
 
-// Mock fetch globally
 global.fetch = jest.fn();
 
 describe('generateTopics', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     
-    // Reset AI store
     useAIStore.setState({
       cache: {},
       generationsToday: 0,
@@ -25,7 +22,6 @@ describe('generateTopics', () => {
       lastGenerationDate: new Date().toISOString(),
     });
     
-    // Default NetInfo to connected
     NetInfo.fetch.mockResolvedValue({ isConnected: true });
   });
 
@@ -45,7 +41,6 @@ describe('generateTopics', () => {
         source: 'api',
       };
 
-      // First call to set cache
       fetch.mockResolvedValueOnce({
         ok: true,
         json: async () => cachedData.items,
@@ -53,10 +48,8 @@ describe('generateTopics', () => {
 
       await generateTopics(params);
 
-      // Clear fetch mock for second call
       jest.clearAllMocks();
 
-      // Second call should use cache
       const result = await generateTopics(params);
 
       expect(result.success).toBe(true);
@@ -83,7 +76,6 @@ describe('generateTopics', () => {
       expect(result.success).toBe(true);
       expect(result.data.items).toEqual(apiResponse);
       
-      // Verify cache was set
       const cache = useAIStore.getState().cache;
       const cacheKeys = Object.keys(cache);
       expect(cacheKeys.length).toBeGreaterThan(0);
@@ -335,7 +327,6 @@ describe('generateTopics', () => {
 
       expect(result.success).toBe(true);
       expect(result.data.topicGroup).toBe('AI Topics');
-      // Empty description won't generate items from words, but test should succeed
       expect(Array.isArray(result.data.items)).toBe(true);
     });
 
@@ -373,7 +364,6 @@ describe('generateTopics', () => {
       });
 
       expect(result.success).toBe(true);
-      // Should use 'big', 'car', 'road' - words with 3+ chars
       expect(result.data.items.some(item => 
         item.toLowerCase().includes('big') || 
         item.toLowerCase().includes('car') || 
@@ -426,7 +416,6 @@ describe('generateTopics', () => {
       });
 
       expect(result.success).toBe(true);
-      // Fallback sets language to 'en' but topicGroup is preserved
       expect(result.data.topicGroup).toBe('test');
     });
   });
@@ -440,7 +429,6 @@ describe('generateTopics', () => {
         language: 'en',
       };
 
-      // First API call
       fetch.mockResolvedValueOnce({
         ok: true,
         json: async () => ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'],
@@ -449,10 +437,8 @@ describe('generateTopics', () => {
       const result1 = await generateTopics(params);
       expect(result1.data.source).toBe('api');
 
-      // Clear fetch mock
       jest.clearAllMocks();
 
-      // Second call with same params should use cache
       const result2 = await generateTopics(params);
 
       expect(result2.data.source).toBe('cache');
@@ -461,7 +447,6 @@ describe('generateTopics', () => {
     });
 
     it('should create different cache entries for different inputs', async () => {
-      // First request
       fetch.mockResolvedValueOnce({
         ok: true,
         json: async () => ['First 1', 'First 2', 'First 3'],
@@ -477,7 +462,6 @@ describe('generateTopics', () => {
       const cacheCountAfterFirst = Object.keys(useAIStore.getState().cache).length;
       expect(cacheCountAfterFirst).toBe(1);
 
-      // Second request with different params
       fetch.mockResolvedValueOnce({
         ok: true,
         json: async () => ['Second 1', 'Second 2', 'Second 3'],
@@ -495,7 +479,6 @@ describe('generateTopics', () => {
     });
 
     it('should differentiate cache by all parameters', async () => {
-      // Same description, different difficulty
       fetch.mockResolvedValue({
         ok: true,
         json: async () => ['Item 1', 'Item 2'],

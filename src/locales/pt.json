@@ -313,5 +313,30 @@
     "playersRemainingLabel": "jogadores restantes",
     "continue": "Continuar",
     "unknown": "Desconhecido"
-  }
+  },
+  "aiTutorial": {
+  "title": "Como funciona a geração por IA",
+  "gotIt": "Entendi!",
+  "whatIsIt": "O que é?",
+  "whatIsItText": "O Criador de Temas com IA usa inteligência artificial para gerar listas de palavras personalizadas com base na sua descrição. Perfeito para criar temas únicos de jogo!",
+  "howToUse": "Como usar",
+  "step1Title": "Descreva seu tema",
+  "step1Text": "Insira uma descrição clara do que você quer. Seja específico!",
+  "step2Title": "Escolha as configurações",
+  "step2Text": "Selecione quantas palavras deseja e o nível de dificuldade.",
+  "step3Title": "Gerar e Jogar",
+  "step3Text": "Toque em Gerar e sua lista personalizada estará pronta para uso imediato!",
+  "examples": "Bons exemplos",
+  "example1": "Cartas do Clash Royale",
+  "example2": "Feitiços de Harry Potter",
+  "example3": "Super-heróis da Marvel",
+  "example4": "Linguagens de programação",
+  "example5": "Times de futebol na Europa",
+  "dailyLimit": "Gerações Diárias",
+  "dailyLimitText": "Você tem 1 geração gratuita por dia. Assista a anúncios recompensados para desbloquear até 5 gerações adicionais diariamente!",
+  "tips": "Dicas Pro",
+  "tip1": "Seja específico na descrição para obter melhores resultados",
+  "tip2": "Use a dificuldade \"Misto\" para variação no tamanho das palavras",
+  "tip3": "Os temas gerados são salvos automaticamente na sua lista personalizada"
+}
 }

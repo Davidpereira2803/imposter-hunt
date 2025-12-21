@@ -1,7 +1,6 @@
 import i18n from '../../src/lib/i18n';
 import * as Localization from 'expo-localization';
 
-// Mock expo-localization
 jest.mock('expo-localization', () => ({
   locale: 'en-US',
 }));
@@ -71,8 +70,6 @@ describe('i18n', () => {
     it('should support interpolation', () => {
       i18n.locale = 'en';
 
-      // Test with a key that has interpolation (if exists in your locales)
-      // This is a generic test for i18n interpolation capability
       const result = i18n.t('common.continue');
       expect(typeof result).toBe('string');
     });
@@ -128,7 +125,6 @@ describe('i18n', () => {
       i18n.locale = 'es';
       const esTranslation = i18n.t('common.continue');
 
-      // Translations should exist in both languages
       expect(enTranslation).toBeTruthy();
       expect(esTranslation).toBeTruthy();
       expect(typeof enTranslation).toBe('string');
@@ -138,14 +134,12 @@ describe('i18n', () => {
 
   describe('Locale Resolution', () => {
     it('should resolve locale from device settings', () => {
-      // The locale should be set based on device or default to 'en'
       expect(['en', 'pt', 'fr', 'de', 'lu', 'it', 'es']).toContain(i18n.locale);
     });
 
     it('should handle invalid locale gracefully', () => {
       i18n.locale = 'invalid';
 
-      // I18n should still work, even with invalid locale
       const result = i18n.t('common.continue', { defaultValue: 'Continue' });
       expect(typeof result).toBe('string');
     });
@@ -159,7 +153,6 @@ describe('i18n', () => {
       languages.forEach((lang) => {
         const langKeys = Object.keys(i18n.translations[lang]);
 
-        // Each language should have the same top-level keys as English
         baseKeys.forEach((key) => {
           expect(langKeys).toContain(key);
         });
@@ -260,7 +253,6 @@ describe('i18n', () => {
     it('should fallback to default locale for missing translations', () => {
       i18n.locale = 'en';
 
-      // Even if we set an invalid locale, it should fallback
       const result = i18n.t('common.continue');
       expect(typeof result).toBe('string');
       expect(result.length).toBeGreaterThan(0);
@@ -270,7 +262,6 @@ describe('i18n', () => {
       i18n.locale = 'en';
       const enValue = i18n.t('common.continue');
 
-      // If a key is somehow missing in another language, it should fallback to English
       expect(enValue).toBe('Continue');
     });
   });
