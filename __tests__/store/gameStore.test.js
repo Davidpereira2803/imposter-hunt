@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react-native';
-import { useGameStore } from '../src/store/gameStore';
+import { useGameStore } from '../../src/store/gameStore';
 
 describe('Game Store', () => {
   beforeEach(async () => {

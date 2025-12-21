@@ -1,4 +1,4 @@
-import { createTestGameState, checkWinCondition, cleanWord } from '../src/utils/testHelpers';
+import { createTestGameState, checkWinCondition, cleanWord } from '../../src/utils/testHelpers';
 
 describe('Test Helpers', () => {
   describe('createTestGameState', () => {
