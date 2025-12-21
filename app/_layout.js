@@ -82,6 +82,9 @@ export default function RootLayout() {
             screenOptions={{
               headerShown: false,
               animation: "slide_from_right",
+              gestureEnabled: true, 
+              gestureDirection: "horizontal",
+              fullScreenGestureEnabled: true,
             }}
             initialRouteName={showTutorial ? "tutorial" : "index"}
           />

@@ -223,6 +223,7 @@ See the [Privacy Policy](docs/PRIVACY.md) for complete details.
 * Implement production ads
 
 ### (v1.0.8) What is new?
+* **Fixed swipe navigation** - Back gestures now properly navigate between screens instead of triggering exit dialog
 * Improved screen adaptation for OS buttons
 * Removed orientation and resizeability restriction
 * Correct version in settings

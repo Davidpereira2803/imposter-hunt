@@ -13,15 +13,23 @@ All notable changes to Imposter Hunt are documented here.
 
 **Released:** December 2025
 
+### New Features
+- **AI Generator Tutorial** - Added interactive tutorial explaining how AI topic generation works
+- **Rotating AI Examples** - Dynamic topic examples in AI generator for inspiration
+- **Vote Confirmation Dialog** - Added player name confirmation before elimination to prevent accidents
+- **Round Information Display** - Shows current round and remaining players in voting screen
+- **Collapsible Topic Section** - Topic grid in setup screen now collapses by default to reduce scrolling
+
+### Bug Fixes
+- **Fixed Swipe Navigation** - Back gestures now properly navigate between screens instead of triggering exit dialog
+- Corrected version display in settings screen
+
 ### Improvements
 - **Screen Adaptation** - Better handling of OS navigation buttons and status bar
 - **Orientation Support** - Removed orientation and resizability restrictions for better flexibility
 - **Theme Update** - Changed primary theme color to red for better brand identity
-- **AI Examples** - Added rotating topic examples in AI generator for inspiration
-- **Icons** - Added visual icons for Jester and Sheriff roles in setup screen
-
-### Bug Fixes
-- Corrected version display in settings screen
+- **Role Icons** - Added visual icons for Jester and Sheriff roles in setup screen
+- **Smooth Animations** - Enhanced voting selection with spring animations for better visual feedback
 
 ---
 
