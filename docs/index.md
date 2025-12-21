@@ -5,30 +5,131 @@ title: Imposter Hunt - Social Deduction Game
 
 # Imposter Hunt
 
-**The ultimate social deduction game for mobile!**
+**AI-powered social deduction game. One device, endless fun.**
 
-Find the imposter among your friends before it's too late. One player receives a different word - can you figure out who?
+Find the imposter among your friends before it's too late. One player receives a different word — can you figure out who? Perfect for parties, game nights, and road trips.
+
+---
+
+## How It Works
+
+1. **Setup** - Add 3-12 players and pick a topic
+2. **Roles** - Everyone gets the secret word... except the imposter
+3. **Discuss** - Give hints and watch for suspicious behavior
+4. **Vote** - Eliminate who you think is the imposter
+5. **Win** - Civilians catch the imposter, or the imposter survives!
+
+---
 
 ## Features
 
-- **3-12 Players** - Perfect for any group size
-- **AI Topic Generator** - Create custom word lists instantly
-- **Multiple Languages** - Play in your language
-- **Beautiful UI** - Modern, polished design
-- **Privacy First** - Your data stays on your device
+### Core Gameplay
+- **3-12 Players** - Perfect for any group size, pass-and-play on one device
+- **Special Roles** - Enable Jester (wins if eliminated) and Sheriff (can inspect players) for 4+ player games
+- **Quick Rounds** - 5-15 minute games, perfect for any occasion
+- **Offline Play** - No internet required, play anywhere
+
+### AI-Powered
+- **AI Topic Generator** - Create custom word lists instantly with AI
+- **Smart Difficulty** - Adjust complexity for casual or hardcore players
+- **1 Free Generation/Day** - Plus 5 bonus via rewarded ads
+
+### Accessibility
+- **7 Languages** - English, Spanish, French, German, Italian, Portuguese, Luxembourgish
+- **Beautiful UI** - Modern, polished design with haptic feedback
+- **Privacy First** - All data stays on your device, no accounts needed
+
+[See All Features](Features)
+
+---
 
 ## Download
 
-[Get it on Google Play](#) | [Download APK](#)
+**Available Now on Android**
+
+[![Get it on Google Play](https://img.shields.io/badge/Google_Play-414141?style=for-the-badge&logo=google-play&logoColor=white)](https://play.google.com/store/apps/details?id=com.davidpereira2803.imposterhunt)
+
+> Free to play • No ads during gameplay • Optional rewarded ads for AI generations
+
+---
 
 ## Documentation
 
-- [How to Play](HowToPlay)
-- [Privacy Policy](Privacy)
+<div class="feature-grid">
+  <div class="feature-card">
+    <h4>How to Play</h4>
+    <p>Complete rules, role explanations, and demo video</p>
+    <a href="{{ site.baseurl }}/HowToPlay">Read Guide →</a>
+  </div>
+  
+  <div class="feature-card">
+    <h4>Strategy Guide</h4>
+    <p>Advanced tactics for Civilian, Imposter, Jester, and Sheriff</p>
+    <a href="{{ site.baseurl }}/Strategy-Guide">Learn Strategies →</a>
+  </div>
+  
+  <div class="feature-card">
+    <h4>Features</h4>
+    <p>Deep dive into AI topics, special roles, and all capabilities</p>
+    <a href="{{ site.baseurl }}/Features">Explore Features →</a>
+  </div>
+  
+  <div class="feature-card">
+    <h4>FAQ</h4>
+    <p>Frequently asked questions and troubleshooting</p>
+    <a href="{{ site.baseurl }}/FAQ">Get Answers →</a>
+  </div>
+  
+  <div class="feature-card">
+    <h4>Screenshots</h4>
+    <p>Visual tour of the game interface and features</p>
+    <a href="{{ site.baseurl }}/Screenshots">View Gallery →</a>
+  </div>
+  
+  <div class="feature-card">
+    <h4>Changelog</h4>
+    <p>Version history and what's new in each release</p>
+    <a href="{{ site.baseurl }}/Changelog">See Updates →</a>
+  </div>
+</div>
+
+---
+
+## Perfect For
+
+- **Parties & Gatherings** - Break the ice with friends
+- **Travel** - Offline play for flights and road trips
+- **Classrooms** - Educational and fun team-building
+- **Game Nights** - Quick rounds between board games
+
+---
 
 ## Built With
 
-React Native • Expo • Zustand • AI Integration
+**React Native** • **Expo** • **Zustand** • **AI Integration** • **Google AdMob**
+
+Open source? Check out the [GitHub repo](https://github.com/Davidpereira2803/imposter-hunt) for tech details.
+
+---
+
+## See It In Action
+
+Want to see gameplay first? Check out our **[How to Play](HowToPlay)** page for a demo video and detailed walkthrough.
+
+---
+
+## Feedback & Support
+
+Found a bug or have a feature request? 
+
+- [Open an issue on GitHub](https://github.com/Davidpereira2803/imposter-hunt/issues)
+- [Reach out to @davidpereira2803](https://github.com/davidpereira2803)
+- Questions? Check the [FAQ](FAQ) first
+
+---
+
+**Quick Links:**  
+[How to Play](HowToPlay) • [Strategy Guide](Strategy-Guide) • [Features](Features) • [FAQ](FAQ) • [Screenshots](Screenshots) • [Changelog](Changelog) • [Privacy](Privacy)
 
 ---
 

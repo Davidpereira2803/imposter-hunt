@@ -103,4 +103,4 @@ Email: perda.business@gmail.com
 
 **By using Imposter Hunt, you agree to this Privacy Policy.**
 
-[Back to Home]({{ site.baseurl }}/) | [How to Play]({{ site.baseurl }}/HowToPlay)
+[Back to Home]({{ site.baseurl }}/) | [How to Play](HowToPlay) | [Strategy Guide](Strategy-Guide) | [Features](Features) | [FAQ](FAQ) | [Screenshots](Screenshots) | [Changelog](Changelog)

@@ -7,12 +7,13 @@ export function useTranslation() {
 
   const t = useCallback(
     (key, fallbackOrOptions, options) => {
-      // If second param is string, it's fallback; if object, it's options
       const fallback = typeof fallbackOrOptions === "string" ? fallbackOrOptions : undefined;
       const opts = typeof fallbackOrOptions === "object" ? fallbackOrOptions : options;
-      
-      const val = i18n.t(key, opts);
-      return val === key ? (fallback ?? key) : val;
+      const finalOpts = fallback ? { ...(opts || {}), defaultValue: fallback } : opts;
+
+      const val = i18n.t(key, finalOpts);
+      const isMissing = typeof val === "string" && /^\[missing ".+?" translation\]$/.test(val);
+      return isMissing ? (fallback ?? key) : val;
     },
     [locale]
   );

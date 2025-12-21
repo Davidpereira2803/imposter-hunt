@@ -14,7 +14,7 @@
     "tapToClose": "Toca en cualquier lugar para cerrar"
   },
   "home": {
-    "title": "Caza del Impostor",
+    "title": "¿Quién es el Munkeler?",
     "subtitle": "Un juego social de deducción de palabras",
     "continueGame": "Continuar Partida",
     "newGame": "Nueva Partida",
@@ -249,10 +249,19 @@
     "selectPlayerMessage": "Elige a alguien para eliminar",
     "noPlayers": "No hay jugadores disponibles",
     "confirmVote": "Confirmar Voto",
+    "confirmTitle": "Confirmar Voto",
+    "confirmMessage": "¿Eliminar a {{player}}?",
     "playerEliminated": "Jugador Eliminado",
     "notTheImposter": "¡No es el impostor!",
     "playersRemain": "{{count}} jugadores quedan",
-    "continueToRound": "Continuar a la Ronda {{round}}"
+    "continueToRound": "Continuar a la Ronda {{round}}",
+    "roundInfo": "Ronda {{round}} • {{count}} Jugadores Restantes",
+    "eliminate": "Eliminar",
+    "playersAlive": "Vivos",
+    "eliminated": "Eliminado",
+    "tieTitle": "Votos Empatados",
+    "tieMessage": "Se requiere revotación",
+    "revoteNeeded": "Los votos están empatados. ¡Vota de nuevo!"
   },
   "aiTopics": {
     "title": "Creador de Temas IA",
@@ -305,5 +314,30 @@
     "playersRemainingLabel": "jugadores restantes",
     "continue": "Continuar",
     "unknown": "Desconocido"
+  },
+  "aiTutorial": {
+    "title": "Cómo funciona la generación con IA",
+    "gotIt": "¡Entendido!",
+    "whatIsIt": "¿Qué es?",
+    "whatIsItText": "El Creador de Temas IA usa inteligencia artificial para generar listas de palabras personalizadas según tu descripción. ¡Perfecto para crear temas únicos del juego!",
+    "howToUse": "Cómo usarlo",
+    "step1Title": "Describe tu tema",
+    "step1Text": "Escribe una descripción clara de lo que quieres. ¡Sé específico!",
+    "step2Title": "Elige los ajustes",
+    "step2Text": "Selecciona cuántas palabras quieres y el nivel de dificultad.",
+    "step3Title": "Genera y juega",
+    "step3Text": "Pulsa generar y tu lista de temas personalizada estará lista para usar al instante.",
+    "examples": "Buenos ejemplos",
+    "example1": "Cartas de Clash Royale",
+    "example2": "Hechizos de Harry Potter",
+    "example3": "Superhéroes de Marvel",
+    "example4": "Lenguajes de programación",
+    "example5": "Equipos de fútbol en Europa",
+    "dailyLimit": "Generaciones diarias",
+    "dailyLimitText": "Tienes 1 generación gratis al día. Mira anuncios con recompensa para desbloquear hasta 5 generaciones más al día.",
+    "tips": "Consejos Pro",
+    "tip1": "Sé específico en tu descripción para obtener mejores resultados",
+    "tip2": "Usa dificultad 'Mixto' para palabras de longitudes variadas",
+    "tip3": "Los temas generados se guardan automáticamente en tu lista personalizada"
   }
 }

@@ -14,7 +14,7 @@
     "tapToClose": "Tocca ovunque per chiudere"
   },
   "home": {
-    "title": "Caccia all'Impostore",
+    "title": "Chi è il Munkeler?",
     "subtitle": "Un gioco sociale di deduzione dove trovi l'impostore tra i tuoi amici",
     "continueGame": "Continua Partita",
     "newGame": "Nuova Partita",
@@ -248,10 +248,19 @@
     "selectPlayerMessage": "Scegli qualcuno da eliminare",
     "noPlayers": "Nessun giocatore disponibile",
     "confirmVote": "Conferma Voto",
+    "confirmTitle": "Conferma Voto",
+    "confirmMessage": "Eliminare {{player}}?",
     "playerEliminated": "Giocatore Eliminato",
     "notTheImposter": "Non è l'impostore!",
     "playersRemain": "{{count}} giocatori rimasti",
-    "continueToRound": "Continua al Round {{round}}"
+    "continueToRound": "Continua al Round {{round}}",
+    "roundInfo": "Round {{round}} • {{count}} Giocatori Rimasti",
+    "eliminate": "Elimina",
+    "playersAlive": "Vivi",
+    "eliminated": "Eliminato",
+    "tieTitle": "Voti Pari",
+    "tieMessage": "È necessario un nuovo voto",
+    "revoteNeeded": "I voti sono pari. Rivota ora!"
   },
   "aiTopics": {
     "title": "Generatore di Argomenti IA",
@@ -304,5 +313,30 @@
     "playersRemainingLabel": "giocatori rimasti",
     "continue": "Continua",
     "unknown": "Sconosciuto"
-  }
+  },
+  "aiTutorial": {
+  "title": "Come funziona la generazione IA",
+  "gotIt": "Capito!",
+  "whatIsIt": "Che cos'è?",
+  "whatIsItText": "Il Generatore di Argomenti IA utilizza l'intelligenza artificiale per creare liste di parole personalizzate in base alla tua descrizione. Perfetto per temi di gioco unici!",
+  "howToUse": "Come usarlo",
+  "step1Title": "Descrivi il tuo argomento",
+  "step1Text": "Inserisci una descrizione chiara di ciò che desideri. Sii specifico!",
+  "step2Title": "Scegli le impostazioni",
+  "step2Text": "Seleziona quante parole vuoi e il livello di difficoltà.",
+  "step3Title": "Genera e Gioca",
+  "step3Text": "Premi Genera e la tua lista personalizzata sarà subito pronta da usare!",
+  "examples": "Buoni esempi",
+  "example1": "Carte Clash Royale",
+  "example2": "Incantesimi Harry Potter",
+  "example3": "Supereroi Marvel",
+  "example4": "Linguaggi di programmazione",
+  "example5": "Squadre di calcio in Europa",
+  "dailyLimit": "Generazioni Giornaliere",
+  "dailyLimitText": "Hai 1 generazione gratuita al giorno. Guarda annunci premiati per sbloccare fino a 5 generazioni aggiuntive al giorno!",
+  "tips": "Consigli Pro",
+  "tip1": "Sii preciso nella descrizione per risultati migliori",
+  "tip2": "Usa la difficoltà \"Misto\" per lunghezze di parole variate",
+  "tip3": "Gli argomenti generati vengono salvati automaticamente nella tua lista personalizzata"
+}
 }

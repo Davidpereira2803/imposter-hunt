@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { View, StyleSheet, BackHandler, Alert, Text, TouchableOpacity } from "react-native";
-import { useRouter } from "expo-router";
+import { useRouter, useFocusEffect } from "expo-router";
 import * as Haptics from "expo-haptics";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useGameStore } from "../src/store/gameStore";
@@ -19,22 +19,24 @@ export default function Home() {
   const { players, topicKey, getTopicByKey } = useGameStore();
   const { t } = useTranslation();
 
-  useEffect(() => {
-    const backAction = () => {
-      Alert.alert(
-        t("home.exitTitle", "Exit"),
-        t("home.exitMessage", "Exit game?"),
-        [
-          { text: t("common.cancel", "Cancel"), style: "cancel" },
-          { text: t("home.exit", "Exit"), onPress: () => BackHandler.exitApp() }
-        ]
-      );
-      return true;
-    };
+  useFocusEffect(
+    React.useCallback(() => {
+      const backAction = () => {
+        Alert.alert(
+          t("home.exitTitle", "Exit"),
+          t("home.exitMessage", "Exit game?"),
+          [
+            { text: t("common.cancel", "Cancel"), style: "cancel" },
+            { text: t("home.exit", "Exit"), onPress: () => BackHandler.exitApp() }
+          ]
+        );
+        return true;
+      };
 
-    const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
-    return () => backHandler.remove();
-  }, [t]);
+      const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
+      return () => backHandler.remove();
+    }, [t])
+  );
 
   const handleQuickStart = async () => {
     try { await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium); } catch {}
@@ -93,7 +95,7 @@ export default function Home() {
               size={icons.gameLogo.size}
               color={palette.primary}
             />
-            <Title style={styles.title}>{t("home.title", "Imposter Hunt")}</Title>
+            <Title style={styles.title}>{t("home.title", "Who's the Munkeler?")}</Title>
             <Text style={styles.subtitle}>
               {t("home.subtitle", "A social, pass-and-play word deduction game")}
             </Text>

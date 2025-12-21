@@ -14,7 +14,7 @@
     "tapToClose": "Überall tippen zum Schließen"
   },
   "home": {
-    "title": "Hochstapler-Jagd",
+    "title": "Wer ist der Munkeler?",
     "subtitle": "Ein soziales Deduktionsspiel zum Weitergeben",
     "continueGame": "Spiel Fortsetzen",
     "newGame": "Neues Spiel",
@@ -249,10 +249,19 @@
     "selectPlayerMessage": "Wähle jemanden zum Rauswählen",
     "noPlayers": "Keine Spieler verfügbar",
     "confirmVote": "Abstimmung Bestätigen",
+    "confirmTitle": "Abstimmung Bestätigen",
+    "confirmMessage": "{{player}} eliminieren?",
     "playerEliminated": "Spieler Ausgeschieden",
     "notTheImposter": "Nicht der Hochstapler!",
     "playersRemain": "{{count}} Spieler übrig",
-    "continueToRound": "Weiter zu Runde {{round}}"
+    "continueToRound": "Weiter zu Runde {{round}}",
+    "roundInfo": "Runde {{round}} • {{count}} Spieler übrig",
+    "eliminate": "Eliminieren",
+    "playersAlive": "Am Leben",
+    "eliminated": "Eliminiert",
+    "tieTitle": "Stimmen Gebunden",
+    "tieMessage": "Erneute Abstimmung erforderlich",
+    "revoteNeeded": "Die Stimmen sind gebunden. Stimmt erneut ab!"
   },
   "aiTopics": {
     "title": "KI-Themen-Generator",
@@ -305,5 +314,30 @@
     "playersRemainingLabel": "Spieler übrig",
     "continue": "Weiter",
     "unknown": "Unbekannt"
+  },
+  "aiTutorial": {
+    "title": "Wie die KI-Generierung funktioniert",
+    "gotIt": "Verstanden!",
+    "whatIsIt": "Was ist das?",
+    "whatIsItText": "Der KI-Themen-Generator nutzt künstliche Intelligenz, um basierend auf deiner Beschreibung individuelle Wortlisten zu erstellen. Perfekt für einzigartige Spielthemen!",
+    "howToUse": "So nutzt du es",
+    "step1Title": "Beschreibe dein Thema",
+    "step1Text": "Gib eine klare, spezifische Beschreibung ein.",
+    "step2Title": "Einstellungen wählen",
+    "step2Text": "Wähle Anzahl der Wörter und den Schwierigkeitsgrad.",
+    "step3Title": "Generieren & Spielen",
+    "step3Text": "Tippe auf Generieren und deine Liste ist sofort einsatzbereit!",
+    "examples": "Gute Beispiele",
+    "example1": "Clash Royale-Karten",
+    "example2": "Harry-Potter-Zaubersprüche",
+    "example3": "Marvel-Superhelden",
+    "example4": "Programmiersprachen",
+    "example5": "Fußballteams in Europa",
+    "dailyLimit": "Tägliche Generierungen",
+    "dailyLimitText": "Du erhältst 1 kostenlose Generierung pro Tag. Schaue belohnte Werbung, um bis zu 5 weitere tägliche Generierungen freizuschalten!",
+    "tips": "Tipps",
+    "tip1": "Sei spezifisch in deiner Beschreibung für bessere Ergebnisse",
+    "tip2": "Nutze \"Gemischt\" für verschiedene Wortlängen",
+    "tip3": "Generierte Themen werden automatisch in deiner eigenen Liste gespeichert"
   }
 }

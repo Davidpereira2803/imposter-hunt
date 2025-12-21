@@ -14,7 +14,7 @@
     "tapToClose": "Appuyez n'importe où pour fermer"
   },
   "home": {
-    "title": "Chasse à l'Imposteur",
+    "title": "Qui est le Munkeler?",
     "subtitle": "Un jeu de déduction sociale où vous trouvez l'imposteur parmi vos amis.",
     "continueGame": "Continuer la Partie",
     "newGame": "Nouvelle Partie",
@@ -249,10 +249,19 @@
     "selectPlayerMessage": "Choisissez quelqu'un à éliminer",
     "noPlayers": "Aucun joueur disponible",
     "confirmVote": "Confirmer le Vote",
+    "confirmTitle": "Confirmer le Vote",
+    "confirmMessage": "Éliminer {{player}} ?",
     "playerEliminated": "Joueur Éliminé",
     "notTheImposter": "Pas l'imposteur !",
     "playersRemain": "{{count}} joueurs restants",
-    "continueToRound": "Continuer à la Manche {{round}}"
+    "continueToRound": "Continuer à la Manche {{round}}",
+    "roundInfo": "Manche {{round}} • {{count}} Joueurs Restants",
+    "eliminate": "Éliminer",
+    "playersAlive": "Vivants",
+    "eliminated": "Éliminé",
+    "tieTitle": "Votes Égalisés",
+    "tieMessage": "Un nouveau vote est nécessaire",
+    "revoteNeeded": "Les votes sont égalisés. Revotez maintenant !"
   },
   "aiTopics": {
     "title": "Créateur de Thèmes IA",
@@ -305,5 +314,30 @@
     "playersRemainingLabel": "joueurs restants",
     "continue": "Continuer",
     "unknown": "Inconnu"
-  }
+  },
+  "aiTutorial": {
+  "title": "Comment fonctionne la génération IA",
+  "gotIt": "Compris !",
+  "whatIsIt": "Qu'est-ce que c'est ?",
+  "whatIsItText": "Le Créateur de Thèmes IA utilise l'intelligence artificielle pour générer des listes de mots personnalisées à partir de votre description. Parfait pour créer des thèmes de jeu uniques !",
+  "howToUse": "Comment l'utiliser",
+  "step1Title": "Décrivez votre thème",
+  "step1Text": "Saisissez une description claire de ce que vous voulez. Soyez précis !",
+  "step2Title": "Choisissez les paramètres",
+  "step2Text": "Sélectionnez le nombre de mots souhaité et le niveau de difficulté.",
+  "step3Title": "Générer et Jouer",
+  "step3Text": "Appuyez sur Générer et votre liste de thèmes personnalisée sera prête à être utilisée immédiatement !",
+  "examples": "Bons exemples",
+  "example1": "Cartes Clash Royale",
+  "example2": "Sorts Harry Potter",
+  "example3": "Super-héros Marvel",
+  "example4": "Langages de programmation",
+  "example5": "Équipes de football en Europe",
+  "dailyLimit": "Générations Quotidiennes",
+  "dailyLimitText": "Vous avez 1 génération gratuite par jour. Regardez des publicités récompensées pour débloquer jusqu'à 5 générations supplémentaires par jour !",
+  "tips": "Astuces Pro",
+  "tip1": "Soyez précis dans votre description pour de meilleurs résultats",
+  "tip2": "Utilisez la difficulté « Mixte » pour des longueurs de mots variées",
+  "tip3": "Les thèmes générés sont automatiquement enregistrés dans votre liste personnalisée"
+}
 }

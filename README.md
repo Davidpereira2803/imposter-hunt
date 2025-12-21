@@ -223,6 +223,7 @@ See the [Privacy Policy](docs/PRIVACY.md) for complete details.
 * Implement production ads
 
 ### (v1.0.8) What is new?
+* **Fixed swipe navigation** - Back gestures now properly navigate between screens instead of triggering exit dialog
 * Improved screen adaptation for OS buttons
 * Removed orientation and resizeability restriction
 * Correct version in settings
@@ -230,6 +231,10 @@ See the [Privacy Policy](docs/PRIVACY.md) for complete details.
 * Add rotating AI Topic examples
 * Add AI generator Tutorial
 * Add icons for jester and sherif in setup
+* **Collapsible topic section** in setup screen - Reduces scrolling by hiding topic grid by default
+* **Vote confirmation dialog** with player name - Prevents accidental eliminations
+* **Round information display** in voting screen - Shows current round and players remaining
+* **Smooth animations** on voting selection - Enhanced visual feedback with spring animations
 
 ---
 
