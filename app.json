@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "Imposter Hunt",
-    "slug": "imposter-hunt",
+    "name": "The Munkeler",
+    "slug": "the-munkeler",
     "version": "1.0.8",
     "orientation": "default",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
-    "scheme": "impostor-hunt",
+    "scheme": "the-munkeler",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
