@@ -236,6 +236,9 @@ See the [Privacy Policy](docs/PRIVACY.md) for complete details.
 * **Round information display** in voting screen - Shows current round and players remaining
 * **Smooth animations** on voting selection - Enhanced visual feedback with spring animations
 
+
+### (v1.0.9) What is new?
+* Rebranding from **Imposter Hunt** to **The Munkeler**
 ---
 
 ## Contributing
