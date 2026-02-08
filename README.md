@@ -249,7 +249,7 @@ This is a personal project, but feedback and suggestions are welcome. Please ope
 
 ## License
 
-Copyright 2025 David Pereira — All rights reserved.
+Copyright 2026 David Pereira — All rights reserved.
 
 This software and associated documentation files may not be copied, modified, merged, published, distributed, sublicensed, or sold without express written permission from the author.
 

@@ -13,7 +13,7 @@ Master the art of deception and deduction with advanced strategies for every rol
 
 ### Playing as Civilian
 
-**Your Goal:** Identify and eliminate the Imposter
+**Your Goal:** Identify and eliminate the Munkeler
 
 #### Basic Strategy
 
@@ -53,19 +53,19 @@ Master the art of deception and deduction with advanced strategies for every rol
 - Change your vote strategically to observe reactions
 
 **Meta-Gaming**
-- Remember who was Imposter in previous rounds
+- Remember who was Munkeler in previous rounds
 - Notice playing patterns (some people are always vague)
 - Track who gives consistently good vs generic hints
 
 **Common Mistakes to Avoid:**
 - ❌ Giving synonyms ("It's a feline" for "Cat")
-- ❌ Being too specific early (Imposter learns too much)
+- ❌ Being too specific early (Munkeler learns too much)
 - ❌ Accusing without evidence (creates chaos)
 - ❌ Trusting someone just because they're confident
 
 ---
 
-### Playing as Imposter
+### Playing as the Munkeler
 
 **Your Goal:** Guess the word or survive to 2 players
 
@@ -136,7 +136,7 @@ Master the art of deception and deduction with advanced strategies for every rol
 #### Basic Strategy
 
 **Be Suspicious, Not Obvious**
-- Don't confess you're the Imposter (too easy)
+- Don't confess you're the Munkeler (too easy)
 - Give hints that are slightly off
 - Act confused or contradict yourself subtly
 
@@ -153,8 +153,8 @@ Master the art of deception and deduction with advanced strategies for every rol
 #### Advanced Tactics
 
 **The False Defense**
-- Defend the actual Imposter to seem like accomplices
-- "I don't think [Imposter] is suspicious at all"
+- Defend the actual Munkeler to seem like accomplices
+- "I don't think [The Munkeler] is suspicious at all"
 - Creates association in others' minds
 
 **The Flip-Flop**
@@ -165,22 +165,22 @@ Master the art of deception and deduction with advanced strategies for every rol
 **The Overconfident Tell**
 - Give a very specific hint early
 - Then act nervous when people notice
-- Seems like you slipped up (classic Imposter mistake)
+- Seems like you slipped up (classic Munkeler mistake)
 
 **Timing Your Act:**
 - Early game: subtle suspicion
 - Mid game: increase red flags
-- Late game: be more obvious (before Imposter is caught)
+- Late game: be more obvious (before Munkeler is caught)
 
 **The Reverse Psychology:**
-- Say "I'm definitely NOT the Imposter!"
+- Say "I'm definitely NOT the Munkeler!"
 - The more you insist, the guiltier you look
 
 **Common Mistakes to Avoid:**
 - ❌ Being too obvious (people will know you're Jester)
 - ❌ Staying silent (won't get voted)
 - ❌ Voting for yourself (dead giveaway)
-- ❌ Acting suspicious after Imposter is revealed (timing is wrong)
+- ❌ Acting suspicious after Munkeler is revealed (timing is wrong)
 
 **Pro Tip:** The best Jester play is being suspicious enough to get voted, but not so obvious that people suspect you're the Jester.
 
@@ -199,11 +199,11 @@ Master the art of deception and deduction with advanced strategies for every rol
 
 **Reading Inspections:**
 - **Civilian** - Cleared, trust their hints
-- **Imposter** - Found them! Share immediately
+- **Munkeler** - Found them! Share immediately
 - **Jester** - Don't reveal (they want elimination)
 
 **Information Management:**
-- Share Imposter findings immediately
+- Share the Munkeler findings immediately
 - Keep Jester findings secret (don't help them win)
 - Clear Civilians publicly to build trust
 
@@ -217,33 +217,33 @@ Master the art of deception and deduction with advanced strategies for every rol
 
 **The Bluff:**
 - Pretend you haven't used inspection yet
-- Imposter might reveal themselves thinking you still have it
+- Munkeler might reveal themselves thinking you still have it
 - Use it earlier than they expect
 
 **The Silent Clear:**
 - Inspect someone, find them Civilian
 - Don't announce it immediately
-- Watch if Imposter tries to frame them
-- Reveal at perfect moment to expose Imposter
+- Watch if the Munkeler tries to frame them
+- Reveal at perfect moment to expose the Munkeler
 
 **The Jester Dilemma:**
 - If you find the Jester early, don't reveal
 - Steer votes away from Jester subtly
-- Focus group on actual Imposter
-- Let Jester help confuse the Imposter
+- Focus group on actual Munkeler
+- Let Jester help confuse the Munkeler
 
 **Protecting Your Identity:**
 - Don't reveal you're Sheriff too early
-- Imposter might guess and frame you
+- The Munkeler might guess and frame you
 - Announce only when you have critical info
 
 **Common Mistakes to Avoid:**
 - ❌ Wasting inspection on random guess Round 1
 - ❌ Revealing Jester (helps them win)
-- ❌ Saving inspection too late (Imposter already caught/won)
+- ❌ Saving inspection too late (The Munkeler already caught/won)
 - ❌ Inspecting the same person twice (impossible, but don't waste it on cleared player)
 
-**Pro Tip:** Inspect the most confident player. Imposters often overcompensate with confidence. True Civilians are naturally confident.
+**Pro Tip:** Inspect the most confident player. Munkelers often overcompensate with confidence. True Civilians are naturally confident.
 
 ---
 
@@ -252,7 +252,7 @@ Master the art of deception and deduction with advanced strategies for every rol
 ### 3-4 Players (Small Group)
 
 **Dynamics:**
-- Harder to hide as Imposter
+- Harder to hide as the Munkeler
 - Fewer hints to learn from
 - Votes matter more (each is 25-33%)
 - Games faster (10 min)
@@ -260,9 +260,9 @@ Master the art of deception and deduction with advanced strategies for every rol
 **Civilian Strategy:**
 - Be more direct with hints
 - Process of elimination is powerful
-- One or two good questions expose Imposter
+- One or two good questions expose Munkeler
 
-**Imposter Strategy:**
+**The Munkeler Strategy:**
 - Guess earlier (less info but more pressure)
 - Can't blend in crowds
 - Use confidence to your advantage
@@ -279,10 +279,10 @@ Master the art of deception and deduction with advanced strategies for every rol
 
 **Civilian Strategy:**
 - Coordinate hints to triangulate
-- Use voting patterns to identify Imposter
+- Use voting patterns to identify the Munkeler
 - Sheriff inspection is game-changing
 
-**Imposter Strategy:**
+**The Munkeler Strategy:**
 - More hints to learn from
 - Easier to blend in crowd
 - Can survive multiple elimination rounds
@@ -299,7 +299,7 @@ Master the art of deception and deduction with advanced strategies for every rol
 **Dynamics:**
 - Information overload
 - Harder to track everyone
-- Imposter can hide easily
+- The Munkeler can hide easily
 - Longer games (15-20 min)
 
 **Civilian Strategy:**
@@ -307,7 +307,7 @@ Master the art of deception and deduction with advanced strategies for every rol
 - Don't try to analyze everyone
 - Form voting blocks for efficiency
 
-**Imposter Strategy:**
+**The Munkeler Strategy:**
 - Lay low early, blend in
 - Lots of hints = easier to guess
 - Survival is easier with more targets
@@ -340,7 +340,7 @@ Master the art of deception and deduction with advanced strategies for every rol
 
 ### Deception Techniques
 
-**The Truth Sandwich (Imposter):**
+**The Truth Sandwich (Munkeler):**
 - Give true statement + guess + true statement
 - "It's common (true), it's red (guess), people use it (true)"
 - Harder to identify the guess
@@ -359,17 +359,17 @@ Master the art of deception and deduction with advanced strategies for every rol
 
 **Early Game (Round 1):**
 - Civilians: Vague hints, gather info
-- Imposter: Ultra vague, listen hard
+- Munkeler: Ultra vague, listen hard
 - Jester: Slightly off hints
 
 **Mid Game (Round 2-3):**
 - Civilians: Coordinated narrowing
-- Imposter: Make your guess call
+- Munkeler: Make your guess call
 - Sheriff: Use your inspection
 
 **End Game (2-4 players left):**
 - Civilians: Direct accusations
-- Imposter: Survival or guess NOW
+- Munkeler: Survival or guess NOW
 - Everyone: High tension decisions
 
 ---
@@ -382,7 +382,7 @@ Master the art of deception and deduction with advanced strategies for every rol
 - Can be more specific (less risk of overlap)
 - "It's a dairy product" is safe
 
-**Imposter:**
+**The Munkeler:**
 - Easier to guess (common items)
 - Use categories: "It's a breakfast food"
 
@@ -392,7 +392,7 @@ Master the art of deception and deduction with advanced strategies for every rol
 - Be careful with specificity (obscure items)
 - Focus on broad categories first
 
-**Imposter:**
+**The Munkeler:**
 - Harder to guess (many possibilities)
 - Survival strategy more viable
 - Guess only with high confidence
@@ -403,7 +403,7 @@ Master the art of deception and deduction with advanced strategies for every rol
 - Test topic familiarity first
 - Some players might not know all items
 
-**Imposter:**
+**The Munkeler:**
 - Hope for obscure items (harder for Civilians to describe)
 - Generic hints blend better with confusion
 
@@ -424,14 +424,14 @@ Master the art of deception and deduction with advanced strategies for every rol
 - Kids: simpler hints, more guidance
 
 **Learn from Each Game**
-- What hints gave away Imposter?
+- What hints gave away the Munkeler?
 - Which questions were most revealing?
 - How did Jester win (or fail)?
 
 ### Common Beginner Mistakes
 
-❌ **Civilians being too specific** → Imposter learns too fast  
-❌ **Imposter asking direct questions** → Obvious tell  
+❌ **Civilians being too specific** → The Munkeler learns too fast  
+❌ **The Munkeler asking direct questions** → Obvious tell  
 ❌ **Jester being too obvious** → Everyone knows, won't vote  
 ❌ **Sheriff wasting inspection** → Lost advantage  
 ❌ **Everyone voting randomly** → Chaos, no strategy  
@@ -453,7 +453,7 @@ Master the art of deception and deduction with advanced strategies for every rol
 - Ask direct follow-up questions
 - Trust the process of elimination
 
-### "I'm Imposter and have no idea"
+### "I'm the Munkeler and have no idea"
 - Survival mode: deflect to final 2
 - Use the category approach: "It's related to [broad category]"
 - Don't guess unless 70%+ sure
@@ -461,11 +461,11 @@ Master the art of deception and deduction with advanced strategies for every rol
 ### "I'm Jester and no one suspects me"
 - Increase suspicious behavior
 - Vote erratically
-- Defend the Imposter
+- Defend the Munkeler
 
 ### "I'm Sheriff and found the Jester"
 - Keep it secret
-- Steer votes toward Imposter
+- Steer votes toward the Munkeler
 - Don't help Jester win
 
 ### "We're in a voting tie"
@@ -473,9 +473,9 @@ Master the art of deception and deduction with advanced strategies for every rol
 - Or switch to create majority (if you're unsure)
 - Sheriff: inspection time if available
 
-### "Imposter is about to guess"
+### "The Munkeler is about to guess"
 - Civilians: stay quiet (don't help)
-- Imposter: review all hints one last time
+- Munkeler: review all hints one last time
 - Take your time, think it through
 
 ---
@@ -487,7 +487,7 @@ Master the art of deception and deduction with advanced strategies for every rol
 2. **Observation Drill:** Watch a round, take notes on everyone's hints
 3. **Question Drill:** Practice asking yes/no questions that narrow options
 
-### Improve Your Imposter Play
+### Improve Your Munkeler Play
 1. **Blending Drill:** Practice giving vague hints that sound specific
 2. **Listening Drill:** From 5 random hints, guess the word
 3. **Confidence Drill:** Deliver a lie with total conviction
@@ -521,7 +521,7 @@ Master the art of deception and deduction with advanced strategies for every rol
 *Adapt your strategy.* Every group is different. Read the room and adjust.
 
 **Third Most Important Rule:**  
-*Learn from losses.* Every eliminated Civilian, every caught Imposter, every failed Jester is a lesson.
+*Learn from losses.* Every eliminated Civilian, every caught Munkeler, every failed Jester is a lesson.
 
 ---
 

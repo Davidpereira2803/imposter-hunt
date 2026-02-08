@@ -3,18 +3,18 @@ layout: default
 title: Privacy Policy
 ---
 
-# Imposter Hunt – Privacy Policy
+# The Munkeler – Privacy Policy
 
 *Last updated: October 2025*
 
-Thank you for playing **Imposter Hunt**!
+Thank you for playing **The Munkeler**!
 Your privacy is very important to us. This policy explains what data is (and isn't) collected, how it's used, and what third-party services are involved.
 
 ---
 
-## About Imposter Hunt
+## About The Munkeler
 
-**Imposter Hunt** is an offline, pass-and-play social game built with **React Native** and **Expo**.
+**The Munkeler** is an offline, pass-and-play social game built with **React Native** and **Expo**.
 The game does **not require an account, registration, or an internet connection** to play.
 All gameplay data — such as player names, topics, and round results — is stored **locally on your device** and never sent to us or anyone else.
 
@@ -70,7 +70,7 @@ When you use the **AI Topic Builder**:
 
 ## Children's Privacy
 
-**Imposter Hunt** is suitable for all ages and does not knowingly collect personal information from children under 13. Since no accounts or personal data are collected, COPPA compliance is maintained.
+**The Munkeler** is suitable for all ages and does not knowingly collect personal information from children under 13. Since no accounts or personal data are collected, COPPA compliance is maintained.
 
 ---
 
@@ -101,6 +101,6 @@ Email: perda.business@gmail.com
 
 ---
 
-**By using Imposter Hunt, you agree to this Privacy Policy.**
+**By using The Munkeler, you agree to this Privacy Policy.**
 
 [Back to Home]({{ site.baseurl }}/) | [How to Play](HowToPlay) | [Strategy Guide](Strategy-Guide) | [Features](Features) | [FAQ](FAQ) | [Screenshots](Screenshots) | [Changelog](Changelog)
