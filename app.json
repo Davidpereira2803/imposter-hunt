@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "The Munkeler",
-    "slug": "the-munkeler",
+    "slug": "imposter-hunt",
     "version": "1.0.8",
     "orientation": "default",
     "icon": "./assets/icon.png",
@@ -20,7 +20,8 @@
       "bundleIdentifier": "com.davidpereira2803.imposterhunt",
       "minimumOsVersion": "14.0",
       "infoPlist": {
-        "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you."
+        "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you.",
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
@@ -31,7 +32,9 @@
       "package": "com.davidpereira2803.imposterhunt",
       "permissions": [
         "android.permission.INTERNET",
-        "android.permission.ACCESS_NETWORK_STATE"
+        "android.permission.ACCESS_NETWORK_STATE",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
       ]
     },
     "web": {
