@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Alert, BackHandler, TouchableOpacity, ScrollView, Animated } from "react-native";
+import { View, Text, StyleSheet, Alert, BackHandler, TouchableOpacity, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
+import Animated, { useSharedValue, withSpring, useAnimatedStyle } from "react-native-reanimated";
 import * as Haptics from "expo-haptics";
 import { useGameStore } from "../src/store/gameStore";
 import Screen from "../src/components/ui/Screen";
@@ -28,7 +29,7 @@ export default function Vote() {
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [showEliminationModal, setShowEliminationModal] = useState(false);
   const [eliminatedPlayerData, setEliminatedPlayerData] = useState(null);
-  const scaleAnim = new Animated.Value(1);
+  const scaleAnim = useSharedValue(1);
 
   useEffect(() => {
     const backAction = () => {
@@ -47,12 +48,13 @@ export default function Vote() {
     return () => backHandler.remove();
   }, [t]);
 
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scaleAnim.value }]
+  }));
+
   const handleSelectPlayer = (index) => {
     setSelectedPlayer(index);
-    Animated.spring(scaleAnim, {
-      toValue: 1.05,
-      useNativeDriver: true
-    }).start();
+    scaleAnim.value = withSpring(1.05);
   };
 
   const handleVote = async () => {
@@ -187,19 +189,23 @@ export default function Vote() {
               const isSelected = selectedPlayer === player.index;
               
               return (
-                <Card
+                <Animated.View
                   key={player.index}
-                  onPress={() => handleSelectPlayer(player.index)}
-                  style={[
-                    styles.playerCard,
-                    isSelected && styles.selectedCard
-                  ]}
+                  style={isSelected ? animatedStyle : undefined}
                 >
-                  <Text style={styles.playerName}>{player.name}</Text>
-                  {isSelected && (
-                    <Icon name="check-circle" size={24} color={palette.success} />
-                  )}
-                </Card>
+                  <Card
+                    onPress={() => handleSelectPlayer(player.index)}
+                    style={[
+                      styles.playerCard,
+                      isSelected && styles.selectedCard
+                    ]}
+                  >
+                    <Text style={styles.playerName}>{player.name}</Text>
+                    {isSelected && (
+                      <Icon name="check-circle" size={24} color={palette.success} />
+                    )}
+                  </Card>
+                </Animated.View>
               );
             })
           )}
