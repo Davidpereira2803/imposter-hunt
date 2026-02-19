@@ -28,6 +28,18 @@ jest.mock('expo-router', () => ({
   Stack: () => null,
 }));
 
+jest.mock('expo-audio', () => ({
+  useAudioPlayer: jest.fn(() => ({
+    play: jest.fn(),
+    pause: jest.fn(),
+    stop: jest.fn(),
+    release: jest.fn(),
+  })),
+  Audio: {
+    Sound: jest.fn(),
+  },
+}));
+
 global.console = {
   ...console,
   warn: jest.fn(),

@@ -172,6 +172,14 @@ Create unlimited custom word lists with AI assistance.
   </div>
 </div>
 
+### Rotating AI Examples
+
+**Interactive carousel** showing real topic examples:
+- Refreshes with each app launch
+- Inspires your own topic ideas
+- Shows variety of AI capabilities
+- Includes suggested descriptions
+
 ### Example Prompts
 
 Get creative with your AI topics:
@@ -181,8 +189,6 @@ Get creative with your AI topics:
 - **Local:** "Luxembourg landmarks", "Portuguese dishes", "German cities"
 - **Niche:** "Types of cheese", "Programming languages", "Yoga poses"
 - **Silly:** "Things in a bathroom", "Sounds animals make", "Dad joke topics"
-
-> AI understands context and difficulty — "Easy pizza toppings" gives common items, "Hard pizza toppings" gives obscure ones.
 
 ### Topic History
 
