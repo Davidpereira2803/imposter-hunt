@@ -48,7 +48,7 @@ describe('i18n', () => {
     it('should translate home keys', () => {
       i18n.locale = 'en';
 
-      expect(i18n.t('home.title')).toContain('Imposter');
+      expect(i18n.t('home.title')).toContain("Who's the Munkeler?");
       expect(i18n.t('home.newGame')).toBe('New Game');
       expect(i18n.t('home.howToPlay')).toBe('How to Play');
     });

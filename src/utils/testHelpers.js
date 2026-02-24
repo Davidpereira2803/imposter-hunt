@@ -1,8 +1,4 @@
 /**
- * Test utilities for Imposter Hunt game logic
- */
-
-/**
  * Generate test game state
  */
 export const createTestGameState = (options = {}) => {

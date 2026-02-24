@@ -14,7 +14,7 @@
     "tapToClose": "Tap anywhere to close"
   },
   "home": {
-    "title": "Who's the Imposter?",
+    "title": "Who's the Munkeler?",
     "subtitle": "A social, pass-and-play word deduction game",
     "continueGame": "Continue Game",
     "newGame": "New Game",
@@ -87,22 +87,22 @@
     "secretWord": "Secret Word",
     "yourRole": "Your Role",
     "civilian": "Civilian",
-    "imposter": "Imposter",
+    "imposter": "Munkeler",
     "jester": "Jester",
     "sheriff": "Sheriff"
   },
   "results": {
     "unknown": "Unknown",
-    "imposterWins": "Imposter Wins!",
+    "imposterWins": "The Munkeler Wins!",
     "civiliansWin": "Civilians Win!",
     "secretWord": "Secret Word",
-    "theImposter": "The Imposter",
+    "theImposter": "The Munkeler",
     "playAgain": "Play Again",
     "newSetup": "New Setup",
     "failedToStart": "Failed to start new game",
     "jesterWins": "The Jester Wins!",
     "jesterFooled": "fooled everyone!",
-    "wasTheImposter": "was the imposter"
+    "wasTheImposter": "was the Munkeler"
   },
   "settings": {
     "title": "Settings",
@@ -144,7 +144,7 @@
     "exit": "Exit",
     "passTo": "Pass to",
     "revealRole": "Reveal Role",
-    "imposter": "IMPOSTER",
+    "imposter": "Munkeler",
     "civilian": "CIVILIAN",
     "jester": "JESTER",
     "sheriff": "SHERIFF",
@@ -152,7 +152,7 @@
     "noWord": "You don't know the secret word",
     "missionTitle": "Your Mission",
     "imposterMission": "• Blend in with civilians\n• Listen carefully to hints\n• Guess the secret word to win\n• Or survive until only 2 remain",
-    "civilianMission": "• Give subtle hints about the word\n• Don't say the word directly\n• Find and eliminate the imposter\n• Be careful - they're listening!",
+    "civilianMission": "• Give subtle hints about the word\n• Don't say the word directly\n• Find and eliminate the Munkeler\n• Be careful - they're listening!",
     "jesterMission": "• Act suspicious but not too obvious\n• Trick them into voting for you\n• If you get voted out, you win alone!",
     "sheriffMission": "• You are on the Civilian team\n• You can check one player's role once\n• Use your info to lead the vote",
     "sheriffAbility": "Inspect Player",
@@ -176,7 +176,7 @@
     "pause": "Pause",
     "vote": "Vote",
     "resetTimer": "Reset Timer",
-    "imposterGuess": "Imposter Guess"
+    "imposterGuess": "Munkeler Guess"
   },
   "imposterGuess": {
     "title": "Final Guess",
@@ -185,7 +185,7 @@
     "cancelWarning": "This is your only chance. Canceling means you pass and civilians win.",
     "stay": "Stay",
     "passAndLose": "Pass & Lose",
-    "imposterFallback": "Imposter",
+    "imposterFallback": "Munkeler",
     "instruction": "One chance only. Guess the secret word.\nCorrect = you win. Wrong = civilians win.",
     "placeholder": "Type your guess...",
     "submit": "Submit Guess",
@@ -199,7 +199,7 @@
     "getStarted": "Get Started",
     
     "step1": {
-      "title": "Welcome to Imposter Hunt!",
+      "title": "Welcome to The Munkeler - Imposter Hunt!",
       "description": "A social deduction game where one player is the imposter trying to blend in.",
       "tip": "Perfect for parties with 3-10 players!"
     },
@@ -209,9 +209,9 @@
       "tip": "You can add up to 10 players for bigger groups!"
     },
     "step3": {
-      "title": "The Imposter",
-      "description": "One player is secretly the imposter! Everyone else sees the secret word, but the imposter doesn't. The imposter must blend in and figure out the word.",
-      "tip": "The imposter can win by guessing the word correctly!"
+      "title": "The Munkeler (Imposter)",
+      "description": "One player is secretly the Munkeler! Everyone else sees the secret word, but the Munkeler doesn't. The Munkeler must blend in and figure out the word.",
+      "tip": "The Munkeler can win by guessing the word correctly!"
     },
     "step4": {
       "title": "The Jester (Optional)",
@@ -225,23 +225,23 @@
     },
     "step6": {
       "title": "Discussion Phase",
-      "description": "Players take turns describing the secret word without saying it directly. The imposter must try to fit in without knowing the word!",
-      "tip": "Be vague enough so the imposter can't guess, but clear enough to prove you know it!"
+      "description": "Players take turns describing the secret word without saying it directly. The Munkeler must try to fit in without knowing the word!",
+      "tip": "Be vague enough so the Munkeler can't guess, but clear enough to prove you know it!"
     },
     "step7": {
       "title": "Voting Phase",
-      "description": "After discussion, vote to eliminate the player you think is the imposter. The player with the most votes is eliminated.",
+      "description": "After discussion, vote to eliminate the player you think is the Munkeler. The player with the most votes is eliminated.",
       "tip": "Pay attention to who seems uncertain or avoids specifics!"
     },
     "step8": {
       "title": "Win Conditions",
-      "description": "• Civilians win by eliminating the imposter\n• Imposter wins by guessing the word or surviving to final 2\n• Jester wins by getting eliminated\n• Sheriff helps civilians find the imposter",
+      "description": "• Civilians win by eliminating the Munkeler\n• The <Munkeler wins by guessing the word or surviving to final 2\n• Jester wins by getting eliminated\n• Sheriff helps civilians find the Munkeler",
       "tip": "Good luck and have fun!"
     }
   },
   "vote": {
     "title": "Vote",
-    "subtitle": "Who is the imposter?",
+    "subtitle": "Who is the Munkeler?",
     "goBackTitle": "Go Back",
     "goBackMessage": "Return to round?",
     "selectPlayerTitle": "Select Player",
@@ -251,7 +251,7 @@
     "confirmTitle": "Confirm Vote",
     "confirmMessage": "Eliminate {{player}}?",
     "playerEliminated": "Player Eliminated",
-    "notTheImposter": "Not the imposter!",
+    "notTheImposter": "Not the Munkeler!",
     "playersRemain": "{{count}} players remain",
     "continueToRound": "Continue to Round {{round}}",
     "roundInfo": "Round {{round}} • {{count}} Players Left",

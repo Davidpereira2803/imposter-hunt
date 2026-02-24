@@ -15,7 +15,7 @@ import { Icon } from "../src/constants/icons";
 import { useLanguageStore } from "../src/store/languageStore";
 import { useTranslation } from "../src/lib/useTranslation";
 import i18n from "../src/lib/i18n";
-
+import Constants from "expo-constants";
 
 const TUTORIAL_SEEN_KEY = "imposter-hunt-tutorial-seen";
 const PRIVACY_POLICY_URL = "https://davidpereira2803.github.io/imposter-hunt/Privacy";
@@ -309,7 +309,7 @@ export default function Settings() {
 
         <View style={styles.version}>
           <Icon name="information-outline" size={16} color={palette.textDim} />
-          <Text style={styles.versionText}>{t("settings.version", "Version")} 1.0.7</Text>
+          <Text style={styles.versionText}>{t("settings.version", "Version")} {Constants.expoConfig?.version}</Text>
         </View>
       </ScrollView>
 

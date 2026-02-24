@@ -15,7 +15,7 @@
   },
   "home": {
     "title": "Chi è il Munkeler?",
-    "subtitle": "Un gioco sociale di deduzione dove trovi l'impostore tra i tuoi amici",
+    "subtitle": "Un gioco sociale di deduzione di parole",
     "continueGame": "Continua Partita",
     "newGame": "Nuova Partita",
     "howToPlay": "Come Giocare",
@@ -87,23 +87,22 @@
     "secretWord": "Parola Segreta",
     "yourRole": "Il Tuo Ruolo",
     "civilian": "Civile",
-    "imposter": "Impostore",
+    "imposter": "Munkeler",
     "jester": "Giullare",
-    "sheriff": "Sceriffo",
-    "eliminated": "Eliminato"
+    "sheriff": "Sceriffo"
   },
   "results": {
     "unknown": "Sconosciuto",
-    "imposterWins": "L'Impostore Vince!",
+    "imposterWins": "Il Munkeler Vince!",
     "civiliansWin": "I Civili Vincono!",
     "secretWord": "Parola Segreta",
-    "theImposter": "L'Impostore",
+    "theImposter": "Il Munkeler",
     "playAgain": "Gioca Ancora",
     "newSetup": "Nuova Configurazione",
     "failedToStart": "Impossibile avviare nuova partita",
     "jesterWins": "Il Giullare Vince!",
     "jesterFooled": "ha ingannato tutti!",
-    "wasTheImposter": "era l'impostore"
+    "wasTheImposter": "era il Munkeler"
   },
   "settings": {
     "title": "Impostazioni",
@@ -145,7 +144,7 @@
     "exit": "Esci",
     "passTo": "Passa a",
     "revealRole": "Rivela Ruolo",
-    "imposter": "IMPOSTORE",
+    "imposter": "MUNKELER",
     "civilian": "CIVILE",
     "jester": "GIULLARE",
     "sheriff": "SCERIFFO",
@@ -153,7 +152,7 @@
     "noWord": "Non conosci la parola segreta",
     "missionTitle": "La Tua Missione",
     "imposterMission": "• Confonditi con i civili\n• Ascolta attentamente gli indizi\n• Indovina la parola segreta per vincere\n• Oppure sopravvivi finché restano solo 2",
-    "civilianMission": "• Dai indizi sottili sulla parola\n• Non dire la parola direttamente\n• Trova ed elimina l'impostore\n• Attenzione - stanno ascoltando!",
+    "civilianMission": "• Dai indizi sottili sulla parola\n• Non dire la parola direttamente\n• Trova ed elimina il Munkeler\n• Attenzione - stanno ascoltando!",
     "jesterMission": "• Comportati in modo sospetto ma non troppo ovvio\n• Ingannali per farti votare\n• Se vieni eliminato, vinci tu solo!",
     "sheriffMission": "• Sei nella squadra dei Civili\n• Puoi controllare il ruolo di un giocatore una volta\n• Usa le tue informazioni per guidare il voto",
     "sheriffAbility": "Ispeziona Giocatore",
@@ -177,7 +176,7 @@
     "pause": "Pausa",
     "vote": "Vota",
     "resetTimer": "Reimposta Timer",
-    "imposterGuess": "Tentativo dell'Impostore"
+    "imposterGuess": "Tentativo del Munkeler"
   },
   "imposterGuess": {
     "title": "Tentativo Finale",
@@ -186,7 +185,7 @@
     "cancelWarning": "Questa è la tua unica possibilità. Annullare significa che passi e i civili vincono.",
     "stay": "Resta",
     "passAndLose": "Passa e Perdi",
-    "imposterFallback": "Impostore",
+    "imposterFallback": "Munkeler",
     "instruction": "Una sola possibilità. Indovina la parola segreta.\nCorretto = vinci. Sbagliato = vincono i civili.",
     "placeholder": "Scrivi il tuo tentativo...",
     "submit": "Invia Tentativo",
@@ -199,8 +198,8 @@
     "next": "Avanti",
     "getStarted": "Inizia",
     "step1": {
-      "title": "Benvenuto a Caccia all'Impostore!",
-      "description": "Un gioco di deduzione sociale in cui un giocatore è l'impostore e cerca di mimetizzarsi.",
+      "title": "Benvenuto a Caccia al Munkeler!",
+      "description": "Un gioco di deduzione sociale in cui un giocatore è il Munkeler e cerca di mimetizzarsi.",
       "tip": "Perfetto per feste con 3-10 giocatori!"
     },
     "step2": {
@@ -209,8 +208,8 @@
       "tip": "Puoi aggiungere fino a 10 giocatori!"
     },
     "step3": {
-      "title": "L'Impostore",
-      "description": "Un giocatore è segretamente l'impostore. Gli altri vedono la parola segreta, lui no. Deve confondersi e cercare di scoprirla.",
+      "title": "Il Munkeler",
+      "description": "Un giocatore è segretamente il Munkeler. Gli altri vedono la parola segreta, lui no. Deve confondersi e cercare di scoprirla.",
       "tip": "Può vincere indovinando la parola!"
     },
     "step4": {
@@ -225,7 +224,7 @@
     },
     "step6": {
       "title": "Fase di Discussione",
-      "description": "A turno i giocatori danno indizi senza dire la parola. L'impostore prova a sembrare credibile senza sapere il termine.",
+      "description": "A turno i giocatori danno indizi senza dire la parola. Il Munkeler prova a sembrare credibile senza sapere il termine.",
       "tip": "Sii vago ma abbastanza chiaro!"
     },
     "step7": {
@@ -235,13 +234,13 @@
     },
     "step8": {
       "title": "Condizioni di Vittoria",
-      "description": "• I civili vincono eliminando l'impostore\n• L'impostore vince indovinando la parola o sopravvivendo fino a 2 giocatori\n• Il Giullare vince se viene eliminato\n• Lo Sceriffo aiuta i civili con l'ispezione",
+      "description": "• I civili vincono eliminando il Munkeler\n• Il Munkeler vince indovinando la parola o sopravvivendo fino a 2 giocatori\n• Il Giullare vince se viene eliminato\n• Lo Sceriffo aiuta i civili con l'ispezione",
       "tip": "Divertiti e buona fortuna!"
     }
   },
   "vote": {
     "title": "Vota",
-    "subtitle": "Chi è l'impostore?",
+    "subtitle": "Chi è il Munkeler?",
     "goBackTitle": "Torna Indietro",
     "goBackMessage": "Tornare al round?",
     "selectPlayerTitle": "Seleziona Giocatore",
@@ -251,7 +250,7 @@
     "confirmTitle": "Conferma Voto",
     "confirmMessage": "Eliminare {{player}}?",
     "playerEliminated": "Giocatore Eliminato",
-    "notTheImposter": "Non è l'impostore!",
+    "notTheImposter": "Non è il Munkeler!",
     "playersRemain": "{{count}} giocatori rimasti",
     "continueToRound": "Continua al Round {{round}}",
     "roundInfo": "Round {{round}} • {{count}} Giocatori Rimasti",
@@ -315,28 +314,28 @@
     "unknown": "Sconosciuto"
   },
   "aiTutorial": {
-  "title": "Come funziona la generazione IA",
-  "gotIt": "Capito!",
-  "whatIsIt": "Che cos'è?",
-  "whatIsItText": "Il Generatore di Argomenti IA utilizza l'intelligenza artificiale per creare liste di parole personalizzate in base alla tua descrizione. Perfetto per temi di gioco unici!",
-  "howToUse": "Come usarlo",
-  "step1Title": "Descrivi il tuo argomento",
-  "step1Text": "Inserisci una descrizione chiara di ciò che desideri. Sii specifico!",
-  "step2Title": "Scegli le impostazioni",
-  "step2Text": "Seleziona quante parole vuoi e il livello di difficoltà.",
-  "step3Title": "Genera e Gioca",
-  "step3Text": "Premi Genera e la tua lista personalizzata sarà subito pronta da usare!",
-  "examples": "Buoni esempi",
-  "example1": "Carte Clash Royale",
-  "example2": "Incantesimi Harry Potter",
-  "example3": "Supereroi Marvel",
-  "example4": "Linguaggi di programmazione",
-  "example5": "Squadre di calcio in Europa",
-  "dailyLimit": "Generazioni Giornaliere",
-  "dailyLimitText": "Hai 1 generazione gratuita al giorno. Guarda annunci premiati per sbloccare fino a 5 generazioni aggiuntive al giorno!",
-  "tips": "Consigli Pro",
-  "tip1": "Sii preciso nella descrizione per risultati migliori",
-  "tip2": "Usa la difficoltà \"Misto\" per lunghezze di parole variate",
-  "tip3": "Gli argomenti generati vengono salvati automaticamente nella tua lista personalizzata"
-}
+    "title": "Come funziona la generazione IA",
+    "gotIt": "Capito!",
+    "whatIsIt": "Che cos'è?",
+    "whatIsItText": "Il Generatore di Argomenti IA utilizza l'intelligenza artificiale per creare liste di parole personalizzate in base alla tua descrizione. Perfetto per temi di gioco unici!",
+    "howToUse": "Come usarlo",
+    "step1Title": "Descrivi il tuo argomento",
+    "step1Text": "Inserisci una descrizione chiara di ciò che desideri. Sii specifico!",
+    "step2Title": "Scegli le impostazioni",
+    "step2Text": "Seleziona quante parole vuoi e il livello di difficoltà.",
+    "step3Title": "Genera e Gioca",
+    "step3Text": "Premi Genera e la tua lista personalizzata sarà subito pronta da usare!",
+    "examples": "Buoni esempi",
+    "example1": "Carte Clash Royale",
+    "example2": "Incantesimi Harry Potter",
+    "example3": "Supereroi Marvel",
+    "example4": "Linguaggi di programmazione",
+    "example5": "Squadre di calcio in Europa",
+    "dailyLimit": "Generazioni Giornaliere",
+    "dailyLimitText": "Hai 1 generazione gratuita al giorno. Guarda annunci premiati per sbloccare fino a 5 generazioni aggiuntive al giorno!",
+    "tips": "Consigli Pro",
+    "tip1": "Sii preciso nella descrizione per risultati migliori",
+    "tip2": "Usa la difficoltà \"Misto\" per lunghezze di parole variate",
+    "tip3": "Gli argomenti generati vengono salvati automaticamente nella tua lista personalizzata"
+  }
 }

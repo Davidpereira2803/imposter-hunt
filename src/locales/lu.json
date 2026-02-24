@@ -87,23 +87,22 @@
     "secretWord": "Geheimwuert",
     "yourRole": "Däin Roll",
     "civilian": "Zivilist",
-    "imposter": "Impostor",
+    "imposter": "Munkeler",
     "jester": "Narr",
-    "sheriff": "Sheriff",
-    "eliminated": "Erausgeholl"
+    "sheriff": "Sheriff"
   },
   "results": {
     "unknown": "Onbekannt",
-    "imposterWins": "Impostor Gewënnt!",
+    "imposterWins": "De Munkeler Gewënnt!",
     "civiliansWin": "Zivilisten Gewannen!",
     "secretWord": "Geheimwuert",
-    "theImposter": "Den Impostor",
+    "theImposter": "De Munkeler",
     "playAgain": "Nach Eng Kéier Spillen",
     "newSetup": "Nei Astellung",
     "failedToStart": "Neit Spill konnt net gestart ginn",
-    "jesterWins": "Den Narr Gewënnt!",
+    "jesterWins": "De Narr Gewënnt!",
     "jesterFooled": "huet jiddereen ausgetrickst!",
-    "wasTheImposter": "war den Impostor"
+    "wasTheImposter": "war de Munkeler"
   },
   "settings": {
     "title": "Astellungen",
@@ -125,7 +124,7 @@
     "updated": "Aktualiséiert",
     "privacyUpdatedMessage": "Privatsphärastellungen gespäichert",
     "resetConsentTitle": "Zoustëmmung Zrécksetzen",
-    "resetConsentMessage": "Dat setzt däin Zoustëmmungspräferenzen zréck an weist de Formulaire nach eng Kéier.",
+    "resetConsentMessage": "Dat setzt däin Zoustëmmungspräferenzen zréck an weist de Formulaire noch eng Kéier.",
     "reset": "Zrécksetzen",
     "consentUpdated": "Zoustëmmungspräferenzen aktualiséiert",
     "couldNotOpen": "Astellungen konnten net opgemaach ginn",
@@ -145,7 +144,7 @@
     "exit": "Verloossen",
     "passTo": "Weiderginn un",
     "revealRole": "Roll Ophiewen",
-    "imposter": "IMPOSTOR",
+    "imposter": "MUNKELER",
     "civilian": "ZIVILIST",
     "jester": "NARR",
     "sheriff": "SHERIFF",
@@ -153,7 +152,7 @@
     "noWord": "Du kenns dat Geheimwuert net",
     "missionTitle": "Däi Missioun",
     "imposterMission": "• Mësch dech ënner d'Zivilisten\n• Lauschter opmierksam op Hiweiser\n• Eroed dat Geheimwuert fir ze gewannen\n• Oder iwwerlief bis nëmmen nach 2 iwwreg sinn",
-    "civilianMission": "• Gëff subtil Hiweiser iwwert d'Wuert\n• Seet d'Wuert net direkt\n• Fann an eliminéier den Impostor\n• Opgepasst - hien lauschtert!",
+    "civilianMission": "• Gëff subtil Hiweiser iwwert d'Wuert\n• Seet d'Wuert net direkt\n• Fann an eliminéier de Munkeler\n• Opgepasst - hien lauschtert!",
     "jesterMission": "• Behuef dech verdächteg mee net ze offensichtlech\n• Trick se aus fir dech ze wielen\n• Wann s de erausgewielt gëss, gewënns du eleng!",
     "sheriffMission": "• Du bass am Zivilisten-Team\n• Du kanns eng Kéier d'Roll vun engem Spiller kontrolléieren\n• Benotz deng Info fir d'Ofstëmmung ze leeden",
     "sheriffAbility": "Spiller Kontrolléieren",
@@ -177,7 +176,7 @@
     "pause": "Paus",
     "vote": "Ofstëmmen",
     "resetTimer": "Timer Zrécksetzen",
-    "imposterGuess": "Impostor-Vermutung"
+    "imposterGuess": "Munkeler-Vermutung"
   },
   "imposterGuess": {
     "title": "Lescht Vermutung",
@@ -186,7 +185,7 @@
     "cancelWarning": "Dat ass däin eenzeg Chance. Ofbriechen bedeit, du passes an d'Zivilisten gewannen.",
     "stay": "Bleiwen",
     "passAndLose": "Passen & Verléieren",
-    "imposterFallback": "Impostor",
+    "imposterFallback": "Munkeler",
     "instruction": "Nëmmen eng Chance. Eroed dat Geheimwuert.\nRichteg = du gewënns. Falsch = Zivilisten gewannen.",
     "placeholder": "Däi Vermutung aginn...",
     "submit": "Ofschécken",
@@ -199,8 +198,8 @@
     "next": "Weider",
     "getStarted": "Lass Ufänken",
     "step1": {
-      "title": "Wëllkomm bei Impostor Juegd!",
-      "description": "E sozial Deduktionsspill wou ee Spiller den Impostor ass an sech versicht ze verstoppen.",
+      "title": "Wëllkomm bei Munkeler Juegd!",
+      "description": "E sozial Deduktionsspill wou ee Spiller de Munkeler ass an sech versicht ze verstoppen.",
       "tip": "Perfekt fir 3–10 Spiller!"
     },
     "step2": {
@@ -209,13 +208,13 @@
       "tip": "Bis zu 10 Spiller méiglech!"
     },
     "step3": {
-      "title": "Den Impostor",
-      "description": "Den Impostor gesäit d'Geheimwuert NET. Hie muss sech ënnermëschen an d'Wuert aus den Hiweiser eroden.",
+      "title": "De Munkeler",
+      "description": "De Munkeler gesäit d'Geheimwuert NET. Hie muss sech ënnermëschen an d'Wuert aus den Hiweiser eroden.",
       "tip": "Lauschter a sammelen Informatioun!"
     },
     "step4": {
-      "title": "Den Narr (Optional)",
-      "description": "Ab 4+ Spiller kann den Narr aktivéiert ginn. Säi Ziel: erausgestëmmt ginn. Wann hien eliminéiert gëtt, gewënnt hien eleng.",
+      "title": "De Narr (Optional)",
+      "description": "Ab 4+ Spiller kann de Narr aktivéiert ginn. Säi Ziel: erausgestëmmt ginn. Wann hien eliminéiert gëtt, gewënnt hien eleng.",
       "tip": "Passt op chaotesch Hiweiser!"
     },
     "step5": {
@@ -225,23 +224,23 @@
     },
     "step6": {
       "title": "Diskussiounsphase",
-      "description": "All Spiller gëtt ee subtile Hiweis zum Wuert. Net direkt soen. Den Impostor probéiert matzemaachen ouni et ze kennen.",
+      "description": "All Spiller gëtt ee subtile Hiweis zum Wuert. Net direkt soen. De Munkeler probéiert matzemaachen ouni et ze kennen.",
       "tip": "Net ze kloer, net ze vag."
     },
     "step7": {
       "title": "Ofstëmmungsphase",
-      "description": "No den Hiweiser stëmmt dir of wien den Impostor ass. D'Majoritéit eliminéiert ee Spiller.",
+      "description": "No den Hiweiser stëmmt dir of wien de Munkeler ass. D'Majoritéit eliminéiert ee Spiller.",
       "tip": "Observéier Onsécherheeten."
     },
     "step8": {
       "title": "Gewënnbedéngungen",
-      "description": "• Zivilisten: eliminéieren den Impostor\n• Impostor: erued d'Wuert oder iwwerlieft bis 2 Spiller\n• Narr: gewënnt wann eliminéiert\n• Sheriff: hëlleft Zivilisten mat senger Kontroll",
+      "description": "• Zivilisten: eliminéieren de Munkeler\n• Munkeler: erued d'Wuert oder iwwerlieft bis 2 Spiller\n• Narr: gewënnt wann eliminéiert\n• Sheriff: hëlleft Zivilisten mat senger Kontroll",
       "tip": "Vill Gléck a vill Spaass!"
     }
   },
   "vote": {
     "title": "Ofstëmmen",
-    "subtitle": "Wien ass den Impostor?",
+    "subtitle": "Wien ass de Munkeler?",
     "goBackTitle": "Zréck",
     "goBackMessage": "Zréck zur Ronn?",
     "selectPlayerTitle": "Spiller Wielen",
@@ -251,7 +250,7 @@
     "confirmTitle": "Ofstëmmung Bestätegen",
     "confirmMessage": "{{player}} erauszestëmmen?",
     "playerEliminated": "Spiller Erausgeholl",
-    "notTheImposter": "Net den Impostor!",
+    "notTheImposter": "Net de Munkeler!",
     "playersRemain": "{{count}} Spiller iwwreg",
     "continueToRound": "Weider zu Ronn {{round}}",
     "roundInfo": "Ronn {{round}} • {{count}} Spiller iwwreg",
@@ -287,7 +286,7 @@
     "stay": "Bleiwen",
     "generationFailed": "Generéierung feelgeschloen",
     "generationFailedTitle": "Generéierung Feelgeschloen",
-    "generationFailedMessage": "Themen konnten net generéiert ginn. Versuch et w.e.g. nach eng Kéier.",
+    "generationFailedMessage": "Themen konnten net generéiert ginn. Versuch et w.e.g. noch eng Kéier.",
     "generationsRemaining": "Generéierungen haut iwwreg",
     "freeLeft": "Gratis iwwreg",
     "adsUsed": "Reklammen gekuckt",
@@ -315,28 +314,28 @@
     "unknown": "Onbekannt"
   },
   "aiTutorial": {
-  "title": "Wéi funktionéiert d'KI-Generéierung",
-  "gotIt": "Verstanen!",
-  "whatIsIt": "Wat ass dat?",
-  "whatIsItText": "De KI-Themen-Generator benotzt kënschtlech Intelligenz fir personaliséiert Wuertlëschten op Basis vun denger Beschreiwung ze generéieren. Perfekt fir eenzegaarteg Spillthemen!",
-  "howToUse": "Wéi benotzen",
-  "step1Title": "Beschreiw däin Thema",
-  "step1Text": "Gëff eng kloer Beschreiwung vun deem, wat s du wëlls. Gëff esou spezifesch wéi méiglech!",
-  "step2Title": "Wiel d'Astellungen",
-  "step2Text": "Wiel, wéi vill Wierder s du wëlls, an de Schwieregkeetsgrad.",
-  "step3Title": "Generéieren & Spillen",
-  "step3Text": "Dréck op Generéieren an deng personaliséiert Themenlëscht ass direkt fäerdeg fir benotzt ze ginn!",
-  "examples": "Gutt Beispiller",
-  "example1": "Clash Royale-Kaarten",
-  "example2": "Harry Potter-Zauber",
-  "example3": "Marvel-Superhelden",
-  "example4": "Programméiersproochen",
-  "example5": "Fussball-Equippen an Europa",
-  "dailyLimit": "Deeglech Generéierungen",
-  "dailyLimitText": "Du kriss 1 gratis Generéierung pro Dag. Kuck beluunegt Reklammen fir bis zu 5 weider deeglech Generéierungen fräizeschalten!",
-  "tips": "Pro-Rotschléi",
-  "tip1": "Säi esou spezifesch wéi méiglech an denger Beschreiwung fir besser Resultater",
-  "tip2": "Benotz \"Gemëscht\" als Schwieregkeetsgrad fir variéiert Wuertlängten",
-  "tip3": "Generéiert Themen ginn automatesch an deng personaliséiert Lëscht gespäichert"
-}
+    "title": "Wéi funktionéiert d'KI-Generéierung",
+    "gotIt": "Verstanen!",
+    "whatIsIt": "Wat ass dat?",
+    "whatIsItText": "De KI-Themen-Generator benotzt kënschtlech Intelligenz fir personaliséiert Wuertlëschten op Basis vun denger Beschreiwung ze generéieren. Perfekt fir eenzegaarteg Spillthemen!",
+    "howToUse": "Wéi benotzen",
+    "step1Title": "Beschreiw däin Thema",
+    "step1Text": "Gëff eng kloer Beschreiwung vun deem, wat s du wëlls. Gëff esou spezifesch wéi méiglech!",
+    "step2Title": "Wiel d'Astellungen",
+    "step2Text": "Wiel, wéi vill Wierder s du wëlls, an de Schwieregkeetsgrad.",
+    "step3Title": "Generéieren & Spillen",
+    "step3Text": "Dréck op Generéieren an deng personaliséiert Themenlëscht ass direkt fäerdeg fir benotzt ze ginn!",
+    "examples": "Gutt Beispiller",
+    "example1": "Clash Royale-Kaarten",
+    "example2": "Harry Potter-Zauber",
+    "example3": "Marvel-Superhelden",
+    "example4": "Programméiersproochen",
+    "example5": "Fussball-Equippen an Europa",
+    "dailyLimit": "Deeglech Generéierungen",
+    "dailyLimitText": "Du kriss 1 gratis Generéierung pro Dag. Kuck beluunegt Reklammen fir bis zu 5 weider deeglech Generéierungen fräizeschalten!",
+    "tips": "Pro-Rotschléi",
+    "tip1": "Säi esou spezifesch wéi méiglech an denger Beschreiwung fir besser Resultater",
+    "tip2": "Benotz \"Gemëscht\" als Schwieregkeetsgrad fir variéiert Wuertlängten",
+    "tip3": "Generéiert Themen ginn automatesch an deng personaliséiert Lëscht gespäichert"
+  }
 }

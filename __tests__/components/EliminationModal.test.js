@@ -112,7 +112,7 @@ describe('EliminationModal', () => {
         onContinue={mockOnContinue}
       />
     );
-    expect(getByText(/Not the imposter/i)).toBeDefined();
+    expect(getByText(/Not the Munkeler/i)).toBeDefined();
   });
 
   it('should call onContinue when button is pressed', async () => {

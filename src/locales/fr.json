@@ -15,7 +15,7 @@
   },
   "home": {
     "title": "Qui est le Munkeler?",
-    "subtitle": "Un jeu de déduction sociale où vous trouvez l'imposteur parmi vos amis.",
+    "subtitle": "Un jeu de déduction sociale où vous trouvez le Munkeler parmi vos amis.",
     "continueGame": "Continuer la Partie",
     "newGame": "Nouvelle Partie",
     "howToPlay": "Comment Jouer",
@@ -87,23 +87,22 @@
     "secretWord": "Mot Secret",
     "yourRole": "Votre Rôle",
     "civilian": "Civil",
-    "imposter": "Imposteur",
+    "imposter": "Munkeler",
     "jester": "Bouffon",
-    "sheriff": "Shérif",
-    "eliminated": "Éliminé"
+    "sheriff": "Shérif"
   },
   "results": {
     "unknown": "Inconnu",
-    "imposterWins": "L'Imposteur Gagne !",
+    "imposterWins": "Le Munkeler Gagne !",
     "civiliansWin": "Les Civils Gagnent !",
     "secretWord": "Mot Secret",
-    "theImposter": "L'Imposteur",
+    "theImposter": "Le Munkeler",
     "playAgain": "Rejouer",
     "newSetup": "Nouvelle Configuration",
     "failedToStart": "Échec du démarrage d'une nouvelle partie",
     "jesterWins": "Le Bouffon Gagne !",
     "jesterFooled": "a trompé tout le monde !",
-    "wasTheImposter": "était l'imposteur"
+    "wasTheImposter": "était le Munkeler"
   },
   "settings": {
     "title": "Paramètres",
@@ -145,7 +144,7 @@
     "exit": "Quitter",
     "passTo": "Passer à",
     "revealRole": "Révéler le Rôle",
-    "imposter": "IMPOSTEUR",
+    "imposter": "MUNKELER",
     "civilian": "CIVIL",
     "jester": "BOUFFON",
     "sheriff": "SHÉRIF",
@@ -153,7 +152,7 @@
     "noWord": "Vous ne connaissez pas le mot secret",
     "missionTitle": "Votre Mission",
     "imposterMission": "• Intégrez-vous aux civils\n• Écoutez attentivement les indices\n• Devinez le mot secret pour gagner\n• Ou survivez jusqu'à ce qu'il ne reste que 2",
-    "civilianMission": "• Donnez des indices subtils sur le mot\n• Ne dites pas le mot directement\n• Trouvez et éliminez l'imposteur\n• Attention - il écoute !",
+    "civilianMission": "• Donnez des indices subtils sur le mot\n• Ne dites pas le mot directement\n• Trouvez et éliminez le Munkeler\n• Attention - il écoute !",
     "jesterMission": "• Agissez de manière suspecte mais pas trop évidente\n• Trompez-les pour qu'ils votent pour vous\n• Si vous êtes éliminé, vous gagnez seul !",
     "sheriffMission": "• Vous êtes dans l'équipe des Civils\n• Vous pouvez vérifier le rôle d'un joueur une fois\n• Utilisez vos infos pour diriger le vote",
     "sheriffAbility": "Inspecter un Joueur",
@@ -177,7 +176,7 @@
     "pause": "Pause",
     "vote": "Voter",
     "resetTimer": "Réinitialiser le Chrono",
-    "imposterGuess": "Supposition de l'Imposteur"
+    "imposterGuess": "Supposition du Munkeler"
   },
   "imposterGuess": {
     "title": "Supposition Finale",
@@ -186,7 +185,7 @@
     "cancelWarning": "C'est votre seule chance. Annuler signifie que vous passez et les civils gagnent.",
     "stay": "Rester",
     "passAndLose": "Passer et Perdre",
-    "imposterFallback": "Imposteur",
+    "imposterFallback": "Munkeler",
     "instruction": "Une seule chance. Devinez le mot secret.\nCorrect = vous gagnez. Faux = les civils gagnent.",
     "placeholder": "Tapez votre supposition...",
     "submit": "Soumettre",
@@ -198,10 +197,9 @@
     "back": "Retour",
     "next": "Suivant",
     "getStarted": "Commencer",
-    
     "step1": {
-      "title": "Bienvenue à Chasse à l'Imposteur !",
-      "description": "Un jeu de déduction sociale où un joueur est l'imposteur qui essaie de se fondre dans la masse.",
+      "title": "Bienvenue à Chasse au Munkeler !",
+      "description": "Un jeu de déduction sociale où un joueur est le Munkeler qui essaie de se fondre dans la masse.",
       "tip": "Parfait pour les fêtes avec 3-10 joueurs !"
     },
     "step2": {
@@ -210,9 +208,9 @@
       "tip": "Vous pouvez ajouter jusqu'à 10 joueurs pour les plus grands groupes !"
     },
     "step3": {
-      "title": "L'Imposteur",
-      "description": "Un joueur est secrètement l'imposteur ! Tous les autres voient le mot secret, mais pas l'imposteur. L'imposteur doit se fondre dans la masse et deviner le mot.",
-      "tip": "L'imposteur peut gagner en devinant correctement le mot !"
+      "title": "Le Munkeler",
+      "description": "Un joueur est secrètement le Munkeler ! Tous les autres voient le mot secret, mais pas le Munkeler. Le Munkeler doit se fondre dans la masse et deviner le mot.",
+      "tip": "Le Munkeler peut gagner en devinant correctement le mot !"
     },
     "step4": {
       "title": "Le Bouffon (Optionnel)",
@@ -226,23 +224,23 @@
     },
     "step6": {
       "title": "Phase de Discussion",
-      "description": "Les joueurs décrivent à tour de rôle le mot secret sans le dire directement. L'imposteur doit essayer de s'intégrer sans connaître le mot !",
-      "tip": "Soyez assez vague pour que l'imposteur ne puisse pas deviner, mais assez clair pour prouver que vous le connaissez !"
+      "description": "Les joueurs décrivent à tour de rôle le mot secret sans le dire directement. Le Munkeler doit essayer de s'intégrer sans connaître le mot !",
+      "tip": "Soyez assez vague pour que le Munkeler ne puisse pas deviner, mais assez clair pour prouver que vous le connaissez !"
     },
     "step7": {
       "title": "Phase de Vote",
-      "description": "Après la discussion, votez pour éliminer le joueur que vous pensez être l'imposteur. Le joueur avec le plus de votes est éliminé.",
+      "description": "Après la discussion, votez pour éliminer le joueur que vous pensez être le Munkeler. Le joueur avec le plus de votes est éliminé.",
       "tip": "Faites attention à qui semble incertain ou évite les détails !"
     },
     "step8": {
       "title": "Conditions de Victoire",
-      "description": "• Les civils gagnent en éliminant l'imposteur\n• L'imposteur gagne en devinant le mot ou en survivant jusqu'aux 2 derniers\n• Le Bouffon gagne en se faisant éliminer\n• Le Shérif aide les civils à trouver l'imposteur",
+      "description": "• Les civils gagnent en éliminant le Munkeler\n• Le Munkeler gagne en devinant le mot ou en survivant jusqu'aux 2 derniers\n• Le Bouffon gagne en se faisant éliminer\n• Le Shérif aide les civils à trouver le Munkeler",
       "tip": "Bonne chance et amusez-vous bien !"
     }
   },
   "vote": {
     "title": "Voter",
-    "subtitle": "Qui est l'imposteur ?",
+    "subtitle": "Qui est le Munkeler ?",
     "goBackTitle": "Retour",
     "goBackMessage": "Retourner à la manche ?",
     "selectPlayerTitle": "Sélectionner un Joueur",
@@ -252,7 +250,7 @@
     "confirmTitle": "Confirmer le Vote",
     "confirmMessage": "Éliminer {{player}} ?",
     "playerEliminated": "Joueur Éliminé",
-    "notTheImposter": "Pas l'imposteur !",
+    "notTheImposter": "Pas le Munkeler !",
     "playersRemain": "{{count}} joueurs restants",
     "continueToRound": "Continuer à la Manche {{round}}",
     "roundInfo": "Manche {{round}} • {{count}} Joueurs Restants",
@@ -316,28 +314,28 @@
     "unknown": "Inconnu"
   },
   "aiTutorial": {
-  "title": "Comment fonctionne la génération IA",
-  "gotIt": "Compris !",
-  "whatIsIt": "Qu'est-ce que c'est ?",
-  "whatIsItText": "Le Créateur de Thèmes IA utilise l'intelligence artificielle pour générer des listes de mots personnalisées à partir de votre description. Parfait pour créer des thèmes de jeu uniques !",
-  "howToUse": "Comment l'utiliser",
-  "step1Title": "Décrivez votre thème",
-  "step1Text": "Saisissez une description claire de ce que vous voulez. Soyez précis !",
-  "step2Title": "Choisissez les paramètres",
-  "step2Text": "Sélectionnez le nombre de mots souhaité et le niveau de difficulté.",
-  "step3Title": "Générer et Jouer",
-  "step3Text": "Appuyez sur Générer et votre liste de thèmes personnalisée sera prête à être utilisée immédiatement !",
-  "examples": "Bons exemples",
-  "example1": "Cartes Clash Royale",
-  "example2": "Sorts Harry Potter",
-  "example3": "Super-héros Marvel",
-  "example4": "Langages de programmation",
-  "example5": "Équipes de football en Europe",
-  "dailyLimit": "Générations Quotidiennes",
-  "dailyLimitText": "Vous avez 1 génération gratuite par jour. Regardez des publicités récompensées pour débloquer jusqu'à 5 générations supplémentaires par jour !",
-  "tips": "Astuces Pro",
-  "tip1": "Soyez précis dans votre description pour de meilleurs résultats",
-  "tip2": "Utilisez la difficulté « Mixte » pour des longueurs de mots variées",
-  "tip3": "Les thèmes générés sont automatiquement enregistrés dans votre liste personnalisée"
-}
+    "title": "Comment fonctionne la génération IA",
+    "gotIt": "Compris !",
+    "whatIsIt": "Qu'est-ce que c'est ?",
+    "whatIsItText": "Le Créateur de Thèmes IA utilise l'intelligence artificielle pour générer des listes de mots personnalisées à partir de votre description. Parfait pour créer des thèmes de jeu uniques !",
+    "howToUse": "Comment l'utiliser",
+    "step1Title": "Décrivez votre thème",
+    "step1Text": "Saisissez une description claire de ce que vous voulez. Soyez précis !",
+    "step2Title": "Choisissez les paramètres",
+    "step2Text": "Sélectionnez le nombre de mots souhaité et le niveau de difficulté.",
+    "step3Title": "Générer et Jouer",
+    "step3Text": "Appuyez sur Générer et votre liste de thèmes personnalisée sera prête à être utilisée immédiatement !",
+    "examples": "Bons exemples",
+    "example1": "Cartes Clash Royale",
+    "example2": "Sorts Harry Potter",
+    "example3": "Super-héros Marvel",
+    "example4": "Langages de programmation",
+    "example5": "Équipes de football en Europe",
+    "dailyLimit": "Générations Quotidiennes",
+    "dailyLimitText": "Vous avez 1 génération gratuite par jour. Regardez des publicités récompensées pour débloquer jusqu'à 5 générations supplémentaires par jour !",
+    "tips": "Astuces Pro",
+    "tip1": "Soyez précis dans votre description pour de meilleurs résultats",
+    "tip2": "Utilisez la difficulté « Mixte » pour des longueurs de mots variées",
+    "tip3": "Les thèmes générés sont automatiquement enregistrés dans votre liste personnalisée"
+  }
 }
