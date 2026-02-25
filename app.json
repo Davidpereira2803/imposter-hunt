@@ -2,7 +2,7 @@
   "expo": {
     "name": "The Munkeler",
     "slug": "imposter-hunt",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "orientation": "default",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
@@ -18,10 +18,10 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.davidpereira2803.imposterhunt",
-      "minimumOsVersion": "14.0",
       "infoPlist": {
         "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you.",
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "minimumOsVersion": "14.0"
       }
     },
     "android": {
