@@ -47,10 +47,14 @@ Find the Munkeler (imposter) among your friends before it's too late. One player
 
 **Available Now on iOS and Android**
 
-[![Download on the App Store](https://toolbox.marketingtools.apple.com/api/badges/download-on-the-app-store/black/en-us?size=250x83)](https://apps.apple.com/us/app/the-munkeler-imposter-hunt/id6759270928)
-
-[![Get it on Google Play](https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png)](https://play.google.com/store/apps/details?id=com.davidpereira2803.imposterhunt)
-
+<div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin: 20px 0;">
+  <a href="https://apps.apple.com/us/app/the-munkeler-imposter-hunt/id6759270928">
+    <img src="{{ site.baseurl }}/assets/apple.svg" alt="Download on the App Store" style="height: 50px;">
+  </a>
+  <a href="https://play.google.com/store/apps/details?id=com.davidpereira2803.imposterhunt">
+    <img src="{{ site.baseurl }}/assets/google.svg" alt="Get it on Google Play" style="height: 50px;">
+  </a>
+</div>
 
 > Free to play • No ads during gameplay • Optional rewarded ads for AI generations
 
