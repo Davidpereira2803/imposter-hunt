@@ -5,7 +5,7 @@ title: Screenshots - Game Gallery
 
 # Screenshots
 
-Visual tour of Imposter Hunt's interface and gameplay.
+Visual tour of The Munkeler's interface and gameplay.
 
 ---
 
@@ -76,8 +76,8 @@ Each player privately views their role before the game begins.
   </div>
   
   <div class="feature-card">
-    <img src="assets/screenshots/role-imposter.png" alt="Imposter Role">
-    <p><strong>Imposter</strong><br>Blend in and guess the word</p>
+    <img src="assets/screenshots/role-imposter.png" alt="Munkeler Role">
+    <p><strong>Munkeler</strong><br>Blend in and guess the word</p>
   </div>
   
   <div class="feature-card">
@@ -110,7 +110,7 @@ Players give hints while the round timer counts down.
 
 ## Voting Phase
 
-Vote to eliminate the suspected imposter.
+Vote to eliminate the suspected the Munkeler (imposter).
 
 ![Voting Screen](assets/screenshots/vote.png)
 *Tap a player to cast your vote*
@@ -128,11 +128,11 @@ Vote to eliminate the suspected imposter.
 
 ---
 
-## Imposter Guess
+## Munkeler Guess
 
-The imposter's chance to guess the secret word.
+The Munkeler's chance to guess the secret word.
 
-![Imposter Guess](assets/screenshots/imposter-guess.png)
+![Munkeler Guess](assets/screenshots/imposter-guess.png)
 *Type your guess or pass to skip*
 
 > **Note:** The guess is case-insensitive and ignores accents/punctuation for fair matching.
@@ -146,12 +146,12 @@ See who won and how the game ended.
 <div class="feature-grid">
   <div class="feature-card">
     <img src="assets/screenshots/results-civilians.png" alt="Civilians Win">
-    <p><strong>Civilians Win!</strong><br>Imposter eliminated or wrong guess</p>
+    <p><strong>Civilians Win!</strong><br>Munkeler eliminated or wrong guess</p>
   </div>
   
   <div class="feature-card">
-    <img src="assets/screenshots/results-imposter.png" alt="Imposter Wins">
-    <p><strong>Imposter Wins!</strong><br>Correct guess or survival</p>
+    <img src="assets/screenshots/results-imposter.png" alt="Munkeler Wins">
+    <p><strong>Munkeler Wins!</strong><br>Correct guess or survival</p>
   </div>
   
   <div class="feature-card">
@@ -198,7 +198,7 @@ Customize language, tutorial, and privacy preferences.
 
 ## Multi-Language Support
 
-Imposter Hunt is fully localized in 7 languages.
+The Munkeler is fully localized in 7 languages.
 
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin:2rem 0;">
   <div style="text-align:center;">
@@ -223,7 +223,7 @@ Imposter Hunt is fully localized in 7 languages.
 
 ## Download Now
 
-Ready to play? Get Imposter Hunt on Google Play.
+Ready to play? Get The Munkeler on Google Play.
 
 <div class="cta-section">
   <a href="https://play.google.com/store/apps/details?id=com.davidpereira2803.imposterhunt" class="btn-download">

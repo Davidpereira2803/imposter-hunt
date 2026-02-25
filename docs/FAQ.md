@@ -5,15 +5,15 @@ title: FAQ - Frequently Asked Questions
 
 # Frequently Asked Questions
 
-Quick answers to common questions about Imposter Hunt.
+Quick answers to common questions about The Munkeler.
 
 ---
 
 ## General Questions
 
-### What is Imposter Hunt?
+### What is The Munkeler?
 
-Imposter Hunt is a social deduction game where players try to find the imposter among them. One player doesn't see the secret word — can you figure out who? It's perfect for parties, game nights, and travel.
+The Munkeler is a social deduction game where players try to find the Munkeler (imposter) among them. One player doesn't see the secret word — can you figure out who? It's perfect for parties, game nights, and travel.
 
 ### How many players do I need?
 
@@ -25,7 +25,7 @@ Special roles (Jester & Sheriff) require at least 4 players.
 
 ### Do I need internet to play?
 
-**No!** Imposter Hunt works completely offline. You only need internet for:
+**No!** The Munkeler works completely offline. You only need internet for:
 - AI topic generation
 - Downloading the app initially
 - Watching rewarded ads for bonus AI generations
@@ -36,7 +36,7 @@ Currently available on **Android** via Google Play Store. iOS version is planned
 
 ### Is the game free?
 
-**Yes!** Imposter Hunt is completely free to play with:
+**Yes!** The Munkeler is completely free to play with:
 - No ads during gameplay
 - 1 free AI generation per day
 - Optional rewarded ads for 5 bonus AI generations per day
@@ -48,10 +48,10 @@ Currently available on **Android** via Google Play Store. iOS version is planned
 ### How does a typical game work?
 
 1. **Setup** - Add 3-12 players and choose a topic
-2. **Roles** - Everyone sees the secret word except the imposter
+2. **Roles** - Everyone sees the secret word except the Munkeler
 3. **Discussion** - Players give hints about the word
-4. **Voting** - Vote to eliminate the suspected imposter
-5. **Win** - Civilians catch the imposter, or the imposter guesses the word!
+4. **Voting** - Vote to eliminate the suspected Munkeler
+5. **Win** - Civilians catch the Munkeler, or the Munkeler guesses the word!
 
 See our **[How to Play](HowToPlay)** page for detailed rules and demo video.
 
@@ -64,19 +64,19 @@ With **4+ players**, you can enable:
 
 These add strategic depth and unexpected twists!
 
-### How does the Imposter win?
+### How does the Munkeler win?
 
-The Imposter can win by:
+The Munkeler can win by:
 1. **Guessing the secret word correctly** (case/accents ignored)
 2. **Surviving until only 2 players remain**
 
 ### How does the Sheriff's inspection work?
 
-The Sheriff can tap a player's card during the round phase to reveal their role (Civilian, Imposter, or Jester). This ability can only be used **once per game**, so use it wisely!
+The Sheriff can tap a player's card during the round phase to reveal their role (Civilian, Munkeler, or Jester). This ability can only be used **once per game**, so use it wisely!
 
 ### Can the Jester win alone?
 
-**Yes!** If the Jester gets eliminated during voting, they win solo — even if civilians catch the imposter. This creates interesting mind games!
+**Yes!** If the Jester gets eliminated during voting, they win solo — even if civilians catch the Munkeler. This creates interesting mind games!
 
 ### What happens in a voting tie?
 
@@ -84,7 +84,7 @@ If votes are tied, the game proceeds to a **revote** with only the tied players.
 
 ### Can I play with 2 players?
 
-The minimum is 3 players. With only 2 players, the game mechanics don't work (one imposter + one civilian means the imposter is immediately obvious).
+The minimum is 3 players. With only 2 players, the game mechanics don't work (one Munkeler + one civilian means the Munkeler is immediately obvious).
 
 ---
 
@@ -130,7 +130,7 @@ Currently, custom topics are saved but cannot be edited. You can create a new ve
 
 ### What languages are supported?
 
-Imposter Hunt supports **7 languages**:
+The Munkeler supports **7 languages**:
 - 🇬🇧 English
 - 🇪🇸 Spanish (Español)
 - 🇫🇷 French (Français)
@@ -155,7 +155,7 @@ Change language in Settings.
 
 ### Is my data safe?
 
-**Absolutely!** Imposter Hunt:
+**Absolutely!** The Munkeler:
 - ✅ Stores all data **locally on your device**
 - ✅ **Never uploads** player names, topics, or game history
 - ✅ Does **not require an account** or login
@@ -196,7 +196,7 @@ See our **[Privacy Policy](Privacy)** for full details.
 
 Try these steps:
 1. Force-close the app and reopen
-2. Clear app cache (Settings → Apps → Imposter Hunt → Clear Cache)
+2. Clear app cache (Settings → Apps → The Munkeler → Clear Cache)
 3. Restart your device
 4. Reinstall the app if issues persist
 
@@ -212,7 +212,7 @@ If it still fails, the app will show a fallback error and you can use manual cus
 ### How do I reset my game data?
 
 Currently there's no in-app reset. To clear all data:
-1. Android Settings → Apps → Imposter Hunt
+1. Android Settings → Apps → The Munkeler
 2. Clear Storage (this removes player names, custom topics, settings)
 3. Reopen the app for a fresh start
 
@@ -235,7 +235,7 @@ Include:
 
 ## Tips & Strategy
 
-### Any tips for playing as the Imposter?
+### Any tips for playing as the Munkeler?
 
 - Listen carefully to others' hints
 - Mirror the group's confidence level
@@ -243,7 +243,7 @@ Include:
 - When in doubt, keep hints vague ("It's common" / "Everyone knows it")
 - Make your guess when you're 70%+ confident
 
-### How do I catch the Imposter?
+### How do I catch the Munkeler?
 
 - Watch for vague or generic hints
 - Notice if someone avoids direct descriptions

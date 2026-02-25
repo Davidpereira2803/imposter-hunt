@@ -1,29 +1,29 @@
-# How to Play Imposter Hunt
+# How to Play The Munkeler
 
-**Imposter Hunt** is a fast-paced social deduction game where players try to uncover who among them is the imposter — all on a single shared device.
+**The Munkeler** is a fast-paced social deduction game where players try to uncover who among them is the Munkeler (imposter) — all on a single shared device.
 
 ## About the Game
 
-Gather your friends and take turns passing the phone around. Everyone except one player receives a secret word from a chosen topic — but the **Imposter** has no clue!
+Gather your friends and take turns passing the phone around. Everyone except one player receives a secret word from a chosen topic — but the **Munkeler** has no clue!
 Your goal: give hints, discuss, and vote out the impostor before they can figure out the word.
 
 ### How to Play
 
 1. **Setup** – Add 3+ players and pick a topic (Food, Animals, Movies, Countries, or create custom topics).
    * **Optional**: Enable special roles (Jester & Sheriff) with 4+ players for added strategy!
-2. **Role Reveal** – Each player privately views their role (Civilian, Imposter, Jester, or Sheriff).
-3. **Discussion** – Give subtle hints and try to expose the Imposter.
+2. **Role Reveal** – Each player privately views their role (Civilian, Munkeler, Jester, or Sheriff).
+3. **Discussion** – Give subtle hints and try to expose the Munkeler.
    * **Sheriff Ability**: The Sheriff can inspect one player's role once per game!
 4. **Voting** – Decide who to vote out each round.
-5. **Imposter Guess** – The Imposter has one chance to guess the secret word.
-6. **Results** – Either the Imposter wins by guessing correctly, Civilians win by catching them, or the Jester wins by getting eliminated!
+5. **Munkeler Guess** – The Munkeler has one chance to guess the secret word.
+6. **Results** – Either the Munkeler wins by guessing correctly, Civilians win by catching them, or the Jester wins by getting eliminated!
 
 ### Win Conditions
 
 * **Civilians Win**: 
-  * The imposter is correctly voted out.
-  * The imposter guesses the secret word incorrectly.
-* **Imposter Wins**:
+  * The Munkeler is correctly voted out.
+  * The Munkeler guesses the secret word incorrectly.
+* **Munkeler Wins**:
   * Correctly guesses the secret word.
   * Survives until only 2 players remain.
 * **Jester Wins** *(NEW)*:
@@ -73,7 +73,7 @@ app/
   ├── role.js               # Role reveal screen (supports 4 roles)
   ├── round.js              # Discussion phase (with Sheriff inspection)
   ├── vote.js               # Voting phase (handles Jester wins)
-  ├── imposter-guess.js     # Imposter's final guess
+  ├── imposter-guess.js     # Munkeler's final guess
   ├── results.js            # Game result screen (all win conditions)
   ├── settings.js           # App settings & preferences
   ├── ai-topics.js          # AI topic generation
@@ -119,8 +119,8 @@ src/
 
 Manages core game state with AsyncStorage persistence:
 * Player list and elimination status
-* Current imposter and secret word
-* **Role assignments** *(NEW)* — Tracks Civilian, Imposter, Jester, and Sheriff roles
+* Current Munkeler and secret word
+* **Role assignments** *(NEW)* — Tracks Civilian, Munkeler, Jester, and Sheriff roles
 * **Special role states** *(NEW)* — Jester/Sheriff enabled flags, Sheriff ability usage
 * Round tracking and voting history
 * Custom topic management
@@ -204,7 +204,7 @@ See the [Privacy Policy](docs/PRIVACY.md) for complete details.
 * Add Italian & Spanish as languages
 * **NEW: Special Roles System** - Added Jester and Sheriff roles (requires 4+ players)
 * **NEW: Jester Role** - Win by getting voted out! Act suspicious and trick others into eliminating you
-* **NEW: Sheriff Role** - Inspect one player's role during the round to help civilians find the imposter
+* **NEW: Sheriff Role** - Inspect one player's role during the round to help civilians find the Munkeler
 * Redesigned role reveal screen with distinct colors and icons for all roles
 * Improved round screen with discrete timer controls (icon-only buttons inside timer)
 * Enhanced voting system to handle Jester win condition
@@ -213,7 +213,7 @@ See the [Privacy Policy](docs/PRIVACY.md) for complete details.
 
 #### (v1.0.5) What is new?
 * BUG: Fix homescreen topic information bar
-* BUG: Fix imposter guess
+* BUG: Fix Munkeler guess
 * Update Tutorial
 
 ### (v1.0.6) What is new?
@@ -236,6 +236,9 @@ See the [Privacy Policy](docs/PRIVACY.md) for complete details.
 * **Round information display** in voting screen - Shows current round and players remaining
 * **Smooth animations** on voting selection - Enhanced visual feedback with spring animations
 
+
+### (v1.0.9) What is new?
+* Rebranding from **Imposter Hunt** to **The Munkeler**
 ---
 
 ## Contributing
@@ -246,7 +249,7 @@ This is a personal project, but feedback and suggestions are welcome. Please ope
 
 ## License
 
-Copyright 2025 David Pereira — All rights reserved.
+Copyright 2026 David Pereira — All rights reserved.
 
 This software and associated documentation files may not be copied, modified, merged, published, distributed, sublicensed, or sold without express written permission from the author.
 

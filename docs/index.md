@@ -1,23 +1,23 @@
 ---
 layout: default
-title: Imposter Hunt - Social Deduction Game
+title: The Munkeler - Social Deduction Game
 ---
 
-# Imposter Hunt
+# The Munkeler
 
 **AI-powered social deduction game. One device, endless fun.**
 
-Find the imposter among your friends before it's too late. One player receives a different word — can you figure out who? Perfect for parties, game nights, and road trips.
+Find the Munkeler (imposter) among your friends before it's too late. One player receives a different word — can you figure out who? Perfect for parties, game nights, and road trips.
 
 ---
 
 ## How It Works
 
 1. **Setup** - Add 3-12 players and pick a topic
-2. **Roles** - Everyone gets the secret word... except the imposter
+2. **Roles** - Everyone gets the secret word... except the Munkeler
 3. **Discuss** - Give hints and watch for suspicious behavior
-4. **Vote** - Eliminate who you think is the imposter
-5. **Win** - Civilians catch the imposter, or the imposter survives!
+4. **Vote** - Eliminate who you think is the Munkeler
+5. **Win** - Civilians catch the Munkeler, or the Munkeler survives!
 
 ---
 
@@ -45,9 +45,12 @@ Find the imposter among your friends before it's too late. One player receives a
 
 ## Download
 
-**Available Now on Android**
+**Available Now on iOS and Android**
 
-[![Get it on Google Play](https://img.shields.io/badge/Google_Play-414141?style=for-the-badge&logo=google-play&logoColor=white)](https://play.google.com/store/apps/details?id=com.davidpereira2803.imposterhunt)
+[![Download on the App Store](https://toolbox.marketingtools.apple.com/api/badges/download-on-the-app-store/black/en-us?size=250x83)](https://apps.apple.com/us/app/the-munkeler-imposter-hunt/id6759270928)
+
+[![Get it on Google Play](https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png)](https://play.google.com/store/apps/details?id=com.davidpereira2803.imposterhunt)
+
 
 > Free to play • No ads during gameplay • Optional rewarded ads for AI generations
 
@@ -64,7 +67,7 @@ Find the imposter among your friends before it's too late. One player receives a
   
   <div class="feature-card">
     <h4>Strategy Guide</h4>
-    <p>Advanced tactics for Civilian, Imposter, Jester, and Sheriff</p>
+    <p>Advanced tactics for Civilian, Munkeler, Jester, and Sheriff</p>
     <a href="{{ site.baseurl }}/Strategy-Guide">Learn Strategies →</a>
   </div>
   

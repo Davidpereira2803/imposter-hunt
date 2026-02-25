@@ -5,7 +5,7 @@ title: Changelog - Version History
 
 # Changelog
 
-All notable changes to Imposter Hunt are documented here.
+All notable changes to The Munkeler are documented here.
 
 ---
 
@@ -179,7 +179,7 @@ All notable changes to Imposter Hunt are documented here.
 
 Future updates may include:
 
-- **iOS Version** - Bring Imposter Hunt to Apple devices
+- **iOS Version** - Bring The Munkeler to Apple devices
 - **More Special Roles** - Additional roles beyond Jester and Sheriff
 - **Custom Game Modes** - Alternative rule sets and variants
 - **Topic Management** - Edit and organize custom topics
@@ -191,7 +191,7 @@ Future updates may include:
 
 ## Version Naming
 
-Imposter Hunt follows semantic versioning:
+IThe Munkeler follows semantic versioning:
 - **Major (X.0.0)** - Significant new features or breaking changes
 - **Minor (1.X.0)** - New features, backward compatible
 - **Patch (1.0.X)** - Bug fixes and minor improvements

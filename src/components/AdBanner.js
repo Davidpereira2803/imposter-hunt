@@ -5,14 +5,6 @@ import { BannerAd, BannerAdSize, TestIds } from "react-native-google-mobile-ads"
 import { useAdConsentContext } from "../contexts/AdConsentContext";
 import ADS_CONFIG from "../config/adshelper";
 
-
-{/*
-const prodUnitId = 
-  Platform.OS === "ios"
-    ? ADS_CONFIG.IOS_BANNER_UNIT_ID
-    : ADS_CONFIG.ANDROID_BANNER_UNIT_ID;
-*/}
-
 const adUnitId = __DEV__
   ? TestIds.BANNER
   : (ADS_CONFIG.BANNER_UNIT_ID || "");

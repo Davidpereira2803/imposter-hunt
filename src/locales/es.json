@@ -87,23 +87,22 @@
     "secretWord": "Palabra Secreta",
     "yourRole": "Tu Rol",
     "civilian": "Civil",
-    "imposter": "Impostor",
+    "imposter": "Munkeler",
     "jester": "Bufón",
-    "sheriff": "Sheriff",
-    "eliminated": "Eliminado"
+    "sheriff": "Sheriff"
   },
   "results": {
     "unknown": "Desconocido",
-    "imposterWins": "¡El Impostor Gana!",
+    "imposterWins": "¡El Munkeler Gana!",
     "civiliansWin": "¡Los Civiles Ganan!",
     "secretWord": "Palabra Secreta",
-    "theImposter": "El Impostor",
+    "theImposter": "El Munkeler",
     "playAgain": "Jugar de Nuevo",
     "newSetup": "Nueva Configuración",
     "failedToStart": "Error al iniciar nueva partida",
     "jesterWins": "¡El Bufón Gana!",
     "jesterFooled": "¡engañó a todos!",
-    "wasTheImposter": "era el impostor"
+    "wasTheImposter": "era el Munkeler"
   },
   "settings": {
     "title": "Configuración",
@@ -145,7 +144,7 @@
     "exit": "Salir",
     "passTo": "Pasar a",
     "revealRole": "Revelar Rol",
-    "imposter": "IMPOSTOR",
+    "imposter": "MUNKELER",
     "civilian": "CIVIL",
     "jester": "BUFÓN",
     "sheriff": "SHERIFF",
@@ -153,7 +152,7 @@
     "noWord": "No conoces la palabra secreta",
     "missionTitle": "Tu Misión",
     "imposterMission": "• Confúndete con los civiles\n• Escucha atentamente las pistas\n• Adivina la palabra secreta para ganar\n• O sobrevive hasta que solo queden 2",
-    "civilianMission": "• Da pistas sutiles sobre la palabra\n• No digas la palabra directamente\n• Encuentra y elimina al impostor\n• Ten cuidado - ¡están escuchando!",
+    "civilianMission": "• Da pistas sutiles sobre la palabra\n• No digas la palabra directamente\n• Encuentra y elimina al Munkeler\n• Ten cuidado - ¡están escuchando!",
     "jesterMission": "• Actúa sospechoso pero no demasiado obvio\n• Engáñalos para que voten por ti\n• ¡Si te eliminan, ganas tú solo!",
     "sheriffMission": "• Estás en el equipo Civil\n• Puedes revisar el rol de un jugador una vez\n• Usa tu información para liderar la votación",
     "sheriffAbility": "Inspeccionar Jugador",
@@ -177,7 +176,7 @@
     "pause": "Pausar",
     "vote": "Votar",
     "resetTimer": "Reiniciar Temporizador",
-    "imposterGuess": "Intento del Impostor"
+    "imposterGuess": "Intento del Munkeler"
   },
   "imposterGuess": {
     "title": "Intento Final",
@@ -186,7 +185,7 @@
     "cancelWarning": "Esta es tu única oportunidad. Cancelar significa que pasas y los civiles ganan.",
     "stay": "Quedarse",
     "passAndLose": "Pasar y Perder",
-    "imposterFallback": "Impostor",
+    "imposterFallback": "Munkeler",
     "instruction": "Una sola oportunidad. Adivina la palabra secreta.\nCorrecto = ganas. Incorrecto = ganan los civiles.",
     "placeholder": "Escribe tu intento...",
     "submit": "Enviar Intento",
@@ -198,10 +197,9 @@
     "back": "Atrás",
     "next": "Siguiente",
     "getStarted": "Comenzar",
-    
     "step1": {
-      "title": "¡Bienvenido a Caza del Impostor!",
-      "description": "Un juego de deducción social donde un jugador es el impostor tratando de mezclarse.",
+      "title": "¡Bienvenido a Caza del Munkeler!",
+      "description": "Un juego de deducción social donde un jugador es el Munkeler intentando mezclarse.",
       "tip": "¡Perfecto para fiestas con 3-10 jugadores!"
     },
     "step2": {
@@ -210,9 +208,9 @@
       "tip": "¡Puedes añadir hasta 10 jugadores para grupos más grandes!"
     },
     "step3": {
-      "title": "El Impostor",
-      "description": "¡Un jugador es secretamente el impostor! Todos los demás ven la palabra secreta, pero el impostor no. El impostor debe mezclarse y descubrir la palabra.",
-      "tip": "¡El impostor puede ganar adivinando la palabra correctamente!"
+      "title": "El Munkeler",
+      "description": "¡Un jugador es secretamente el Munkeler! Todos los demás ven la palabra secreta, pero el Munkeler no. El Munkeler debe mezclarse y descubrir la palabra.",
+      "tip": "¡El Munkeler puede ganar adivinando la palabra correctamente!"
     },
     "step4": {
       "title": "El Bufón (Opcional)",
@@ -226,23 +224,23 @@
     },
     "step6": {
       "title": "Fase de Discusión",
-      "description": "Los jugadores se turnan para describir la palabra secreta sin decirla directamente. ¡El impostor debe intentar encajar sin conocer la palabra!",
-      "tip": "¡Sé lo suficientemente vago para que el impostor no pueda adivinar, pero lo suficientemente claro para demostrar que la conoces!"
+      "description": "Los jugadores se turnan para describir la palabra secreta sin decirla directamente. ¡El Munkeler debe intentar encajar sin conocer la palabra!",
+      "tip": "¡Sé lo suficientemente vago para que el Munkeler no pueda adivinar, pero lo suficientemente claro para demostrar que la conoces!"
     },
     "step7": {
       "title": "Fase de Votación",
-      "description": "Después de la discusión, vota para eliminar al jugador que creas que es el impostor. El jugador con más votos es eliminado.",
+      "description": "Después de la discusión, vota para eliminar al jugador que creas que es el Munkeler. El jugador con más votos es eliminado.",
       "tip": "¡Presta atención a quién parece inseguro o evita detalles!"
     },
     "step8": {
       "title": "Condiciones de Victoria",
-      "description": "• Los civiles ganan eliminando al impostor\n• El impostor gana adivinando la palabra o sobreviviendo hasta los 2 finales\n• El Bufón gana siendo eliminado\n• El Sheriff ayuda a los civiles a encontrar al impostor",
+      "description": "• Los civiles ganan eliminando al Munkeler\n• El Munkeler gana adivinando la palabra o sobreviviendo hasta los 2 finales\n• El Bufón gana siendo eliminado\n• El Sheriff ayuda a los civiles a encontrar al Munkeler",
       "tip": "¡Buena suerte y diviértete!"
     }
   },
   "vote": {
     "title": "Votar",
-    "subtitle": "¿Quién es el impostor?",
+    "subtitle": "¿Quién es el Munkeler?",
     "goBackTitle": "Volver",
     "goBackMessage": "¿Volver a la ronda?",
     "selectPlayerTitle": "Seleccionar Jugador",
@@ -252,7 +250,7 @@
     "confirmTitle": "Confirmar Voto",
     "confirmMessage": "¿Eliminar a {{player}}?",
     "playerEliminated": "Jugador Eliminado",
-    "notTheImposter": "¡No es el impostor!",
+    "notTheImposter": "¡No es el Munkeler!",
     "playersRemain": "{{count}} jugadores quedan",
     "continueToRound": "Continuar a la Ronda {{round}}",
     "roundInfo": "Ronda {{round}} • {{count}} Jugadores Restantes",

@@ -14,7 +14,7 @@
     "tapToClose": "Überall tippen zum Schließen"
   },
   "home": {
-    "title": "Wer ist der Munkeler?",
+    "title": "Wer ist der Hochstapler?",
     "subtitle": "Ein soziales Deduktionsspiel zum Weitergeben",
     "continueGame": "Spiel Fortsetzen",
     "newGame": "Neues Spiel",
@@ -89,13 +89,12 @@
     "civilian": "Zivilist",
     "imposter": "Hochstapler",
     "jester": "Narr",
-    "sheriff": "Sheriff",
-    "eliminated": "Ausgeschieden"
+    "sheriff": "Sheriff"
   },
   "results": {
     "unknown": "Unbekannt",
-    "imposterWins": "Hochstapler Gewinnt!",
-    "civiliansWin": "Zivilisten Gewinnen!",
+    "imposterWins": "Der Hochstapler Gewinnt!",
+    "civiliansWin": "Die Zivilisten Gewinnen!",
     "secretWord": "Geheimwort",
     "theImposter": "Der Hochstapler",
     "playAgain": "Nochmal Spielen",
@@ -198,7 +197,6 @@
     "back": "Zurück",
     "next": "Weiter",
     "getStarted": "Los Geht's",
-    
     "step1": {
       "title": "Willkommen bei Hochstapler-Jagd!",
       "description": "Ein soziales Deduktionsspiel, bei dem ein Spieler der Hochstapler ist und versucht, sich einzufügen.",

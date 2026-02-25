@@ -5,7 +5,7 @@ title: Features - Complete Overview
 
 # Features
 
-Everything you can do in Imposter Hunt — from core gameplay to advanced features.
+Everything you can do in The Munkeler — from core gameplay to advanced features.
 
 ---
 
@@ -54,7 +54,7 @@ Everything you can do in Imposter Hunt — from core gameplay to advanced featur
 2. **Role Reveal** (1 min)
    - Each player privately views their role
    - Civilians see the secret word
-   - Imposter sees nothing
+   - The Munkeler sees nothing
 
 3. **Discussion Round** (5-10 min)
    - Players give hints about the word
@@ -62,12 +62,12 @@ Everything you can do in Imposter Hunt — from core gameplay to advanced featur
    - Sheriff can inspect one player (optional)
 
 4. **Voting** (2 min)
-   - Vote to eliminate suspected imposter
+   - Vote to eliminate suspected Munkeler
    - Majority rules
    - Handle ties with revotes
 
-5. **Imposter Guess** (1 min)
-   - Imposter's chance to guess the word
+5. **Munkeler Guess** (1 min)
+   - The Munkeler's chance to guess the word
    - Win instantly with correct guess
    - Or continue if wrong/skipped
 
@@ -96,10 +96,10 @@ Available with **4+ players** for enhanced strategy.
 **Advanced tactics:**
 - Vote erratically to draw attention
 - Contradict yourself subtly
-- Defend the actual imposter to seem guilty
+- Defend the actual Munkeler to seem guilty
 - Time your suspicious behavior carefully
 
-> The Jester adds a mind game layer — is that player really the imposter, or just trying to get eliminated?
+> The Jester adds a mind game layer — is that player really the Munkeler, or just trying to get eliminated?
 
 ### The Sheriff
 
@@ -109,7 +109,7 @@ Available with **4+ players** for enhanced strategy.
 - Wait until you have 2-3 suspects
 - Use before critical votes
 - Share or hide your findings strategically
-- Help civilians identify the real imposter
+- Help civilians identify the real Munkeler
 
 **Advanced tactics:**
 - Bluff about when you've used your ability
@@ -123,7 +123,7 @@ Available with **4+ players** for enhanced strategy.
 
 With both roles enabled:
 - Jester can pretend to be Sheriff
-- Sheriff must identify Jester vs Imposter
+- Sheriff must identify Jester vs Munkeler
 - Civilians can't trust suspicious behavior alone
 - Creates complex psychological gameplay
 
@@ -172,6 +172,14 @@ Create unlimited custom word lists with AI assistance.
   </div>
 </div>
 
+### Rotating AI Examples
+
+**Interactive carousel** showing real topic examples:
+- Refreshes with each app launch
+- Inspires your own topic ideas
+- Shows variety of AI capabilities
+- Includes suggested descriptions
+
 ### Example Prompts
 
 Get creative with your AI topics:
@@ -181,8 +189,6 @@ Get creative with your AI topics:
 - **Local:** "Luxembourg landmarks", "Portuguese dishes", "German cities"
 - **Niche:** "Types of cheese", "Programming languages", "Yoga poses"
 - **Silly:** "Things in a bathroom", "Sounds animals make", "Dad joke topics"
-
-> AI understands context and difficulty — "Easy pizza toppings" gives common items, "Hard pizza toppings" gives obscure ones.
 
 ### Topic History
 
@@ -255,7 +261,7 @@ Play in your native language with full localization.
 
 [x] **User Interface** - All buttons, labels, navigation  
 [x] **Built-in Topics** - Food, Animals, Movies, etc.  
-[x] **Role Descriptions** - Civilian, Imposter, Jester, Sheriff  
+[x] **Role Descriptions** - Civilian, Munkeler, Jester, Sheriff  
 [x] **Tutorial** - Complete walkthrough in your language  
 [x] **Error Messages** - All alerts and notifications  
 [x] **Settings** - Configuration and preferences  
@@ -379,7 +385,7 @@ Your data is saved automatically:
 - Game ends immediately
 - Other players see Jester won
 
-### Imposter Guess Matching
+### Munkeler Guess Matching
 
 **Smart Normalization**
 - Case-insensitive ("Apple" = "apple")
@@ -394,10 +400,10 @@ Your data is saved automatically:
 **Multiple Paths to Victory:**
 
 **Civilians Win If:**
-- Imposter voted out
-- Imposter guesses wrong
+- The Munkeler voted out
+- The Munkeler guesses wrong
 
-**Imposter Wins If:**
+**The Munkeler Wins If:**
 - Guesses secret word correctly
 - Survives until 2 players remain
 
