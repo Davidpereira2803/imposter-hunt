@@ -47,12 +47,12 @@ Find the Munkeler (imposter) among your friends before it's too late. One player
 
 **Available Now on iOS and Android**
 
-<div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin: 20px 0;">
-  <a href="https://apps.apple.com/us/app/the-munkeler-imposter-hunt/id6759270928">
-    <img src="{{ site.baseurl }}/assets/apple.svg" alt="Download on the App Store" style="height: 50px;">
+<div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap; margin: 30px 0;">
+  <a href="https://apps.apple.com/us/app/the-munkeler-imposter-hunt/id6759270928" style="display: inline-block; padding: 5px;">
+    <img src="{{ site.baseurl }}/assets/apple.svg" alt="Download on the App Store" style="height: 40px; width: auto;">
   </a>
-  <a href="https://play.google.com/store/apps/details?id=com.davidpereira2803.imposterhunt">
-    <img src="{{ site.baseurl }}/assets/google.svg" alt="Get it on Google Play" style="height: 50px;">
+  <a href="https://play.google.com/store/apps/details?id=com.davidpereira2803.imposterhunt" style="display: inline-block; padding: 5px;">
+    <img src="{{ site.baseurl }}/assets/google.svg" alt="Get it on Google Play" style="height: 40px; width: auto;">
   </a>
 </div>
 
