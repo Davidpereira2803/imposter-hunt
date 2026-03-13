@@ -337,5 +337,6 @@
     "tip1": "Seja específico na descrição para obter melhores resultados",
     "tip2": "Use a dificuldade \"Misto\" para variação no tamanho das palavras",
     "tip3": "Os temas gerados são salvos automaticamente na sua lista personalizada"
-  }
+  },
+  "votedOutInstruction": "Você foi votado. Última chance: adivinhe a palavra secreta. Correto = você vence. Errado = civis vencem."
 }

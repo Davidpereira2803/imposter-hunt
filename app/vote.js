@@ -102,8 +102,8 @@ export default function Vote() {
     
     if (outcome === "civilians") {
       router.replace({
-        pathname: "/results",
-        params: { winner: "civilians" }
+        pathname: "/imposter-guess",
+        params: { source: "voted-out" }
       });
       return;
     }

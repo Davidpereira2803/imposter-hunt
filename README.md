@@ -239,6 +239,14 @@ See the [Privacy Policy](docs/PRIVACY.md) for complete details.
 
 ### (v1.0.9) What is new?
 * Rebranding from **Imposter Hunt** to **The Munkeler**
+
+### (v1.1.0) What is new?
+* **Gameplay: Random speaking order each round** - Speaking order now reshuffles every round for more variety.
+* **Balance update: Munkeler never speaks first** - The Munkeler is explicitly prevented from being first in the speaking order.
+* **New comeback mechanic** - If the Munkeler is voted out, they now get a final word guess attempt.
+* **Updated win condition after vote-out** - Voted-out Munkeler wins if the guess is correct; Civilians win if the guess is wrong (or passed).
+* **Flow update** - Voting now routes to the Munkeler guess screen when the eliminated player is the Munkeler.
+* **UX copy improvement** - Munkeler guess screen supports contextual messaging for the voted-out scenario.
 ---
 
 ## Contributing
