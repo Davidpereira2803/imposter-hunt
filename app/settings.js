@@ -240,6 +240,7 @@ export default function Settings() {
             )}
           </Card>
 
+          {/*
           <Card style={styles.infoRow}>
             <View style={styles.infoLeft}>
               <Icon name="advertisements" size={18} color={palette.textDim} />
@@ -259,6 +260,7 @@ export default function Settings() {
               {isLoading ? "..." : canShowPersonalizedAds ? t("common.yes", "Yes") : t("common.no", "No")}
             </Text>
           </Card>
+          */}
 
           <Button
             title={t("settings.privacyPolicy", "Privacy Policy")}

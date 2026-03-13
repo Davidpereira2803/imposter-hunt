@@ -1,6 +1,15 @@
 import { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Keyboard, BackHandler, KeyboardAvoidingView, Platform, Alert } from "react-native";
-import { useRouter } from "expo-router";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Keyboard,
+  BackHandler,
+  KeyboardAvoidingView,
+  Platform,
+  Alert,
+} from "react-native";
+import { useRouter, useLocalSearchParams } from "expo-router";
 import * as Haptics from "expo-haptics";
 import { useGameStore } from "../src/store/gameStore";
 import { useTranslation } from "../src/lib/useTranslation";
@@ -13,6 +22,9 @@ import { space, palette, type } from "../src/constants/theme";
 
 export default function ImposterGuess() {
   const router = useRouter();
+  const { source } = useLocalSearchParams();
+  const wasVotedOut = source === "voted-out";
+
   const { t } = useTranslation();
   const { players, imposterIndex, secretWord, _hydrated } = useGameStore();
   const [guess, setGuess] = useState("");
@@ -21,14 +33,22 @@ export default function ImposterGuess() {
     const backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
       Alert.alert(
         t("imposterGuess.cancelTitle", "Cancel Guess?"),
-        t("imposterGuess.backWarning", "Going back counts as passing your guess. Civilians will win."),
+        t(
+          "imposterGuess.backWarning",
+          "Going back counts as passing your guess. Civilians will win."
+        ),
         [
           { text: t("imposterGuess.stay", "Stay"), style: "cancel" },
-          { text: t("common.cancel", "Cancel"), style: "destructive", onPress: handleCancel }
+          {
+            text: t("common.cancel", "Cancel"),
+            style: "destructive",
+            onPress: handleCancel,
+          },
         ]
       );
       return true;
     });
+
     return () => backHandler.remove();
   }, [t]);
 
@@ -51,11 +71,11 @@ export default function ImposterGuess() {
         .replace(/\s+/g, " ")
         .trim();
     };
-    
+
     const cleanedGuess = clean(guess);
     const cleanedSecret = clean(secretWord);
     const isCorrect = cleanedGuess === cleanedSecret;
-    
+
     try {
       if (isCorrect) {
         await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
@@ -65,10 +85,10 @@ export default function ImposterGuess() {
     } catch (e) {}
 
     Keyboard.dismiss();
-    
+
     router.replace({
       pathname: "/results",
-      params: { winner: isCorrect ? "imposter" : "civilians" }
+      params: { winner: isCorrect ? "imposter" : "civilians" },
     });
   };
 
@@ -76,22 +96,29 @@ export default function ImposterGuess() {
     try {
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     } catch (e) {}
-    
+
     Keyboard.dismiss();
-    
+
     router.replace({
       pathname: "/results",
-      params: { winner: "civilians" }
+      params: { winner: "civilians" },
     });
   };
 
   const cancel = () => {
     Alert.alert(
       t("imposterGuess.cancelTitle", "Cancel Guess?"),
-      t("imposterGuess.cancelWarning", "This is your only chance. Canceling means you pass and civilians win."),
+      t(
+        "imposterGuess.cancelWarning",
+        "This is your only chance. Canceling means you pass and civilians win."
+      ),
       [
         { text: t("imposterGuess.stay", "Stay"), style: "cancel" },
-        { text: t("imposterGuess.passAndLose", "Pass & Lose"), style: "destructive", onPress: handleCancel }
+        {
+          text: t("imposterGuess.passAndLose", "Pass & Lose"),
+          style: "destructive",
+          onPress: handleCancel,
+        },
       ]
     );
   };
@@ -100,19 +127,27 @@ export default function ImposterGuess() {
 
   return (
     <Screen>
-      <KeyboardAvoidingView 
+      <KeyboardAvoidingView
         style={styles.container}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
       >
         <View style={styles.content}>
           <Title style={styles.title}>{t("imposterGuess.title", "Final Guess")}</Title>
-          
+
           <Card style={styles.infoCard}>
             <Text style={styles.imposterLabel}>{t("role.imposter", "Imposter")}</Text>
             <Text style={styles.imposterName}>{imposterName}</Text>
             <Text style={styles.instruction}>
-              {t("imposterGuess.instruction", "One chance only. Guess the secret word.\nCorrect = you win. Wrong = civilians win.")}
+              {wasVotedOut
+                ? t(
+                    "imposterGuess.votedOutInstruction",
+                    "You were voted out. Final chance: guess the secret word. Correct = you win. Wrong = civilians win."
+                  )
+                : t(
+                    "imposterGuess.instruction",
+                    "One chance only. Guess the secret word.\nCorrect = you win. Wrong = civilians win."
+                  )}
             </Text>
           </Card>
 

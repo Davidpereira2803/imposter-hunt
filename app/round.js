@@ -40,23 +40,41 @@ export default function Round() {
 
   const aliveNow = getAliveCount ? getAliveCount() : (players?.length || 0);
 
-  const alivePlayers = players
-    ?.map((name, index) => ({ name, index }))
-    .filter((_, index) => alive?.[index] !== false) || [];
+  const alivePlayers = React.useMemo(
+    () =>
+      players
+        ?.map((name, index) => ({ name, index }))
+        .filter((_, index) => alive?.[index] !== false) || [],
+    [players, alive]
+  );
 
-  const orderedPlayers = React.useMemo(() => {
-    if (!alivePlayers.length) return [];
-    
-    if (round === 1 && imposterIndex !== null) {
-      const imposterPlayerIndex = alivePlayers.findIndex(p => p.index === imposterIndex);
-      
-      if (imposterPlayerIndex === 0) {
-        return [...alivePlayers.slice(1), alivePlayers[0]];
+  const [orderedPlayers, setOrderedPlayers] = useState([]);
+
+  useEffect(() => {
+    if (!alivePlayers.length) {
+      setOrderedPlayers([]);
+      return;
+    }
+
+    const shuffled = [...alivePlayers];
+
+    // Fisher-Yates
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+
+    // Enforce: imposter can never be first (when there is someone else)
+    if (imposterIndex != null && shuffled.length > 1) {
+      const impPos = shuffled.findIndex((p) => p.index === imposterIndex);
+      if (impPos === 0) {
+        const swapWith = 1 + Math.floor(Math.random() * (shuffled.length - 1));
+        [shuffled[0], shuffled[swapWith]] = [shuffled[swapWith], shuffled[0]];
       }
     }
-    
-    return alivePlayers;
-  }, [alivePlayers, round, imposterIndex]);
+
+    setOrderedPlayers(shuffled);
+  }, [round, alivePlayers, imposterIndex]);
 
   const sheriffIndex = roles?.indexOf("sheriff");
   const isSheriff = sheriffIndex !== -1 && alive?.[sheriffIndex] !== false;
