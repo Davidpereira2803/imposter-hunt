@@ -337,5 +337,6 @@
     "tip1": "Sii preciso nella descrizione per risultati migliori",
     "tip2": "Usa la difficoltà \"Misto\" per lunghezze di parole variate",
     "tip3": "Gli argomenti generati vengono salvati automaticamente nella tua lista personalizzata"
-  }
+  },
+  "votedOutInstruction": "Sei stato votato. Ultima possibilità: indovina la parola segreta. Corretto = vinci. Sbagliato = vincono i civili."
 }

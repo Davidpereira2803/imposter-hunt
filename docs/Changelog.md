@@ -9,6 +9,33 @@ All notable changes to The Munkeler are documented here.
 
 ---
 
+## [v1.1.0] - Gameplay Flow & Balance Update
+
+**Released:** March 2026
+
+### New Features
+- **Random Speaking Order Per Round** - Speaking order now reshuffles each round for more variety.
+- **Munkeler Never First** - Added rule so the Munkeler is never placed first in speaking order.
+- **Voted-Out Final Guess** - If the Munkeler is voted out, they now get a final chance to guess the secret word.
+
+### Win Condition Updates
+- **Munkeler Comeback Mechanic** - A voted-out Munkeler wins if the final guess is correct.
+- **Civilians Confirmed Win Path** - Civilians win if that final guess is wrong (or skipped).
+
+### UX Improvements
+- **Contextual Guess Messaging** - Munkeler guess screen now supports voted-out context copy.
+
+---
+
+## [v1.0.9] - Rebrand to The Munkeler
+
+**Released:** January 2026
+
+### Major Change
+- **Product Rebranding** - Renamed from **Imposter Hunt** to **The Munkeler** across app naming and presentation.
+
+---
+
 ## [v1.0.8] - Current Release
 
 **Released:** December 2025

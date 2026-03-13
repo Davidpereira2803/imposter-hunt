@@ -338,5 +338,6 @@
     "tip1": "Be specific in your description for better results",
     "tip2": "Use 'Mixed' difficulty for varied word lengths",
     "tip3": "Generated topics are automatically saved to your custom list"
-  }
+  },
+  "votedOutInstruction": "You were voted out. Final chance: guess the secret word. Correct = you win. Wrong = civilians win."
 }

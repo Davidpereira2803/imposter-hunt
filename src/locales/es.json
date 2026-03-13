@@ -337,5 +337,6 @@
     "tip1": "Sé específico en tu descripción para obtener mejores resultados",
     "tip2": "Usa dificultad 'Mixto' para palabras de longitudes variadas",
     "tip3": "Los temas generados se guardan automáticamente en tu lista personalizada"
-  }
+  },
+  "votedOutInstruction": "Fuiste votado. Última oportunidad: adivina la palabra secreta. Correcto = ganas. Incorrecto = ganan los civiles."
 }

@@ -337,5 +337,6 @@
     "tip1": "Säi esou spezifesch wéi méiglech an denger Beschreiwung fir besser Resultater",
     "tip2": "Benotz \"Gemëscht\" als Schwieregkeetsgrad fir variéiert Wuertlängten",
     "tip3": "Generéiert Themen ginn automatesch an deng personaliséiert Lëscht gespäichert"
-  }
+  },
+  "votedOutInstruction": "Du hues ausgewielt. Letzten Kéier: Rätsel d'geheime Wuert. Richtig = du gewinnst. Falsch = Zivilisten gewinnen."
 }

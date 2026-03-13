@@ -337,5 +337,6 @@
     "tip1": "Soyez précis dans votre description pour de meilleurs résultats",
     "tip2": "Utilisez la difficulté « Mixte » pour des longueurs de mots variées",
     "tip3": "Les thèmes générés sont automatiquement enregistrés dans votre liste personnalisée"
-  }
+  },
+  "votedOutInstruction": "Vous avez été voté. Dernière chance : devinez le mot secret. Correct = vous gagnez. Faux = les civils gagnent."
 }
