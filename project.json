@@ -1,0 +1,14 @@
+{
+  "slug": "imposter-hunt",
+  "title": "Imposter Hunt",
+  "description": "Fast-paced social deduction game with AI-backed generation API for custom word lists, on a single shared device.",
+  "longDescription": "Imposter Hunt is a fast-pa:contentReference[oaicite:0]{index=0}er on a single shared device. Players receive a secret word except the Imposter, who must blend in and guess the word after surviving the voting rounds. The project features an AI-backed generation API that lets users create custom word lists from their own input.",
+  "tags": ["React Native", "Expo", "Zustand", "AI API"],
+  "link": "https://github.com/Davidpereira2803/imposter-hunt",
+  "repo": "https://github.com/Davidpereira2803/imposter-hunt",
+  "productPage": "https://pearlabs.dev/imposter-hunt",
+  "image": ["https://raw.githubusercontent.com/Davidpereira2803/imposter-hunt/main/assets/icon.png", "https://raw.githubusercontent.com/Davidpereira2803/imposter-hunt/main/assets/Slice1.png", "https://raw.githubusercontent.com/Davidpereira2803/imposter-hunt/main/assets/Slice2.png", "https://raw.githubusercontent.com/Davidpereira2803/imposter-hunt/main/assets/Slice3.png", "https://raw.githubusercontent.com/Davidpereira2803/imposter-hunt/main/assets/Slice4.png", "https://raw.githubusercontent.com/Davidpereira2803/imposter-hunt/main/assets/Slice5.png", "https://raw.githubusercontent.com/Davidpereira2803/imposter-hunt/main/assets/Slice6.png", "https://raw.githubusercontent.com/Davidpereira2803/imposter-hunt/main/assets/Slice7.png", "https://raw.githubusercontent.com/Davidpereira2803/imposter-hunt/main/assets/Slice8.png"],
+  "category": "Mobile",
+  "status": "production",
+  "featured": false
+}
