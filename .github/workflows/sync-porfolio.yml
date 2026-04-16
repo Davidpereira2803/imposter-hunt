@@ -19,8 +19,9 @@ jobs:
       - name: Read metadata
         id: metadata
         run: |
+          json=$(cat portfolio/project.json)
           echo "json<<EOF" >> $GITHUB_OUTPUT
-          cat portfolio/project.json >> $GITHUB_OUTPUT
+          echo "$json" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Dispatch to portfolio repo
