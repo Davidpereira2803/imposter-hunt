@@ -2,7 +2,7 @@ name: Sync portfolio metadata
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
     paths:
       - "portfolio/project.json"
 
