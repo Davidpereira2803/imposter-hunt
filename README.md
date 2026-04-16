@@ -1,4 +1,4 @@
-# How to Play The Munkeler
+# The Munkeler - Imposter Hunt
 
 **The Munkeler** is a fast-paced social deduction game where players try to uncover who among them is the Munkeler (imposter) — all on a single shared device.
 
