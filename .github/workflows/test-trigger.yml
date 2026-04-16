@@ -3,7 +3,7 @@ name: Debug trigger
 on:
   push:
     branches:
-      - main
+      - master
   workflow_dispatch:
 
 jobs:
