@@ -1,0 +1,37 @@
+name: EAS build status
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ci/build-status]
+
+permissions:
+  contents: read
+
+jobs:
+  status:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: testing
+    env:
+      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Report recent cloud builds without starting new ones
+        run: |
+          npx eas-cli@16.23.1 build:list --limit 5 --json --non-interactive > /tmp/eas-build-status.json
+          node <<'JS'
+          const fs = require('node:fs');
+          const builds = JSON.parse(fs.readFileSync('/tmp/eas-build-status.json', 'utf8'));
+          for (const b of builds) {
+            console.log(JSON.stringify({id: b.id, platform: b.platform, status: b.status,
+              appVersion: b.appVersion, buildNumber: b.appBuildVersion,
+              createdAt: b.createdAt, updatedAt: b.updatedAt,
+              error: b.error, gitCommitHash: b.gitCommitHash}));
+          }
+          JS
