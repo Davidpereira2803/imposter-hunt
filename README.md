@@ -266,3 +266,7 @@ This software and associated documentation files may not be copied, modified, me
 ## Acknowledgments
 
 Built with Expo, React Native, and the React Native community ecosystem.
+
+## CI and store releases
+
+See [CI/CD setup and monthly release guide](docs/CI-CD.md) for GitHub Actions, EAS credentials, store submission, and production releases. Version tags upload to testing; production releases run manually from the same tag.
