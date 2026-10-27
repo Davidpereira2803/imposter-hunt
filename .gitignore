@@ -50,3 +50,10 @@ coverage/
 jest-results.json
 .jest-cache/
 
+
+# CI build artifacts and Fastlane output
+/dist-ci/
+/build-result.json
+/fastlane/report.xml
+/fastlane/README.md
+/fastlane/Preview.html

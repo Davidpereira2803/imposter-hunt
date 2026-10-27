@@ -1,0 +1,70 @@
+name: Release readiness
+
+on:
+  push:
+    branches: [ci/store-pipeline]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Environment to check (does not build or submit)
+        type: choice
+        required: true
+        default: testing
+        options: [testing, production]
+
+permissions:
+  contents: read
+
+jobs:
+  readiness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: ${{ inputs.environment || 'testing' }}
+    env:
+      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+      ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+      ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+      ASC_API_KEY_P8: ${{ secrets.ASC_API_KEY_P8 }}
+      GOOGLE_PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
+      ASC_APP_ID: ${{ vars.ASC_APP_ID }}
+      APPLE_TEAM_ID: ${{ vars.APPLE_TEAM_ID }}
+      IOS_RELEASE_NOTES: ${{ vars.IOS_RELEASE_NOTES }}
+      CHECK_ENVIRONMENT: ${{ inputs.environment || 'testing' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Check required account settings without printing values
+        run: |
+          node <<'JS'
+          const required = ['EXPO_TOKEN', 'ASC_KEY_ID', 'ASC_ISSUER_ID', 'ASC_API_KEY_P8',
+            'GOOGLE_PLAY_SERVICE_ACCOUNT_JSON', 'ASC_APP_ID', 'APPLE_TEAM_ID'];
+          if (process.env.CHECK_ENVIRONMENT === 'production') required.push('IOS_RELEASE_NOTES');
+          const missing = required.filter(name => !process.env[name]?.trim());
+          if (missing.length) throw new Error(`Missing settings: ${missing.join(', ')}`);
+          if (!/^\d+$/.test(process.env.ASC_APP_ID)) throw new Error('ASC_APP_ID must be numeric');
+          let key;
+          try { key = JSON.parse(process.env.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON); }
+          catch { throw new Error('Google service account secret is not valid JSON'); }
+          if (key.type !== 'service_account' || !key.client_email || !key.private_key) {
+            throw new Error('Google service account secret is missing required fields');
+          }
+          const { createPrivateKey } = require('node:crypto');
+          for (const value of [key.private_key, process.env.ASC_API_KEY_P8]) {
+            try { createPrivateKey(value); }
+            catch { throw new Error('A configured private key is invalid; use the raw file contents'); }
+          }
+          console.log('Required settings are present and credential file formats are valid.');
+          JS
+      - name: Install app dependencies for Expo config plugins
+        run: npm ci --no-audit --no-fund
+      - name: Verify Expo authentication and project access
+        run: |
+          npx eas-cli@16.23.1 whoami
+          npx eas-cli@16.23.1 project:info
+      - name: Explain remaining validation
+        run: |
+          echo 'This checks credential presence, file formats, and Expo project access.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'A testing release is still required to verify signing, Apple/Google API permissions, and submission.' >> "$GITHUB_STEP_SUMMARY"

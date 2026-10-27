@@ -1,0 +1,30 @@
+name: App checks
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: node --test scripts/release.test.cjs
+      - run: npm test -- --ci --runInBand
+      - name: Validate Expo configuration
+        run: npx expo config --type public > /dev/null
+      - name: Bundle both mobile platforms
+        run: |
+          npx expo export --platform android --output-dir dist-ci/android
+          npx expo export --platform ios --output-dir dist-ci/ios

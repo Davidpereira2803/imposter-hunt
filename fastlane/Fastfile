@@ -1,0 +1,47 @@
+default_platform(:ios)
+
+platform :ios do
+  desc 'Submit the exact EAS build for review, then release after approval'
+  lane :release do
+    notes = ENV.fetch('RELEASE_NOTES')
+    UI.user_error!('Set IOS_RELEASE_NOTES in the production GitHub environment') if notes.strip.empty?
+    api_key = app_store_connect_api_key(
+      key_id: ENV.fetch('ASC_KEY_ID'),
+      issuer_id: ENV.fetch('ASC_ISSUER_ID'),
+      key_content: ENV.fetch('ASC_API_KEY_P8'),
+      in_house: false
+    )
+    # EAS upload may finish before Apple finishes processing the build.
+    app = Spaceship::ConnectAPI::App.find('com.davidpereira2803.imposterhunt')
+    UI.user_error!('App not found in App Store Connect') unless app
+    deadline = Time.now + 1800
+    loop do
+      builds = Spaceship::ConnectAPI::Build.all(
+        app_id: app.id,
+        version: ENV.fetch('APP_VERSION'),
+        build_number: ENV.fetch('BUILD_NUMBER'),
+        platform: 'IOS'
+      )
+      build = builds.first
+      break if build && build.processing_state == 'VALID'
+      UI.user_error!('Apple rejected build processing') if build && ['INVALID', 'FAILED'].include?(build.processing_state)
+      UI.user_error!('Timed out waiting for Apple build processing') if Time.now >= deadline
+      sleep 30
+    end
+    deliver(
+      api_key: api_key,
+      app_identifier: 'com.davidpereira2803.imposterhunt',
+      app_version: ENV.fetch('APP_VERSION'),
+      build_number: ENV.fetch('BUILD_NUMBER'),
+      skip_binary_upload: true,
+      skip_screenshots: true,
+      release_notes: { 'default' => notes },
+      submit_for_review: true,
+      automatic_release: true,
+      phased_release: true,
+      run_precheck_before_submit: false,
+      force: true,
+      submission_information: { export_compliance_uses_encryption: false }
+    )
+  end
+end
