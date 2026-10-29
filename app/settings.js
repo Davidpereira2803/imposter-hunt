@@ -141,8 +141,6 @@ export default function Settings() {
             try {
               await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
               await resetConsent();
-              await new Promise(resolve => setTimeout(resolve, 500));
-              await showConsentForm();
               Alert.alert(t("common.success", "Success"), t("settings.consentUpdated", "Consent preferences updated"));
             } catch (error) {
               Alert.alert(t("common.error", "Error"), error?.message || t("settings.couldNotReset", "Could not reset consent"));

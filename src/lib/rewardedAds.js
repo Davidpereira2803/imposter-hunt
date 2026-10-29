@@ -5,8 +5,6 @@ import mobileAds, {
   RewardedAdEventType,
   TestIds,
 } from "react-native-google-mobile-ads";
-import { ca } from "zod/v4/locales";
-import Constants from "expo-constants";
 import ADS_CONFIG from "../config/adshelper";
 
 const REWARDED_ID = __DEV__

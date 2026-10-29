@@ -4,63 +4,12 @@ import API_CONFIG from "../config/api";
 
 const API_ENDPOINT = `${API_CONFIG.BASE_URL}/api/complete`;
 
-const createHash = (description, numTopics, difficulty, language) => {
-  const str = `${description.toLowerCase()}-${numTopics}-${difficulty}-${language}`;
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = (hash << 5) - hash + char;
-    hash = hash & hash;
-  }
-  return Math.abs(hash).toString(36);
-};
-
-const generateLocalFallback = (description, numTopics) => {
-  const words = description
-    .toLowerCase()
-    .split(/[\s,;.]+/)
-    .filter((w) => w.length > 2);
-
-  const base = words.slice(0, Math.max(1, Math.min(numTopics, words.length)));
-  const items = [];
-  const variations = [
-    "",
-    "Super",
-    "Mega",
-    "Epic",
-    "Legendary",
-    "Rare",
-    "Common",
-    "Golden",
-    "Silver",
-    "Bronze",
-    "Dark",
-    "Light",
-    "Fire",
-    "Ice",
-    "Thunder",
-  ];
-
-  for (let i = 0; i < Math.min(numTopics, base.length * 3); i++) {
-    const w = base[i % base.length];
-    const v = variations[i % variations.length];
-    const c = (s) => s.charAt(0).toUpperCase() + s.slice(1);
-    const combined = v ? `${v} ${c(w)}` : c(w);
-    if (!items.includes(combined)) items.push(combined);
-  }
-
-  while (items.length < numTopics && base.length > 0) {
-    const w = base[items.length % base.length];
-    const c = (s) => s.charAt(0).toUpperCase() + s.slice(1);
-    items.push(`${c(w)} ${items.length + 1}`);
-  }
-
-  return {
-    topicGroup: description.trim() || "AI Topics",
-    language: "en",
-    items: items.slice(0, numTopics),
-    source: "local-fallback",
-  };
+const normalizeItems = (raw, limit) => {
+  const values = Array.isArray(raw) ? raw : raw?.items;
+  if (!Array.isArray(values)) return [];
+  return [...new Set(values.map((item) => typeof item === "string" ? item : item?.word)
+    .filter((item) => typeof item === "string")
+    .map((item) => item.trim()).filter(Boolean))].slice(0, limit);
 };
 
 export const generateTopics = async ({
@@ -69,80 +18,53 @@ export const generateTopics = async ({
   difficulty,
   language,
 }) => {
+  let timeoutId;
   try {
-    const hash = createHash(description, numTopics, difficulty, language);
-
-    const cached = useAIStore.getState().getCachedResult(hash);
-    if (cached) {
-      return { success: true, data: { ...cached, source: "cache" } };
+    if (typeof description !== "string" || !description.trim() ||
+        !Number.isInteger(numTopics) || numTopics < 1 || numTopics > 100) {
+      return { success: false, error: "Enter a description and a topic count from 1 to 100.", code: "invalid-input" };
+    }
+    const selectedLanguage = language?.trim() || "en";
+    const prompt = description.trim();
+    // Versioned, collision-free keys also exclude results cached under the old fallback contract.
+    const key = JSON.stringify(["v2", prompt.toLowerCase(), numTopics, difficulty, selectedLanguage]);
+    const cached = useAIStore.getState().getCachedResult(key);
+    if (cached?.source === "api" && normalizeItems(cached.items, numTopics).length) {
+      return { success: true, data: { ...cached, items: normalizeItems(cached.items, numTopics), source: "cache" } };
     }
 
     const netInfo = await NetInfo.fetch();
-    if (!netInfo.isConnected) {
-      const fallback = generateLocalFallback(description, numTopics);
-      return { success: true, data: fallback };
+    if (netInfo.isConnected === false || netInfo.isInternetReachable === false) {
+      return { success: false, error: "Connect to the internet and try again.", code: "offline" };
     }
 
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 30000);
-
+    timeoutId = setTimeout(() => controller.abort(), 30000);
     const response = await fetch(API_ENDPOINT, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${API_CONFIG.API_KEY}`,
       },
-      body: JSON.stringify({
-        prompt: description,
-        count: numTopics,
-        difficulty,
-      }),
+      body: JSON.stringify({ prompt, count: numTopics, difficulty, language: selectedLanguage }),
       signal: controller.signal,
     });
-
-    clearTimeout(timeoutId);
-
     if (!response.ok) {
-      const text = await response.text().catch(() => "");
-      
-      if (response.status === 401 || response.status === 403) {
-        throw new Error("Authentication failed. Please update the app.");
-      }
-      
-      throw new Error(`API ${response.status}${text ? `: ${text}` : ""}`);
+      const code = response.status === 401 || response.status === 403 ? "authentication" :
+        response.status === 429 ? "rate-limit" : "server";
+      return { success: false, error: "Could not generate topics. Please try again later.", code };
     }
-
-    const raw = await response.json();
-
-    let items = [];
-    if (Array.isArray(raw)) {
-      items = raw
-        .map((x) => (typeof x === "string" ? x : x?.word))
-        .filter(Boolean);
-    } else if (Array.isArray(raw?.items)) {
-      items = raw.items
-        .map((x) => (typeof x === "string" ? x : x?.word))
-        .filter(Boolean);
-    } else {
-      throw new Error("Invalid response format (expected array or items[])");
+    const items = normalizeItems(await response.json(), numTopics);
+    if (!items.length) {
+      return { success: false, error: "The service returned no usable topics. Please try again.", code: "invalid-response" };
     }
-
-    const data = {
-      topicGroup: description.trim() || "AI Topics",
-      language: language || "en",
-      items,
-      source: "api",
-    };
-
-    useAIStore.getState().setCachedResult(hash, data);
-
+    const data = { topicGroup: prompt, language: selectedLanguage, items, source: "api" };
+    useAIStore.getState().setCachedResult(key, data);
     return { success: true, data };
   } catch (error) {
-    const fallback = generateLocalFallback(description, numTopics);
-    return {
-      success: true,
-      data: fallback,
-      warning: "Using fallback due to: " + (error?.message || "unknown error"),
-    };
+    return { success: false, error: "Could not generate topics. Please try again.",
+      code: error?.name === "AbortError" ? "timeout" : "network" };
+  } finally {
+    clearTimeout(timeoutId);
   }
 };

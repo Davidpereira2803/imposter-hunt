@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, KeyboardAvoidingView, Platform, Alert, ActivityIndicator } from "react-native";
 import { useRouter, useFocusEffect } from "expo-router";
 import * as Haptics from "expo-haptics";
@@ -13,7 +13,7 @@ import Input from "../src/components/ui/Input";
 import Card from "../src/components/ui/Card";
 import { space, palette, type } from "../src/constants/theme";
 import { Icon } from "../src/constants/icons";
-import { initAds, showRewarded } from "../src/lib/rewardedAds";
+import { showRewarded } from "../src/lib/rewardedAds";
 import { useAdConsentContext } from "../src/contexts/AdConsentContext";
 import AITutorialModal from "../src/components/AITutorialModal";
 import aiExamples from "../src/data/aiTopicExamples.json";
@@ -25,7 +25,7 @@ const slugify = (s = "") =>
 
 export default function AITopics() {
   const router = useRouter();
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const {
     canGenerate,
     generationsToday,
@@ -42,13 +42,14 @@ export default function AITopics() {
 
   const { addCustomTopic, setTopicKey } = useGameStore();
 
-  const { canShowAds, canShowPersonalizedAds, showConsentForm } = useAdConsentContext();
+  const { canShowAds, canShowPersonalizedAds, isReady: consentReady, checkConsent } = useAdConsentContext();
   const [isShowingAd, setIsShowingAd] = useState(false);
 
   const [description, setDescription] = useState("");
   const [numTopics, setNumTopics] = useState(24);
   const [difficulty, setDifficulty] = useState("medium");
-  const [language, setLanguage] = useState("en");
+  const generationInFlight = useRef(false);
+  const adInFlight = useRef(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const [showTutorial, setShowTutorial] = useState(false);
@@ -56,10 +57,6 @@ export default function AITopics() {
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
 
   const placeholderExamples = aiExamples.examples;
-
-  useEffect(() => {
-    initAds().catch(() => {});
-  }, []);
 
   useEffect(() => {
     ensureDailyReset();
@@ -93,36 +90,49 @@ export default function AITopics() {
   };
 
   const handleWatchAd = async () => {
-    if (!canShowAds) {
-      try { await showConsentForm(); } catch {}
-    }
+    if (adInFlight.current) return;
     if (watchedAdsToday >= maxAdsPerDay) {
-      Alert.alert(
-        t("aiTopics.limitReached", "Limit Reached"),
-        t("aiTopics.maxAdsMessage", "You've watched the maximum rewarded ads for today.")
-      );
+      Alert.alert(t("aiTopics.limitReached", "Limit Reached"),
+        t("aiTopics.maxAdsMessage", "You've watched the maximum rewarded ads for today."));
       return;
     }
+    adInFlight.current = true;
     setIsShowingAd(true);
-    const res = await showRewarded({ nonPersonalized: !canShowPersonalizedAds });
-    setIsShowingAd(false);
-
-    if (res.earned) {
-      incrementAdsWatched();
-      try { await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success); } catch {}
-      Alert.alert(
-        t("aiTopics.thanks", "Thanks!"),
-        t("aiTopics.earnedGeneration", "You earned +1 AI generation.")
-      );
-    } else {
-      Alert.alert(
-        t("aiTopics.noReward", "No reward"),
-        res.error?.message || t("aiTopics.adClosedEarly", "Ad closed before completion. Try again.")
-      );
+    try {
+      // Use the returned snapshot: React context in this handler may still contain the old choice.
+      let allowed = canShowAds;
+      let personalized = canShowPersonalizedAds;
+      if (!allowed) {
+        const info = await checkConsent();
+        allowed = info.canRequestAds;
+        personalized = info.canShowPersonalizedAds;
+      }
+      if (!allowed) {
+        Alert.alert(t("aiTopics.noReward", "No reward"),
+          t("aiTopics.adUnavailable", "An ad is not available right now. Please try again later."));
+        return;
+      }
+      const res = await showRewarded({ nonPersonalized: !personalized });
+      if (res.earned) {
+        incrementAdsWatched();
+        try { await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success); } catch {}
+        Alert.alert(t("aiTopics.thanks", "Thanks!"),
+          t("aiTopics.earnedGeneration", "You earned +1 AI generation."));
+      } else {
+        Alert.alert(t("aiTopics.noReward", "No reward"),
+          t("aiTopics.adClosedEarly", "Ad closed before completion. Try again."));
+      }
+    } catch {
+      Alert.alert(t("aiTopics.noReward", "No reward"),
+        t("aiTopics.adUnavailable", "An ad is not available right now. Please try again later."));
+    } finally {
+      adInFlight.current = false;
+      setIsShowingAd(false);
     }
   };
 
   const handleGenerate = async () => {
+    if (generationInFlight.current) return;
     if (!description.trim()) {
       Alert.alert(
         t("aiTopics.missingInput", "Missing Input"),
@@ -146,24 +156,21 @@ export default function AITopics() {
       return;
     }
 
+    generationInFlight.current = true;
+    setIsLoading(true);
     try {
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     } catch {}
-
-    setIsLoading(true);
 
     try {
       const result = await generateTopics({
         description: description.trim(),
         numTopics,
         difficulty,
-        language: language.trim() || "en",
+        language: locale || "en",
       });
 
       if (result.success && result.data) {
-        incrementGenerations();
-        addGeneratedTopic(result.data);
-
         const baseName = (result.data.topicGroup || description || t("aiTopics.aiTopicsFallback", "AI Topics")).trim();
         let finalName = `${baseName} (AI)`;
         let attempts = 0;
@@ -171,12 +178,18 @@ export default function AITopics() {
 
         while (!added.ok && attempts < 5) {
           added = await addCustomTopic({ name: finalName, words: result.data.items });
+          if (added.code === "storage") break;
           if (!added.ok) {
             attempts += 1;
             finalName = `${baseName} (AI ${attempts + 1})`;
           }
         }
 
+        if (!added.ok) {
+          throw new Error(t("aiTopics.saveFailed", "Could not save these topics. Your generation has not been used."));
+        }
+        if (result.data.source === "api") incrementGenerations();
+        addGeneratedTopic(result.data);
         if (added.ok) {
           const key = `custom:${slugify(finalName)}`;
           setTopicKey(key);
@@ -197,7 +210,13 @@ export default function AITopics() {
 
         setDescription("");
       } else {
-        throw new Error(result.error || t("aiTopics.generationFailed", "Generation failed"));
+        const messages = {
+          offline: t("aiTopics.offlineMessage", "Connect to the internet and try again. Your generation has not been used."),
+          timeout: t("aiTopics.timeoutMessage", "The request timed out. Please try again. Your generation has not been used."),
+          authentication: t("aiTopics.serviceUnavailable", "The topic service is unavailable. Please try again later. Your generation has not been used."),
+          "rate-limit": t("aiTopics.rateLimitMessage", "The topic service is busy. Please try again later. Your generation has not been used."),
+        };
+        throw new Error(messages[result.code] || t("aiTopics.requestFailed", "Could not generate usable topics. Please try again. Your generation has not been used."));
       }
     } catch (error) {
       console.error("Generation error:", error);
@@ -214,6 +233,7 @@ export default function AITopics() {
         [{ text: t("common.ok", "OK") }]
       );
     } finally {
+      generationInFlight.current = false;
       setIsLoading(false);
     }
   };
@@ -258,7 +278,7 @@ export default function AITopics() {
                 <TouchableOpacity 
                   style={styles.adButton}
                   onPress={handleWatchAd}
-                  disabled={isShowingAd || !canShowAds}
+                  disabled={isShowingAd || !consentReady}
                 >
                   <Icon name="video" size={18} color={palette.text} />
                   <Text style={styles.adButtonText}>+1</Text>

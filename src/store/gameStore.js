@@ -4,6 +4,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import topics from "../data/topics.json";
 
 const CUSTOM_TOPICS_KEY = "imposter-hunt-custom-topics";
+let topicWrites = Promise.resolve();
+const queueTopicWrite = (write) => {
+  const operation = topicWrites.then(write);
+  topicWrites = operation.catch(() => {});
+  return operation;
+};
 
 const slugify = (s = "") =>
   s.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
@@ -202,7 +208,7 @@ export const useGameStore = create(
           await AsyncStorage.setItem(CUSTOM_TOPICS_KEY, JSON.stringify(customTopics));
         } catch {}
       },
-      addCustomTopic: async ({ name, words = [] }) => {
+      addCustomTopic: ({ name, words = [] }) => queueTopicWrite(async () => {
         const safeName = (name || "").trim();
         const safeWords = (words || []).map((w) => String(w).trim()).filter(Boolean);
         if (!safeName) return { ok: false, error: "Topic name required" };
@@ -217,12 +223,18 @@ export const useGameStore = create(
           return { ok: false, error: "Topic name already exists" };
         }
 
-        const next = [...(get().customTopics || []), { name: safeName, words: safeWords }];
+        const topic = { name: safeName, words: safeWords };
+        const next = [...(get().customTopics || []), topic];
+        try {
+          // Only report success after the custom topic has actually been saved.
+          await AsyncStorage.setItem(CUSTOM_TOPICS_KEY, JSON.stringify(next));
+        } catch {
+          return { ok: false, code: "storage", error: "Could not save topic" };
+        }
         set({ customTopics: next });
-        await get().saveCustomTopics?.();
         return { ok: true };
-      },
-      removeCustomTopic: async (name) => {
+      }),
+      removeCustomTopic: (name) => queueTopicWrite(async () => {
         const next = (get().customTopics || []).filter((t) => t.name !== name);
         set({ customTopics: next });
         await get().saveCustomTopics?.();
@@ -231,7 +243,7 @@ export const useGameStore = create(
         if (selected && selected.startsWith("custom:") && selected === `custom:${slugify(name)}`) {
           set({ topicKey: undefined });
         }
-      },
+      }),
       getAllTopics: () => {
         const pre = Object.entries(get().predefinedTopics || {}).map(([key, words]) => ({
           key, name: key, words, isCustom: false,
