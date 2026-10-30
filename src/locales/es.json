@@ -23,7 +23,11 @@
     "exitMessage": "¿Salir del juego?",
     "exit": "Salir",
     "players": "jugadores",
-    "aiTopics": "Temas IA"
+    "aiTopics": "Temas IA",
+    "eyebrow": "UN TELÉFONO. MUCHOS SOSPECHOSOS.",
+    "play": "Vamos a jugar",
+    "minimumPlayers": "3+ jugadores",
+    "oneDevice": "Pasa el teléfono"
   },
   "setup": {
     "title": "Configuración",
@@ -161,7 +165,17 @@
     "inspectionResult": "Resultado de Inspección",
     "hideAndPass": "Ocultar y Pasar",
     "startRound": "Iniciar Ronda",
-    "unknown": "Desconocido"
+    "unknown": "Desconocido",
+    "shortImposter": "Pasa desapercibido. Escucha las pistas. Adivina la palabra o sobrevive.",
+    "shortCivilian": "Da una pista sutil. Guarda la palabra. Encuentra al Munkeler.",
+    "shortSheriff": "Ayuda a los civiles. Comprueba el rol de un jugador una vez por partida.",
+    "shortJester": "Parece sospechoso. Consigue que te expulsen y gana en solitario.",
+    "privateCard": "SOLO PARA TUS OJOS",
+    "hiddenWord": "LA PALABRA ES UN MISTERIO",
+    "secretIdentity": "Te espera una identidad secreta.",
+    "privateHint": "Asegúrate de que solo tú puedes ver la pantalla.",
+    "hideAndStart": "Ocultar e iniciar ronda",
+    "keepSecret": "Guarda tu rol. Pasa el teléfono, no el secreto."
   },
   "round": {
     "quitTitle": "Abandonar Partida",

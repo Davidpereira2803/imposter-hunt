@@ -1,23 +1,25 @@
-import React, { useEffect } from "react";
-import { View, StyleSheet, BackHandler, Alert, Text, TouchableOpacity } from "react-native";
+import React from "react";
+import { View, StyleSheet, BackHandler, Alert, Text, TouchableOpacity, ScrollView } from "react-native";
 import { useRouter, useFocusEffect } from "expo-router";
 import * as Haptics from "expo-haptics";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useGameStore } from "../src/store/gameStore";
 import { AdBanner } from "../src/components/AdBanner";
 import Screen from "../src/components/ui/Screen";
-import Title from "../src/components/ui/Title";
+import IdentityMark from "../src/components/IdentityMark";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Button from "../src/components/ui/Button";
-import { space, palette, type, radii } from "../src/constants/theme";
-import { Icon, icons } from "../src/constants/icons";
+import { space, palette, radii } from "../src/constants/theme";
+import { Icon } from "../src/constants/icons";
 import { useTranslation } from "../src/lib/useTranslation";
 
 const TUTORIAL_SEEN_KEY = "imposter-hunt-tutorial-seen";
 
 export default function Home() {
   const router = useRouter();
-  const { players, topicKey, getTopicByKey } = useGameStore();
+  const { players, topicKey, secretWord, imposterIndex, getTopicByKey } = useGameStore();
   const { t } = useTranslation();
+  const insets = useSafeAreaInsets();
 
   useFocusEffect(
     React.useCallback(() => {
@@ -40,7 +42,7 @@ export default function Home() {
 
   const handleQuickStart = async () => {
     try { await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium); } catch {}
-    if (players?.length >= 3 && topicKey) {
+    if (players?.length >= 3 && topicKey && secretWord && imposterIndex != null) {
       router.push("/role");
     } else {
       router.push("/setup");
@@ -68,7 +70,7 @@ export default function Home() {
     router.push("/ai-topics");
   };
 
-  const canQuickStart = players?.length >= 3 && topicKey;
+  const canQuickStart = players?.length >= 3 && topicKey && secretWord && imposterIndex != null;
 
   const getTopicDisplayName = (key) => {
     if (!key) return "";
@@ -87,155 +89,90 @@ export default function Home() {
 
   return (
     <Screen>
-      <View style={styles.container}>
-        <View style={styles.content}>
-          <View style={styles.header}>
-            <Icon
-              name={icons.gameLogo.name}
-              size={icons.gameLogo.size}
-              color={palette.primary}
-            />
-            <Title style={styles.title}>{t("home.title", "Who's the Munkeler?")}</Title>
-            <Text style={styles.subtitle}>
-              {t("home.subtitle", "A social, pass-and-play word deduction game")}
-            </Text>
+      <ScrollView contentContainerStyle={[styles.scroll, { paddingTop: insets.top + 18 }]}
+        showsVerticalScrollIndicator={false}>
+        <View style={styles.container}>
+          <View style={styles.topBar}>
+            <Text style={styles.wordmark}>THE MUNKELER<Text style={{ color: palette.primary }}>.</Text></Text>
+            <TouchableOpacity onPress={handleSettings} style={styles.settings}
+              accessibilityRole="button" accessibilityLabel={t("common.settings", "Settings")}>
+              <Icon name="cog-outline" size={23} color={palette.textDim} />
+            </TouchableOpacity>
           </View>
 
-          <View style={styles.actions}>
-            {canQuickStart && (
-              <>
-                {/* Game Info Chip */}
-                <View style={styles.gameInfoChip}>
-                  <Icon name="account-multiple" size={16} color={palette.primary} />
-                  <Text style={styles.gameInfoText}>
-                    {players.length} {t("home.players", "players")} • {getTopicDisplayName(topicKey)}
-                  </Text>
-                </View>
-
-                <Button
-                  title={t("home.continueGame", "Continue Game")}
-                  onPress={handleQuickStart}
-                  variant="success"
-                  size="lg"
-                  icon={<Icon name="play-circle" size={24} color="#000" />}
-                />
-              </>
-            )}
-
-            <Button
-              title={t("home.newGame", "New Game")}
-              onPress={handleNewGame}
-              variant="primary"
-              size="lg"
-              icon={<Icon name="plus-circle" size={24} color={palette.text} />}
-            />
+          <View style={styles.hero}>
+            <View style={styles.deck} accessible={false}>
+              <View style={[styles.cardOutline, styles.cardLeft]} />
+              <View style={[styles.cardOutline, styles.cardRight]} />
+              <View style={styles.heroCard}><IdentityMark size={124} /></View>
+            </View>
+            <Text style={styles.eyebrow}>{t("home.eyebrow", "ONE PHONE. MANY SUSPECTS.")}</Text>
+            <Text style={styles.title}>{t("home.title", "Who's the Munkeler?")}</Text>
+            <Text style={styles.subtitle}>{t("home.subtitle", "A social, pass-and-play word deduction game")}</Text>
           </View>
 
-          {/* Quick Action Cards */}
-          <View style={styles.quickActions}>
-            <TouchableOpacity 
-              style={styles.quickActionCard}
-              onPress={handleAITopics}
-              activeOpacity={0.7}
-            >
-              <Icon name="lightning-bolt" size={20} color={palette.primary} />
-              <Text style={styles.quickActionText}>{t("home.aiTopics", "AI Topics")}</Text>
+          <Button title={t("home.play", "Let's play")} onPress={handleNewGame} size="lg"
+            icon={<Icon name="arrow-right" size={23} color={palette.text} />} iconPosition="right" />
+          <View style={styles.gameFacts}>
+            <Icon name="account-multiple-outline" size={16} color={palette.textDim} />
+            <Text style={styles.fact}>{t("home.minimumPlayers", "3+ players")}</Text>
+            <Text style={styles.fact}>·</Text>
+            <Icon name="cellphone" size={16} color={palette.textDim} />
+            <Text style={styles.fact}>{t("home.oneDevice", "Pass & play")}</Text>
+          </View>
+
+          {canQuickStart && (
+            <TouchableOpacity style={styles.resume} onPress={handleQuickStart} accessibilityRole="button">
+              <View style={styles.resumeIcon}><Icon name="play-outline" size={23} color={palette.text} /></View>
+              <View style={{ flex: 1 }}>
+                <Text style={styles.resumeTitle}>{t("home.continueGame", "Continue Game")}</Text>
+                <Text style={styles.resumeDetail}>{players.length} {t("home.players", "players")} · {getTopicDisplayName(topicKey)}</Text>
+              </View>
+              <Icon name="chevron-right" size={22} color={palette.textDim} />
             </TouchableOpacity>
-            
-            <TouchableOpacity 
-              style={styles.quickActionCard}
-              onPress={handleViewTutorial}
-              activeOpacity={0.7}
-            >
-              <Icon name="help-circle" size={20} color={palette.text} />
-              <Text style={styles.quickActionText}>{t("home.howToPlay", "How to Play")}</Text>
-            </TouchableOpacity>
+          )}
+
+          <View style={styles.extras}>
+            {[
+              { key: "aiTopics", label: t("home.aiTopics", "AI Topics"), icon: "creation", action: handleAITopics },
+              { key: "howToPlay", label: t("home.howToPlay", "How to Play"), icon: "cards-outline", action: handleViewTutorial },
+            ].map(item => (
+              <TouchableOpacity key={item.key} style={styles.extra} onPress={item.action} accessibilityRole="button">
+                <Icon name={item.icon} size={24} color={palette.textDim} />
+                <Text style={styles.extraLabel}>{item.label}</Text>
+                <Icon name="arrow-top-right" size={16} color={palette.textDim} />
+              </TouchableOpacity>
+            ))}
           </View>
         </View>
-
-        {/* Settings Button - Only one at bottom */}
-        <Button
-          title={t("common.settings", "Settings")}
-          onPress={handleSettings}
-          variant="muted"
-          size="md"
-          icon={<Icon name={icons.settings.name} size={20} color={palette.text} />}
-          style={styles.settingsButton}
-        />
-      </View>
-
+      </ScrollView>
       <AdBanner />
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: space.lg,
-    paddingTop: space.xl * 2,
-    paddingBottom: space.xl,
-  },
-  content: {
-    flex: 1,
-    justifyContent: "center",
-  },
-  header: {
-    alignItems: "center",
-    marginBottom: space.xl * 2,
-  },
-  title: {
-    marginTop: space.md,
-  },
-  subtitle: {
-    marginTop: 6,
-    color: palette.textDim,
-    textAlign: "center",
-  },
-  actions: {
-    gap: space.md,
-  },
-  gameInfoChip: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: space.xs,
-    paddingVertical: space.xs,
-    paddingHorizontal: space.md,
-    borderRadius: 16,
-    backgroundColor: palette.primaryDim,
-    borderWidth: 1,
-    borderColor: palette.primary,
-    alignSelf: "center",
-  },
-  gameInfoText: {
-    fontSize: type.small,
-    fontWeight: "700",
-    color: palette.primary,
-  },
-  quickActions: {
-    flexDirection: "row",
-    gap: space.sm,
-    marginTop: space.xl,
-  },
-  quickActionCard: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: space.xs,
-    paddingVertical: space.md,
-    borderRadius: radii.lg,
-    backgroundColor: palette.panel,
-    borderWidth: 1,
-    borderColor: palette.line,
-  },
-  quickActionText: {
-    fontSize: type.small,
-    fontWeight: "700",
-    color: palette.text,
-  },
-  settingsButton: {
-    marginTop: space.md,
-  },
+  scroll: { flexGrow: 1, paddingHorizontal: space.lg, paddingBottom: space.xl },
+  container: { width: "100%", maxWidth: 480, alignSelf: "center", flex: 1, justifyContent: "center" },
+  topBar: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 22 },
+  wordmark: { color: palette.text, fontSize: 14, fontWeight: "900", letterSpacing: 2 },
+  settings: { minWidth: 48, minHeight: 48, justifyContent: "center", alignItems: "center", borderWidth: 1, borderColor: palette.line, borderRadius: 16 },
+  hero: { alignItems: "center", paddingBottom: 28 },
+  deck: { width: 220, height: 204, alignItems: "center", justifyContent: "center", marginBottom: 25 },
+  cardOutline: { position: "absolute", width: 142, height: 180, backgroundColor: palette.panel, borderWidth: 1, borderColor: palette.line, borderRadius: 22 },
+  cardLeft: { transform: [{ rotate: "-13deg" }, { translateX: -20 }], top: 17 },
+  cardRight: { transform: [{ rotate: "12deg" }, { translateX: 20 }], top: 17 },
+  heroCard: { width: 148, height: 190, backgroundColor: palette.panel, borderRadius: 22, borderWidth: 1, borderColor: palette.primary, alignItems: "center", justifyContent: "center" },
+  eyebrow: { color: palette.textDim, fontSize: 10, fontWeight: "800", letterSpacing: 2.1, textAlign: "center", marginBottom: 13 },
+  title: { color: palette.text, fontSize: 38, lineHeight: 44, fontWeight: "900", textAlign: "center", letterSpacing: -1.4, marginBottom: 12 },
+  subtitle: { color: palette.textDim, fontSize: 15, lineHeight: 23, textAlign: "center", maxWidth: 290 },
+  gameFacts: { flexDirection: "row", alignItems: "center", justifyContent: "center", flexWrap: "wrap", gap: 8, marginTop: 14, marginBottom: 25 },
+  fact: { color: palette.textDim, fontSize: 12 },
+  resume: { borderWidth: 1, borderColor: palette.line, borderRadius: radii.lg, padding: 14, backgroundColor: palette.panel, flexDirection: "row", alignItems: "center", gap: 12, marginBottom: 14 },
+  resumeIcon: { width: 40, height: 40, borderRadius: 12, backgroundColor: palette.backgroundDim, justifyContent: "center", alignItems: "center" },
+  resumeTitle: { color: palette.text, fontWeight: "800", fontSize: 14 },
+  resumeDetail: { color: palette.textDim, fontSize: 12, marginTop: 4 },
+  extras: { flexDirection: "row", flexWrap: "wrap", gap: 12 },
+  extra: { flexGrow: 1, flexBasis: 145, flexDirection: "row", alignItems: "center", gap: 9, minHeight: 70, padding: 14, borderWidth: 1, borderColor: palette.line, borderRadius: radii.lg },
+  extraLabel: { color: palette.text, flex: 1, fontSize: 13, fontWeight: "700" },
 });

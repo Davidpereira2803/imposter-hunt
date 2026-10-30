@@ -23,7 +23,11 @@
     "exitMessage": "Spill verloossen?",
     "exit": "Erauszéien",
     "players": "Spiller",
-    "aiTopics": "KI Themen"
+    "aiTopics": "KI Themen",
+    "eyebrow": "EEN HANDY. VILL VERDÄCHTEGER.",
+    "play": "Loosse mer spillen",
+    "minimumPlayers": "3+ Spiller",
+    "oneDevice": "Handy weiderginn"
   },
   "setup": {
     "title": "Astellung",
@@ -161,7 +165,17 @@
     "inspectionResult": "Kontrollresultat",
     "hideAndPass": "Verstoppen & Weiderginn",
     "startRound": "Ronn Starten",
-    "unknown": "Onbekannt"
+    "unknown": "Onbekannt",
+    "shortImposter": "Fal net op. Lauschter op d’Hiweiser. Rot d’Wuert oder iwwerlief.",
+    "shortCivilian": "Gëff e subtilen Hiweis. Halt d’Wuert geheim. Fann de Munkeler.",
+    "shortSheriff": "Hëllef den Zivilisten. Kontrolléier eemol pro Spill d’Roll vun engem Spiller.",
+    "shortJester": "Wierk verdächteg. Looss dech erauswielen a gewann eleng.",
+    "privateCard": "NËMME FIR DENG AEN",
+    "hiddenWord": "D’WUERT ASS E GEHEIMNIS",
+    "secretIdentity": "Eng geheim Identitéit waart op dech.",
+    "privateHint": "Pass op, datt nëmmen du den Ecran gesäis.",
+    "hideAndStart": "Verstoppen a Ronn starten",
+    "keepSecret": "Halt deng Roll geheim. Gëff den Handy weider, net d’Geheimnis."
   },
   "round": {
     "quitTitle": "Spill Ophalen",
