@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: space.lg,
   },
   modalContent: {
-    backgroundColor: '#0d1117',
+    backgroundColor: palette.panel,
     borderRadius: radii.xl,
     padding: space.xl,
     width: "100%",
@@ -125,10 +125,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     shadowColor: palette.danger,
     shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.9,
-    shadowRadius: 24,
+    shadowOpacity: 0.22,
+    shadowRadius: 16,
     elevation: 16,
-    borderWidth: 3,
+    borderWidth: 1,
     borderColor: palette.danger,
   },
   
