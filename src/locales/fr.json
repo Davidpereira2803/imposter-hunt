@@ -23,7 +23,11 @@
     "exitMessage": "Quitter le jeu ?",
     "exit": "Quitter",
     "players": "Joueurs",
-    "aiTopics": "Sujets IA"
+    "aiTopics": "Sujets IA",
+    "eyebrow": "UN TÉLÉPHONE. PLUSIEURS SUSPECTS.",
+    "play": "Jouons",
+    "minimumPlayers": "3 joueurs ou plus",
+    "oneDevice": "Passez le téléphone"
   },
   "setup": {
     "title": "Configuration",
@@ -161,7 +165,17 @@
     "inspectionResult": "Résultat de l'Inspection",
     "hideAndPass": "Cacher et Passer",
     "startRound": "Commencer la Manche",
-    "unknown": "Inconnu"
+    "unknown": "Inconnu",
+    "shortImposter": "Fondez-vous dans le groupe. Écoutez les indices. Devinez le mot ou survivez.",
+    "shortCivilian": "Donnez un indice subtil. Gardez le mot secret. Trouvez le Munkeler.",
+    "shortSheriff": "Aidez les civils. Vérifiez le rôle d’un joueur une seule fois par partie.",
+    "shortJester": "Paraissez suspect. Faites-vous éliminer par vote pour gagner seul.",
+    "privateCard": "POUR VOS YEUX SEULEMENT",
+    "hiddenWord": "LE MOT EST UN MYSTÈRE",
+    "secretIdentity": "Une identité secrète vous attend.",
+    "privateHint": "Assurez-vous d’être seul à voir l’écran.",
+    "hideAndStart": "Masquer et commencer",
+    "keepSecret": "Gardez votre rôle pour vous. Passez le téléphone, pas le secret."
   },
   "round": {
     "quitTitle": "Quitter le Jeu",

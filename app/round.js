@@ -10,7 +10,7 @@ import CircularTimer from "../src/components/ui/CircularTimer";
 import Screen from "../src/components/ui/Screen";
 import Button from "../src/components/ui/Button";
 import Card from "../src/components/ui/Card";
-import { space, palette, type, radii } from "../src/constants/theme";
+import { space, palette, roleColors, type, radii } from "../src/constants/theme";
 import { Icon } from "../src/constants/icons";
 import { useTranslation } from "../src/lib/useTranslation";
 
@@ -274,7 +274,7 @@ export default function Round() {
     }
     if (isJester) {
       return {
-        color: "#A855F7",
+        color: roleColors.jester,
         icon: "emoticon-devil",
         label: t("role.jester", "JESTER"),
         bgStyle: styles.jesterBg,
@@ -284,7 +284,7 @@ export default function Round() {
     }
     if (isSheriffRole) {
       return {
-        color: "#3B82F6",
+        color: roleColors.sheriff,
         icon: "shield-star",
         label: t("role.sheriff", "SHERIFF"),
         bgStyle: styles.sheriffBg,
@@ -493,7 +493,7 @@ export default function Round() {
               style={styles.sheriffModalContent}
             >
               <View style={styles.sheriffModalHeader}>
-                <Icon name="shield-star" size={40} color="#3B82F6" />
+                <Icon name="shield-star" size={40} color={roleColors.sheriff} />
                 <Text style={styles.sheriffModalTitle}>
                   {t("role.sheriffAbility", "Inspect Player")}
                 </Text>
@@ -552,7 +552,7 @@ export default function Round() {
                 onStartShouldSetResponder={() => true}
               >
                 <View style={styles.sheriffResultHeader}>
-                  <Icon name="shield-check" size={48} color="#3B82F6" />
+                  <Icon name="shield-check" size={48} color={roleColors.sheriff} />
                   <Text style={styles.sheriffResultTitle}>
                     {t("role.inspectionResult", "Inspection Result")}
                   </Text>
@@ -576,7 +576,7 @@ export default function Round() {
                     roleIcon = "incognito";
                   } else if (checkedRole === "jester") {
                     roleLabel = t("role.jester", "JESTER");
-                    roleColor = "#A855F7";
+                    roleColor = roleColors.jester;
                     roleIcon = "emoticon-devil";
                   } else {
                     roleLabel = t("role.civilian", "CIVILIAN");
@@ -705,7 +705,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   sheriffButton: {
-    backgroundColor: "#3B82F6",
+    backgroundColor: roleColors.sheriff,
   },
   abilityUsedBadge: {
     flexDirection: "row",
@@ -743,7 +743,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: space.lg,
   },
   roleModal: {
-    backgroundColor: '#0d1117',
+    backgroundColor: palette.panel,
     borderRadius: radii.xl,
     padding: space.xl,
     width: "100%",
@@ -782,10 +782,10 @@ const styles = StyleSheet.create({
     backgroundColor: `${palette.success}20`,
   },
   jesterBg: {
-    backgroundColor: `#A855F720`,
+    backgroundColor: `${roleColors.jester}20`,
   },
   sheriffBg: {
-    backgroundColor: `#3B82F620`,
+    backgroundColor: `${roleColors.sheriff}20`,
   },
   modalPlayerName: {
     fontSize: type.h2,
@@ -807,10 +807,10 @@ const styles = StyleSheet.create({
     backgroundColor: palette.success,
   },
   jesterBadge: {
-    backgroundColor: "#A855F7",
+    backgroundColor: roleColors.jester,
   },
   sheriffBadge: {
-    backgroundColor: "#3B82F6",
+    backgroundColor: roleColors.sheriff,
   },
   roleText: {
     fontSize: type.h4,
@@ -894,15 +894,15 @@ const styles = StyleSheet.create({
   },
 
   sheriffResultModal: {
-    backgroundColor: '#0d1117',
+    backgroundColor: palette.panel,
     borderRadius: radii.xl,
     padding: space.xl,
     width: "100%",
     maxWidth: 360,
     alignItems: "center",
     borderWidth: 3,
-    borderColor: "#3B82F6",
-    shadowColor: "#3B82F6",
+    borderColor: roleColors.sheriff,
+    shadowColor: roleColors.sheriff,
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.4,
     shadowRadius: 24,
@@ -915,7 +915,7 @@ const styles = StyleSheet.create({
   sheriffResultTitle: {
     fontSize: type.h3,
     fontWeight: "900",
-    color: "#3B82F6",
+    color: roleColors.sheriff,
     marginTop: space.md,
     textTransform: "uppercase",
     letterSpacing: 1,

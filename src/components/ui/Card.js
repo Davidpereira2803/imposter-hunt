@@ -59,6 +59,8 @@ export default function Card({ children, style, onPress, disabled, ...rest }) {
 const styles = StyleSheet.create({
   card: {
     backgroundColor: palette.panel,
+    borderWidth: 1,
+    borderColor: palette.line,
     borderRadius: radii.lg,
     padding: space.md,
   },

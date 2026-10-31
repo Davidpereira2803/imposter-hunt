@@ -8,7 +8,7 @@ import Title from "../src/components/ui/Title";
 import Input from "../src/components/ui/Input";
 import Button from "../src/components/ui/Button";
 import Card from "../src/components/ui/Card";
-import { space, palette, type, radii } from "../src/constants/theme";
+import { space, palette, roleColors, type, radii } from "../src/constants/theme";
 import { Icon, icons } from "../src/constants/icons";
 import { useTranslation } from "../src/lib/useTranslation";
 
@@ -290,19 +290,29 @@ export default function Setup() {
           </View>
 
           {/* NEW: Special Roles Section - Only shows with 4+ players */}
-          {playerList.length >= 4 && (
+          {(
             <View style={styles.section}>
-              <Text style={styles.sectionTitle}>{t("setup.specialRoles", "Special Roles")}</Text>
+              <View style={styles.specialRolesHeading}>
+                <View style={styles.specialRolesHeadingCopy}>
+                  <Text style={styles.sectionTitle}>{t("setup.specialRoles", "Special Roles")}</Text>
+                  <Text style={styles.specialRolesHint}>
+                    {playerList.length >= 4
+                      ? t("setup.specialRolesHint", "Optional roles · choose before dealing cards")
+                      : t("setup.minPlayersForRoles", "Need 4+ players for special roles")}
+                  </Text>
+                </View>
+                <Icon name="cards-outline" size={22} color={palette.primary} />
+              </View>
               
               <Card style={styles.rolesCard}>
                 {/* Jester Toggle */}
-                <View style={styles.roleToggleRow}>
+                <View style={[styles.roleToggleRow, playerList.length < 4 && styles.roleToggleRowDisabled, enableJester && styles.roleToggleRowActive]}>
                   <View style={styles.roleInfo}>
                     <View style={styles.roleHeader}>
                       <Icon
                         name={icons.jester.name}
                         size={icons.jester.size}
-                        color="#A855F7" 
+                        color={roleColors.jester}
                       />
                       <Text style={styles.roleName}>{t("setup.jester", "Jester")}</Text>
                     </View>
@@ -310,25 +320,29 @@ export default function Setup() {
                   </View>
                   <Switch
                     value={enableJester}
+                    accessibilityRole="switch"
+                    accessibilityLabel={t("setup.jester", "Jester")}
+                    accessibilityState={{ disabled: playerList.length < 4, checked: enableJester }}
+                    disabled={playerList.length < 4}
                     onValueChange={(v) => {
                       Haptics.selectionAsync().catch(() => {});
                       setEnableJester(v);
                     }}
-                    trackColor={{ false: palette.line, true: "#A855F7" }}
-                    thumbColor={palette.background}
+                    trackColor={{ false: palette.line, true: roleColors.jester }}
+                    thumbColor={palette.text}
                   />
                 </View>
 
                 <View style={styles.separator} />
 
                 {/* Sheriff Toggle */}
-                <View style={styles.roleToggleRow}>
+                <View style={[styles.roleToggleRow, playerList.length < 4 && styles.roleToggleRowDisabled, enableSheriff && styles.roleToggleRowActive]}>
                   <View style={styles.roleInfo}>
                     <View style={styles.roleHeader}>
                       <Icon
                         name={icons.sheriff.name}
                         size={icons.sheriff.size}
-                        color="#3B82F6"
+                        color={roleColors.sheriff}
                       />
                       <Text style={styles.roleName}>{t("setup.sheriff", "Sheriff")}</Text>
                     </View>
@@ -336,23 +350,20 @@ export default function Setup() {
                   </View>
                   <Switch
                     value={enableSheriff}
+                    accessibilityRole="switch"
+                    accessibilityLabel={t("setup.sheriff", "Sheriff")}
+                    accessibilityState={{ disabled: playerList.length < 4, checked: enableSheriff }}
+                    disabled={playerList.length < 4}
                     onValueChange={(v) => {
                       Haptics.selectionAsync().catch(() => {});
                       setEnableSheriff(v);
                     }}
-                    trackColor={{ false: palette.line, true: "#3B82F6" }}
-                    thumbColor={palette.background}
+                    trackColor={{ false: palette.line, true: roleColors.sheriff }}
+                    thumbColor={palette.text}
                   />
                 </View>
               </Card>
             </View>
-          )}
-
-          {/* Hint Text for Special Roles */}
-          {playerList.length > 0 && playerList.length < 4 && (
-            <Text style={styles.hintText}>
-              {t("setup.minPlayersForRoles", "Need 4+ players for special roles")}
-            </Text>
           )}
 
           <Button 
@@ -577,14 +588,39 @@ const styles = StyleSheet.create({
   },
 
   rolesCard: {
-    padding: space.md,
+    padding: space.sm,
+    backgroundColor: palette.panel,
+    borderColor: palette.line,
+    borderRadius: radii.lg,
+  },
+  specialRolesHeading: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: space.sm,
+  },
+  specialRolesHeadingCopy: { flex: 1 },
+  specialRolesHint: {
+    color: palette.textDim,
+    fontSize: type.small,
+    marginTop: -space.xs,
+    marginBottom: space.xs,
   },
   roleToggleRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     paddingVertical: space.sm,
+    paddingHorizontal: space.sm,
+    borderRadius: radii.md,
+    borderWidth: 1,
+    borderColor: "transparent",
   },
+  roleToggleRowActive: {
+    backgroundColor: palette.backgroundDim,
+    borderColor: palette.line,
+  },
+  roleToggleRowDisabled: { opacity: 0.62 },
   roleInfo: {
     flex: 1,
     paddingRight: space.md,

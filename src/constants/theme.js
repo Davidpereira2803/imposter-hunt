@@ -1,13 +1,24 @@
+// Shared surfaces and semantic colors. Background aliases support existing screens.
 export const palette = {
-  bg:      "#0B0D12",  // near-black with a hint of blue
-  panel:   "#131722",  // cards/panels
-  line:    "#1F2430",  // dividers, strokes
-  text:    "#F4F7FF",  // primary text (very light)
-  textDim: "#C2A8A9",  // secondary text
-  primary: "#D32F2F",  // actions / links (blue)
-  success: "#4CAF50",  // positive
-  danger:  "#F44336",  // destructive
-  warn:    "#FFB020",  // caution / pause
+  bg: "#100E12",
+  background: "#100E12",
+  panel: "#1C191F",
+  backgroundDim: "#252129",
+  line: "#39323D",
+  text: "#F8F1E8",
+  textDim: "#B9ACB7",
+  primary: "#BE334B",
+  primaryDim: "#321923",
+  success: "#77CBA5",
+  danger: "#F07888",
+  warn: "#E8B86D",
+};
+
+export const roleColors = {
+  imposter: palette.danger,
+  civilian: palette.success,
+  sheriff: "#8CBDF0",
+  jester: "#CAA0F0",
 };
 
 export const paletteblue = {

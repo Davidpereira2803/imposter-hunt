@@ -7,7 +7,7 @@ import Screen from "../src/components/ui/Screen";
 import Title from "../src/components/ui/Title";
 import Button from "../src/components/ui/Button";
 import Card from "../src/components/ui/Card";
-import { space, palette, type } from "../src/constants/theme";
+import { space, palette, roleColors, type } from "../src/constants/theme";
 import { Icon } from "../src/constants/icons";
 import { useTranslation } from "../src/lib/useTranslation";
 
@@ -63,7 +63,7 @@ export default function Results() {
         subtitle: eliminatedPlayer 
           ? `${eliminatedPlayer} ${t("results.jesterFooled", "fooled everyone!")}`
           : t("results.jesterFooled", "The Jester fooled everyone!"),
-        color: "#A855F7",
+        color: roleColors.jester,
         icon: "emoticon-devil",
       };
     }
