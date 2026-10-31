@@ -12,9 +12,10 @@ jest.mock('expo-blur', () => ({
 }));
 jest.mock('react-native-reanimated', () => ({
   ...require('react-native-reanimated/mock'),
-  FadeIn: { duration: jest.fn(() => ({})) },
-  FadeOut: { duration: jest.fn(() => ({})) },
-  ZoomIn: { duration: jest.fn(() => ({ delay: jest.fn(() => ({ springify: jest.fn(() => ({})) })) })) },
+  useReducedMotion: () => false,
+  FadeIn: (() => { const b = {}; b.duration = jest.fn(() => b); b.reduceMotion = jest.fn(() => b); return b; })(),
+  FadeOut: (() => { const b = {}; b.duration = jest.fn(() => b); b.reduceMotion = jest.fn(() => b); return b; })(),
+  ZoomIn: (() => { const b = {}; b.duration = jest.fn(() => b); b.delay = jest.fn(() => b); b.springify = jest.fn(() => b); b.reduceMotion = jest.fn(() => b); return b; })(),
 }));
 
 describe('EliminationModal', () => {

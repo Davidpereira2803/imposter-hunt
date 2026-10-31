@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, Modal } from "react-native";
-import Animated, { FadeIn, FadeOut, ZoomIn } from "react-native-reanimated";
+import Animated, { FadeIn, FadeOut, ZoomIn, ReduceMotion } from "react-native-reanimated";
 import { BlurView } from "expo-blur";
 import * as Haptics from "expo-haptics";
 import Button from "./ui/Button";
@@ -34,12 +34,12 @@ export default function EliminationModal({
     >
       <BlurView intensity={90} style={styles.modalOverlay}>
         <Animated.View 
-          entering={FadeIn.duration(300)}
-          exiting={FadeOut.duration(200)}
+          entering={FadeIn.duration(300).reduceMotion(ReduceMotion.System)}
+          exiting={FadeOut.duration(200).reduceMotion(ReduceMotion.System)}
           style={styles.modalBackground}
         >
           <Animated.View
-            entering={ZoomIn.duration(400).delay(100).springify()}
+            entering={ZoomIn.duration(400).delay(100).springify().reduceMotion(ReduceMotion.System)}
             style={styles.modalContent}
           >
             {/* Icon Header with Background */}

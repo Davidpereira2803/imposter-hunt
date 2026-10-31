@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Alert, BackHandler, TouchableOpacity, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
-import Animated, { useSharedValue, withSpring, useAnimatedStyle } from "react-native-reanimated";
+import Animated, { FadeInDown, ReduceMotion, useSharedValue, withSpring, useAnimatedStyle, useReducedMotion } from "react-native-reanimated";
 import * as Haptics from "expo-haptics";
 import { useGameStore } from "../src/store/gameStore";
 import Screen from "../src/components/ui/Screen";
@@ -30,6 +30,7 @@ export default function Vote() {
   const [showEliminationModal, setShowEliminationModal] = useState(false);
   const [eliminatedPlayerData, setEliminatedPlayerData] = useState(null);
   const scaleAnim = useSharedValue(1);
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     const backAction = () => {
@@ -54,7 +55,7 @@ export default function Vote() {
 
   const handleSelectPlayer = (index) => {
     setSelectedPlayer(index);
-    scaleAnim.value = withSpring(1.05);
+    if (!reducedMotion) scaleAnim.value = withSpring(1.04);
   };
 
   const handleVote = async () => {
@@ -185,12 +186,13 @@ export default function Vote() {
           {alivePlayers.length === 0 ? (
             <Text style={styles.emptyText}>{t("vote.noPlayers", "No players available")}</Text>
           ) : (
-            alivePlayers.map((player) => {
+            alivePlayers.map((player, rowIndex) => {
               const isSelected = selectedPlayer === player.index;
               
               return (
                 <Animated.View
                   key={player.index}
+                  entering={FadeInDown.delay(Math.min(rowIndex * 45, 270)).duration(240).reduceMotion(ReduceMotion.System)}
                   style={isSelected ? animatedStyle : undefined}
                 >
                   <Card

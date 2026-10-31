@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, BackHandler, Alert, AppState, ScrollView, Touch
 import { useRouter, useFocusEffect } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as Haptics from "expo-haptics";
-import Animated, { FadeIn, ReduceMotion } from "react-native-reanimated";
+import Animated, { FlipInEasyY, ReduceMotion } from "react-native-reanimated";
 import { useGameStore } from "../src/store/gameStore";
 import Screen from "../src/components/ui/Screen";
 import Button from "../src/components/ui/Button";
@@ -91,7 +91,7 @@ export default function Role() {
           <Text style={styles.eyebrow}>{t("role.passTo", "Pass to")}</Text>
           <Text style={styles.playerName}>{players[currentPlayerIndex]}</Text>
 
-          <Animated.View key={`${currentPlayerIndex}-${revealed}`} entering={FadeIn.duration(160).reduceMotion(ReduceMotion.System)}
+          <Animated.View key={`${currentPlayerIndex}-${revealed}`} entering={FlipInEasyY.duration(280).reduceMotion(ReduceMotion.System)}
             style={[styles.card, revealed && { borderColor: accent }]}>
             {revealed ? (
               <>

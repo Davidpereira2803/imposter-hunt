@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { View, Text, StyleSheet, BackHandler, Alert } from "react-native";
+import Animated, { FadeInUp, ZoomIn, ReduceMotion } from "react-native-reanimated";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import * as Haptics from "expo-haptics";
 import { useGameStore } from "../src/store/gameStore";
@@ -94,7 +95,7 @@ export default function Results() {
   return (
     <Screen>
       <View style={styles.content}>
-        <View style={styles.header}>
+        <Animated.View entering={ZoomIn.duration(360).reduceMotion(ReduceMotion.System)} style={styles.header}>
           <Icon 
             name={icon} 
             size={100} 
@@ -108,9 +109,9 @@ export default function Results() {
             {title}
           </Title>
           <Text style={styles.subtitle}>{subtitle}</Text>
-        </View>
+        </Animated.View>
 
-        <View style={styles.info}>
+        <Animated.View entering={FadeInUp.delay(100).duration(280).reduceMotion(ReduceMotion.System)} style={styles.info}>
           <Card style={styles.infoCard}>
             <Text style={styles.label}>{t("results.secretWord", "Secret Word")}</Text>
             <Text style={styles.wordText}>{secretWord}</Text>
@@ -120,9 +121,9 @@ export default function Results() {
             <Text style={styles.label}>{t("results.theImposter", "The Imposter")}</Text>
             <Text style={[styles.imposterText]}>{imposterName}</Text>
           </Card>
-        </View>
+        </Animated.View>
 
-        <View style={styles.actions}>
+        <Animated.View entering={FadeInUp.delay(180).duration(280).reduceMotion(ReduceMotion.System)} style={styles.actions}>
           <Button
             title={t("results.playAgain", "Play Again")}
             onPress={handlePlayAgain}
@@ -136,7 +137,7 @@ export default function Results() {
             variant="ghost"
             size="md"
           />
-        </View>
+        </Animated.View>
       </View>
     </Screen>
   );

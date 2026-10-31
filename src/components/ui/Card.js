@@ -5,6 +5,7 @@ import Animated, {
   useSharedValue,
   withTiming,
   withSpring,
+  useReducedMotion,
 } from "react-native-reanimated";
 import { palette, radii, space } from "../../constants/theme";
 
@@ -13,6 +14,7 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 export default function Card({ children, style, onPress, disabled, ...rest }) {
   const scale = useSharedValue(1);
   const opacity = useSharedValue(1);
+  const reducedMotion = useReducedMotion();
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ scale: scale.value }],
@@ -20,14 +22,14 @@ export default function Card({ children, style, onPress, disabled, ...rest }) {
   }));
 
   const handlePressIn = () => {
-    if (!disabled) {
+    if (!disabled && !reducedMotion) {
       scale.value = withSpring(0.99, { damping: 15, stiffness: 300 });
       opacity.value = withTiming(0.85, { duration: 100 });
     }
   };
 
   const handlePressOut = () => {
-    if (!disabled) {
+    if (!disabled && !reducedMotion) {
       scale.value = withSpring(1, { damping: 15, stiffness: 300 });
       opacity.value = withTiming(1, { duration: 100 });
     }

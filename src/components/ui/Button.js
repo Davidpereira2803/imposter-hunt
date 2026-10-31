@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
-import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
+import { Pressable, Text, StyleSheet, View } from "react-native";
+import Animated, { useAnimatedStyle, useSharedValue, withSpring, useReducedMotion } from "react-native-reanimated";
 import { palette, radii, type } from "../../constants/theme";
 import { useAudioPlayer } from "expo-audio";
 
@@ -15,6 +16,9 @@ export default function Button({
   iconPosition = "left",
   style,
 }) {
+  const scale = useSharedValue(1);
+  const reducedMotion = useReducedMotion();
+  const animatedStyle = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }] }));
   const variantStyle = styles[variant] || styles.primary;
   const sizeStyle = size === "lg" ? styles.lg : styles.md;
   const textColorStyle = ["success", "danger", "warn"].includes(variant) ? styles.textBlack : styles.textWhite;
@@ -63,19 +67,19 @@ export default function Button({
   };
 
   return (
-    <TouchableOpacity 
+    <AnimatedPressable
       onPress={handlePress} 
       disabled={disabled}
       accessibilityRole="button"
       accessibilityState={{ disabled }}
-      style={[
-        styles.base, 
-        variantStyle, 
-        sizeStyle,
-        disabled && styles.disabled,
-        style
-      ]}
-      activeOpacity={0.7}
+      onPressIn={() => {
+        if (!disabled && !reducedMotion) scale.value = withSpring(0.975, { damping: 16, stiffness: 320 });
+      }}
+      onPressOut={() => {
+        scale.value = withSpring(1, { damping: 16, stiffness: 320 });
+      }}
+      style={[styles.base, variantStyle, sizeStyle, disabled && styles.disabled, style, animatedStyle]}
+      android_ripple={{ color: "#FFFFFF18", borderless: false }}
     >
       <View style={styles.content}>
         {icon && iconPosition === "left" && <View style={styles.iconLeft}>{icon}</View>}
@@ -84,9 +88,11 @@ export default function Button({
         </Text>
         {icon && iconPosition === "right" && <View style={styles.iconRight}>{icon}</View>}
       </View>
-    </TouchableOpacity>
+    </AnimatedPressable>
   );
 }
+
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 const styles = StyleSheet.create({
   base: { 
