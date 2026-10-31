@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { View, Text, StyleSheet, Alert, BackHandler, TouchableOpacity, ScrollView, Modal } from "react-native";
 import { useRouter } from "expo-router";
-import Animated, { FadeIn, FadeOut, ZoomIn } from "react-native-reanimated";
+import Animated, { FadeIn, FadeOut, FadeInDown, ZoomIn, ReduceMotion } from "react-native-reanimated";
 import { BlurView } from "expo-blur";
 import * as Haptics from "expo-haptics";
 import { useGameStore } from "../src/store/gameStore";
@@ -328,28 +328,29 @@ export default function Round() {
             style={styles.playerCardsScroll}
           >
             {orderedPlayers.map((player, idx) => (
-              <TouchableOpacity
-                key={player.index}
-                onPress={() => handlePlayerPress(player)}
-                activeOpacity={0.7}
-              >
-                <Card style={styles.playerCard}>
-                  <View style={styles.playerNumberBadge}>
-                    <Text style={styles.playerNumberText}>{idx + 1}</Text>
-                  </View>
-                  <Text 
-                    style={styles.playerCardName} 
-                    numberOfLines={2}
-                    adjustsFontSizeToFit
-                    minimumFontScale={0.7}
-                  >
-                    {player.name}
-                  </Text>
-                  <View style={styles.eyeIcon}>
-                    <Icon name="eye" size={16} color={palette.textDim} />
-                  </View>
-                </Card>
-              </TouchableOpacity>
+              <Animated.View key={player.index} entering={FadeInDown.delay(Math.min(idx * 45, 270)).duration(260).reduceMotion(ReduceMotion.System)}>
+                <TouchableOpacity
+                  onPress={() => handlePlayerPress(player)}
+                  activeOpacity={0.7}
+                >
+                  <Card style={styles.playerCard}>
+                    <View style={styles.playerNumberBadge}>
+                      <Text style={styles.playerNumberText}>{idx + 1}</Text>
+                    </View>
+                    <Text
+                      style={styles.playerCardName}
+                      numberOfLines={2}
+                      adjustsFontSizeToFit
+                      minimumFontScale={0.7}
+                    >
+                      {player.name}
+                    </Text>
+                    <View style={styles.eyeIcon}>
+                      <Icon name="eye" size={16} color={palette.textDim} />
+                    </View>
+                  </Card>
+                </TouchableOpacity>
+              </Animated.View>
             ))}
           </ScrollView>
         </View>
@@ -425,12 +426,12 @@ export default function Round() {
             onPress={handleCloseModal}
           >
             <Animated.View 
-              entering={FadeIn.duration(200)}
-              exiting={FadeOut.duration(150)}
+              entering={FadeIn.duration(200).reduceMotion(ReduceMotion.System)}
+              exiting={FadeOut.duration(150).reduceMotion(ReduceMotion.System)}
               style={styles.modalBackground}
             >
               <Animated.View
-                entering={ZoomIn.duration(300).springify()}
+                entering={ZoomIn.duration(300).springify().reduceMotion(ReduceMotion.System)}
                 style={styles.roleModal}
                 onStartShouldSetResponder={() => true}
               >
@@ -489,7 +490,7 @@ export default function Round() {
         <BlurView intensity={90} style={styles.modalOverlay}>
           <View style={styles.sheriffModalContainer}>
             <Animated.View
-              entering={ZoomIn.duration(300).springify()}
+              entering={ZoomIn.duration(300).springify().reduceMotion(ReduceMotion.System)}
               style={styles.sheriffModalContent}
             >
               <View style={styles.sheriffModalHeader}>
@@ -543,11 +544,11 @@ export default function Round() {
             onPress={handleCloseSheriffResult}
           >
             <Animated.View 
-              entering={FadeIn.duration(200)}
+              entering={FadeIn.duration(200).reduceMotion(ReduceMotion.System)}
               style={styles.modalBackground}
             >
               <Animated.View
-                entering={ZoomIn.duration(400).springify()}
+                entering={ZoomIn.duration(400).springify().reduceMotion(ReduceMotion.System)}
                 style={styles.sheriffResultModal}
                 onStartShouldSetResponder={() => true}
               >

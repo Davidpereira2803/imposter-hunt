@@ -10,6 +10,7 @@ import {
   Alert,
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
+import Animated, { FadeInUp, ReduceMotion } from "react-native-reanimated";
 import * as Haptics from "expo-haptics";
 import { useGameStore } from "../src/store/gameStore";
 import { useTranslation } from "../src/lib/useTranslation";
@@ -135,6 +136,7 @@ export default function ImposterGuess() {
         <View style={styles.content}>
           <Title style={styles.title}>{t("imposterGuess.title", "Final Guess")}</Title>
 
+          <Animated.View entering={FadeInUp.duration(280).reduceMotion(ReduceMotion.System)}>
           <Card style={styles.infoCard}>
             <Text style={styles.imposterLabel}>{t("role.imposter", "Imposter")}</Text>
             <Text style={styles.imposterName}>{imposterName}</Text>
@@ -150,7 +152,9 @@ export default function ImposterGuess() {
                   )}
             </Text>
           </Card>
+          </Animated.View>
 
+          <Animated.View entering={FadeInUp.delay(70).duration(280).reduceMotion(ReduceMotion.System)}>
           <Input
             autoFocus
             placeholder={t("imposterGuess.placeholder", "Type your guess...")}
@@ -164,8 +168,9 @@ export default function ImposterGuess() {
             spellCheck={false}
             style={styles.input}
           />
+          </Animated.View>
 
-          <View style={styles.actions}>
+          <Animated.View entering={FadeInUp.delay(140).duration(280).reduceMotion(ReduceMotion.System)} style={styles.actions}>
             <Button
               title={t("imposterGuess.submit", "Submit Guess")}
               onPress={submit}
@@ -180,7 +185,7 @@ export default function ImposterGuess() {
               variant="ghost"
               size="md"
             />
-          </View>
+          </Animated.View>
         </View>
       </KeyboardAvoidingView>
     </Screen>

@@ -1,14 +1,15 @@
 import React from "react";
-import { View, StyleSheet, StatusBar } from "react-native";
+import { StyleSheet, StatusBar } from "react-native";
+import Animated, { FadeIn, ReduceMotion } from "react-native-reanimated";
 import { palette } from "../../constants/theme";
 
 export default function Screen({ children, style }) {
   return (
     <>
       <StatusBar barStyle="light-content" backgroundColor={palette.bg} />
-      <View style={[styles.container, style]}>
+      <Animated.View entering={FadeIn.duration(220).reduceMotion(ReduceMotion.System)} style={[styles.container, style]}>
         {children}
-      </View>
+      </Animated.View>
     </>
   );
 }
