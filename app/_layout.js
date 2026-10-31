@@ -9,6 +9,8 @@ import { useLanguageStore } from "../src/store/languageStore";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from "expo-audio";
 
+import { palette } from "../src/constants/theme";
+
 const TUTORIAL_SEEN_KEY = "imposter-hunt-tutorial-seen";
 
 export default function RootLayout() {
@@ -75,8 +77,8 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <AdConsentProvider>
-        <StatusBar style="light" backgroundColor="#000000" />
-        <SafeAreaView style={{ flex: 1, backgroundColor: "#000000" }} edges={["bottom"]}>
+        <StatusBar style="light" backgroundColor={palette.bg} />
+        <SafeAreaView style={{ flex: 1, backgroundColor: palette.bg }} edges={["bottom"]}>
           <Stack
             key={`stack-${locale}`}
             screenOptions={{

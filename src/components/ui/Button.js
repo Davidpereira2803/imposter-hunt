@@ -17,7 +17,7 @@ export default function Button({
 }) {
   const variantStyle = styles[variant] || styles.primary;
   const sizeStyle = size === "lg" ? styles.lg : styles.md;
-  const textColorStyle = variant === "success" ? styles.textBlack : styles.textWhite;
+  const textColorStyle = ["success", "danger", "warn"].includes(variant) ? styles.textBlack : styles.textWhite;
 
   const player = useAudioPlayer(audioSource);
   const playerRef = useRef(player);
@@ -79,7 +79,7 @@ export default function Button({
     >
       <View style={styles.content}>
         {icon && iconPosition === "left" && <View style={styles.iconLeft}>{icon}</View>}
-        <Text style={[styles.label, textColorStyle]} adjustsFontSizeToFit numberOfLines={1}>
+        <Text style={[styles.label, textColorStyle]} adjustsFontSizeToFit numberOfLines={2}>
           {title}
         </Text>
         {icon && iconPosition === "right" && <View style={styles.iconRight}>{icon}</View>}
@@ -113,11 +113,13 @@ const styles = StyleSheet.create({
   lg: { 
     paddingVertical: 14, 
     paddingHorizontal: 24, 
-    minHeight: 52 
+    minHeight: 58
   },
   label: { 
     fontWeight: "900", 
     fontSize: type.body, 
+    textAlign: "center",
+    flexShrink: 1,
     letterSpacing: 0.3 
   },
   textWhite: { 

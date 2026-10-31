@@ -23,7 +23,11 @@
     "exitMessage": "Sair do jogo?",
     "exit": "Sair",
     "players": "jogadores",
-    "aiTopics": "Temas IA"
+    "aiTopics": "Temas IA",
+    "eyebrow": "UM TELEMÓVEL. VÁRIOS SUSPEITOS.",
+    "play": "Vamos jogar",
+    "minimumPlayers": "3+ jogadores",
+    "oneDevice": "Passa o telemóvel"
   },
   "setup": {
     "title": "Configuração",
@@ -161,7 +165,17 @@
     "inspectionResult": "Resultado da Inspeção",
     "hideAndPass": "Esconder e Passar",
     "startRound": "Iniciar Rodada",
-    "unknown": "Desconhecido"
+    "unknown": "Desconhecido",
+    "shortImposter": "Mistura-te no grupo. Ouve as pistas. Adivinha a palavra ou sobrevive.",
+    "shortCivilian": "Dá uma pista subtil. Guarda a palavra. Descobre o Munkeler.",
+    "shortSheriff": "Ajuda os civis. Verifica o papel de um jogador uma vez por partida.",
+    "shortJester": "Pareça suspeito. Convence os outros a eliminar-te e ganha sozinho.",
+    "privateCard": "SÓ PARA OS TEUS OLHOS",
+    "hiddenWord": "A PALAVRA É UM MISTÉRIO",
+    "secretIdentity": "Uma identidade secreta espera por ti.",
+    "privateHint": "Garante que só tu consegues ver o ecrã.",
+    "hideAndStart": "Ocultar e começar",
+    "keepSecret": "Guarda o teu papel. Passa o telemóvel, não o segredo."
   },
   "round": {
     "quitTitle": "Abandonar Jogo",

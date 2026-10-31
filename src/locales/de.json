@@ -23,7 +23,11 @@
     "exitMessage": "Spiel verlassen?",
     "exit": "Beenden",
     "players": "Spieler",
-    "aiTopics": "KI Themen"
+    "aiTopics": "KI Themen",
+    "eyebrow": "EIN HANDY. VIELE VERDÄCHTIGE.",
+    "play": "Los geht’s",
+    "minimumPlayers": "Ab 3 Personen",
+    "oneDevice": "Handy weitergeben"
   },
   "setup": {
     "title": "Einstellungen",
@@ -161,7 +165,17 @@
     "inspectionResult": "Prüfungsergebnis",
     "hideAndPass": "Verbergen & Weitergeben",
     "startRound": "Runde Starten",
-    "unknown": "Unbekannt"
+    "unknown": "Unbekannt",
+    "shortImposter": "Bleib unauffällig. Höre auf die Hinweise. Errate das Wort oder halte durch.",
+    "shortCivilian": "Gib einen unauffälligen Hinweis. Verrate das Wort nicht. Finde den Munkeler.",
+    "shortSheriff": "Hilf den Zivilisten. Prüfe einmal pro Spiel die Rolle einer Person.",
+    "shortJester": "Mach dich verdächtig. Lass dich rauswählen und gewinne allein.",
+    "privateCard": "NUR FÜR DEINE AUGEN",
+    "hiddenWord": "DAS WORT IST EIN GEHEIMNIS",
+    "secretIdentity": "Eine geheime Identität wartet.",
+    "privateHint": "Achte darauf, dass nur du den Bildschirm siehst.",
+    "hideAndStart": "Verbergen & Runde starten",
+    "keepSecret": "Behalte deine Rolle für dich. Gib das Handy weiter, nicht das Geheimnis."
   },
   "round": {
     "quitTitle": "Spiel Beenden",
@@ -339,5 +353,4 @@
     "tip3": "Generierte Themen werden automatisch in deiner eigenen Liste gespeichert"
   },
   "votedOutInstruction": "Du wurdest ausgewählt. Letzte Chance: Rate das geheime Wort. Richtig = du gewinnst. Falsch = Zivilisten gewinnen."
-
 }

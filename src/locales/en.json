@@ -23,7 +23,11 @@
     "exitMessage": "Exit game?",
     "exit": "Exit",
     "players": "players",
-    "aiTopics": "AI Topics"
+    "aiTopics": "AI Topics",
+    "eyebrow": "ONE PHONE. MANY SUSPECTS.",
+    "play": "Let’s play",
+    "minimumPlayers": "3+ players",
+    "oneDevice": "Pass & play"
   },
   "setup": {
     "title": "Setup",
@@ -161,7 +165,17 @@
     "inspectionResult": "Inspection Result",
     "hideAndPass": "Hide & Pass",
     "startRound": "Start Round",
-    "unknown": "Unknown"
+    "unknown": "Unknown",
+    "shortImposter": "Blend in. Listen to the hints. Guess the word or outlast the others.",
+    "shortCivilian": "Give a subtle hint. Keep the word secret. Find the Munkeler.",
+    "shortSheriff": "Help the civilians. Check one player’s role, once per game.",
+    "shortJester": "Look suspicious. Convince the others to vote you out and win alone.",
+    "privateCard": "YOUR EYES ONLY",
+    "hiddenWord": "THE WORD IS A MYSTERY",
+    "secretIdentity": "A secret identity awaits.",
+    "privateHint": "Make sure only you can see the screen.",
+    "hideAndStart": "Hide & start round",
+    "keepSecret": "Your role stays with you. Pass the phone, not the secret."
   },
   "round": {
     "quitTitle": "Quit Game",
@@ -197,7 +211,6 @@
     "back": "Back",
     "next": "Next",
     "getStarted": "Get Started",
-    
     "step1": {
       "title": "Welcome to The Munkeler - Imposter Hunt!",
       "description": "A social deduction game where one player is the imposter trying to blend in.",
