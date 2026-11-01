@@ -15,7 +15,7 @@ describe('LoadingScreen', () => {
     
     expect(container.props.style).toEqual({
       flex: 1,
-      backgroundColor: '#000',
+      backgroundColor: palette.bg,
       justifyContent: 'center',
       alignItems: 'center',
     });
@@ -41,7 +41,7 @@ describe('LoadingScreen', () => {
     const loadingText = getByText('Loading…');
     
     expect(loadingText.props.style).toEqual({
-      color: '#fff',
+      color: palette.textDim,
       fontSize: 18,
       marginTop: 20,
       fontWeight: '600',
@@ -52,7 +52,7 @@ describe('LoadingScreen', () => {
     const { root } = render(<LoadingScreen />);
     const container = root.findByType('View');
     
-    expect(container.props.style.backgroundColor).toBe('#000');
+    expect(container.props.style.backgroundColor).toBe(palette.bg);
   });
 
   it('should center content vertically and horizontally', () => {

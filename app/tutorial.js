@@ -10,6 +10,7 @@ import Title from "../src/components/ui/Title";
 import Button from "../src/components/ui/Button";
 import { space, palette, type } from "../src/constants/theme";
 import { Icon, icons as ICONS } from "../src/constants/icons";
+import IdentityMark from "../src/components/IdentityMark";
 
 const TUTORIAL_SEEN_KEY = "imposter-hunt-tutorial-seen";
 
@@ -85,7 +86,9 @@ export default function Tutorial() {
             return (
               <View key={step.id} style={[styles.slide, { width: PAGE }]}>
                 <View style={styles.iconContainer}>
-                  <Icon name={iconDef.name} size={64} color={palette.primary} />
+                  {step.icon === "gameLogo"
+                    ? <IdentityMark size={92} />
+                    : <Icon name={iconDef.name} size={64} color={palette.primary} />}
                 </View>
 
                 <Text style={styles.stepTitle}>{title}</Text>

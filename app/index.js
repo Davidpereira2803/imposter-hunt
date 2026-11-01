@@ -1,5 +1,6 @@
 import React from "react";
 import { View, StyleSheet, BackHandler, Alert, Text, TouchableOpacity, ScrollView } from "react-native";
+import Animated, { ZoomIn, ReduceMotion } from "react-native-reanimated";
 import { useRouter, useFocusEffect } from "expo-router";
 import * as Haptics from "expo-haptics";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -104,7 +105,9 @@ export default function Home() {
             <View style={styles.deck} accessible={false}>
               <View style={[styles.cardOutline, styles.cardLeft]} />
               <View style={[styles.cardOutline, styles.cardRight]} />
-              <View style={styles.heroCard}><IdentityMark size={124} /></View>
+              <Animated.View entering={ZoomIn.duration(420).delay(100).reduceMotion(ReduceMotion.System)} style={styles.heroCard}>
+                <IdentityMark size={124} />
+              </Animated.View>
             </View>
             <Text style={styles.eyebrow}>{t("home.eyebrow", "ONE PHONE. MANY SUSPECTS.")}</Text>
             <Text style={styles.title}>{t("home.title", "Who's the Munkeler?")}</Text>

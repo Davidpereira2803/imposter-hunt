@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView, Alert, TouchableOpacity, Modal, Switch, KeyboardAvoidingView, Platform } from "react-native";
 import { useRouter } from "expo-router";
+import Animated, { FadeInDown, ReduceMotion } from "react-native-reanimated";
 import * as Haptics from "expo-haptics";
 import { useGameStore } from "../src/store/gameStore";
 import Screen from "../src/components/ui/Screen";
@@ -201,11 +202,11 @@ export default function Setup() {
 
             {topicExpanded && allTopics && allTopics.length > 0 && (
               <View style={styles.topicGrid}>
-                {allTopics.map((tpc) => {
+                {allTopics.map((tpc, topicIndex) => {
                   const wordCount = tpc.words?.length || 0;
                   return (
+                    <Animated.View key={tpc.key} style={styles.topicCardWrapper} entering={FadeInDown.delay(Math.min(topicIndex * 25, 250)).duration(220).reduceMotion(ReduceMotion.System)}>
                     <Card
-                      key={tpc.key}
                       onPress={() => handleSelectTopic(tpc.key)}
                       style={[
                         styles.topicCard,
@@ -234,6 +235,7 @@ export default function Setup() {
                         </Text>
                       </View>
                     </Card>
+                    </Animated.View>
                   );
                 })}
               </View>
@@ -278,12 +280,14 @@ export default function Setup() {
             {playerList.length > 0 && (
               <View style={styles.playerList}>
                 {playerList.map((name, index) => (
-                  <Card key={`player-${index}`} style={styles.playerCard}>
+                  <Animated.View key={`player-${index}`} entering={FadeInDown.delay(Math.min(index * 30, 180)).duration(220).reduceMotion(ReduceMotion.System)}>
+                  <Card style={styles.playerCard}>
                     <Text style={styles.playerName}>{name}</Text>
                     <TouchableOpacity onPress={() => removePlayer(index)} style={styles.removeBtn}>
                       <Text style={styles.removeText}>×</Text>
                     </TouchableOpacity>
                   </Card>
+                  </Animated.View>
                 ))}
               </View>
             )}
@@ -518,12 +522,13 @@ const styles = StyleSheet.create({
     marginTop: space.sm,
   },
   topicCard: {
-    width: "48%",
+    width: "100%",
     padding: space.md,
     borderRadius: radii.md,
     justifyContent: "space-between",
     minHeight: 90,
   },
+  topicCardWrapper: { width: "48%" },
   topicName: {
     color: palette.text,
     fontSize: type.h4,

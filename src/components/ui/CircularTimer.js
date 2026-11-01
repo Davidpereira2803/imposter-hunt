@@ -9,6 +9,8 @@ import Animated, {
   useAnimatedStyle,
   withSequence,
   withSpring,
+  useReducedMotion,
+  ReduceMotion,
 } from "react-native-reanimated";
 import Svg, { Circle } from "react-native-svg";
 import { palette, type, space } from "../../constants/theme";
@@ -28,14 +30,16 @@ export default function CircularTimer({
   const { t } = useTranslation();
   const progress = useSharedValue(1);
   const scale = useSharedValue(1);
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     progress.value = withTiming(seconds / totalSeconds, {
       duration: 300,
       easing: Easing.bezier(0.25, 0.1, 0.25, 1),
+      reduceMotion: ReduceMotion.System,
     });
 
-    if (seconds <= 10 && seconds > 0) {
+    if (!reducedMotion && seconds <= 10 && seconds > 0) {
       scale.value = withSequence(
         withSpring(1.05, { damping: 10 }),
         withSpring(1, { damping: 10 })
