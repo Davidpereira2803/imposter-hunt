@@ -56,7 +56,14 @@
     "jesterDesc": "Vince se eliminato",
     "sheriff": "Sceriffo",
     "sheriffDesc": "Può controllare un ruolo",
-    "minPlayersForRoles": "Servono 4+ giocatori per i ruoli speciali"
+    "minPlayersForRoles": "Servono 4+ giocatori per i ruoli speciali",
+    "quickPicks": "Scelta rapida",
+    "randomMixDescription": "A ogni partita viene scelta una categoria a caso",
+    "localPicks": "Lussemburgo",
+    "browseCategories": "Esplora categorie",
+    "yourTopics": "I tuoi temi",
+    "aiTag": "IA",
+    "customTag": "Personalizzato"
   },
   "topics": {
     "random": "Casuale",
@@ -84,7 +91,8 @@
     "Instruments": "Strumenti",
     "instruments": "Strumenti",
     "Technology": "Tecnologia",
-    "technology": "Tecnologia"
+    "technology": "Tecnologia",
+    "Luxembourgish": "Lussemburghese"
   },
   "game": {
     "round": "Round",

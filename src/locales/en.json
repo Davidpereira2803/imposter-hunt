@@ -56,7 +56,14 @@
     "jesterDesc": "Wins if voted out",
     "sheriff": "Sheriff",
     "sheriffDesc": "Can check one role",
-    "minPlayersForRoles": "Need 4+ players for special roles"
+    "minPlayersForRoles": "Need 4+ players for special roles",
+    "quickPicks": "Quick pick",
+    "randomMixDescription": "A category is picked at random for each game",
+    "localPicks": "Luxembourg",
+    "browseCategories": "Browse categories",
+    "yourTopics": "Your topics",
+    "aiTag": "AI",
+    "customTag": "Custom"
   },
   "topics": {
     "random": "Random",
@@ -84,7 +91,8 @@
     "Instruments": "Instruments",
     "instruments": "Instruments",
     "Technology": "Technology",
-    "technology": "Technology"
+    "technology": "Technology",
+    "Luxembourgish": "Luxembourgish"
   },
   "game": {
     "round": "Round",

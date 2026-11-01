@@ -56,7 +56,14 @@
     "jesterDesc": "Gewënnt wann erausgewielt",
     "sheriff": "Sheriff",
     "sheriffDesc": "Kann eng Roll kontrolléieren",
-    "minPlayersForRoles": "4+ Spiller gebraucht fir Spezialrollen"
+    "minPlayersForRoles": "4+ Spiller gebraucht fir Spezialrollen",
+    "quickPicks": "Direkt wielën",
+    "randomMixDescription": "Fir all Spill gëtt eng zoufälleg Kategorie gewielt",
+    "localPicks": "Lëtzebuerg",
+    "browseCategories": "Kategorien",
+    "yourTopics": "Deng Themen",
+    "aiTag": "KI",
+    "customTag": "Eegen"
   },
   "topics": {
     "random": "Zoufälleg",
@@ -84,7 +91,8 @@
     "Instruments": "Instrumenter",
     "instruments": "Instrumenter",
     "Technology": "Technologie",
-    "technology": "Technologie"
+    "technology": "Technologie",
+    "Luxembourgish": "Lëtzebuergesch"
   },
   "game": {
     "round": "Ronn",
