@@ -1,7 +1,17 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import topics from "../data/topics.json";
+import topicLists from "../data/topics.json";
+import localizedTopicLists from "../data/localizedTopics.json";
+import luxembourgishWords from "../data/luWords.json";
+import { useLanguageStore } from "./languageStore";
+
+const topics = { ...topicLists, Luxembourgish: luxembourgishWords };
+
+const getWordsForLocale = (key, words) => {
+  const locale = useLanguageStore.getState().locale || "en";
+  return localizedTopicLists[locale]?.[key] || words;
+};
 
 const CUSTOM_TOPICS_KEY = "imposter-hunt-custom-topics";
 let topicWrites = Promise.resolve();
@@ -43,10 +53,12 @@ export const useGameStore = create(
         if (!key) return null;
         
         if (key === "random") {
-          const { predefinedTopics, customTopics } = get();
-          const preWords = Object.values(predefinedTopics || {}).flat();
+          const { customTopics } = get();
+          const preWords = get().getAllTopics()
+            .filter((topic) => topic.key !== "random")
+            .flatMap((topic) => topic.words || []);
           const customWords = (customTopics || []).flatMap(t => t.words || []);
-          const allWords = [...preWords, ...customWords];
+          const allWords = [...new Set([...preWords, ...customWords])];
           
           return {
             key: "random",
@@ -63,7 +75,7 @@ export const useGameStore = create(
         }
         const words = (get().predefinedTopics || {})[key];
         if (Array.isArray(words)) {
-          return { key, name: key, words, isCustom: false };
+          return { key, name: key, words: getWordsForLocale(key, words), isCustom: false };
         }
         return null;
       },
@@ -76,7 +88,14 @@ export const useGameStore = create(
         const { players, topicKey, enableJester, enableSheriff } = get();
         if (!players || players.length < 3) return false;
 
-        const words = get().getTopicWordsByKey(topicKey);
+        let words;
+        if (topicKey === "random") {
+          const topicLists = get().getAllTopics().filter((topic) => topic.key !== "random" && topic.words?.length);
+          const selectedTopic = topicLists[Math.floor(Math.random() * topicLists.length)];
+          words = selectedTopic?.words;
+        } else {
+          words = get().getTopicWordsByKey(topicKey);
+        }
         if (!words || words.length === 0) {
           console.error("Invalid topic key");
           return false;
@@ -246,15 +265,15 @@ export const useGameStore = create(
       }),
       getAllTopics: () => {
         const pre = Object.entries(get().predefinedTopics || {}).map(([key, words]) => ({
-          key, name: key, words, isCustom: false,
+          key, name: key, words: getWordsForLocale(key, words), isCustom: false,
         }));
         const custom = (get().customTopics || []).map((t) => ({
           key: `custom:${slugify(t.name)}`, name: t.name, words: t.words || [], isCustom: true,
+          isAI: t.isAI || /\s\(AI(?:\s+\d+)?\)$/i.test(t.name),
         }));
         
         const allWords = [
-          ...pre.flatMap(t => t.words),
-          ...custom.flatMap(t => t.words),
+          ...new Set([...pre.flatMap(t => t.words), ...custom.flatMap(t => t.words)]),
         ];
         
         const randomTopic = {
@@ -270,6 +289,15 @@ export const useGameStore = create(
     {
       name: "imposter-hunt-storage",
       storage: createJSONStorage(() => AsyncStorage),
+      merge: (persistedState, currentState) => ({
+        ...currentState,
+        ...persistedState,
+        // Refresh bundled lists when an older app version persisted its copy.
+        predefinedTopics: {
+          ...(persistedState?.predefinedTopics || {}),
+          ...topics,
+        },
+      }),
       onRehydrateStorage: () => (state) => {
         if (state) {
           state._hasHydrated = true;

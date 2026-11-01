@@ -42,6 +42,39 @@ export default function Setup() {
   const [error, setError] = useState("");
 
   const allTopics = getAllTopics();
+  const localTopicKeys = ["Luxembourg", "Luxembourgish"];
+  const randomTopic = allTopics.find((topic) => topic.key === "random");
+  const localTopics = allTopics.filter((topic) => localTopicKeys.includes(topic.key));
+  const categoryTopics = allTopics.filter((topic) => !topic.isCustom && topic.key !== "random" && !localTopicKeys.includes(topic.key));
+  const userTopics = allTopics.filter((topic) => topic.isCustom);
+  const topicIcons = {
+    random: "shuffle-variant", Luxembourg: "map-marker-radius", Luxembourgish: "translate",
+    Food: "food-apple", Animals: "paw", Movies: "movie-open", Countries: "earth",
+    Sports: "trophy", Occupations: "account-tie", Brands: "tag", Colors: "palette",
+    Clothing: "tshirt-crew", Vehicles: "car", Instruments: "music", Technology: "laptop",
+  };
+  const renderTopicCard = (topic, index) => {
+    const selected = topicKey === topic.key;
+    const label = topic.isCustom ? topic.name : t(`topics.${topic.key}`, topic.name);
+    const badgeLabel = topic.isAI ? t("setup.aiTag", "AI") : t("setup.customTag", "Custom");
+    return (
+      <Animated.View key={topic.key} style={styles.topicCardWrapper} entering={FadeInDown.delay(Math.min(index * 25, 250)).duration(220).reduceMotion(ReduceMotion.System)}>
+        <Card
+          onPress={() => handleSelectTopic(topic.key)}
+          accessibilityLabel={`${label}, ${topic.words?.length || 0} ${t("setup.words", "words")}`}
+          accessibilityState={{ selected }}
+          style={[styles.topicCard, selected && styles.selectedTopicCard]}
+        >
+          <View style={styles.topicCardTop}>
+            <View style={styles.topicIconBadge}><Icon name={topicIcons[topic.key] || "playlist-edit"} size={20} color={selected ? palette.primary : palette.textDim} /></View>
+            {selected ? <Icon name="check-circle" size={20} color={palette.primary} /> : topic.isCustom ? <View style={[styles.topicTag, topic.isAI && styles.topicTagAI]}><Text style={styles.topicTagText}>{badgeLabel}</Text></View> : null}
+          </View>
+          <Text style={styles.topicName} numberOfLines={1} ellipsizeMode="tail">{label}</Text>
+          <View style={styles.wordCountRow}><Icon name="text-box-multiple" size={12} color={palette.textDim} /><Text style={styles.wordCountText}>{topic.words?.length || 0} {t("setup.words", "words")}</Text></View>
+        </Card>
+      </Animated.View>
+    );
+  };
 
   useEffect(() => {
     if (storedPlayers?.length) setPlayerList(storedPlayers);
@@ -201,43 +234,47 @@ export default function Setup() {
             </TouchableOpacity>
 
             {topicExpanded && allTopics && allTopics.length > 0 && (
-              <View style={styles.topicGrid}>
-                {allTopics.map((tpc, topicIndex) => {
-                  const wordCount = tpc.words?.length || 0;
-                  return (
-                    <Animated.View key={tpc.key} style={styles.topicCardWrapper} entering={FadeInDown.delay(Math.min(topicIndex * 25, 250)).duration(220).reduceMotion(ReduceMotion.System)}>
+              <View>
+                {randomTopic ? (
+                  <View style={styles.topicGroup}>
+                    <Text style={styles.topicGroupTitle}>{t("setup.quickPicks", "Quick pick")}</Text>
                     <Card
-                      onPress={() => handleSelectTopic(tpc.key)}
-                      style={[
-                        styles.topicCard,
-                        topicKey === tpc.key && { borderColor: palette.primary, borderWidth: 2 },
-                      ]}
+                      onPress={() => handleSelectTopic(randomTopic.key)}
+                      accessibilityLabel={`${t("topics.random", "Random")}. ${t("setup.randomMixDescription", "A category is picked at random for each game")}`}
+                      accessibilityState={{ selected: topicKey === randomTopic.key }}
+                      style={[styles.topicCard, styles.featuredTopicCard, topicKey === randomTopic.key && styles.selectedTopicCard]}
                     >
-                      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
-                        <Text
-                          style={styles.topicName}
-                          numberOfLines={1}
-                          ellipsizeMode="tail"
-                        >
-                          {tpc.name}
-                        </Text>
-                        {tpc.isCustom ? (
-                          <View
-                            style={[styles.dot, tpc.isAI ? styles.dotAI : styles.dotCustom]}
-                          />
-                        ) : null}
+                      <View style={styles.featuredTopicContent}>
+                        <View style={styles.topicIconBadge}><Icon name={topicIcons.random} size={22} color={palette.primary} /></View>
+                        <View style={styles.featuredTopicCopy}>
+                          <Text style={styles.topicName}>{t("topics.random", "Random")}</Text>
+                          <Text style={styles.topicDescription}>{t("setup.randomMixDescription", "A category is picked at random for each game")}</Text>
+                        </View>
+                        {topicKey === randomTopic.key && <Icon name="check-circle" size={22} color={palette.primary} />}
                       </View>
-                      
-                      <View style={styles.wordCountRow}>
-                        <Icon name="text-box-multiple" size={12} color={palette.textDim} />
-                        <Text style={styles.wordCountText}>
-                          {wordCount} {t("setup.words", "words")}
-                        </Text>
-                      </View>
+                      <View style={styles.wordCountRow}><Icon name="text-box-multiple" size={12} color={palette.textDim} /><Text style={styles.wordCountText}>{randomTopic.words?.length || 0} {t("setup.words", "words")}</Text></View>
                     </Card>
-                    </Animated.View>
-                  );
-                })}
+                  </View>
+                ) : null}
+
+                {localTopics.length > 0 && (
+                  <View style={styles.topicGroup}>
+                    <Text style={styles.topicGroupTitle}>{t("setup.localPicks", "Luxembourg")}</Text>
+                    <View style={styles.topicGrid}>{localTopics.map((topic, index) => renderTopicCard(topic, index))}</View>
+                  </View>
+                )}
+
+                <View style={styles.topicGroup}>
+                  <Text style={styles.topicGroupTitle}>{t("setup.browseCategories", "Browse categories")}</Text>
+                  <View style={styles.topicGrid}>{categoryTopics.map((topic, index) => renderTopicCard(topic, index))}</View>
+                </View>
+
+                {userTopics.length > 0 && (
+                  <View style={styles.topicGroup}>
+                    <Text style={styles.topicGroupTitle}>{t("setup.yourTopics", "Your topics")}</Text>
+                    <View style={styles.topicGrid}>{userTopics.map((topic, index) => renderTopicCard(topic, index))}</View>
+                  </View>
+                )}
               </View>
             )}
           </View>
@@ -518,9 +555,12 @@ const styles = StyleSheet.create({
   topicGrid: {
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: space.sm,
+    justifyContent: "space-between",
+    rowGap: space.sm,
     marginTop: space.sm,
   },
+  topicGroup: { marginTop: space.md },
+  topicGroupTitle: { color: palette.textDim, fontSize: type.small, fontWeight: "800", letterSpacing: 0.7, textTransform: "uppercase", marginBottom: space.sm },
   topicCard: {
     width: "100%",
     padding: space.md,
@@ -528,25 +568,22 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     minHeight: 90,
   },
+  selectedTopicCard: { borderColor: palette.primary, borderWidth: 2, backgroundColor: palette.panelElevated || palette.panel },
+  featuredTopicCard: { minHeight: 112, borderColor: palette.primary + "66" },
+  featuredTopicContent: { flexDirection: "row", alignItems: "center", gap: space.md },
+  featuredTopicCopy: { flex: 1 },
+  topicDescription: { color: palette.textDim, fontSize: type.small, marginTop: 3 },
+  topicCardTop: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: space.sm },
+  topicIconBadge: { width: 34, height: 34, borderRadius: 12, backgroundColor: palette.surface || "#29272A", alignItems: "center", justifyContent: "center" },
+  topicTag: { paddingHorizontal: 8, paddingVertical: 3, borderRadius: 10, backgroundColor: "#EF444426" },
+  topicTagAI: { backgroundColor: "#3B82F626" },
+  topicTagText: { color: palette.textDim, fontSize: 10, fontWeight: "800" },
   topicCardWrapper: { width: "48%" },
   topicName: {
     color: palette.text,
     fontSize: type.h4,
     fontWeight: "800",
     maxWidth: "80%",
-  },
-  dot: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
-    borderWidth: 1,
-    borderColor: "#00000040",
-  },
-  dotAI: {
-    backgroundColor: "#3B82F6",
-  },
-  dotCustom: {
-    backgroundColor: "#EF4444",
   },
   wordCountRow: {
     flexDirection: "row",

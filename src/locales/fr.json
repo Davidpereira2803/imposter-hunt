@@ -56,7 +56,14 @@
     "jesterDesc": "Gagne s'il est éliminé",
     "sheriff": "Shérif",
     "sheriffDesc": "Peut vérifier un rôle",
-    "minPlayersForRoles": "4+ joueurs requis pour les rôles spéciaux"
+    "minPlayersForRoles": "4+ joueurs requis pour les rôles spéciaux",
+    "quickPicks": "À la une",
+    "randomMixDescription": "Une catégorie est choisie au hasard à chaque partie",
+    "localPicks": "Le Luxembourg",
+    "browseCategories": "Parcourir les catégories",
+    "yourTopics": "Vos thèmes",
+    "aiTag": "IA",
+    "customTag": "Personnalisé"
   },
   "topics": {
     "random": "Aléatoire",
@@ -84,7 +91,8 @@
     "Instruments": "Instruments",
     "instruments": "Instruments",
     "Technology": "Technologie",
-    "technology": "Technologie"
+    "technology": "Technologie",
+    "Luxembourgish": "Luxembourgeois"
   },
   "game": {
     "round": "Manche",
