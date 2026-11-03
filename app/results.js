@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { View, Text, StyleSheet, BackHandler, Alert } from "react-native";
 import Animated, { FadeInUp, ZoomIn, ReduceMotion } from "react-native-reanimated";
 import { useRouter, useLocalSearchParams } from "expo-router";
@@ -17,9 +17,15 @@ export default function Results() {
   const { t } = useTranslation();
   const { winner, eliminatedPlayer } = useLocalSearchParams();
   const { players, imposterIndex, secretWord, startMatch, resetMatch } = useGameStore();
+  const [completedGame] = useState(() => ({
+    secretWord,
+    imposterName: players?.[imposterIndex],
+  }));
+  const [isStartingAgain, setIsStartingAgain] = useState(false);
+  const isStartingAgainRef = useRef(false);
 
   const imposterWon = winner === "imposter";
-  const imposterName = players?.[imposterIndex] || t("results.unknown", "Unknown");
+  const imposterName = completedGame.imposterName || t("results.unknown", "Unknown");
 
   useEffect(() => {
     const backAction = () => true;
@@ -41,12 +47,18 @@ export default function Results() {
   }, [imposterWon]);
 
   const handlePlayAgain = async () => {
+    if (isStartingAgainRef.current) return;
+    isStartingAgainRef.current = true;
+    setIsStartingAgain(true);
+
     try { await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium); } catch {}
-    
+
     const success = startMatch();
     if (success) {
       router.replace("/role");
     } else {
+      isStartingAgainRef.current = false;
+      setIsStartingAgain(false);
       Alert.alert(t("common.error", "Error"), t("results.failedToStart", "Failed to start new game"));
     }
   };
@@ -114,7 +126,7 @@ export default function Results() {
         <Animated.View entering={FadeInUp.delay(100).duration(280).reduceMotion(ReduceMotion.System)} style={styles.info}>
           <Card style={styles.infoCard}>
             <Text style={styles.label}>{t("results.secretWord", "Secret Word")}</Text>
-            <Text style={styles.wordText}>{secretWord}</Text>
+            <Text style={styles.wordText}>{completedGame.secretWord}</Text>
           </Card>
 
           <Card style={styles.infoCard}>
@@ -129,6 +141,7 @@ export default function Results() {
             onPress={handlePlayAgain}
             variant="success"
             size="lg"
+            disabled={isStartingAgain}
           />
 
           <Button
