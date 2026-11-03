@@ -56,7 +56,14 @@
     "jesterDesc": "Ganha se for eliminado",
     "sheriff": "Xerife",
     "sheriffDesc": "Pode verificar uma função",
-    "minPlayersForRoles": "4+ jogadores necessários para funções especiais"
+    "minPlayersForRoles": "4+ jogadores necessários para funções especiais",
+    "quickPicks": "Escolha rápida",
+    "randomMixDescription": "Uma categoria é escolhida aleatoriamente em cada jogo",
+    "localPicks": "Luxemburgo",
+    "browseCategories": "Categorias",
+    "yourTopics": "Os seus temas",
+    "aiTag": "IA",
+    "customTag": "Personalizado"
   },
   "topics": {
     "random": "Aleatório",
@@ -84,7 +91,8 @@
     "Instruments": "Instrumentos",
     "instruments": "Instrumentos",
     "Technology": "Tecnologia",
-    "technology": "Tecnologia"
+    "technology": "Tecnologia",
+    "Luxembourgish": "Luxemburguês"
   },
   "game": {
     "round": "Rodada",

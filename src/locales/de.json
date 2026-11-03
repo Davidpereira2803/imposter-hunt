@@ -56,7 +56,14 @@
     "jesterDesc": "Gewinnt bei Rauswahl",
     "sheriff": "Sheriff",
     "sheriffDesc": "Kann eine Rolle prüfen",
-    "minPlayersForRoles": "4+ Spieler für Spezialrollen nötig"
+    "minPlayersForRoles": "4+ Spieler für Spezialrollen nötig",
+    "quickPicks": "Schnellauswahl",
+    "randomMixDescription": "Für jede Runde wird eine zufällige Kategorie gewählt",
+    "localPicks": "Luxemburg",
+    "browseCategories": "Kategorien",
+    "yourTopics": "Deine Themen",
+    "aiTag": "KI",
+    "customTag": "Eigene"
   },
   "topics": {
     "random": "Zufällig",
@@ -84,7 +91,8 @@
     "Instruments": "Instrumente",
     "instruments": "Instrumente",
     "Technology": "Technologie",
-    "technology": "Technologie"
+    "technology": "Technologie",
+    "Luxembourgish": "Luxemburgisch"
   },
   "game": {
     "round": "Runde",
