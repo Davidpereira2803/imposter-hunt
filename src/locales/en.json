@@ -27,7 +27,11 @@
     "eyebrow": "ONE PHONE. MANY SUSPECTS.",
     "play": "Let’s play",
     "minimumPlayers": "3+ players",
-    "oneDevice": "Pass & play"
+    "oneDevice": "Pass & play",
+    "sessionScores": "Session scores",
+    "activeSession": "Session in progress",
+    "sessionMatchCount": "{{count}} matches played",
+    "startScoring": "Start a session to track player rankings"
   },
   "setup": {
     "title": "Setup",
@@ -115,7 +119,8 @@
     "jesterWins": "The Jester Wins!",
     "jesterFooled": "fooled everyone!",
     "wasTheImposter": "was the Munkeler",
-    "newGameHint": "Starts a fresh match with a new secret word."
+    "newGameHint": "Starts a fresh match with a new secret word.",
+    "sessionStandings": "View Session Standings"
   },
   "settings": {
     "title": "Settings",
@@ -366,5 +371,33 @@
     "tip2": "Use 'Mixed' difficulty for varied word lengths",
     "tip3": "Generated topics are automatically saved to your custom list"
   },
-  "votedOutInstruction": "You were voted out. Final chance: guess the secret word. Correct = you win. Wrong = civilians win."
+  "votedOutInstruction": "You were voted out. Final chance: guess the secret word. Correct = you win. Wrong = civilians win.",
+  "leaderboard": {
+    "title": "Player Rankings",
+    "active": "SESSION IN PROGRESS",
+    "allTime": "ALL-TIME RANKING",
+    "latestSession": "LATEST SESSION",
+    "recentSessions": "RECENT SESSIONS",
+    "startSession": "Start scoring session",
+    "continueSession": "Continue session",
+    "finish": "Finish session",
+    "finishTitle": "Finish this session?",
+    "finishMessage": "This saves the session ranking and returns you to the leaderboard.",
+    "cancel": "Keep playing",
+    "finishNow": "Finish session",
+    "matches": "matches",
+    "wins": "wins",
+    "points": "points",
+    "empty": "Finish a match to see the session rankings.",
+    "noPlayers": "Scores appear here after your first completed session match.",
+    "hourReminderTitle": "Been playing for an hour?",
+    "hourReminderMessage": "You can finish this session and see the rankings, or keep playing.",
+    "keepPlaying": "Keep playing",
+    "finishAndRank": "Finish & view ranking",
+    "scoringRules": "How points work",
+    "participation": "+1 for every completed match",
+    "civilianBonus": "+2 bonus for a civilian or sheriff win",
+    "imposterBonus": "+3 bonus for an imposter win",
+    "jesterBonus": "+4 bonus for a Jester solo win"
+  }
 }

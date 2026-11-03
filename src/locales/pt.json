@@ -27,7 +27,11 @@
     "eyebrow": "UM TELEMÓVEL. VÁRIOS SUSPEITOS.",
     "play": "Vamos jogar",
     "minimumPlayers": "3+ jogadores",
-    "oneDevice": "Passa o telemóvel"
+    "oneDevice": "Passa o telemóvel",
+    "sessionScores": "Pontuação da sessão",
+    "activeSession": "Sessão em curso",
+    "sessionMatchCount": "{{count}} partidas jogadas",
+    "startScoring": "Inicia uma sessão para acompanhar a classificação"
   },
   "setup": {
     "title": "Configuração",
@@ -115,7 +119,8 @@
     "jesterWins": "O Bobo Vence!",
     "jesterFooled": "enganou todo mundo!",
     "wasTheImposter": "era o Munkeler",
-    "newGameHint": "Começa uma nova partida com uma nova palavra secreta."
+    "newGameHint": "Começa uma nova partida com uma nova palavra secreta.",
+    "sessionStandings": "Ver classificação da sessão"
   },
   "settings": {
     "title": "Configurações",
@@ -366,5 +371,33 @@
     "tip2": "Use a dificuldade \"Misto\" para variação no tamanho das palavras",
     "tip3": "Os temas gerados são salvos automaticamente na sua lista personalizada"
   },
-  "votedOutInstruction": "Você foi votado. Última chance: adivinhe a palavra secreta. Correto = você vence. Errado = civis vencem."
+  "votedOutInstruction": "Você foi votado. Última chance: adivinhe a palavra secreta. Correto = você vence. Errado = civis vencem.",
+  "leaderboard": {
+    "title": "Classificação dos jogadores",
+    "active": "SESSÃO EM CURSO",
+    "allTime": "CLASSIFICAÇÃO GERAL",
+    "latestSession": "SESSÃO MAIS RECENTE",
+    "recentSessions": "SESSÕES RECENTES",
+    "startSession": "Iniciar sessão com pontuação",
+    "continueSession": "Continuar sessão",
+    "finish": "Terminar sessão",
+    "finishTitle": "Terminar esta sessão?",
+    "finishMessage": "A classificação será guardada e apresentada aqui.",
+    "cancel": "Continuar a jogar",
+    "finishNow": "Terminar sessão",
+    "matches": "partidas",
+    "wins": "vitórias",
+    "points": "pontos",
+    "empty": "Termina uma partida para ver a classificação.",
+    "noPlayers": "As pontuações aparecem depois da primeira partida concluída.",
+    "hourReminderTitle": "Estão a jogar há uma hora?",
+    "hourReminderMessage": "Podes terminar a sessão para ver a classificação ou continuar a jogar.",
+    "keepPlaying": "Continuar a jogar",
+    "finishAndRank": "Terminar e ver classificação",
+    "scoringRules": "Como ganhar pontos",
+    "participation": "+1 por cada partida concluída",
+    "civilianBonus": "+2 por uma vitória dos civis ou do xerife",
+    "imposterBonus": "+3 por uma vitória do Munkeler",
+    "jesterBonus": "+4 pela vitória a solo do bobo da corte"
+  }
 }

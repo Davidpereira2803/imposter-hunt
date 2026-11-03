@@ -27,7 +27,11 @@
     "eyebrow": "UN TELÉFONO. MUCHOS SOSPECHOSOS.",
     "play": "Vamos a jugar",
     "minimumPlayers": "3+ jugadores",
-    "oneDevice": "Pasa el teléfono"
+    "oneDevice": "Pasa el teléfono",
+    "sessionScores": "Puntuaciones de sesión",
+    "activeSession": "Sesión en curso",
+    "sessionMatchCount": "{{count}} partidas jugadas",
+    "startScoring": "Inicia una sesión para seguir la clasificación"
   },
   "setup": {
     "title": "Configuración",
@@ -115,7 +119,8 @@
     "jesterWins": "¡El Bufón Gana!",
     "jesterFooled": "¡engañó a todos!",
     "wasTheImposter": "era el Munkeler",
-    "newGameHint": "Empieza una partida nueva con una nueva palabra secreta."
+    "newGameHint": "Empieza una partida nueva con una nueva palabra secreta.",
+    "sessionStandings": "Ver clasificación de la sesión"
   },
   "settings": {
     "title": "Configuración",
@@ -366,5 +371,33 @@
     "tip2": "Usa dificultad 'Mixto' para palabras de longitudes variadas",
     "tip3": "Los temas generados se guardan automáticamente en tu lista personalizada"
   },
-  "votedOutInstruction": "Fuiste votado. Última oportunidad: adivina la palabra secreta. Correcto = ganas. Incorrecto = ganan los civiles."
+  "votedOutInstruction": "Fuiste votado. Última oportunidad: adivina la palabra secreta. Correcto = ganas. Incorrecto = ganan los civiles.",
+  "leaderboard": {
+    "title": "Clasificación de jugadores",
+    "active": "SESIÓN EN CURSO",
+    "allTime": "CLASIFICACIÓN TOTAL",
+    "latestSession": "ÚLTIMA SESIÓN",
+    "recentSessions": "SESIONES RECIENTES",
+    "startSession": "Iniciar sesión con puntuación",
+    "continueSession": "Continuar sesión",
+    "finish": "Finalizar sesión",
+    "finishTitle": "¿Finalizar esta sesión?",
+    "finishMessage": "Se guardará la clasificación y volverás a verla aquí.",
+    "cancel": "Seguir jugando",
+    "finishNow": "Finalizar sesión",
+    "matches": "partidas",
+    "wins": "victorias",
+    "points": "puntos",
+    "empty": "Termina una partida para ver la clasificación.",
+    "noPlayers": "Las puntuaciones aparecerán tras la primera partida completada.",
+    "hourReminderTitle": "¿Lleváis una hora jugando?",
+    "hourReminderMessage": "Puedes terminar la sesión y ver la clasificación, o seguir jugando.",
+    "keepPlaying": "Seguir jugando",
+    "finishAndRank": "Terminar y ver clasificación",
+    "scoringRules": "Cómo se consiguen puntos",
+    "participation": "+1 por cada partida completada",
+    "civilianBonus": "+2 por una victoria civil o del sheriff",
+    "imposterBonus": "+3 por una victoria del Munkeler",
+    "jesterBonus": "+4 por la victoria en solitario del bufón"
+  }
 }

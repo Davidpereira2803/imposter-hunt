@@ -27,7 +27,11 @@
     "eyebrow": "EIN HANDY. VIELE VERDÄCHTIGE.",
     "play": "Los geht’s",
     "minimumPlayers": "Ab 3 Personen",
-    "oneDevice": "Handy weitergeben"
+    "oneDevice": "Handy weitergeben",
+    "sessionScores": "Sitzungswertung",
+    "activeSession": "Sitzung läuft",
+    "sessionMatchCount": "{{count}} Spiele gespielt",
+    "startScoring": "Starte eine Sitzung für eine Spielerrangliste"
   },
   "setup": {
     "title": "Einstellungen",
@@ -115,7 +119,8 @@
     "jesterWins": "Der Narr Gewinnt!",
     "jesterFooled": "hat alle ausgetrickst!",
     "wasTheImposter": "war der Hochstapler",
-    "newGameHint": "Startet eine neue Partie mit einem neuen geheimen Wort."
+    "newGameHint": "Startet eine neue Partie mit einem neuen geheimen Wort.",
+    "sessionStandings": "Sitzungsrangliste ansehen"
   },
   "settings": {
     "title": "Einstellungen",
@@ -366,5 +371,33 @@
     "tip2": "Nutze \"Gemischt\" für verschiedene Wortlängen",
     "tip3": "Generierte Themen werden automatisch in deiner eigenen Liste gespeichert"
   },
-  "votedOutInstruction": "Du wurdest ausgewählt. Letzte Chance: Rate das geheime Wort. Richtig = du gewinnst. Falsch = Zivilisten gewinnen."
+  "votedOutInstruction": "Du wurdest ausgewählt. Letzte Chance: Rate das geheime Wort. Richtig = du gewinnst. Falsch = Zivilisten gewinnen.",
+  "leaderboard": {
+    "title": "Spielerrangliste",
+    "active": "SITZUNG LÄUFT",
+    "allTime": "GESAMTRANGLISTE",
+    "latestSession": "LETZTE SITZUNG",
+    "recentSessions": "LETZTE SITZUNGEN",
+    "startSession": "Wertungssitzung starten",
+    "continueSession": "Sitzung fortsetzen",
+    "finish": "Sitzung beenden",
+    "finishTitle": "Diese Sitzung beenden?",
+    "finishMessage": "Die Rangliste wird gespeichert und angezeigt.",
+    "cancel": "Weiterspielen",
+    "finishNow": "Sitzung beenden",
+    "matches": "Spiele",
+    "wins": "Siege",
+    "points": "Punkte",
+    "empty": "Beende ein Spiel, um die Rangliste zu sehen.",
+    "noPlayers": "Nach dem ersten beendeten Spiel erscheinen hier Punkte.",
+    "hourReminderTitle": "Spielt ihr schon eine Stunde?",
+    "hourReminderMessage": "Du kannst die Sitzung beenden und die Rangliste ansehen oder weiterspielen.",
+    "keepPlaying": "Weiterspielen",
+    "finishAndRank": "Beenden und Rangliste ansehen",
+    "scoringRules": "So gibt es Punkte",
+    "participation": "+1 für jedes abgeschlossene Spiel",
+    "civilianBonus": "+2 für einen Sieg der Zivilisten oder des Sheriffs",
+    "imposterBonus": "+3 für einen Sieg des Munkelers",
+    "jesterBonus": "+4 für einen alleinigen Sieg des Narren"
+  }
 }

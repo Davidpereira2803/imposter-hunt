@@ -27,7 +27,11 @@
     "eyebrow": "UN TELEFONO. TANTI SOSPETTATI.",
     "play": "Giochiamo",
     "minimumPlayers": "3+ giocatori",
-    "oneDevice": "Passa il telefono"
+    "oneDevice": "Passa il telefono",
+    "sessionScores": "Punteggi della sessione",
+    "activeSession": "Sessione in corso",
+    "sessionMatchCount": "{{count}} partite giocate",
+    "startScoring": "Avvia una sessione per seguire la classifica"
   },
   "setup": {
     "title": "Configurazione",
@@ -115,7 +119,8 @@
     "jesterWins": "Il Giullare Vince!",
     "jesterFooled": "ha ingannato tutti!",
     "wasTheImposter": "era il Munkeler",
-    "newGameHint": "Inizia una nuova partita con una nuova parola segreta."
+    "newGameHint": "Inizia una nuova partita con una nuova parola segreta.",
+    "sessionStandings": "Vedi classifica sessione"
   },
   "settings": {
     "title": "Impostazioni",
@@ -366,5 +371,33 @@
     "tip2": "Usa la difficoltà \"Misto\" per lunghezze di parole variate",
     "tip3": "Gli argomenti generati vengono salvati automaticamente nella tua lista personalizzata"
   },
-  "votedOutInstruction": "Sei stato votato. Ultima possibilità: indovina la parola segreta. Corretto = vinci. Sbagliato = vincono i civili."
+  "votedOutInstruction": "Sei stato votato. Ultima possibilità: indovina la parola segreta. Corretto = vinci. Sbagliato = vincono i civili.",
+  "leaderboard": {
+    "title": "Classifica giocatori",
+    "active": "SESSIONE IN CORSO",
+    "allTime": "CLASSIFICA GENERALE",
+    "latestSession": "ULTIMA SESSIONE",
+    "recentSessions": "SESSIONI RECENTI",
+    "startSession": "Avvia sessione con punteggi",
+    "continueSession": "Continua sessione",
+    "finish": "Termina sessione",
+    "finishTitle": "Terminare questa sessione?",
+    "finishMessage": "La classifica verrà salvata e mostrata qui.",
+    "cancel": "Continua a giocare",
+    "finishNow": "Termina sessione",
+    "matches": "partite",
+    "wins": "vittorie",
+    "points": "punti",
+    "empty": "Completa una partita per vedere la classifica.",
+    "noPlayers": "I punteggi appariranno dopo la prima partita completata.",
+    "hourReminderTitle": "State giocando da un’ora?",
+    "hourReminderMessage": "Puoi terminare la sessione e vedere la classifica oppure continuare a giocare.",
+    "keepPlaying": "Continua a giocare",
+    "finishAndRank": "Termina e vedi la classifica",
+    "scoringRules": "Come si guadagnano punti",
+    "participation": "+1 per ogni partita completata",
+    "civilianBonus": "+2 per la vittoria dei civili o dello sceriffo",
+    "imposterBonus": "+3 per la vittoria del Munkeler",
+    "jesterBonus": "+4 per la vittoria in solitaria del giullare"
+  }
 }

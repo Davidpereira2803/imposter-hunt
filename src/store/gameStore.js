@@ -5,6 +5,7 @@ import topicLists from "../data/topics.json";
 import localizedTopicLists from "../data/localizedTopics.json";
 import luxembourgishWords from "../data/luWords.json";
 import { useLanguageStore } from "./languageStore";
+import { useSessionStore } from "./sessionStore";
 
 const topics = { ...topicLists, Luxembourgish: luxembourgishWords };
 
@@ -30,6 +31,7 @@ export const useGameStore = create(
       players: [],
       topicKey: "",
       secretWord: "",
+      matchId: null,
       imposterIndex: null,
       alive: [],
       round: 1,
@@ -124,6 +126,7 @@ export const useGameStore = create(
 
         set({
           secretWord,
+          matchId: `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`,
           imposterIndex,
           roles: availableRoles,
           alive,
@@ -141,6 +144,7 @@ export const useGameStore = create(
       resetMatch: () => {
         set({
           secretWord: "",
+          matchId: null,
           imposterIndex: null,
           alive: [],
           round: 1,
@@ -200,10 +204,12 @@ export const useGameStore = create(
 
       clearStorage: async () => {
         await AsyncStorage.clear();
+        useSessionStore.getState().clearSessionData();
         set({
           players: [],
           topicKey: "",
           secretWord: "",
+          matchId: null,
           imposterIndex: null,
           alive: [],
           round: 1,

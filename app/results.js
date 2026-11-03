@@ -4,6 +4,7 @@ import Animated, { FadeInUp, ZoomIn, ReduceMotion } from "react-native-reanimate
 import { useRouter, useLocalSearchParams } from "expo-router";
 import * as Haptics from "expo-haptics";
 import { useGameStore } from "../src/store/gameStore";
+import { useSessionStore } from "../src/store/sessionStore";
 import Screen from "../src/components/ui/Screen";
 import Title from "../src/components/ui/Title";
 import Button from "../src/components/ui/Button";
@@ -16,16 +17,34 @@ export default function Results() {
   const router = useRouter();
   const { t } = useTranslation();
   const { winner, eliminatedPlayer } = useLocalSearchParams();
-  const { players, imposterIndex, secretWord, startMatch, resetMatch } = useGameStore();
+  const { players, imposterIndex, secretWord, matchId, roles, startMatch, resetMatch } = useGameStore();
+  const activeSession = useSessionStore((state) => state.activeSession);
+  const recordMatchResult = useSessionStore((state) => state.recordMatchResult);
   const [completedGame] = useState(() => ({
     secretWord,
     imposterName: players?.[imposterIndex],
+    matchId,
+    players,
+    roles,
+    imposterIndex,
   }));
   const [isStartingAgain, setIsStartingAgain] = useState(false);
   const isStartingAgainRef = useRef(false);
 
-  const imposterWon = winner === "imposter";
+  const winnerKey = Array.isArray(winner) ? winner[0] : winner;
+  const imposterWon = winnerKey === "imposter";
   const imposterName = completedGame.imposterName || t("results.unknown", "Unknown");
+
+  useEffect(() => {
+    if (!completedGame.matchId) return;
+    recordMatchResult({
+      matchId: completedGame.matchId,
+      winner: winnerKey,
+      players: completedGame.players,
+      roles: completedGame.roles,
+      imposterIndex: completedGame.imposterIndex,
+    });
+  }, [completedGame, winnerKey, recordMatchResult]);
 
   useEffect(() => {
     const backAction = () => true;
@@ -70,7 +89,7 @@ export default function Results() {
   };
 
   const getWinnerInfo = () => {
-    if (winner === "jester") {
+    if (winnerKey === "jester") {
       return {
         title: t("results.jesterWins", "The Jester Wins!"),
         subtitle: eliminatedPlayer 
@@ -81,7 +100,7 @@ export default function Results() {
       };
     }
 
-    if (winner === "imposter") {
+    if (winnerKey === "imposter") {
       return {
         title: t("results.imposterWins", "Imposter Wins!"),
         subtitle: imposterName 
@@ -144,6 +163,15 @@ export default function Results() {
             disabled={isStartingAgain}
           />
           <Text style={styles.newGameHint}>{t("results.newGameHint", "Starts a fresh match with a new secret word.")}</Text>
+
+          {activeSession && (
+            <Button
+              title={t("results.sessionStandings", "View Session Standings")}
+              onPress={() => router.push("/leaderboard")}
+              variant="ghost"
+              size="md"
+            />
+          )}
 
           <Button
             title={t("results.newSetup", "New Setup")}

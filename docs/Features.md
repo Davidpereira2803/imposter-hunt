@@ -366,19 +366,25 @@ Your data is saved automatically:
 
 > Never re-enter the same player names twice. Pick up where you left off.
 
+### Sessions & Player Rankings
+
+- Start a scoring session from the home screen and play normally.
+- Each player earns 1 participation point for a completed match.
+- Winning civilians and sheriffs earn 2 bonus points; an imposter win earns 3; a Jester's solo win earns 4.
+- View the live session ranking between matches, then finish the session to save its final ranking.
+- All-time standings and the 20 most recent session rankings are stored locally on the device.
+- After one hour, the app offers to finish the session and show the ranking; players can keep playing instead.
+
 ---
 
 ## Smart Game Logic
 
 ### Voting System
 
-**Majority Rules**
-- Player with most votes is eliminated
-- Requires more than 50% consensus
-
-**Tie Handling**
-- Automatic revote with only tied players
-- If still tied, no elimination that round
+**Group Consensus**
+- Players discuss and agree around the table.
+- One player records the group's agreed choice on the shared phone.
+- The game does not collect individual ballots or resolve ties; the players settle disagreements together.
 
 **Jester Victory**
 - If Jester eliminated, they win alone
