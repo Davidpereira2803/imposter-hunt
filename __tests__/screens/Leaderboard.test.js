@@ -8,6 +8,7 @@ import { useSessionStore } from '../../src/store/sessionStore';
 const mockPush = jest.fn();
 const mockReplace = jest.fn();
 jest.mock('expo-router', () => ({ useRouter: () => ({ push: mockPush, replace: mockReplace, back: jest.fn() }) }));
+jest.mock('react-native-safe-area-context', () => ({ useSafeAreaInsets: () => ({ top: 24, bottom: 0, left: 0, right: 0 }) }));
 jest.mock('../../src/lib/useTranslation', () => ({ useTranslation: () => ({ t: (_key, fallback) => fallback, locale: 'en' }) }));
 jest.mock('../../src/constants/icons', () => ({ Icon: () => null }));
 jest.mock('../../src/components/ui/Screen', () => { const React = require('react'); const { View } = require('react-native'); return ({ children }) => <View>{children}</View>; });
