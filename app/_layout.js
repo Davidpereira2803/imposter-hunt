@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Stack } from "expo-router";
+import { Stack, usePathname } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { useKeepAwake } from "expo-keep-awake";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useGameStore } from "../src/store/gameStore";
 import { AdConsentProvider } from "../src/contexts/AdConsentContext";
@@ -12,6 +13,12 @@ import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from "expo-audio"
 import { palette } from "../src/constants/theme";
 
 const TUTORIAL_SEEN_KEY = "imposter-hunt-tutorial-seen";
+const GAMEPLAY_PATHS = new Set(["/role", "/round", "/vote", "/imposter-guess", "/results"]);
+
+function KeepScreenAwake() {
+  useKeepAwake("munkeler-gameplay");
+  return null;
+}
 
 export default function RootLayout() {
   const [isReady, setIsReady] = useState(false);
@@ -19,6 +26,7 @@ export default function RootLayout() {
   const [tutorialChecked, setTutorialChecked] = useState(false);
   const hasHydrated = useGameStore((state) => state._hasHydrated);
   const locale = useLanguageStore((s) => s.locale);
+  const pathname = usePathname();
 
   useEffect(() => {
     useGameStore.getState().loadCustomTopics?.();
@@ -79,6 +87,7 @@ export default function RootLayout() {
       <AdConsentProvider>
         <StatusBar style="light" backgroundColor={palette.bg} />
         <SafeAreaView style={{ flex: 1, backgroundColor: palette.bg }} edges={["bottom"]}>
+          {GAMEPLAY_PATHS.has(pathname) && <KeepScreenAwake />}
           <Stack
             key={`stack-${locale}`}
             screenOptions={{

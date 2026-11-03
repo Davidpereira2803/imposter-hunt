@@ -109,12 +109,13 @@
     "civiliansWin": "Os Civis Vencem!",
     "secretWord": "Palavra Secreta",
     "theImposter": "O Munkeler",
-    "playAgain": "Jogar Novamente",
+    "playAgain": "Novo jogo",
     "newSetup": "Nova Configuração",
     "failedToStart": "Falha ao iniciar novo jogo",
     "jesterWins": "O Bobo Vence!",
     "jesterFooled": "enganou todo mundo!",
-    "wasTheImposter": "era o Munkeler"
+    "wasTheImposter": "era o Munkeler",
+    "newGameHint": "Começa uma nova partida com uma nova palavra secreta."
   },
   "settings": {
     "title": "Configurações",
@@ -211,7 +212,11 @@
     "instruction": "Apenas uma chance. Adivinhe a palavra secreta.\nCorreto = você vence. Errado = civis vencem.",
     "placeholder": "Digite sua tentativa...",
     "submit": "Enviar Tentativa",
-    "passButton": "Passar (Perder)"
+    "passButton": "Passar (Perder)",
+    "confirmTitle": "Confirmar palpite?",
+    "confirmMessage": "Só tens uma tentativa. Se errares, os civis ganham.",
+    "keepThinking": "Pensar melhor",
+    "confirmSubmit": "Confirmar palpite"
   },
   "tutorial": {
     "title": "Como Jogar",
@@ -281,7 +286,8 @@
     "eliminated": "Eliminado",
     "tieTitle": "Votos Empatados",
     "tieMessage": "Nova votação necessária",
-    "revoteNeeded": "Os votos estão empatados. Votem novamente!"
+    "revoteNeeded": "Os votos estão empatados. Votem novamente!",
+    "nextRoundHint": "Mesma partida e a mesma palavra secreta. Continuem a discutir."
   },
   "aiTopics": {
     "title": "Criador de Temas com IA",

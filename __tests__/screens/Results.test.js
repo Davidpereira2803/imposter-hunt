@@ -10,7 +10,7 @@ jest.mock('expo-router', () => ({
   useLocalSearchParams: () => ({ winner: 'civilians' }),
 }));
 jest.mock('../../src/lib/useTranslation', () => ({
-  useTranslation: () => ({ t: (_key, fallback) => fallback }),
+  useTranslation: () => ({ t: (key, fallback) => key === 'results.playAgain' ? 'New Game' : fallback }),
 }));
 jest.mock('../../src/constants/icons', () => ({ Icon: () => null }));
 jest.mock('../../src/components/ui/Screen', () => {
@@ -59,7 +59,7 @@ test('keeps the completed game result visible while Play Again changes the match
   expect(ui.getByText('Bob was the imposter')).toBeTruthy();
 
   await act(async () => {
-    fireEvent.press(ui.getByText('Play Again'));
+    fireEvent.press(ui.getByText('New Game'));
   });
   await waitFor(() => expect(mockReplace).toHaveBeenCalledWith('/role'));
 
@@ -72,8 +72,8 @@ test('keeps the completed game result visible while Play Again changes the match
 test('ignores repeat Play Again taps while the new match is starting', async () => {
   const ui = render(<Results />);
   await act(async () => {
-    fireEvent.press(ui.getByText('Play Again'));
-    fireEvent.press(ui.getByText('Play Again'));
+    fireEvent.press(ui.getByText('New Game'));
+    fireEvent.press(ui.getByText('New Game'));
   });
   await waitFor(() => expect(mockReplace).toHaveBeenCalledWith('/role'));
   expect(useGameStore.getState().startMatch).toHaveBeenCalledTimes(1);

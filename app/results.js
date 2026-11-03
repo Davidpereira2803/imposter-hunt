@@ -143,6 +143,7 @@ export default function Results() {
             size="lg"
             disabled={isStartingAgain}
           />
+          <Text style={styles.newGameHint}>{t("results.newGameHint", "Starts a fresh match with a new secret word.")}</Text>
 
           <Button
             title={t("results.newSetup", "New Setup")}
@@ -212,5 +213,11 @@ const styles = StyleSheet.create({
   },
   actions: {
     gap: space.md,
+  },
+  newGameHint: {
+    color: palette.textDim,
+    fontSize: type.small,
+    textAlign: "center",
+    marginTop: -space.xs,
   },
 });

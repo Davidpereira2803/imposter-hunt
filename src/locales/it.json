@@ -109,12 +109,13 @@
     "civiliansWin": "I Civili Vincono!",
     "secretWord": "Parola Segreta",
     "theImposter": "Il Munkeler",
-    "playAgain": "Gioca Ancora",
+    "playAgain": "Nuova partita",
     "newSetup": "Nuova Configurazione",
     "failedToStart": "Impossibile avviare nuova partita",
     "jesterWins": "Il Giullare Vince!",
     "jesterFooled": "ha ingannato tutti!",
-    "wasTheImposter": "era il Munkeler"
+    "wasTheImposter": "era il Munkeler",
+    "newGameHint": "Inizia una nuova partita con una nuova parola segreta."
   },
   "settings": {
     "title": "Impostazioni",
@@ -211,7 +212,11 @@
     "instruction": "Una sola possibilità. Indovina la parola segreta.\nCorretto = vinci. Sbagliato = vincono i civili.",
     "placeholder": "Scrivi il tuo tentativo...",
     "submit": "Invia Tentativo",
-    "passButton": "Passa (Perdi)"
+    "passButton": "Passa (Perdi)",
+    "confirmTitle": "Confermi la risposta?",
+    "confirmMessage": "Hai un solo tentativo. Se sbagli, vincono i civili.",
+    "keepThinking": "Ci penso ancora",
+    "confirmSubmit": "Conferma risposta"
   },
   "tutorial": {
     "title": "Come Giocare",
@@ -281,7 +286,8 @@
     "eliminated": "Eliminato",
     "tieTitle": "Voti Pari",
     "tieMessage": "È necessario un nuovo voto",
-    "revoteNeeded": "I voti sono pari. Rivota ora!"
+    "revoteNeeded": "I voti sono pari. Rivota ora!",
+    "nextRoundHint": "Stessa partita e stessa parola segreta. Continuate a discutere."
   },
   "aiTopics": {
     "title": "Generatore di Argomenti IA",

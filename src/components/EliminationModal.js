@@ -86,6 +86,10 @@ export default function EliminationModal({
               </View>
             </View>
 
+            <Text style={styles.continueHint}>
+              {t("vote.nextRoundHint", "Same match and secret word. Keep discussing.")}
+            </Text>
+
             {/* Continue Button */}
             <Button
               title={t("vote.continueToRound", "Continue to Round {{round}}", {
@@ -213,6 +217,13 @@ const styles = StyleSheet.create({
     fontSize: type.body,
     color: palette.text,
     fontWeight: "700",
+  },
+  continueHint: {
+    width: "100%",
+    color: palette.textDim,
+    fontSize: type.small,
+    textAlign: "center",
+    marginBottom: space.md,
   },
   
   continueButton: {

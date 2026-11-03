@@ -109,12 +109,13 @@
     "civiliansWin": "Civilians Win!",
     "secretWord": "Secret Word",
     "theImposter": "The Munkeler",
-    "playAgain": "Play Again",
+    "playAgain": "New Game",
     "newSetup": "New Setup",
     "failedToStart": "Failed to start new game",
     "jesterWins": "The Jester Wins!",
     "jesterFooled": "fooled everyone!",
-    "wasTheImposter": "was the Munkeler"
+    "wasTheImposter": "was the Munkeler",
+    "newGameHint": "Starts a fresh match with a new secret word."
   },
   "settings": {
     "title": "Settings",
@@ -211,7 +212,11 @@
     "instruction": "One chance only. Guess the secret word.\nCorrect = you win. Wrong = civilians win.",
     "placeholder": "Type your guess...",
     "submit": "Submit Guess",
-    "passButton": "Pass (Lose)"
+    "passButton": "Pass (Lose)",
+    "confirmTitle": "Lock in your guess?",
+    "confirmMessage": "This is your one chance. A wrong answer gives the civilians the win.",
+    "keepThinking": "Keep thinking",
+    "confirmSubmit": "Submit final guess"
   },
   "tutorial": {
     "title": "How to Play",
@@ -281,7 +286,8 @@
     "eliminated": "Eliminated",
     "tieTitle": "Vote Tied",
     "tieMessage": "Revote required",
-    "revoteNeeded": "Votes are tied. Revote now!"
+    "revoteNeeded": "Votes are tied. Revote now!",
+    "nextRoundHint": "Same match and secret word. Keep discussing."
   },
   "aiTopics": {
     "title": "AI Topic Builder",

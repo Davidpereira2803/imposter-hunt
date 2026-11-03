@@ -109,12 +109,13 @@
     "civiliansWin": "Zivilisten Gewannen!",
     "secretWord": "Geheimwuert",
     "theImposter": "De Munkeler",
-    "playAgain": "Nach Eng Kéier Spillen",
+    "playAgain": "Neit Spill",
     "newSetup": "Nei Astellung",
     "failedToStart": "Neit Spill konnt net gestart ginn",
     "jesterWins": "De Narr Gewënnt!",
     "jesterFooled": "huet jiddereen ausgetrickst!",
-    "wasTheImposter": "war de Munkeler"
+    "wasTheImposter": "war de Munkeler",
+    "newGameHint": "Et fänkt en neit Spill mat engem neie geheime Wuert un."
   },
   "settings": {
     "title": "Astellungen",
@@ -211,7 +212,11 @@
     "instruction": "Nëmmen eng Chance. Eroed dat Geheimwuert.\nRichteg = du gewënns. Falsch = Zivilisten gewannen.",
     "placeholder": "Däi Vermutung aginn...",
     "submit": "Ofschécken",
-    "passButton": "Passen (Verléieren)"
+    "passButton": "Passen (Verléieren)",
+    "confirmTitle": "Guess fixéieren?",
+    "confirmMessage": "Dat ass deng eenzeg Chance. Bei enger falscher Äntwert gewannen d’Zivilisten.",
+    "keepThinking": "Weider iwwerdenken",
+    "confirmSubmit": "Definitiv äntweren"
   },
   "tutorial": {
     "title": "Wéi Spillen",
@@ -281,7 +286,8 @@
     "eliminated": "Erausgeholl",
     "tieTitle": "Ofstëmmung Gléich",
     "tieMessage": "Nei Ofstëmmung erfuerderlech",
-    "revoteNeeded": "Ofstëmmunge sinn gläich. Stëmmt nach eng Kéier of!"
+    "revoteNeeded": "Ofstëmmunge sinn gläich. Stëmmt nach eng Kéier of!",
+    "nextRoundHint": "Dat selwecht Spill an dat selwecht geheime Wuert. Schwätzt weider."
   },
   "aiTopics": {
     "title": "KI-Themen-Generator",

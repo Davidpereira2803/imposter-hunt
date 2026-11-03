@@ -109,12 +109,13 @@
     "civiliansWin": "Die Zivilisten Gewinnen!",
     "secretWord": "Geheimwort",
     "theImposter": "Der Hochstapler",
-    "playAgain": "Nochmal Spielen",
+    "playAgain": "Neues Spiel",
     "newSetup": "Neue Einstellungen",
     "failedToStart": "Neues Spiel konnte nicht gestartet werden",
     "jesterWins": "Der Narr Gewinnt!",
     "jesterFooled": "hat alle ausgetrickst!",
-    "wasTheImposter": "war der Hochstapler"
+    "wasTheImposter": "war der Hochstapler",
+    "newGameHint": "Startet eine neue Partie mit einem neuen geheimen Wort."
   },
   "settings": {
     "title": "Einstellungen",
@@ -211,7 +212,11 @@
     "instruction": "Nur eine Chance. Errate das Geheimwort.\nRichtig = du gewinnst. Falsch = Zivilisten gewinnen.",
     "placeholder": "Deine Vermutung eingeben...",
     "submit": "Absenden",
-    "passButton": "Passen (Verlieren)"
+    "passButton": "Passen (Verlieren)",
+    "confirmTitle": "Tipp endgültig abgeben?",
+    "confirmMessage": "Du hast nur einen Versuch. Bei einer falschen Antwort gewinnen die Zivilisten.",
+    "keepThinking": "Weiter überlegen",
+    "confirmSubmit": "Endgültig raten"
   },
   "tutorial": {
     "title": "Spielanleitung",
@@ -281,7 +286,8 @@
     "eliminated": "Eliminiert",
     "tieTitle": "Stimmen Gebunden",
     "tieMessage": "Erneute Abstimmung erforderlich",
-    "revoteNeeded": "Die Stimmen sind gebunden. Stimmt erneut ab!"
+    "revoteNeeded": "Die Stimmen sind gebunden. Stimmt erneut ab!",
+    "nextRoundHint": "Gleiches Spiel und dasselbe geheime Wort. Diskutiert weiter."
   },
   "aiTopics": {
     "title": "KI-Themen-Generator",
