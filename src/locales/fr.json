@@ -27,7 +27,11 @@
     "eyebrow": "UN TÉLÉPHONE. PLUSIEURS SUSPECTS.",
     "play": "Jouons",
     "minimumPlayers": "3 joueurs ou plus",
-    "oneDevice": "Passez le téléphone"
+    "oneDevice": "Passez le téléphone",
+    "sessionScores": "Scores de la session",
+    "activeSession": "Session en cours",
+    "sessionMatchCount": "{{count}} manches jouées",
+    "startScoring": "Lancez une session pour suivre le classement"
   },
   "setup": {
     "title": "Configuration",
@@ -115,7 +119,8 @@
     "jesterWins": "Le Bouffon Gagne !",
     "jesterFooled": "a trompé tout le monde !",
     "wasTheImposter": "était le Munkeler",
-    "newGameHint": "Commence une nouvelle partie avec un nouveau mot secret."
+    "newGameHint": "Commence une nouvelle partie avec un nouveau mot secret.",
+    "sessionStandings": "Voir le classement"
   },
   "settings": {
     "title": "Paramètres",
@@ -366,5 +371,33 @@
     "tip2": "Utilisez la difficulté « Mixte » pour des longueurs de mots variées",
     "tip3": "Les thèmes générés sont automatiquement enregistrés dans votre liste personnalisée"
   },
-  "votedOutInstruction": "Vous avez été voté. Dernière chance : devinez le mot secret. Correct = vous gagnez. Faux = les civils gagnent."
+  "votedOutInstruction": "Vous avez été voté. Dernière chance : devinez le mot secret. Correct = vous gagnez. Faux = les civils gagnent.",
+  "leaderboard": {
+    "title": "Classement des joueurs",
+    "active": "SESSION EN COURS",
+    "allTime": "CLASSEMENT GÉNÉRAL",
+    "latestSession": "DERNIÈRE SESSION",
+    "recentSessions": "SESSIONS RÉCENTES",
+    "startSession": "Lancer une session avec scores",
+    "continueSession": "Continuer la session",
+    "finish": "Terminer la session",
+    "finishTitle": "Terminer cette session ?",
+    "finishMessage": "Le classement sera enregistré et affiché.",
+    "cancel": "Continuer à jouer",
+    "finishNow": "Terminer",
+    "matches": "manches",
+    "wins": "victoires",
+    "points": "points",
+    "empty": "Terminez une manche pour afficher le classement.",
+    "noPlayers": "Les scores apparaîtront après la première manche terminée.",
+    "hourReminderTitle": "Cela fait une heure que vous jouez ?",
+    "hourReminderMessage": "Vous pouvez terminer la session pour voir le classement ou continuer à jouer.",
+    "keepPlaying": "Continuer à jouer",
+    "finishAndRank": "Terminer et voir le classement",
+    "scoringRules": "Comment gagner des points",
+    "participation": "+1 pour chaque manche terminée",
+    "civilianBonus": "+2 pour une victoire des civils ou du shérif",
+    "imposterBonus": "+3 pour une victoire du Munkeler",
+    "jesterBonus": "+4 pour la victoire solo du Bouffon"
+  }
 }

@@ -5,6 +5,7 @@ import { useRouter, useFocusEffect } from "expo-router";
 import * as Haptics from "expo-haptics";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useGameStore } from "../src/store/gameStore";
+import { useSessionStore } from "../src/store/sessionStore";
 import { AdBanner } from "../src/components/AdBanner";
 import Screen from "../src/components/ui/Screen";
 import IdentityMark from "../src/components/IdentityMark";
@@ -19,6 +20,7 @@ const TUTORIAL_SEEN_KEY = "imposter-hunt-tutorial-seen";
 export default function Home() {
   const router = useRouter();
   const { players, topicKey, secretWord, imposterIndex, getTopicByKey } = useGameStore();
+  const activeSession = useSessionStore((state) => state.activeSession);
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
 
@@ -59,6 +61,11 @@ export default function Home() {
   const handleNewGame = async () => {
     try { await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium); } catch {}
     router.push("/setup");
+  };
+
+  const handleSessionScores = async () => {
+    try { await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); } catch {}
+    router.push("/leaderboard");
   };
 
   const handleSettings = async () => {
@@ -116,6 +123,18 @@ export default function Home() {
 
           <Button title={t("home.play", "Let's play")} onPress={handleNewGame} size="lg"
             icon={<Icon name="arrow-right" size={23} color={palette.text} />} iconPosition="right" />
+          <TouchableOpacity style={styles.sessionCard} onPress={handleSessionScores} accessibilityRole="button">
+            <View style={styles.sessionIcon}><Icon name="trophy-outline" size={22} color={palette.primary} /></View>
+            <View style={styles.sessionCopy}>
+              <Text style={styles.sessionTitle}>{activeSession ? t("home.activeSession", "Session in progress") : t("home.sessionScores", "Session scores")}</Text>
+              <Text style={styles.sessionDetail}>
+                {activeSession
+                  ? t("home.sessionMatchCount", "{{count}} matches played", { count: activeSession.matches.length })
+                  : t("home.startScoring", "Start a session to track player rankings")}
+              </Text>
+            </View>
+            <Icon name="chevron-right" size={21} color={palette.textDim} />
+          </TouchableOpacity>
           <View style={styles.gameFacts}>
             <Icon name="account-multiple-outline" size={16} color={palette.textDim} />
             <Text style={styles.fact}>{t("home.minimumPlayers", "3+ players")}</Text>
@@ -172,6 +191,11 @@ const styles = StyleSheet.create({
   gameFacts: { flexDirection: "row", alignItems: "center", justifyContent: "center", flexWrap: "wrap", gap: 8, marginTop: 14, marginBottom: 25 },
   fact: { color: palette.textDim, fontSize: 12 },
   resume: { borderWidth: 1, borderColor: palette.line, borderRadius: radii.lg, padding: 14, backgroundColor: palette.panel, flexDirection: "row", alignItems: "center", gap: 12, marginBottom: 14 },
+  sessionCard: { borderWidth: 1, borderColor: palette.line, borderRadius: radii.lg, padding: 13, backgroundColor: palette.panel, flexDirection: "row", alignItems: "center", gap: 12, marginTop: 12 },
+  sessionIcon: { width: 40, height: 40, borderRadius: 12, backgroundColor: palette.primaryDim, justifyContent: "center", alignItems: "center" },
+  sessionCopy: { flex: 1 },
+  sessionTitle: { color: palette.text, fontWeight: "800", fontSize: 14 },
+  sessionDetail: { color: palette.textDim, fontSize: 12, marginTop: 4 },
   resumeIcon: { width: 40, height: 40, borderRadius: 12, backgroundColor: palette.backgroundDim, justifyContent: "center", alignItems: "center" },
   resumeTitle: { color: palette.text, fontWeight: "800", fontSize: 14 },
   resumeDetail: { color: palette.textDim, fontSize: 12, marginTop: 4 },

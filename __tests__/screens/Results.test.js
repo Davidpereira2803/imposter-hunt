@@ -3,6 +3,7 @@ import { render, fireEvent, act, waitFor } from '@testing-library/react-native';
 import * as Haptics from 'expo-haptics';
 import Results from '../../app/results';
 import { useGameStore } from '../../src/store/gameStore';
+import { useSessionStore } from '../../src/store/sessionStore';
 
 const mockReplace = jest.fn();
 jest.mock('expo-router', () => ({
@@ -42,12 +43,21 @@ beforeEach(() => {
   jest.clearAllMocks();
   Haptics.impactAsync.mockResolvedValue(undefined);
   Haptics.notificationAsync.mockResolvedValue(undefined);
+  useSessionStore.setState({
+    _hasHydrated: true,
+    activeSession: { id: 'session-1', startedAt: Date.now(), hourReminderShown: false, players: [], scores: {}, matches: [] },
+    sessionHistory: [],
+    allTimeScores: {},
+    recordedMatchIds: [],
+  });
   useGameStore.setState({
     players: ['Alice', 'Bob', 'Casey'],
     imposterIndex: 1,
     secretWord: 'Old Word',
+    matchId: 'old-match',
+    roles: ['civilian', 'imposter', 'civilian'],
     startMatch: jest.fn(() => {
-      useGameStore.setState({ secretWord: 'New Word', imposterIndex: 0 });
+      useGameStore.setState({ secretWord: 'New Word', matchId: 'new-match', imposterIndex: 0, roles: ['imposter', 'civilian', 'civilian'] });
       return true;
     }),
   });
@@ -55,6 +65,7 @@ beforeEach(() => {
 
 test('keeps the completed game result visible while Play Again changes the match state', async () => {
   const ui = render(<Results />);
+  expect(useSessionStore.getState().activeSession.matches.map((match) => match.id)).toEqual(['old-match']);
   expect(ui.getByText('Old Word')).toBeTruthy();
   expect(ui.getByText('Bob was the imposter')).toBeTruthy();
 
@@ -67,6 +78,7 @@ test('keeps the completed game result visible while Play Again changes the match
   expect(ui.queryByText('New Word')).toBeNull();
   expect(ui.getByText('Bob was the imposter')).toBeTruthy();
   expect(ui.queryByText('Alice was the imposter')).toBeNull();
+  expect(useSessionStore.getState().activeSession.matches.map((match) => match.id)).toEqual(['old-match']);
 });
 
 test('ignores repeat Play Again taps while the new match is starting', async () => {

@@ -27,7 +27,11 @@
     "eyebrow": "EEN HANDY. VILL VERDÄCHTEGER.",
     "play": "Loosse mer spillen",
     "minimumPlayers": "3+ Spiller",
-    "oneDevice": "Handy weiderginn"
+    "oneDevice": "Handy weiderginn",
+    "sessionScores": "Punkten an der Sessioun",
+    "activeSession": "Sessioun leeft",
+    "sessionMatchCount": "{{count}} Matcher gespillt",
+    "startScoring": "Start eng Sessioun fir eng Ranglëscht ze kréien"
   },
   "setup": {
     "title": "Astellung",
@@ -115,7 +119,8 @@
     "jesterWins": "De Narr Gewënnt!",
     "jesterFooled": "huet jiddereen ausgetrickst!",
     "wasTheImposter": "war de Munkeler",
-    "newGameHint": "Et fänkt en neit Spill mat engem neie geheime Wuert un."
+    "newGameHint": "Et fänkt en neit Spill mat engem neie geheime Wuert un.",
+    "sessionStandings": "Ranglëscht vun der Sessioun"
   },
   "settings": {
     "title": "Astellungen",
@@ -366,5 +371,33 @@
     "tip2": "Benotz \"Gemëscht\" als Schwieregkeetsgrad fir variéiert Wuertlängten",
     "tip3": "Generéiert Themen ginn automatesch an deng personaliséiert Lëscht gespäichert"
   },
-  "votedOutInstruction": "Du hues ausgewielt. Letzten Kéier: Rätsel d'geheime Wuert. Richtig = du gewinnst. Falsch = Zivilisten gewinnen."
+  "votedOutInstruction": "Du hues ausgewielt. Letzten Kéier: Rätsel d'geheime Wuert. Richtig = du gewinnst. Falsch = Zivilisten gewinnen.",
+  "leaderboard": {
+    "title": "Ranglëscht vun de Spiller",
+    "active": "SESSIOUN LEEFT",
+    "allTime": "GESAMTRANGLËSCHT",
+    "latestSession": "LESCHT SESSIOUN",
+    "recentSessions": "LESCHT SESSIOUNEN",
+    "startSession": "Sessioun mat Punkten starten",
+    "continueSession": "Sessioun virufueren",
+    "finish": "Sessioun ofschléissen",
+    "finishTitle": "Dës Sessioun ofschléissen?",
+    "finishMessage": "D’Ranglëscht gëtt gespäichert an hei gewisen.",
+    "cancel": "Weiderspillen",
+    "finishNow": "Sessioun ofschléissen",
+    "matches": "Matcher",
+    "wins": "Victoire",
+    "points": "Punkten",
+    "empty": "Schloss e Match of fir d’Ranglëscht ze gesinn.",
+    "noPlayers": "No dengem éischte Match gesäis du hei Punkten.",
+    "hourReminderTitle": "Spillt dir schonn eng Stonn?",
+    "hourReminderMessage": "Du kanns d’Sessioun ofschléissen an d’Ranglëscht kucken oder weiderspillen.",
+    "keepPlaying": "Weiderspillen",
+    "finishAndRank": "Ofschléissen a Ranglëscht kucken",
+    "scoringRules": "Wéi kritt een Punkten?",
+    "participation": "+1 fir all ofgeschlossene Match",
+    "civilianBonus": "+2 fir eng Victoire vun den Zivilisten oder dem Sheriff",
+    "imposterBonus": "+3 fir eng Victoire vum Munkeler",
+    "jesterBonus": "+4 fir eng eleng Victoire vum Narr"
+  }
 }
