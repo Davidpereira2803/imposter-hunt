@@ -109,12 +109,13 @@
     "civiliansWin": "Les Civils Gagnent !",
     "secretWord": "Mot Secret",
     "theImposter": "Le Munkeler",
-    "playAgain": "Rejouer",
+    "playAgain": "Nouvelle partie",
     "newSetup": "Nouvelle Configuration",
     "failedToStart": "Échec du démarrage d'une nouvelle partie",
     "jesterWins": "Le Bouffon Gagne !",
     "jesterFooled": "a trompé tout le monde !",
-    "wasTheImposter": "était le Munkeler"
+    "wasTheImposter": "était le Munkeler",
+    "newGameHint": "Commence une nouvelle partie avec un nouveau mot secret."
   },
   "settings": {
     "title": "Paramètres",
@@ -211,7 +212,11 @@
     "instruction": "Une seule chance. Devinez le mot secret.\nCorrect = vous gagnez. Faux = les civils gagnent.",
     "placeholder": "Tapez votre supposition...",
     "submit": "Soumettre",
-    "passButton": "Passer (Perdre)"
+    "passButton": "Passer (Perdre)",
+    "confirmTitle": "Valider votre réponse ?",
+    "confirmMessage": "Vous n’avez qu’une seule chance. Si votre réponse est fausse, les civils gagnent.",
+    "keepThinking": "Continuer à réfléchir",
+    "confirmSubmit": "Confirmer ma réponse"
   },
   "tutorial": {
     "title": "Comment Jouer",
@@ -281,7 +286,8 @@
     "eliminated": "Éliminé",
     "tieTitle": "Votes Égalisés",
     "tieMessage": "Un nouveau vote est nécessaire",
-    "revoteNeeded": "Les votes sont égalisés. Revotez maintenant !"
+    "revoteNeeded": "Les votes sont égalisés. Revotez maintenant !",
+    "nextRoundHint": "Même partie et même mot secret. Continuez à discuter."
   },
   "aiTopics": {
     "title": "Créateur de Thèmes IA",

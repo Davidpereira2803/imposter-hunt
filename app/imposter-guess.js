@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   View,
   Text,
@@ -29,6 +29,7 @@ export default function ImposterGuess() {
   const { t } = useTranslation();
   const { players, imposterIndex, secretWord, _hydrated } = useGameStore();
   const [guess, setGuess] = useState("");
+  const submissionInProgress = useRef(false);
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
@@ -60,7 +61,10 @@ export default function ImposterGuess() {
     }
   }, [players, imposterIndex, secretWord, _hydrated, router]);
 
-  const submit = async () => {
+  const resolveGuess = async () => {
+    if (submissionInProgress.current) return;
+    submissionInProgress.current = true;
+
     const clean = (s) => {
       if (!s) return "";
       return String(s)
@@ -91,6 +95,19 @@ export default function ImposterGuess() {
       pathname: "/results",
       params: { winner: isCorrect ? "imposter" : "civilians" },
     });
+  };
+
+  const confirmGuess = () => {
+    if (!guess.trim() || submissionInProgress.current) return;
+    Keyboard.dismiss();
+    Alert.alert(
+      t("imposterGuess.confirmTitle", "Lock in your guess?"),
+      t("imposterGuess.confirmMessage", "This is your one chance. A wrong answer gives the civilians the win."),
+      [
+        { text: t("imposterGuess.keepThinking", "Keep thinking"), style: "cancel" },
+        { text: t("imposterGuess.confirmSubmit", "Submit final guess"), style: "destructive", onPress: resolveGuess },
+      ]
+    );
   };
 
   const handleCancel = async () => {
@@ -160,7 +177,7 @@ export default function ImposterGuess() {
             placeholder={t("imposterGuess.placeholder", "Type your guess...")}
             value={guess}
             onChangeText={setGuess}
-            onSubmitEditing={submit}
+            onSubmitEditing={confirmGuess}
             returnKeyType="done"
             autoCapitalize="none"
             autoCorrect={false}
@@ -173,7 +190,7 @@ export default function ImposterGuess() {
           <Animated.View entering={FadeInUp.delay(140).duration(280).reduceMotion(ReduceMotion.System)} style={styles.actions}>
             <Button
               title={t("imposterGuess.submit", "Submit Guess")}
-              onPress={submit}
+              onPress={confirmGuess}
               variant="primary"
               size="lg"
               disabled={!guess.trim()}

@@ -109,12 +109,13 @@
     "civiliansWin": "¡Los Civiles Ganan!",
     "secretWord": "Palabra Secreta",
     "theImposter": "El Munkeler",
-    "playAgain": "Jugar de Nuevo",
+    "playAgain": "Nueva partida",
     "newSetup": "Nueva Configuración",
     "failedToStart": "Error al iniciar nueva partida",
     "jesterWins": "¡El Bufón Gana!",
     "jesterFooled": "¡engañó a todos!",
-    "wasTheImposter": "era el Munkeler"
+    "wasTheImposter": "era el Munkeler",
+    "newGameHint": "Empieza una partida nueva con una nueva palabra secreta."
   },
   "settings": {
     "title": "Configuración",
@@ -211,7 +212,11 @@
     "instruction": "Una sola oportunidad. Adivina la palabra secreta.\nCorrecto = ganas. Incorrecto = ganan los civiles.",
     "placeholder": "Escribe tu intento...",
     "submit": "Enviar Intento",
-    "passButton": "Pasar (Perder)"
+    "passButton": "Pasar (Perder)",
+    "confirmTitle": "¿Confirmar respuesta?",
+    "confirmMessage": "Solo tienes un intento. Si fallas, ganan los civiles.",
+    "keepThinking": "Seguir pensando",
+    "confirmSubmit": "Confirmar respuesta"
   },
   "tutorial": {
     "title": "Cómo Jugar",
@@ -281,7 +286,8 @@
     "eliminated": "Eliminado",
     "tieTitle": "Votos Empatados",
     "tieMessage": "Se requiere revotación",
-    "revoteNeeded": "Los votos están empatados. ¡Vota de nuevo!"
+    "revoteNeeded": "Los votos están empatados. ¡Vota de nuevo!",
+    "nextRoundHint": "Misma partida y la misma palabra secreta. Seguid debatiendo."
   },
   "aiTopics": {
     "title": "Creador de Temas IA",
