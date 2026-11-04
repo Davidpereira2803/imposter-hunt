@@ -78,7 +78,7 @@ jobs:
         if: matrix.platform == 'ios' && inputs.destination == 'production' && steps.release.outputs.id != ''
         with:
           ruby-version: '3.3'
-      - name: Submit iOS build for review and release after approval
+      - name: Prepare iOS version for manual review submission
         if: matrix.platform == 'ios' && inputs.destination == 'production' && steps.release.outputs.id != ''
         env:
           APP_VERSION: ${{ steps.release.outputs.version }}

@@ -6,7 +6,7 @@ GitHub Actions runs the checks and triggers EAS cloud builds for both stores. No
 
 - `ci.yml`: runs Jest, validates Expo config, and exports both mobile bundles on PRs and pushes to `master`.
 - `release.yml`: repeats checks before releasing. A `vX.Y.Z` tag automatically uploads production-signed builds to Play internal testing and TestFlight. A manual run on a version tag can target testing or production and either or both platforms.
-- Production Android submissions target the public production track. Production iOS submissions wait for build processing, select the exact version/build, submit for review with Fastlane, and request automatic release with Apple's phased rollout.
+- Production Android submissions target the public production track. Production iOS runs wait for build processing, prepare the version and release notes with Fastlane, and select the exact build in App Store Connect. Review submission and public release remain manual.
 - Builds use the EAS `production` environment, even when uploaded to testing, so testers exercise production configuration.
 - EAS manages build numbers remotely; the visible app version is managed in Git.
 - Releases are serialized; the two platforms run independently, so one store's failure does not cancel the other.
@@ -86,7 +86,7 @@ Before the first release, review `app.json`: the iOS AdMob application ID curren
 3. The tag workflow builds both platforms and uploads to TestFlight and Play internal testing. Ensure internal tester groups/distribution are configured in each store. Test gameplay, ads/consent, audio, translations, and AI topic generation on real devices.
 4. Set production `IOS_RELEASE_NOTES`. In GitHub Actions → Release app → Run workflow, select the **same version tag** in the ref selector, `production`, and the desired platform(s).
 5. This first implementation makes fresh production builds with higher build numbers; it does not promote the previously tested binary. The source tag and EAS environment are the same, but verify the final builds if needed. Exact tested-binary promotion can be added later.
-6. Follow the workflow logs and store dashboards. GitHub success means submission was accepted, not that review has completed or the version is public. Apple's phased release runs after approval; Google production is configured for a completed release, subject to review and managed publishing settings.
+6. Follow the workflow logs and store dashboards. GitHub success means the Android submission was accepted and the iOS version was prepared; it does not mean review has completed or the version is public. For iOS, open App Store Connect, complete any required metadata, and manually submit the prepared version for review. The pipeline selects manual release after approval and disables phased release; you can change those settings in App Store Connect. Google production is configured for a completed release, subject to review and managed publishing settings.
 
 Selecting a branch for a manual run skips the release job: use a `vX.Y.Z` tag. Version tags must match both manifest versions. Never move a released tag.
 
