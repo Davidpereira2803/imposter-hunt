@@ -67,9 +67,14 @@ export default function Tutorial() {
         <ScrollView
           ref={scrollRef}
           horizontal
+          style={styles.slides}
           pagingEnabled
           showsHorizontalScrollIndicator={false}
-          onLayout={(e) => setPageWidth(e.nativeEvent.layout.width)}
+          onLayout={(e) => {
+            const width = e.nativeEvent.layout.width;
+            setPageWidth(width);
+            scrollRef.current?.scrollTo({ x: width * currentStep, animated: false });
+          }}
           onMomentumScrollEnd={(e) => {
             const i = Math.round(e.nativeEvent.contentOffset.x / PAGE);
             setCurrentStep(i);
@@ -84,7 +89,8 @@ export default function Tutorial() {
             const tip = t(`tutorial.${stepKey}.tip`, "");
 
             return (
-              <View key={step.id} style={[styles.slide, { width: PAGE }]}>
+              <ScrollView key={step.id} style={{ width: PAGE }} contentContainerStyle={styles.slide}
+                nestedScrollEnabled showsVerticalScrollIndicator={false}>
                 <View style={styles.iconContainer}>
                   {step.icon === "gameLogo"
                     ? <IdentityMark size={92} />
@@ -100,7 +106,7 @@ export default function Tutorial() {
                     <Text style={styles.tipText}>{tip}</Text>
                   </View>
                 )}
-              </View>
+              </ScrollView>
             );
           })}
         </ScrollView>
@@ -127,7 +133,6 @@ export default function Tutorial() {
               onPress={handleBack}
               variant="ghost"
               size="md"
-              style={styles.backBtn}
             />
           )}
 
@@ -149,7 +154,7 @@ export default function Tutorial() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 60,
+    paddingTop: space.lg,
     paddingHorizontal: space.lg,
     paddingBottom: space.lg,
   },
@@ -167,9 +172,11 @@ const styles = StyleSheet.create({
     opacity: 0.85,
   },
 
+  slides: { flex: 1, minHeight: 0 },
   slide: {
-    flex: 1,
-    paddingHorizontal: space.lg,
+    flexGrow: 1,
+    paddingHorizontal: space.sm,
+    paddingBottom: space.lg,
     paddingTop: space.xl,
   },
   iconContainer: {
@@ -184,7 +191,7 @@ const styles = StyleSheet.create({
   },
   stepTitle: {
     color: palette.text,
-    fontSize: type.title,
+    fontSize: type.h2,
     fontWeight: "900",
     textAlign: "center",
     marginBottom: space.md,
@@ -206,6 +213,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   tipText: {
+    flexShrink: 1,
     marginLeft: space.sm,
     color: palette.warn,
     fontSize: type.small,
@@ -242,7 +250,6 @@ const styles = StyleSheet.create({
   },
 
   actions: { gap: space.md },
-  backBtn: { marginBottom: space.sm },
   primaryActions: { flexDirection: "row" },
   nextBtn: { flex: 1 },
 });

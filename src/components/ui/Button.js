@@ -83,7 +83,7 @@ export default function Button({
     >
       <View style={styles.content}>
         {icon && iconPosition === "left" && <View style={styles.iconLeft}>{icon}</View>}
-        <Text style={[styles.label, textColorStyle]} adjustsFontSizeToFit numberOfLines={2}>
+        <Text style={[styles.label, textColorStyle]}>
           {title}
         </Text>
         {icon && iconPosition === "right" && <View style={styles.iconRight}>{icon}</View>}
@@ -101,14 +101,17 @@ const styles = StyleSheet.create({
     justifyContent: "center" 
   },
   content: {
+    maxWidth: "100%",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
   },
   iconLeft: {
+    flexShrink: 0,
     marginRight: 8,
   },
   iconRight: {
+    flexShrink: 0,
     marginLeft: 8,
   },
   md: { 

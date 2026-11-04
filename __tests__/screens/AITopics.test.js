@@ -29,7 +29,11 @@ const prepare = () => {
   fireEvent.changeText(ui.UNSAFE_getByType(TextInput), 'Space');
   return ui;
 };
-const pressGenerate = (ui) => fireEvent.press(ui.getByText('Generate Topics'));
+const pressGenerate = async (ui) => {
+  fireEvent.press(ui.getByText('Generate Topics'));
+  await waitFor(() => expect(ui.getByText('Save words')).toBeTruthy());
+  fireEvent.press(ui.getByText('Save words'));
+};
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -43,7 +47,7 @@ beforeEach(() => {
 afterEach(() => alert.mockRestore());
 
 test('saves real topics, consumes one allowance, and sends the selected app language', async () => {
-  const ui = prepare(); pressGenerate(ui);
+  const ui = prepare(); await pressGenerate(ui);
   await waitFor(() => expect(useAIStore.getState().generationsToday).toBe(1));
   expect(generateTopics).toHaveBeenCalledWith(expect.objectContaining({ language: 'fr' }));
   expect(useGameStore.getState().customTopics[0].words).toEqual(['Moon', 'Mars']);
@@ -52,7 +56,7 @@ test('saves real topics, consumes one allowance, and sends the selected app lang
 
 test.each(['offline', 'timeout', 'authentication', 'rate-limit', 'invalid-response'])('does not save or charge a %s failure', async (code) => {
   generateTopics.mockResolvedValue({ success: false, code });
-  const ui = prepare(); pressGenerate(ui);
+  const ui = prepare(); fireEvent.press(ui.getByText('Generate Topics'));
   await waitFor(() => expect(alert).toHaveBeenCalledWith('Generation Failed', expect.stringContaining('not been used'), expect.any(Array)));
   expect(useAIStore.getState().generationsToday).toBe(0);
   expect(useAIStore.getState().generatedTopics).toEqual([]);
@@ -61,14 +65,14 @@ test.each(['offline', 'timeout', 'authentication', 'rate-limit', 'invalid-respon
 
 test('does not consume another allowance for a cached result', async () => {
   generateTopics.mockResolvedValue({ success: true, data: { ...data, source: 'cache' } });
-  const ui = prepare(); pressGenerate(ui);
+  const ui = prepare(); await pressGenerate(ui);
   await waitFor(() => expect(useGameStore.getState().customTopics).toHaveLength(1));
   expect(useAIStore.getState().generationsToday).toBe(0);
 });
 
 test('does not show success or consume an allowance when saving fails', async () => {
   useGameStore.setState({ addCustomTopic: jest.fn().mockResolvedValue({ ok: false }) });
-  const ui = prepare(); pressGenerate(ui);
+  const ui = prepare(); await pressGenerate(ui);
   await waitFor(() => expect(alert).toHaveBeenCalledWith('Generation Failed', expect.stringContaining('Could not save'), expect.any(Array)));
   expect(useAIStore.getState().generationsToday).toBe(0);
   expect(useAIStore.getState().generatedTopics).toEqual([]);
@@ -83,6 +87,8 @@ test('guards rapid duplicate generation taps', async () => {
   fireEvent.press(button);
   await waitFor(() => expect(generateTopics).toHaveBeenCalledTimes(1));
   await act(async () => finish({ success: true, data }));
+  fireEvent.press(ui.getByText('Save words'));
+  await waitFor(() => expect(useAIStore.getState().generationsToday).toBe(1));
   expect(useAIStore.getState().generationsToday).toBe(1);
 });
 
@@ -118,9 +124,45 @@ test('restores the ad button after a rejected ad request', async () => {
 
 test('preserves the allowance when the real topic storage write fails', async () => {
   AsyncStorage.setItem.mockRejectedValueOnce(new Error('Disk full'));
-  const ui = prepare(); pressGenerate(ui);
+  const ui = prepare(); await pressGenerate(ui);
   await waitFor(() => expect(alert).toHaveBeenCalledWith('Generation Failed', expect.stringContaining('Could not save'), expect.any(Array)));
   expect(useAIStore.getState().generationsToday).toBe(0);
   expect(useAIStore.getState().generatedTopics).toEqual([]);
   expect(useGameStore.getState().customTopics).toEqual([]);
+});
+
+
+test('previews without saving or charging, then saves edited words only', async () => {
+  const ui = prepare();
+  fireEvent.press(ui.getByText('Generate Topics'));
+  await waitFor(() => expect(ui.getByText('Save words')).toBeTruthy());
+  expect(useGameStore.getState().customTopics).toEqual([]);
+  expect(useAIStore.getState().generationsToday).toBe(0);
+  fireEvent.changeText(ui.getByLabelText('Word 1'), 'Earth');
+  fireEvent.press(ui.getByLabelText('Remove word 2'));
+  fireEvent.press(ui.getByText('Save words'));
+  await waitFor(() => expect(useGameStore.getState().customTopics[0].words).toEqual(['Earth']));
+  expect(useAIStore.getState().generatedTopics[0].items).toEqual(['Earth']);
+});
+
+test('discarding a preview preserves the allowance', async () => {
+  const ui = prepare();
+  fireEvent.press(ui.getByText('Generate Topics'));
+  await waitFor(() => expect(ui.getByText('Discard draft')).toBeTruthy());
+  fireEvent.press(ui.getByText('Discard draft'));
+  expect(ui.queryByText('Save words')).toBeNull();
+  expect(useAIStore.getState().generationsToday).toBe(0);
+  expect(useGameStore.getState().customTopics).toEqual([]);
+});
+
+test('keeps the draft after a storage failure and allows retrying the save', async () => {
+  const add = jest.fn().mockResolvedValueOnce({ ok: false, code: 'storage' }).mockResolvedValueOnce({ ok: true });
+  useGameStore.setState({ addCustomTopic: add });
+  const ui = prepare(); await pressGenerate(ui);
+  await waitFor(() => expect(alert).toHaveBeenCalledWith('Generation Failed', expect.any(String), expect.any(Array)));
+  await act(async () => {});
+  expect(ui.getByDisplayValue('Moon')).toBeTruthy();
+  fireEvent.press(ui.getByText('Save words'));
+  await waitFor(() => expect(useAIStore.getState().generationsToday).toBe(1));
+  expect(generateTopics).toHaveBeenCalledTimes(1);
 });

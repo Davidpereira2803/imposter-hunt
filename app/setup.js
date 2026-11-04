@@ -4,6 +4,7 @@ import { useRouter } from "expo-router";
 import Animated, { FadeInDown, ReduceMotion } from "react-native-reanimated";
 import * as Haptics from "expo-haptics";
 import { useGameStore } from "../src/store/gameStore";
+import ModalFrame from "../src/components/ui/ModalFrame";
 import Screen from "../src/components/ui/Screen";
 import Title from "../src/components/ui/Title";
 import Input from "../src/components/ui/Input";
@@ -192,7 +193,7 @@ export default function Setup() {
           {/* Topic Section */}
           <View style={styles.section}>
             <View style={styles.topicActionsRow}>
-              <View style={{ flex: 1 }}>
+              <View style={styles.topicAction}>
                 <Button 
                   title={t("setup.generateAI", "Generate with AI")}
                   onPress={() => {
@@ -205,8 +206,7 @@ export default function Setup() {
                   style={styles.topicActionBtn}
                 />
               </View>
-              <View style={{ width: space.sm }} />
-              <View style={{ flex: 1 }}>
+              <View style={styles.topicAction}>
                 <Button
                   title={t("setup.customTopic", "Custom Topic")}
                   onPress={openModal}
@@ -426,41 +426,45 @@ export default function Setup() {
         onRequestClose={closeModal}
       >
         <View style={styles.modalBackdrop}>
-          <View style={styles.modalCard}>
-            <Text style={styles.modalTitle}>{t("setup.customTopic", "Custom Topic")}</Text>
+          <ModalFrame>
+            <View style={styles.modalCard}>
+              <Text style={styles.modalTitle}>{t("setup.customTopic", "Custom Topic")}</Text>
 
-            <Input
-              placeholder={t("setup.topicNamePlaceholder", "Topic Name")}
-              value={topicName}
-              onChangeText={setTopicName}
-              style={styles.modalField}
-            />
-
-            <Input
-              placeholder={t("setup.wordsPlaceholder", "Add words (comma separated)")}
-              value={topicWordsText}
-              onChangeText={setTopicWordsText}
-              multiline
-              numberOfLines={3}
-              style={styles.textArea}
-            />
-
-            {error ? <Text style={styles.errorText}>{error}</Text> : null}
-
-            <View style={styles.modalActions}>
-              <Button
-                title={t("common.cancel", "Cancel")}
-                onPress={closeModal}
-                variant="ghost"
+              <Input
+                placeholder={t("setup.topicNamePlaceholder", "Topic Name")}
+                value={topicName}
+                onChangeText={setTopicName}
+                style={styles.modalField}
               />
-              <Button
-                title={t("common.save", "Save")}
-                onPress={handleSaveTopic}
-                variant="primary"
-                icon={<Icon name="content-save" size={18} color={palette.text} />}
+
+              <Input
+                placeholder={t("setup.wordsPlaceholder", "Add words (comma separated)")}
+                value={topicWordsText}
+                onChangeText={setTopicWordsText}
+                multiline
+                numberOfLines={3}
+                style={styles.textArea}
               />
+
+              {error ? <Text style={styles.errorText}>{error}</Text> : null}
+
+              <View style={styles.modalActions}>
+                <Button
+                  title={t("common.cancel", "Cancel")}
+                  onPress={closeModal}
+                  variant="ghost"
+                  style={styles.modalActionButton}
+                />
+                <Button
+                  title={t("common.save", "Save")}
+                  onPress={handleSaveTopic}
+                  variant="primary"
+                  style={styles.modalActionButton}
+                  icon={<Icon name="content-save" size={18} color={palette.text} />}
+                />
+              </View>
             </View>
-          </View>
+          </ModalFrame>
         </View>
       </Modal>
     </Screen>
@@ -471,8 +475,8 @@ const styles = StyleSheet.create({
   container: { flex: 1 },
   scroll: { 
     padding: space.lg, 
-    paddingTop: 60,
-    paddingBottom: 40 
+    paddingTop: space.lg,
+    paddingBottom: space.xl,
   },
   header: {
     flexDirection: "row",
@@ -481,8 +485,8 @@ const styles = StyleSheet.create({
     marginBottom: space.xl,
   },
   backButton: {
-    width: 40,
-    height: 40,
+    width: 44,
+    height: 44,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -542,12 +546,16 @@ const styles = StyleSheet.create({
     paddingBottom: space.sm,
     marginBottom: space.md,
   },
+  topicAction: { flexGrow: 1, flexBasis: 160 },
   topicActionsRow: {
     flexDirection: "row",
+    flexWrap: "wrap",
+    gap: space.sm,
     alignItems: "stretch",
     marginBottom: space.md,
   },
   topicActionBtn: {
+    flexGrow: 1,
     minHeight: 52,
     alignSelf: "stretch",
     justifyContent: "center",
@@ -581,7 +589,7 @@ const styles = StyleSheet.create({
   topicCardWrapper: { width: "48%" },
   topicName: {
     color: palette.text,
-    fontSize: type.h4,
+    fontSize: type.h3,
     fontWeight: "800",
     maxWidth: "80%",
   },
@@ -616,9 +624,9 @@ const styles = StyleSheet.create({
     fontWeight: "600" 
   },
   removeBtn: { 
-    width: 32, 
-    height: 32, 
-    borderRadius: 16, 
+    width: 44,
+    height: 44,
+    borderRadius: 22,
     backgroundColor: palette.danger,
     alignItems: "center",
     justifyContent: "center"
@@ -703,10 +711,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#000A",
     alignItems: "center",
     justifyContent: "center",
-    padding: space.lg,
   },
   modalCard: {
     width: "100%",
+    maxWidth: 420,
     backgroundColor: palette.panel,
     borderRadius: radii.lg,
     padding: space.lg,
@@ -721,13 +729,14 @@ const styles = StyleSheet.create({
     marginBottom: space.md,
   },
   textArea: {
-    height: 100,
+    minHeight: 100,
     textAlignVertical: "top",
   },
+  modalActionButton: { flexGrow: 1, flexBasis: 120 },
   modalActions: {
     marginTop: space.md,
     flexDirection: "row",
-    justifyContent: "flex-end",
+    flexWrap: "wrap",
     gap: space.md,
   },
   errorText: {

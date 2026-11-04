@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { View, Text, StyleSheet, BackHandler, Alert, AppState, ScrollView, TouchableOpacity } from "react-native";
 import { useRouter, useFocusEffect } from "expo-router";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as Haptics from "expo-haptics";
 import Animated, { FlipInEasyY, ReduceMotion } from "react-native-reanimated";
 import { useGameStore } from "../src/store/gameStore";
@@ -18,7 +17,6 @@ const feedback = (action) => {
 
 export default function Role() {
   const router = useRouter();
-  const insets = useSafeAreaInsets();
   const { players, imposterIndex, secretWord, roles } = useGameStore();
   const { t } = useTranslation();
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
@@ -79,14 +77,14 @@ export default function Role() {
 
   return (
     <Screen>
-      <ScrollView contentContainerStyle={[styles.scroll, { paddingTop: insets.top + 18 }]} showsVerticalScrollIndicator={false}>
+      <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
           <View style={styles.topBar}>
             <TouchableOpacity onPress={confirmExit} style={styles.close} accessibilityRole="button" accessibilityLabel={t("role.exitTitle", "Exit Game")}>
               <Icon name="close" size={22} color={palette.textDim} />
             </TouchableOpacity>
             <Text style={styles.counter}>{currentPlayerIndex + 1} / {players.length}</Text>
-            <Icon name="lock-outline" size={19} color={palette.textDim} />
+            <View style={styles.lock}><Icon name="lock-outline" size={19} color={palette.textDim} /></View>
           </View>
           <Text style={styles.eyebrow}>{t("role.passTo", "Pass to")}</Text>
           <Text style={styles.playerName}>{players[currentPlayerIndex]}</Text>
@@ -136,10 +134,11 @@ export default function Role() {
 }
 
 const styles = StyleSheet.create({
-  scroll: { flexGrow: 1, paddingHorizontal: space.lg, paddingBottom: space.xl },
-  container: { width: "100%", maxWidth: 440, alignSelf: "center", flex: 1, justifyContent: "center" },
+  scroll: { flexGrow: 1, paddingTop: space.lg, paddingHorizontal: space.lg, paddingBottom: space.xl },
+  container: { width: "100%", maxWidth: 440, alignSelf: "center", flexGrow: 1, justifyContent: "center" },
   topBar: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 20 },
   close: { minWidth: 48, minHeight: 48, justifyContent: "center", alignItems: "center", borderRadius: 16, borderWidth: 1, borderColor: palette.line },
+  lock: { width: 48, alignItems: "center" },
   counter: { fontSize: 13, letterSpacing: 3, color: palette.textDim, fontWeight: "700" },
   eyebrow: { textAlign: "center", textTransform: "uppercase", color: palette.textDim, fontSize: 11, fontWeight: "800", letterSpacing: 2, marginBottom: 8 },
   playerName: { color: palette.text, textAlign: "center", fontSize: 34, fontWeight: "900", letterSpacing: -0.8, marginBottom: 24 },

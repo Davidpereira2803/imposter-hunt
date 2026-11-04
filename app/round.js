@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { View, Text, StyleSheet, Alert, BackHandler, TouchableOpacity, ScrollView, Modal } from "react-native";
 import { useRouter } from "expo-router";
-import Animated, { FadeIn, FadeOut, FadeInDown, ZoomIn, ReduceMotion } from "react-native-reanimated";
+import Animated, { FadeInDown, ZoomIn, ReduceMotion } from "react-native-reanimated";
 import { BlurView } from "expo-blur";
 import * as Haptics from "expo-haptics";
 import { useGameStore } from "../src/store/gameStore";
 import HUD from "../src/components/HUD";
 import CircularTimer from "../src/components/ui/CircularTimer";
+import ModalFrame from "../src/components/ui/ModalFrame";
 import Screen from "../src/components/ui/Screen";
 import Button from "../src/components/ui/Button";
 import Card from "../src/components/ui/Card";
@@ -425,11 +426,7 @@ export default function Round() {
             activeOpacity={1}
             onPress={handleCloseModal}
           >
-            <Animated.View 
-              entering={FadeIn.duration(200).reduceMotion(ReduceMotion.System)}
-              exiting={FadeOut.duration(150).reduceMotion(ReduceMotion.System)}
-              style={styles.modalBackground}
-            >
+            <ModalFrame>
               <Animated.View
                 entering={ZoomIn.duration(300).springify().reduceMotion(ReduceMotion.System)}
                 style={styles.roleModal}
@@ -475,7 +472,7 @@ export default function Round() {
                   {t("common.tapToClose", "Tap anywhere to close")}
                 </Text>
               </Animated.View>
-            </Animated.View>
+            </ModalFrame>
           </TouchableOpacity>
         </BlurView>
       </Modal>
@@ -488,7 +485,7 @@ export default function Round() {
         onRequestClose={() => setShowSheriffModal(false)}
       >
         <BlurView intensity={90} style={styles.modalOverlay}>
-          <View style={styles.sheriffModalContainer}>
+          <ModalFrame>
             <Animated.View
               entering={ZoomIn.duration(300).springify().reduceMotion(ReduceMotion.System)}
               style={styles.sheriffModalContent}
@@ -503,7 +500,7 @@ export default function Round() {
                 </Text>
               </View>
 
-              <ScrollView style={styles.sheriffPlayerList}>
+              <View>
                 {alivePlayers
                   .filter(p => p.index !== sheriffIndex)
                   .map((player) => (
@@ -516,7 +513,7 @@ export default function Round() {
                       <Icon name="arrow-right" size={20} color={palette.textDim} />
                     </TouchableOpacity>
                   ))}
-              </ScrollView>
+              </View>
 
               <Button
                 title={t("common.cancel", "Cancel")}
@@ -526,7 +523,7 @@ export default function Round() {
                 style={{ marginTop: space.md }}
               />
             </Animated.View>
-          </View>
+          </ModalFrame>
         </BlurView>
       </Modal>
 
@@ -543,10 +540,7 @@ export default function Round() {
             activeOpacity={1}
             onPress={handleCloseSheriffResult}
           >
-            <Animated.View 
-              entering={FadeIn.duration(200).reduceMotion(ReduceMotion.System)}
-              style={styles.modalBackground}
-            >
+            <ModalFrame>
               <Animated.View
                 entering={ZoomIn.duration(400).springify().reduceMotion(ReduceMotion.System)}
                 style={styles.sheriffResultModal}
@@ -604,7 +598,7 @@ export default function Round() {
                   {t("common.tapToClose", "Tap anywhere to close")}
                 </Text>
               </Animated.View>
-            </Animated.View>
+            </ModalFrame>
           </TouchableOpacity>
         </BlurView>
       </Modal>
@@ -617,12 +611,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
-    paddingTop: 60,
+    paddingTop: space.lg,
     paddingHorizontal: space.lg,
     paddingBottom: space.xl,
   },
   header: {
     marginBottom: space.lg,
+    paddingHorizontal: 48,
+    minHeight: 44,
+    justifyContent: "center",
     position: "relative",
   },
   quitButton: {
@@ -630,17 +627,17 @@ const styles = StyleSheet.create({
     top: 0,
     right: 0,
     zIndex: 10,
-    width: 40,
-    height: 40,
+    width: 44,
+    height: 44,
     alignItems: "center",
     justifyContent: "center",
   },
   
   orderSection: {
-    marginBottom: space.xl,
+    marginBottom: space.lg,
   },
   orderTitle: {
-    fontSize: type.h4,
+    fontSize: type.h3,
     fontWeight: "800",
     color: palette.text,
     marginBottom: space.md,
@@ -693,17 +690,20 @@ const styles = StyleSheet.create({
   
   timerSection: {
     alignItems: "center",
-    marginVertical: space.xl,
+    marginTop: space.sm,
+    marginBottom: space.xl,
   },
   actions: {
     gap: space.md,
   },
   primaryActions: {
     flexDirection: "row",
+    flexWrap: "wrap",
     gap: space.md,
   },
   controlBtn: {
-    flex: 1,
+    flexGrow: 1,
+    flexBasis: 160,
   },
   sheriffButton: {
     backgroundColor: roleColors.sheriff,
@@ -736,13 +736,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  modalBackground: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-    paddingHorizontal: space.lg,
-  },
   roleModal: {
     backgroundColor: palette.panel,
     borderRadius: radii.xl,
@@ -763,8 +756,8 @@ const styles = StyleSheet.create({
     top: space.md,
     right: space.md,
     zIndex: 10,
-    width: 32,
-    height: 32,
+    width: 44,
+    height: 44,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -814,7 +807,7 @@ const styles = StyleSheet.create({
     backgroundColor: roleColors.sheriff,
   },
   roleText: {
-    fontSize: type.h4,
+    fontSize: type.h3,
     fontWeight: "900",
     color: palette.background,
     letterSpacing: 1,
@@ -846,19 +839,12 @@ const styles = StyleSheet.create({
     marginTop: space.sm,
   },
 
-  sheriffModalContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: space.lg,
-  },
   sheriffModalContent: {
     backgroundColor: palette.panel,
     borderRadius: radii.xl,
     padding: space.xl,
     width: "100%",
     maxWidth: 400,
-    maxHeight: "80%",
   },
   sheriffModalHeader: {
     alignItems: "center",
@@ -876,9 +862,6 @@ const styles = StyleSheet.create({
     color: palette.textDim,
     textAlign: "center",
   },
-  sheriffPlayerList: {
-    maxHeight: 300,
-  },
   sheriffPlayerCard: {
     flexDirection: "row",
     alignItems: "center",
@@ -889,7 +872,9 @@ const styles = StyleSheet.create({
     marginBottom: space.sm,
   },
   sheriffPlayerName: {
-    fontSize: type.h4,
+    flex: 1,
+    marginRight: space.sm,
+    fontSize: type.h3,
     fontWeight: "700",
     color: palette.text,
   },

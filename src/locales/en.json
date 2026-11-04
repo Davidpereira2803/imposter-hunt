@@ -295,6 +295,14 @@
     "nextRoundHint": "Same match and secret word. Keep discussing."
   },
   "aiTopics": {
+    "previewTitle": "Review your words",
+    "previewHint": "Edit or remove words before saving. Your generation is used only when you save.",
+    "partialResult": "Fewer words are available than requested. You can save the usable words below.",
+    "wordLabel": "Word",
+    "removeWord": "Remove word",
+    "saveWords": "Save words",
+    "discardDraft": "Discard draft",
+
     "title": "AI Topic Builder",
     "dailyGenerations": "Daily Generations",
     "limitReached": "Limit Reached",

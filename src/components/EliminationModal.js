@@ -1,10 +1,10 @@
 import React from "react";
 import { View, Text, StyleSheet, Modal } from "react-native";
-import Animated, { FadeIn, FadeOut, ZoomIn, ReduceMotion } from "react-native-reanimated";
+import Animated, { ZoomIn, ReduceMotion } from "react-native-reanimated";
 import { BlurView } from "expo-blur";
 import * as Haptics from "expo-haptics";
+import ModalFrame from "./ui/ModalFrame";
 import Button from "./ui/Button";
-import Title from "./ui/Title";
 import { Icon } from "../constants/icons";
 import { space, palette, type, radii } from "../constants/theme";
 import { useTranslation } from "../lib/useTranslation";
@@ -33,11 +33,7 @@ export default function EliminationModal({
       onRequestClose={handleContinue}
     >
       <BlurView intensity={90} style={styles.modalOverlay}>
-        <Animated.View 
-          entering={FadeIn.duration(300).reduceMotion(ReduceMotion.System)}
-          exiting={FadeOut.duration(200).reduceMotion(ReduceMotion.System)}
-          style={styles.modalBackground}
-        >
+        <ModalFrame>
           <Animated.View
             entering={ZoomIn.duration(400).delay(100).springify().reduceMotion(ReduceMotion.System)}
             style={styles.modalContent}
@@ -101,7 +97,7 @@ export default function EliminationModal({
               style={styles.continueButton}
             />
           </Animated.View>
-        </Animated.View>
+        </ModalFrame>
       </BlurView>
     </Modal>
   );
@@ -112,13 +108,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-  },
-  modalBackground: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-    paddingHorizontal: space.lg,
   },
   modalContent: {
     backgroundColor: palette.panel,

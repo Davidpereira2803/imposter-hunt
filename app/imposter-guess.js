@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet,
   Keyboard,
+  ScrollView,
   BackHandler,
   KeyboardAvoidingView,
   Platform,
@@ -150,7 +151,7 @@ export default function ImposterGuess() {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
       >
-        <View style={styles.content}>
+        <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
           <Title style={styles.title}>{t("imposterGuess.title", "Final Guess")}</Title>
 
           <Animated.View entering={FadeInUp.duration(280).reduceMotion(ReduceMotion.System)}>
@@ -203,7 +204,7 @@ export default function ImposterGuess() {
               size="md"
             />
           </Animated.View>
-        </View>
+        </ScrollView>
       </KeyboardAvoidingView>
     </Screen>
   );
@@ -214,8 +215,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: "center",
+    paddingVertical: space.lg,
     paddingHorizontal: space.lg,
   },
   title: {
@@ -235,6 +237,7 @@ const styles = StyleSheet.create({
     marginBottom: space.xs,
   },
   imposterName: {
+    textAlign: "center",
     color: palette.danger,
     fontSize: type.h1,
     fontWeight: "900",

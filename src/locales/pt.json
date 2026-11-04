@@ -295,6 +295,14 @@
     "nextRoundHint": "Mesma partida e a mesma palavra secreta. Continuem a discutir."
   },
   "aiTopics": {
+    "previewTitle": "Revê as palavras",
+    "previewHint": "Edita ou remove palavras antes de guardar. A geração só é descontada quando guardas.",
+    "partialResult": "Estão disponíveis menos palavras do que pediste. Podes guardar as palavras abaixo.",
+    "wordLabel": "Palavra",
+    "removeWord": "Remover palavra",
+    "saveWords": "Guardar palavras",
+    "discardDraft": "Descartar rascunho",
+
     "title": "Criador de Temas com IA",
     "dailyGenerations": "Gerações Diárias",
     "limitReached": "Limite Atingido",

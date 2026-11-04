@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react-native';
+import { render, fireEvent } from '@testing-library/react-native';
 import { AdBanner } from '../../src/components/AdBanner';
 
 jest.mock('react-native-google-mobile-ads', () => ({
@@ -23,35 +23,38 @@ jest.mock('../../src/config/adshelper', () => ({
 const { useAdConsentContext } = require('../../src/contexts/AdConsentContext');
 const { BannerAd } = require('react-native-google-mobile-ads');
 
+const renderBanner = () => {
+  const ui = render(<AdBanner />);
+  const wrapper = ui.root?.findAllByType('View')[0];
+  if (wrapper) fireEvent(wrapper, 'layout', { nativeEvent: { layout: { width: 320 } } });
+  return ui;
+};
+
 describe('AdBanner', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('should render placeholder when not ready', () => {
+  it('should leave no empty space when not ready', () => {
     useAdConsentContext.mockReturnValue({
       isReady: false,
       canShowAds: true,
       canShowPersonalizedAds: true,
     });
 
-    const { root } = render(<AdBanner />);
-    const views = root.findAllByType('View');
-    const placeholder = views.find((v) => v.props.style?.height === 50);
-    expect(placeholder).toBeDefined();
+    const { toJSON } = renderBanner();
+    expect(toJSON()).toBeNull();
   });
 
-  it('should render placeholder when ads cannot be shown', () => {
+  it('should leave no empty space when ads cannot be shown', () => {
     useAdConsentContext.mockReturnValue({
       isReady: true,
       canShowAds: false,
       canShowPersonalizedAds: true,
     });
 
-    const { root } = render(<AdBanner />);
-    const views = root.findAllByType('View');
-    const placeholder = views.find((v) => v.props.style?.height === 50);
-    expect(placeholder).toBeDefined();
+    const { toJSON } = renderBanner();
+    expect(toJSON()).toBeNull();
   });
 
   it('should show BannerAd when all conditions are met', () => {
@@ -61,8 +64,9 @@ describe('AdBanner', () => {
       canShowPersonalizedAds: true,
     });
 
-    render(<AdBanner />);
+    renderBanner();
     expect(BannerAd).toHaveBeenCalled();
+    expect(BannerAd.mock.calls[0][0].width).toBe(320);
   });
 
   it('should request personalized ads when canShowPersonalizedAds is true', () => {
@@ -72,7 +76,7 @@ describe('AdBanner', () => {
       canShowPersonalizedAds: true,
     });
 
-    render(<AdBanner />);
+    renderBanner();
     const call = BannerAd.mock.calls[0]?.[0];
     expect(call?.requestOptions?.requestNonPersonalizedAdsOnly).toBe(false);
   });
@@ -84,7 +88,7 @@ describe('AdBanner', () => {
       canShowPersonalizedAds: false,
     });
 
-    render(<AdBanner />);
+    renderBanner();
     const call = BannerAd.mock.calls[0]?.[0];
     expect(call?.requestOptions?.requestNonPersonalizedAdsOnly).toBe(true);
   });
@@ -96,7 +100,7 @@ describe('AdBanner', () => {
       canShowPersonalizedAds: true,
     });
 
-    render(<AdBanner />);
+    renderBanner();
     expect(BannerAd).not.toHaveBeenCalled();
   });
 
@@ -107,7 +111,7 @@ describe('AdBanner', () => {
       canShowPersonalizedAds: true,
     });
 
-    render(<AdBanner />);
+    renderBanner();
     expect(BannerAd).not.toHaveBeenCalled();
   });
 });

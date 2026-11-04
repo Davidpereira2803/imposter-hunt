@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View, Text, StyleSheet, BackHandler, Alert } from "react-native";
+import { Text, StyleSheet, BackHandler, Alert, ScrollView } from "react-native";
 import Animated, { FadeInUp, ZoomIn, ReduceMotion } from "react-native-reanimated";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import * as Haptics from "expo-haptics";
@@ -125,7 +125,7 @@ export default function Results() {
 
   return (
     <Screen>
-      <View style={styles.content}>
+      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <Animated.View entering={ZoomIn.duration(360).reduceMotion(ReduceMotion.System)} style={styles.header}>
           <Icon 
             name={icon} 
@@ -180,20 +180,21 @@ export default function Results() {
             size="md"
           />
         </Animated.View>
-      </View>
+      </ScrollView>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
   content: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: "center",
+    paddingVertical: space.xl,
     paddingHorizontal: space.lg,
   },
   header: {
     alignItems: "center",
-    marginBottom: space.xl * 2,
+    marginBottom: space.xl,
   },
   icon: {
     marginBottom: space.lg,
@@ -209,13 +210,13 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     color: palette.textDim,
-    fontSize: type.medium,
+    fontSize: type.body,
     textAlign: "center",
     marginTop: space.sm,
   },
   info: {
     gap: space.lg,
-    marginBottom: space.xl * 2,
+    marginBottom: space.xl,
   },
   infoCard: {
     alignItems: "center",
@@ -230,11 +231,13 @@ const styles = StyleSheet.create({
     marginBottom: space.sm,
   },
   wordText: {
+    textAlign: "center",
     color: palette.text,
     fontSize: type.h1,
     fontWeight: "900",
   },
   imposterText: {
+    textAlign: "center",
     color: palette.danger,
     fontSize: type.h1,
     fontWeight: "900",

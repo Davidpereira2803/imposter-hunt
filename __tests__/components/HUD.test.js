@@ -44,12 +44,6 @@ describe('HUD', () => {
     expect(container.props.style.gap).toBe(space.sm);
   });
 
-  it('should have correct bottom margin', () => {
-    const { root } = render(<HUD round={1} aliveCount={5} />);
-    const container = root.findByType('View');
-    expect(container.props.style.marginBottom).toBe(space.lg);
-  });
-
   it('should handle single digit round numbers', () => {
     const { getByText } = render(<HUD round={1} aliveCount={5} />);
     expect(getByText('Round 1')).toBeDefined();
@@ -98,6 +92,5 @@ describe('HUD', () => {
     const container = root.findByType('View');
     
     expect(container.props.style.gap).toBe(space.sm);
-    expect(container.props.style.marginBottom).toBe(space.lg);
   });
 });

@@ -1,7 +1,6 @@
 import React from "react";
 import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useRouter } from "expo-router";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as Haptics from "expo-haptics";
 import Screen from "../src/components/ui/Screen";
 import Button from "../src/components/ui/Button";
@@ -62,7 +61,6 @@ function ScoringRules({ t }) {
 
 export default function Leaderboard() {
   const router = useRouter();
-  const insets = useSafeAreaInsets();
   const { t, locale } = useTranslation();
   const activeSession = useSessionStore((state) => state.activeSession);
   const sessionHistory = useSessionStore((state) => state.sessionHistory);
@@ -97,7 +95,7 @@ export default function Leaderboard() {
 
   return (
     <Screen>
-      <View style={[styles.container, { paddingTop: insets.top + space.md }]}>
+      <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity onPress={() => router.back()} style={styles.backButton} accessibilityRole="button" accessibilityLabel={t("common.back", "Back")}>
             <Icon name="arrow-left" size={22} color={palette.text} />
@@ -169,11 +167,11 @@ export default function Leaderboard() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, paddingHorizontal: space.lg },
+  container: { flex: 1, paddingTop: space.lg, paddingHorizontal: space.lg },
   header: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: space.md },
   backButton: { width: 44, height: 44, alignItems: "center", justifyContent: "center" },
   title: { flex: 1, textAlign: "center" },
-  content: { paddingBottom: space.xl * 2, gap: space.lg },
+  content: { paddingBottom: space.xl, gap: space.lg },
   section: { gap: space.sm },
   sectionHeader: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: space.sm },
   eyebrow: { color: palette.primary, fontSize: type.small, fontWeight: "900", letterSpacing: 1.5, marginBottom: 5 },

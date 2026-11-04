@@ -239,7 +239,7 @@ export default function Vote() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 60,
+    paddingTop: space.lg,
     paddingHorizontal: space.lg,
   },
   header: {
@@ -249,8 +249,8 @@ const styles = StyleSheet.create({
     marginBottom: space.lg,
   },
   backButton: {
-    width: 40,
-    height: 40,
+    width: 44,
+    height: 44,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -284,7 +284,8 @@ const styles = StyleSheet.create({
   },
   playerListContent: {
     gap: space.md,
-    paddingBottom: space.md,
+    paddingVertical: space.sm,
+    paddingHorizontal: space.xs,
   },
   playerCard: {
     flexDirection: "row",
@@ -297,7 +298,9 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   playerName: {
-    fontSize: type.h4,
+    flex: 1,
+    marginRight: space.sm,
+    fontSize: type.h3,
     fontWeight: "700",
     color: palette.text,
   },

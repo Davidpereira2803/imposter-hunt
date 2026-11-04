@@ -15,8 +15,8 @@ export default function HUD({ round, aliveCount }) {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
+    flexWrap: "wrap",
     justifyContent: "center",
     gap: space.sm,
-    marginBottom: space.lg,
   },
 });

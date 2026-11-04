@@ -295,6 +295,14 @@
     "nextRoundHint": "Stessa partita e stessa parola segreta. Continuate a discutere."
   },
   "aiTopics": {
+    "previewTitle": "Controlla le parole",
+    "previewHint": "Modifica o rimuovi le parole prima di salvare. La generazione viene conteggiata solo al salvataggio.",
+    "partialResult": "Sono disponibili meno parole di quelle richieste. Puoi salvare le parole qui sotto.",
+    "wordLabel": "Parola",
+    "removeWord": "Rimuovi parola",
+    "saveWords": "Salva parole",
+    "discardDraft": "Scarta bozza",
+
     "title": "Generatore di Argomenti IA",
     "dailyGenerations": "Generazioni Giornaliere",
     "limitReached": "Limite Raggiunto",

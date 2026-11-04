@@ -52,6 +52,10 @@ export default function AITopics() {
   const adInFlight = useRef(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const [draft, setDraft] = useState(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const saveInFlight = useRef(false);
+
   const [showTutorial, setShowTutorial] = useState(false);
 
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
@@ -132,7 +136,7 @@ export default function AITopics() {
   };
 
   const handleGenerate = async () => {
-    if (generationInFlight.current) return;
+    if (generationInFlight.current || draft || saveInFlight.current) return;
     if (!description.trim()) {
       Alert.alert(
         t("aiTopics.missingInput", "Missing Input"),
@@ -171,44 +175,7 @@ export default function AITopics() {
       });
 
       if (result.success && result.data) {
-        const baseName = (result.data.topicGroup || description || t("aiTopics.aiTopicsFallback", "AI Topics")).trim();
-        let finalName = `${baseName} (AI)`;
-        let attempts = 0;
-        let added = { ok: false };
-
-        while (!added.ok && attempts < 5) {
-          added = await addCustomTopic({ name: finalName, words: result.data.items });
-          if (added.code === "storage") break;
-          if (!added.ok) {
-            attempts += 1;
-            finalName = `${baseName} (AI ${attempts + 1})`;
-          }
-        }
-
-        if (!added.ok) {
-          throw new Error(t("aiTopics.saveFailed", "Could not save these topics. Your generation has not been used."));
-        }
-        if (result.data.source === "api") incrementGenerations();
-        addGeneratedTopic(result.data);
-        if (added.ok) {
-          const key = `custom:${slugify(finalName)}`;
-          setTopicKey(key);
-        }
-
-        try {
-          await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-        } catch {}
-
-        Alert.alert(
-          t("common.success", "Success"),
-          `${t("aiTopics.generated", "Generated")} ${result.data.items?.length || 0} ${t("aiTopics.topicsCount", "topics")}.\n${t("aiTopics.addedToList", "Added")} "${finalName}" ${t("aiTopics.toYourList", "to your list")}.`,
-          [
-            { text: t("aiTopics.goToSetup", "Go to Setup"), onPress: () => router.push("/setup") },
-            { text: t("aiTopics.stay", "Stay"), style: "cancel" },
-          ]
-        );
-
-        setDescription("");
+        setDraft({ ...result.data, requestedCount: numTopics });
       } else {
         const messages = {
           offline: t("aiTopics.offlineMessage", "Connect to the internet and try again. Your generation has not been used."),
@@ -235,6 +202,61 @@ export default function AITopics() {
     } finally {
       generationInFlight.current = false;
       setIsLoading(false);
+    }
+  };
+
+  const handleSave = async () => {
+    if (!draft || saveInFlight.current) return;
+    const words = [...new Map(draft.items.map((word) => word.trim())
+      .filter(Boolean).map((word) => [word.toLowerCase(), word])).values()];
+    if (!words.length) return;
+    saveInFlight.current = true;
+    setIsSaving(true);
+    try {
+        const baseName = (draft.topicGroup || description || t("aiTopics.aiTopicsFallback", "AI Topics")).trim();
+        let finalName = `${baseName} (AI)`;
+        let attempts = 0;
+        let added = { ok: false };
+
+        while (!added.ok && attempts < 5) {
+          added = await addCustomTopic({ name: finalName, words });
+          if (added.code === "storage") break;
+          if (!added.ok) {
+            attempts += 1;
+            finalName = `${baseName} (AI ${attempts + 1})`;
+          }
+        }
+
+        if (!added.ok) {
+          throw new Error(t("aiTopics.saveFailed", "Could not save these topics. Your generation has not been used."));
+        }
+        if (draft.source === "api") incrementGenerations();
+        addGeneratedTopic({ ...draft, items: words });
+        if (added.ok) {
+          const key = `custom:${slugify(finalName)}`;
+          setTopicKey(key);
+        }
+
+        try {
+          await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+        } catch {}
+
+        Alert.alert(
+          t("common.success", "Success"),
+          `${t("aiTopics.generated", "Generated")} ${words.length} ${t("aiTopics.topicsCount", "topics")}.\n${t("aiTopics.addedToList", "Added")} "${finalName}" ${t("aiTopics.toYourList", "to your list")}.`,
+          [
+            { text: t("aiTopics.goToSetup", "Go to Setup"), onPress: () => router.push("/setup") },
+            { text: t("aiTopics.stay", "Stay"), style: "cancel" },
+          ]
+        );
+
+        setDescription("");
+        setDraft(null);
+    } catch (error) {
+      Alert.alert(t("aiTopics.generationFailedTitle", "Generation Failed"), error.message, [{ text: t("common.ok", "OK") }]);
+    } finally {
+      saveInFlight.current = false;
+      setIsSaving(false);
     }
   };
 
@@ -386,7 +408,7 @@ export default function AITopics() {
             onPress={handleGenerate}
             variant="primary"
             size="lg"
-            disabled={isLoading || remaining <= 0}
+            disabled={isLoading || isSaving || !!draft || remaining <= 0}
             icon={
               isLoading ? (
                 <ActivityIndicator color={palette.text} size="small" />
@@ -396,6 +418,41 @@ export default function AITopics() {
             }
             style={styles.generateButton}
           />
+
+          {draft && (
+            <Card style={styles.preview}>
+              <Text style={styles.label}>{t("aiTopics.previewTitle", "Review your words")}</Text>
+              <Text style={styles.hint}>{t("aiTopics.previewHint", "Edit or remove words before saving. Your generation is used only when you save.")}</Text>
+              {draft.items.length < draft.requestedCount && (
+                <Text style={styles.hint}>{t("aiTopics.partialResult", "Fewer words are available than requested. You can save the usable words below.")}</Text>
+              )}
+              {draft.items.map((word, index) => (
+                <View key={index} style={styles.previewRow}>
+                  <Input
+                    style={{ flex: 1 }}
+                    accessibilityLabel={`${t("aiTopics.wordLabel", "Word")} ${index + 1}`}
+                    value={word}
+                    editable={!isSaving}
+                    maxLength={80}
+                    onChangeText={(value) => setDraft((current) => ({ ...current, items: current.items.map((item, i) => i === index ? value : item) }))}
+                  />
+                  <TouchableOpacity
+                    accessibilityRole="button"
+                    accessibilityLabel={`${t("aiTopics.removeWord", "Remove word")} ${index + 1}`}
+                    disabled={isSaving}
+                    onPress={() => setDraft((current) => ({ ...current, items: current.items.filter((_, i) => i !== index) }))}
+                    style={styles.backButton}
+                  >
+                    <Icon name="close" size={24} color={palette.text} />
+                  </TouchableOpacity>
+                </View>
+              ))}
+              <Button title={t("aiTopics.saveWords", "Save words")} onPress={handleSave}
+                disabled={isSaving || !draft.items.some((word) => word.trim())} />
+              <Button title={t("aiTopics.discardDraft", "Discard draft")} variant="ghost" disabled={isSaving}
+                onPress={() => setDraft(null)} />
+            </Card>
+          )}
 
           {/* Info Footer */}
           <Card style={styles.infoCard}>
@@ -416,11 +473,13 @@ export default function AITopics() {
 }
 
 const styles = StyleSheet.create({
+  preview: { marginBottom: space.lg, gap: space.sm },
+  previewRow: { flexDirection: "row", alignItems: "center", gap: space.sm, marginVertical: space.xs },
   container: {
     flex: 1,
   },
   scroll: {
-    paddingTop: 60,
+    paddingTop: space.lg,
     paddingHorizontal: space.lg,
     paddingBottom: space.xl,
   },
@@ -431,8 +490,8 @@ const styles = StyleSheet.create({
     marginBottom: space.lg,
   },
   backButton: {
-    width: 40,
-    height: 40,
+    width: 44,
+    height: 44,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -441,8 +500,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   helpButton: {
-    width: 40,
-    height: 40,
+    width: 44,
+    height: 44,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -520,7 +579,7 @@ const styles = StyleSheet.create({
     marginBottom: space.sm,
   },
   sliderValue: {
-    fontSize: type.h4,
+    fontSize: type.h3,
     fontWeight: "900",
     color: palette.primary,
   },

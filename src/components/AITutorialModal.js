@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, ScrollView, Modal, TouchableOpacity } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { palette, space, type } from "../constants/theme";
 import { Icon } from "../constants/icons";
 import Card from "./ui/Card";
@@ -16,7 +17,7 @@ export default function AITutorialModal({ visible, onClose }) {
       transparent
       onRequestClose={onClose}
     >
-      <View style={styles.overlay}>
+      <SafeAreaView style={styles.overlay}>
         <View style={styles.modal}>
           {/* Header */}
           <View style={styles.header}>
@@ -221,7 +222,7 @@ export default function AITutorialModal({ visible, onClose }) {
             style={styles.button}
           />
         </View>
-      </View>
+      </SafeAreaView>
     </Modal>
   );
 }
@@ -239,7 +240,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     width: "100%",
     maxWidth: 500,
-    maxHeight: "90%",
+    maxHeight: "100%",
+    flexShrink: 1,
     borderWidth: 2,
     borderColor: palette.line,
   },
@@ -266,7 +268,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   content: {
-    padding: space.lg,
+    flexShrink: 1,
   },
   section: {
     marginBottom: space.md,
@@ -282,7 +284,8 @@ const styles = StyleSheet.create({
     marginBottom: space.sm,
   },
   sectionTitle: {
-    fontSize: type.h4,
+    flexShrink: 1,
+    fontSize: type.h3,
     fontWeight: "800",
     color: palette.text,
   },
@@ -332,6 +335,7 @@ const styles = StyleSheet.create({
     gap: space.sm,
   },
   exampleText: {
+    flex: 1,
     fontSize: type.body,
     color: palette.textDim,
   },
@@ -355,9 +359,9 @@ const styles = StyleSheet.create({
   },
   button: {
     margin: space.lg,
-    marginTop: 0,
+    marginTop: space.sm,
   },
   scrollContent: {
-    paddingBottom: space.xl,
+    padding: space.lg,
   },
 });

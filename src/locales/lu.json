@@ -295,6 +295,14 @@
     "nextRoundHint": "Dat selwecht Spill an dat selwecht geheime Wuert. Schwätzt weider."
   },
   "aiTopics": {
+    "previewTitle": "Iwwerpréif deng Wierder",
+    "previewHint": "Änner oder läsch Wierder virum Späicheren. D’Generatioun gëtt eréischt beim Späichere verbraucht.",
+    "partialResult": "Et si manner Wierder disponibel wéi ugefrot. Du kanns d’Wierder hei drënner späicheren.",
+    "wordLabel": "Wuert",
+    "removeWord": "Wuert läschen",
+    "saveWords": "Wierder späicheren",
+    "discardDraft": "Entworf läschen",
+
     "title": "KI-Themen-Generator",
     "dailyGenerations": "Deeglech Generéierungen",
     "limitReached": "Limit Erreecht",

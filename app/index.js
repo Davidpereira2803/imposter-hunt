@@ -9,7 +9,6 @@ import { useSessionStore } from "../src/store/sessionStore";
 import { AdBanner } from "../src/components/AdBanner";
 import Screen from "../src/components/ui/Screen";
 import IdentityMark from "../src/components/IdentityMark";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Button from "../src/components/ui/Button";
 import { space, palette, radii } from "../src/constants/theme";
 import { Icon } from "../src/constants/icons";
@@ -22,7 +21,6 @@ export default function Home() {
   const { players, topicKey, secretWord, imposterIndex, getTopicByKey } = useGameStore();
   const activeSession = useSessionStore((state) => state.activeSession);
   const { t } = useTranslation();
-  const insets = useSafeAreaInsets();
 
   useFocusEffect(
     React.useCallback(() => {
@@ -97,7 +95,7 @@ export default function Home() {
 
   return (
     <Screen>
-      <ScrollView contentContainerStyle={[styles.scroll, { paddingTop: insets.top + 18 }]}
+      <ScrollView contentContainerStyle={styles.scroll}
         showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
           <View style={styles.topBar}>
@@ -174,8 +172,8 @@ export default function Home() {
 }
 
 const styles = StyleSheet.create({
-  scroll: { flexGrow: 1, paddingHorizontal: space.lg, paddingBottom: space.xl },
-  container: { width: "100%", maxWidth: 480, alignSelf: "center", flex: 1, justifyContent: "center" },
+  scroll: { flexGrow: 1, paddingTop: space.lg, paddingHorizontal: space.lg, paddingBottom: space.xl },
+  container: { width: "100%", maxWidth: 480, alignSelf: "center", flexGrow: 1, justifyContent: "center" },
   topBar: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 22 },
   wordmark: { color: palette.text, fontSize: 14, fontWeight: "900", letterSpacing: 2 },
   settings: { minWidth: 48, minHeight: 48, justifyContent: "center", alignItems: "center", borderWidth: 1, borderColor: palette.line, borderRadius: 16 },

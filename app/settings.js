@@ -320,7 +320,7 @@ export default function Settings() {
 
 const styles = StyleSheet.create({
   scroll: {
-    paddingTop: 60,
+    paddingTop: space.lg,
     paddingHorizontal: space.lg,
     paddingBottom: space.xl,
   },
@@ -331,8 +331,8 @@ const styles = StyleSheet.create({
     marginBottom: space.xl,
   },
   backButton: {
-    width: 40,
-    height: 40,
+    width: 44,
+    height: 44,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -358,17 +358,21 @@ const styles = StyleSheet.create({
   },
   infoRow: {
     flexDirection: "row",
+    flexWrap: "wrap",
+    gap: space.sm,
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: space.sm,
     padding: space.md,
   },
   infoLeft: {
+    flexShrink: 1,
     flexDirection: "row",
     alignItems: "center",
     gap: space.sm,
   },
   infoLabel: {
+    flexShrink: 1,
     color: palette.textDim,
     fontSize: type.body,
     fontWeight: "600",
@@ -438,6 +442,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   settingLabel: {
+    flex: 1,
+    marginRight: space.sm,
     color: palette.text,
     fontSize: type.body,
     fontWeight: "600",
@@ -458,6 +464,7 @@ const styles = StyleSheet.create({
     backgroundColor: palette.panel,
   },
   statusText: {
+    flexShrink: 1,
     fontSize: type.small,
     fontWeight: "700",
   },

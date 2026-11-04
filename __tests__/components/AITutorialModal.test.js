@@ -183,7 +183,7 @@ describe('AITutorialModal', () => {
     const { root } = render(
       <AITutorialModal visible={true} onClose={mockOnClose} />
     );
-    const overlayViews = root.findAllByType('View');
+    const overlayViews = root.findAll((node) => node.props.style?.backgroundColor === 'rgba(0, 0, 0, 0.85)');
     const overlay = overlayViews.find((v) => v.props.style?.backgroundColor === 'rgba(0, 0, 0, 0.85)');
     expect(overlay).toBeDefined();
   });

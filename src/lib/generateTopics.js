@@ -7,9 +7,16 @@ const API_ENDPOINT = `${API_CONFIG.BASE_URL}/api/complete`;
 const normalizeItems = (raw, limit) => {
   const values = Array.isArray(raw) ? raw : raw?.items;
   if (!Array.isArray(values)) return [];
-  return [...new Set(values.map((item) => typeof item === "string" ? item : item?.word)
+  const seen = new Set();
+  return values.map((item) => typeof item === "string" ? item : item?.word)
     .filter((item) => typeof item === "string")
-    .map((item) => item.trim()).filter(Boolean))].slice(0, limit);
+    .map((item) => item.normalize("NFC").trim().replace(/\s+/g, " "))
+    .filter((item) => {
+      const key = item.toLowerCase();
+      if (!item || item.length > 80 || /placeholder/i.test(item) || seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    }).slice(0, limit);
 };
 
 export const generateTopics = async ({
@@ -27,7 +34,7 @@ export const generateTopics = async ({
     const selectedLanguage = language?.trim() || "en";
     const prompt = description.trim();
     // Versioned, collision-free keys also exclude results cached under the old fallback contract.
-    const key = JSON.stringify(["v2", prompt.toLowerCase(), numTopics, difficulty, selectedLanguage]);
+    const key = JSON.stringify(["v3", prompt.toLowerCase(), numTopics, difficulty, selectedLanguage]);
     const cached = useAIStore.getState().getCachedResult(key);
     if (cached?.source === "api" && normalizeItems(cached.items, numTopics).length) {
       return { success: true, data: { ...cached, items: normalizeItems(cached.items, numTopics), source: "cache" } };

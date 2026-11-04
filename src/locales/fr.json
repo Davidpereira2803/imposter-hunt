@@ -295,6 +295,14 @@
     "nextRoundHint": "Même partie et même mot secret. Continuez à discuter."
   },
   "aiTopics": {
+    "previewTitle": "Vérifiez vos mots",
+    "previewHint": "Modifiez ou supprimez des mots avant de sauvegarder. La génération est décomptée uniquement à la sauvegarde.",
+    "partialResult": "Moins de mots que prévu sont disponibles. Vous pouvez sauvegarder les mots ci-dessous.",
+    "wordLabel": "Mot",
+    "removeWord": "Supprimer le mot",
+    "saveWords": "Sauvegarder les mots",
+    "discardDraft": "Supprimer le brouillon",
+
     "title": "Créateur de Thèmes IA",
     "dailyGenerations": "Générations Quotidiennes",
     "limitReached": "Limite Atteinte",

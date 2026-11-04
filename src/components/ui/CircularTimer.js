@@ -113,10 +113,10 @@ export default function CircularTimer({
 
         {/* Timer Content - Centered */}
         <View style={styles.timeContainer}>
-          <Text style={[styles.timeText, { color: getTimerColor() }]}>
+          <Text maxFontSizeMultiplier={1.2} style={[styles.timeText, { color: getTimerColor() }]}>
             {formatTime(seconds)}
           </Text>
-          <Text style={styles.label}>{t("timer.remaining", "remaining")}</Text>
+          <Text maxFontSizeMultiplier={1.2} style={styles.label}>{t("timer.remaining", "remaining")}</Text>
           
           {/* Timer Controls - Below the time */}
           <View style={styles.controls}>
@@ -209,9 +209,9 @@ const styles = StyleSheet.create({
     backgroundColor: palette.warn,
   },
   resetButton: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    width: 44,
+    height: 44,
+    borderRadius: 22,
     backgroundColor: palette.backgroundDim,
     alignItems: "center",
     justifyContent: "center",

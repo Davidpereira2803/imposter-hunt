@@ -116,3 +116,9 @@ test.each([0, -1, 101, 1.5, '3'])('rejects invalid topic count %j', async (numTo
   expect(await generateTopics({ ...params, numTopics })).toMatchObject({ success: false, code: 'invalid-input' });
   expect(fetch).not.toHaveBeenCalled();
 });
+
+
+test('rejects placeholders and case-insensitive duplicates from older servers', async () => {
+  fetch.mockResolvedValue(response(['Moon', ' moon ', '(placeholder)', 'Mars']));
+  expect((await generateTopics(params)).data.items).toEqual(['Moon', 'Mars']);
+});

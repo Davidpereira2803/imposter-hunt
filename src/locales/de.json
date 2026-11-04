@@ -295,6 +295,14 @@
     "nextRoundHint": "Gleiches Spiel und dasselbe geheime Wort. Diskutiert weiter."
   },
   "aiTopics": {
+    "previewTitle": "Wörter überprüfen",
+    "previewHint": "Bearbeite oder entferne Wörter vor dem Speichern. Die Generierung wird erst beim Speichern verbraucht.",
+    "partialResult": "Es sind weniger Wörter als angefordert verfügbar. Du kannst die Wörter unten speichern.",
+    "wordLabel": "Wort",
+    "removeWord": "Wort entfernen",
+    "saveWords": "Wörter speichern",
+    "discardDraft": "Entwurf verwerfen",
+
     "title": "KI-Themen-Generator",
     "dailyGenerations": "Tägliche Generierungen",
     "limitReached": "Limit Erreicht",
